@@ -14,7 +14,7 @@
     var app = express();
     // Initialize server variables
     app.set('views', path.join(__dirname, '../server/views'));
-    app.set('view engine', 'jade');
+    app.set('view engine', 'pug');
     //app.use(favicon(__dirname + '/public/favicon.ico'));
     app.use(logger('dev'));
     app.use(bodyParser.json());

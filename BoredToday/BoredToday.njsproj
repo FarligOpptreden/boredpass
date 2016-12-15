@@ -42,6 +42,7 @@
     <Compile Include="handlr\handlr.mongo.js" />
     <Compile Include="routes\users.js" />
     <Compile Include="bin\www" />
+    <Compile Include="server\controllers\activities.js" />
     <Compile Include="server\controllers\_default.js" />
     <Compile Include="server\services\activities.js" />
     <Compile Include="server\services\_default.js" />
@@ -62,10 +63,10 @@
       <DependentUpon>public\css\shared.css</DependentUpon>
     </Content>
     <Content Include="README.md" />
-    <Content Include="server\views\_default.jade" />
+    <Content Include="server\views\_default.pug" />
     <Content Include="typings.json" />
     <Content Include="server\views\layout.jade" />
-    <Content Include="server\views\error.jade" />
+    <Content Include="server\views\error.pug" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

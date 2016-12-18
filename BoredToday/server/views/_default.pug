@@ -1,5 +1,18 @@
 ﻿extends layout
 
+block css
+  link(rel='stylesheet', href='/css/_default.min.css')
+
 block content
-  p Welcome to Bored Today!
-  p This is the landing page of the site...
+  header
+    a(href="/sign-in" class="sign-in") Sign In
+    a(href="/" class="home")
+  article
+    p Welcome to Bored Today!
+    p This is the landing page of the site...
+    ul
+      each activity in activities.data
+        li
+          h3 #{activity.name}
+          span #{activity.location}
+  footer

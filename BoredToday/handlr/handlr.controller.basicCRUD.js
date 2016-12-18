@@ -7,7 +7,7 @@ module.exports = new function () {
         var searchFields = args && args.searchFields ? args.searchFields : ['name'];
         var sortFields = args && args.sortFields ? args.sortFields : { 'name': 1 };
         var buildFilter = function (search) {
-            if (!searchFields && !search)
+            if (!searchFields || !search)
                 return null;
             var filter = { $or: [] };
             searchFields.forEach(function (field, i) {

@@ -42,7 +42,7 @@
     <Compile Include="handlr\handlr.mongo.js" />
     <Compile Include="routes\users.js" />
     <Compile Include="bin\www" />
-    <Compile Include="server\controllers\activities.js" />
+    <Compile Include="server\controllers\api\v1\activities.js" />
     <Compile Include="server\controllers\_default.js" />
     <Compile Include="server\services\activities.js" />
     <Compile Include="server\services\_default.js" />
@@ -62,6 +62,18 @@
       <SubType>Content</SubType>
       <DependentUpon>public\css\shared.css</DependentUpon>
     </Content>
+    <Content Include="public\css\_default.css">
+      <SubType>Content</SubType>
+      <DependentUpon>public\css\_default.less</DependentUpon>
+    </Content>
+    <Content Include="public\css\_default.less" />
+    <Content Include="public\css\_default.min.css">
+      <SubType>Content</SubType>
+      <DependentUpon>public\css\_default.css</DependentUpon>
+    </Content>
+    <Content Include="public\images\colour-black.svg" />
+    <Content Include="public\images\colour-white.svg" />
+    <Content Include="public\images\logo.svg" />
     <Content Include="README.md" />
     <Content Include="server\views\_default.pug" />
     <Content Include="typings.json" />
@@ -79,6 +91,8 @@
     <Folder Include="server\" />
     <Folder Include="public\" />
     <Folder Include="server\controllers\" />
+    <Folder Include="server\controllers\api\" />
+    <Folder Include="server\controllers\api\v1\" />
     <Folder Include="server\views\" />
     <Folder Include="server\services\" />
   </ItemGroup>

@@ -2,5 +2,9 @@
   {
     "outputFile": "public/css/shared.css",
     "inputFile": "public/css/shared.less"
+  },
+  {
+    "outputFile": "public/css/_default.css",
+    "inputFile": "public/css/_default.less"
   }
 ]

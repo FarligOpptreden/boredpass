@@ -1,3 +1,3 @@
-﻿var handlr = require('./handlr/handlr.js');
+﻿import Handlr from './handlr/Handlr';
 
-module.exports = handlr.start();
+export default new Handlr().start();

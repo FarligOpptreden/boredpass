@@ -1,12 +1,11 @@
-﻿var requireRoot = 'root/../..';
-var service = require(requireRoot + '/server/services/activities.js');
-var handlr = require(requireRoot + '/handlr/handlr.controller.basicCRUD.js').get(
-    '/api/v1/activities', 
-    service,
+﻿import ActivitiesService from '../../../services/activities';
+import CrudController from '../../../../handlr/CrudController';
+
+export default new CrudController(
+    '/api/v1/activities',
+    ActivitiesService,
     {
         searchFields: ['name', 'location'],
         sortFields: { '_created': -1, 'name': 1 }
     }
-);
-
-module.exports = handlr;
+).controllers;

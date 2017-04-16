@@ -33,14 +33,13 @@
     <Compile Include="app.iis.js" />
     <Compile Include="app.js" />
     <Compile Include="config.js" />
-    <Compile Include="handlr\handlr.arrayExtensions.js" />
-    <Compile Include="handlr\handlr.controller.basicCRUD.js" />
-    <Compile Include="handlr\handlr.controller.js" />
-    <Compile Include="handlr\handlr.js" />
-    <Compile Include="handlr\handlr.listMap.js" />
-    <Compile Include="handlr\handlr.mongo.basicCRUD.js" />
-    <Compile Include="handlr\handlr.mongo.js" />
-    <Compile Include="routes\users.js" />
+    <Compile Include="handlr\BasicCrud.js" />
+    <Compile Include="handlr\Controller.js" />
+    <Compile Include="handlr\CrudController.js" />
+    <Compile Include="handlr\Handlr.js" />
+    <Compile Include="handlr\ListMap.js" />
+    <Compile Include="handlr\Mongo.js" />
+    <Compile Include="handlr\_arrayExtensions.js" />
     <Compile Include="bin\www" />
     <Compile Include="server\controllers\api\v1\activities.js" />
     <Compile Include="server\controllers\_default.js" />
@@ -73,7 +72,7 @@
     </Content>
     <Content Include="public\images\colour-black.svg" />
     <Content Include="public\images\colour-white.svg" />
-    <Content Include="public\images\logo.svg" />
+    <Content Include="public\images\logo.png" />
     <Content Include="README.md" />
     <Content Include="server\views\_default.pug" />
     <Content Include="typings.json" />
@@ -95,6 +94,35 @@
     <Folder Include="server\controllers\api\v1\" />
     <Folder Include="server\views\" />
     <Folder Include="server\services\" />
+    <Folder Include="typings\" />
+    <Folder Include="typings\globals\" />
+    <Folder Include="typings\globals\body-parser\" />
+    <Folder Include="typings\globals\cookie-parser\" />
+    <Folder Include="typings\globals\debug\" />
+    <Folder Include="typings\globals\express-serve-static-core\" />
+    <Folder Include="typings\globals\express\" />
+    <Folder Include="typings\globals\jade\" />
+    <Folder Include="typings\globals\mime\" />
+    <Folder Include="typings\globals\morgan\" />
+    <Folder Include="typings\globals\node\" />
+    <Folder Include="typings\globals\serve-favicon\" />
+    <Folder Include="typings\globals\serve-static\" />
+    <Folder Include="typings\globals\stylus\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="typings\globals\body-parser\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\cookie-parser\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\debug\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\express-serve-static-core\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\express\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\jade\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\mime\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\morgan\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\node\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\serve-favicon\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\serve-static\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\stylus\index.d.ts" />
+    <TypeScriptCompile Include="typings\index.d.ts" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

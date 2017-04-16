@@ -1,5 +1,6 @@
-﻿var debug = require('debug')('BoredToday');
-var app = require('./app.js');
+﻿var babel = require('babel-register')({ presets: ['es2015'] });
+var debug = require('debug')('LCBM.Api');
+var app = require('./app.js').default;
 var config = require('./config.js');
 
 app.set('port', process.env.PORT || config.port || 3000);

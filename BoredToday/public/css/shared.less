@@ -37,3 +37,34 @@ table {
 body {
     font-family: 'Raleway', sans-serif;
 }
+#header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 300px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+#header > nav {
+    min-height: 300px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+#body {
+    position: absolute;
+    top: 0;
+    left: 300px;
+    right: 300px;
+}
+#context {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 300px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+#context > div {
+    position: sticky;
+    min-height: 300px;
+    background-color: rgba(0, 0, 0, 0.1);
+}

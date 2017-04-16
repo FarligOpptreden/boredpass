@@ -1,13 +1,15 @@
-﻿var _activities = require('./activities.js');
+﻿import ActivitiesService from './activities';
 
-module.exports = new function () {
-    var ctx = this;
-    this.recommendedActivities = function (args) {
-        _activities.page({
-            pageSize: 20,
-            pageNo: args.pageNo,
-            sort: { _created: -1 },
-            callback: args.callback
-        });
+class Default {
+    constructor() { }
+    recommendedActivities(args) {
+        ActivitiesService.page(
+            null,
+            { _created: -1 },
+            args.pageNo,
+            20,
+            args.callback);
     };
-};
+}
+
+export default new Default();

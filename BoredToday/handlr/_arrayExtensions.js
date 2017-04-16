@@ -1,4 +1,4 @@
-﻿Array.prototype.contains = function (val, expr) {
+﻿Array.prototype.contains = (val, expr) => {
     for (var i = 0; i < this.length; i++) {
         if (expr && expr(this[i], val))
             return true;
@@ -7,7 +7,7 @@
     }
     return false;
 }
-Array.prototype.sum = function (expr) {
+Array.prototype.sum = (expr) => {
     var sum = 0;
     for (var i = 0; i < this.length; i++) {
         if (expr)

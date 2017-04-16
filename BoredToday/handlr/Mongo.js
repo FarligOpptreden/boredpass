@@ -1,24 +1,38 @@
-﻿var mongo = require('mongodb');
-var moment = require('moment');
+﻿import mongo from 'mongodb';
+import moment from 'moment';
 
-module.exports = new function () {
-    var ctx = this;
-    this.objectId = function (args) {
+class Mongo {
+    get operations() {
+        return {
+            insertOne: 'insertOne',
+            insertMany: 'insertMany',
+            updateOne: 'updateOne',
+            updateMany: 'updateMany',
+            deleteOne: 'deleteOne',
+            deleteMany: 'deleteMany',
+            replaceOne: 'replaceOne',
+            pagedData: 'pagedData',
+            aggregate: 'aggregate',
+            distinct: 'distinct',
+            find: 'find'
+        };
+    }
+    objectId(args) {
         return new mongo.ObjectID(args);
     }
-    this.mongo = function (args) {
-        var client = mongo.MongoClient;
+    mongo(args) {
+        let client = mongo.MongoClient;
         if (args.data)
-            for (var k in args.data) {
+            for (let k in args.data) {
                 if (k === '_id' && mongo.ObjectID.isValid(args.data[k]))
-                    args.data[k] = ctx.objectId(args.data[k]);
+                    args.data[k] = this.objectId(args.data[k]);
             }
         if (args.filter)
-            for (var k in args.filter) {
+            for (let k in args.filter) {
                 if (k === '_id' && mongo.ObjectID.isValid(args.filter[k]))
-                    args.filter[k] = ctx.objectId(args.filter[k]);
+                    args.filter[k] = this.objectId(args.filter[k]);
             }
-        var toLog = '';
+        let toLog = '';
         toLog += '[H:i:' + moment().format('YYYY-MM-DDTHH:mm:ss:SSS') + '] Executing MongoDB statement';
         toLog += '\n    > Url        : ' + args.url;
         toLog += '\n    > Collection : ' + args.collection;
@@ -32,22 +46,22 @@ module.exports = new function () {
         toLog += '\n    > Limit      : ' + JSON.stringify(args.limit);
         toLog += '\n    > Pipeline   : ' + JSON.stringify(args.pipeline);
         console.log(toLog);
-        var execute = function (db, callback) {
-            var operation = args.operation;
-            if (operation === ctx.operations.pagedData)
-                operation = ctx.operations.find;
-            var col = db.collection(args.collection);
-            var evalResultSet = function (cursor, callback) {
-                var objs = [];
-                cursor.each(function (err, res) {
+        let execute = (db, callback) => {
+            let operation = args.operation;
+            if (operation === this.operations.pagedData)
+                operation = this.operations.find;
+            let col = db.collection(args.collection);
+            let evalResultSet = (cursor, callback) => {
+                let objs = [];
+                cursor.each((err, res) => {
                     if (res != null)
                         objs.push(res);
                     else
                         callback({ data: objs }, true);
                 });
             }
-            var doFind = function () {
-                var results = col.find(args.filter, args.data);
+            let doFind = () => {
+                let results = col.find(args.filter, args.data);
                 if (args.sort)
                     results = results.sort(args.sort);
                 if (args.skip)
@@ -56,7 +70,7 @@ module.exports = new function () {
                     results = results.limit(args.limit);
                 evalResultSet(results, callback);
             }
-            var doPagedData = function () {
+            let doPagedData = () => {
                 if (!args.paging) {
                     callback('Paging parameters not specified for "pagedData" Mongo Handlr', false);
                     return;
@@ -71,11 +85,11 @@ module.exports = new function () {
                 }
                 args.paging.pageNo = parseInt(args.paging.pageNo, 10);
                 args.paging.pageSize = parseInt(args.paging.pageSize, 10);
-                var doPageStatistics = function (res, success) {
-                    var data = res.data;
-                    col.find(args.filter).count(function (err, res) {
-                        var itemCount = res;
-                        var mod = itemCount % args.paging.pageSize > 0 ? 1 : 0;
+                let doPageStatistics = (res, success) => {
+                    let data = res.data;
+                    col.find(args.filter).count((err, res) => {
+                        let itemCount = res;
+                        let mod = itemCount % args.paging.pageSize > 0 ? 1 : 0;
                         callback({
                             pageNo: args.paging.pageNo,
                             pageSize: args.paging.pageSize,
@@ -89,42 +103,42 @@ module.exports = new function () {
                     .find(args.filter, args.data)
                     .sort(args.sort ? args.sort : {})
                     .skip((args.paging.pageNo - 1) * args.paging.pageSize)
-                    .limit(args.paging.pageSize), 
+                    .limit(args.paging.pageSize),
                     doPageStatistics
                 );
             }
-            var doInsertOne = function () {
+            let doInsertOne = () => {
                 delete args.data._id;
                 delete args.data._created;
-                var data = { _id: ctx.objectId(), _created: new Date() };
-                for (var key in args.data) {
+                let data = { _id: this.objectId(), _created: new Date() };
+                for (let key in args.data) {
                     data[key] = args.data[key];
                 }
-                col.insertOne(data, function (err, res) {
+                col.insertOne(data, (err, res) => {
                     callback({ mongo: res, data: data }, true);
                 });
             }
-            var doInsertMany = function () {
+            let doInsertMany = () => {
                 if (args.data && !args.data.length) {
                     callback('"data" parameter must be an array for "insertMany" Mongo Handlr', false);
                     return;
                 }
-                args.data.forEach(function (d, i, data) {
-                    var newD = {
-                        _id: ctx.objectId(),
+                args.data.forEach((d, i, data) => {
+                    let newD = {
+                        _id: this.objectId(),
                         _created: new Date()
                     };
-                    for (var key in d) {
+                    for (let key in d) {
                         newD[key] = d[key];
                     }
                     d = newD;
                 });
-                col.insertMany(args.data, function (err, res) {
+                col.insertMany(args.data, (err, res) => {
                     callback({ mongo: res, data: args.data }, true);
                 });
             }
-            var doUpdateOne = function () {
-                var originalData = args.data ? {
+            let doUpdateOne = () => {
+                let originalData = args.data ? {
                     _id: args.data._id,
                     _created: args.data._created
                 } : null;
@@ -132,7 +146,7 @@ module.exports = new function () {
                 delete args.data._created;
                 delete args.data._modified;
                 args.data = { $set: args.data, $currentDate: { '_modified': true } };
-                col.updateOne(args.filter, args.data, function (err, res) {
+                col.updateOne(args.filter, args.data, (err, res) => {
                     if (args.data.$set && originalData && originalData._id)
                         args.data.$set._id = originalData._id;
                     if (args.data.$set && originalData && originalData._created)
@@ -140,39 +154,39 @@ module.exports = new function () {
                     callback({ mongo: res, data: args.data.$set }, true);
                 });
             }
-            var doUpdateMany = function () {
+            let doUpdateMany = () => {
                 args.data = { $set: args.data, $currentDate: { '_modified': true } };
-                col.updateMany(args.filter, args.data, function (err, res) {
+                col.updateMany(args.filter, args.data, (err, res) => {
                     callback({ mongo: res, data: args.data }, true);
                 });
             }
-            var doDeleteOne = function () {
-                col.deleteOne(args.filter, function (err, res) {
+            let doDeleteOne = () => {
+                col.deleteOne(args.filter, (err, res) => {
                     callback({ mongo: res }, true);
                 });
             }
-            var doDeleteMany = function () {
-                col.deleteMany(args.filter, function (err, res) {
+            let doDeleteMany = () => {
+                col.deleteMany(args.filter, (err, res) => {
                     callback({ mongo: res }, true);
                 });
             }
-            var doReplaceOne = function () {
-                col.replaceOne(args.filter, args.data, function (err, res) {
+            let doReplaceOne = () => {
+                col.replaceOne(args.filter, args.data, (err, res) => {
                     callback({ mongo: res, data: args.data }, true);
                 });
             }
-            var doAggregate = function () {
-                var agg = [];
+            let doAggregate = () => {
+                let agg = [];
                 if (args.pipeline) {
-                    args.pipeline.forEach(function (p) {
-                        var operator = '$';
-                        var value = null;
-                        for (var o in p) {
+                    args.pipeline.forEach((p) => {
+                        let operator = '$';
+                        let value = null;
+                        for (let o in p) {
                             operator += (o === 'filter' ? 'match' : o);
                             value = p[o];
                         }
                         if (operator && value) {
-                            var obj = {};
+                            let obj = {};
                             obj[operator] = value;
                             agg.push(obj);
                         }
@@ -187,20 +201,20 @@ module.exports = new function () {
                     if (args.sort)
                         agg.push({ $sort: args.sort });
                 }
-                var results = col.aggregate(agg, {
-                    allowDiskUsage: true, 
+                let results = col.aggregate(agg, {
+                    allowDiskUsage: true,
                     cursor: { batchSize: 1000 }
                 });
-                var objs = [];
-                results.on('data', function (data) {
+                let objs = [];
+                results.on('data', (data) => {
                     objs.push(data);
                 });
-                results.on('end', function () {
+                results.on('end', () => {
                     callback(objs, true);
                 });
             }
-            var doDistinct = function () {
-                col.distinct(args.data, args.filter, function (err, res) {
+            let doDistinct = () => {
+                col.distinct(args.data, args.filter, (err, res) => {
                     callback({ data: res }, true);
                 });
             }
@@ -219,8 +233,8 @@ module.exports = new function () {
                 default: callback('Invalid operation specified for Mongo Handlr', false);
             }
         }
-        client.connect(args.url, function (err, db) {
-            execute(db, function (res, success) {
+        client.connect(args.url, (err, db) => {
+            execute(db, (res, success) => {
                 db.close();
                 if (!success) {
                     console.log('[H:e' + moment().format('YYYY-MM-DDTHH:mm:ss:SSS') + '] ' + res);
@@ -231,17 +245,6 @@ module.exports = new function () {
             });
         });
     }
-    this.operations = {
-        insertOne: 'insertOne',
-        insertMany: 'insertMany',
-        updateOne: 'updateOne',
-        updateMany: 'updateMany',
-        deleteOne: 'deleteOne',
-        deleteMany: 'deleteMany',
-        replaceOne: 'replaceOne',
-        pagedData: 'pagedData',
-        aggregate: 'aggregate',
-        distinct: 'distinct',
-        find: 'find'
-    }
 }
+
+export default new Mongo();

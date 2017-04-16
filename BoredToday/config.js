@@ -1,8 +1,8 @@
-﻿module.exports = {
+﻿export default {
     port: 1337,
     app: {
         id: '',
-        name: 'Bored Today'
+        name: 'Boredpass'
     },
     accounts: {
         url: 'http://www.boredtoday.dev:85/sign-in'
@@ -15,7 +15,7 @@
         user: 'root',
         password: 'V7AfIQTMc4Je'
     },
-    b2dMondy: {
+    b2dMongo: {
         user: 'BoredTodayAdmin',
         password: 'b0r3dt0d@y'
     }

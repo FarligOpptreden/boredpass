@@ -4,15 +4,21 @@ block css
   link(rel='stylesheet', href='/css/_default.min.css')
 
 block content
-  header
-    a(href="/sign-in" class="sign-in") Sign In
-    a(href="/" class="home")
-  article
-    p Welcome to Bored Today!
-    p This is the landing page of the site...
-    ul
+  header(id="header")
+    nav
+  article(id="body")
+    h1 Find activities and events in [LOCATION]
+    ul(class="activities")
       each activity in activities.data
-        li
-          h3 #{activity.name}
-          span #{activity.location}
-  footer
+        li(class="activity")
+          a(class="content" href="/activities/#{activity._id}")
+            div(class="photos count3")
+              span(class="photo")
+              span(class="photo")
+              span(class="photo")
+            h3 #{activity.name}
+            span #{activity.location}
+            p #{activity.description}
+  aside(id="context")
+    div
+  footer(id="footer")

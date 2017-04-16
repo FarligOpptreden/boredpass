@@ -1,4 +1,4 @@
-﻿var config = require('../../config.js');
-var db = require('../../handlr/handlr.mongo.basicCRUD.js').get(config.connectionStrings.boredToday, 'activities');
+﻿import config from '../../config';
+import BasicCrud from '../../handlr/BasicCrud';
 
-module.exports = db;
+export default new BasicCrud(config.connectionStrings.boredToday, 'activities');

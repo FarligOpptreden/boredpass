@@ -36,35 +36,263 @@ table {
 /* Standard styling */
 body {
     font-family: 'Raleway', sans-serif;
+    background-color: #E8E8E8;
 }
+
 #header {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 300px;
-    padding: 20px;
+    margin: 0 auto;
+    padding: 20px 10px 0 10px;
+    width: 1260px;
+}
+
+#header > div:first-child {
+    height: 500px;
+    background-color: #25B9C5;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    position: relative;
+    background-image: url(../images/bg-mountains.jpg);
+    background-size: cover;
+    background-position: center center;
+    border-radius: 3px;
+}
+
+#header > div > nav {
+    text-align: right;
+    padding: 10px;
     box-sizing: border-box;
 }
-#header > nav {
-    min-height: 300px;
-    background-color: rgba(0, 0, 0, 0.1);
+
+#header > div > nav > a, #header > div > nav > a:link, #header > div > nav > a:visited {
+    text-decoration: none;
+    color: #FFF;
+    font-weight: 200;
+    font-size: 14px;
+    display: inline-block;
+    padding: 8px;
 }
-#body {
+
+#header #logo {
     position: absolute;
-    top: 0;
-    left: 300px;
-    right: 300px;
+    top: 50%;
+    left: 50%;
+    margin-top: -170px;
+    margin-left: -100px;
+    display: block;
+    background-image: url(../images/boredpass.svg);
+    width: 200px;
+    height: 80px;
+    box-sizing: border-box;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
-#context {
-    position: fixed;
+
+#header > div > .search-wrapper {
+    left: 85px;
+    right: 85px;
+    height: 42px;
+    position: absolute;
+    bottom: 75px;
+    margin-top: -21px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    border: solid 2px rgba(255, 255, 255, 0.8);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+#header > div > .search-wrapper > div {
+    width: 50%;
+    box-sizing: border-box;
+    float: left;
+}
+
+#header > div > .search-wrapper > div > input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 12px;
+    transition: all 0.2s;
+    display: block;
+    box-sizing: border-box;
+}
+
+#search-button {
+    display: block;
+    position: absolute;
     right: 0;
     top: 0;
-    width: 300px;
-    padding: 20px;
-    box-sizing: border-box;
+    height: 42px;
+    width: 42px;
+    margin-right: -50px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    outline: none;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
+    border-radius: 25px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
 }
-#context > div {
-    position: sticky;
-    min-height: 300px;
-    background-color: rgba(0, 0, 0, 0.1);
+
+#search-button:hover, #search-button:focus {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+#search-button:active {
+    transform: scale(0.93);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+#header > div > .search-wrapper input:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#header > div > .search-wrapper input:focus {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+#body {
+    width: 1280px;
+    margin: 0 auto;
+}
+
+::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+input:focus::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+::-moz-placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+input:focus::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+input:focus:-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+:-moz-placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+input:focus:-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+#header #add-activity {
+    color: #FFFFFF;
+    position: absolute;
+    bottom: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+#header #add-activity * {
+    line-height: 2;
+    font-weight: 800;
+}
+
+#header #add-activity span {
+    text-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+#header #add-activity a {
+    display: inline-block;
+    padding: 0 10px;
+    margin: 0 10px;
+    background-color: #F8BD0B;
+    color: #FFF;
+    border: solid 2px rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+}
+
+#header #add-activity a:hover {
+    background-color: #FADF2D;
+}
+
+#header #add-activity a:active {
+    transform: scale(0.95);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+} 
+
+@media all and (max-width: 1310px) {
+    #header, #body {
+        width: auto;
+        margin: 0;
+    }
+
+    #header {
+        padding-top: 10px;
+    }
+
+    #header > div:first-child {
+        height: 400px;
+    }
+
+    #header #logo {
+        margin-top: -150px;
+    }
+}
+
+@media all and (max-width: 660px) {
+    #header #logo {
+        height: 50px;
+        width: 200px;
+        margin-left: -100px;
+        margin-top: -120px;
+    }
+
+    #header > div:first-child {
+        height: 350px;
+    }
+
+    #search-location {
+        position: relative;
+        right: auto;
+        width: 100%;
+    }
+
+    #header > div > .search-wrapper {
+        height: 84px;
+        left: 10px;
+        right: 54px;
+        bottom: 95px;
+    }
+
+    #header > div > .search-wrapper > div {
+        display: block;
+        float: none;
+        width: 100%;
+    }
+
+    #search-button {
+        margin-top: 21px;
+    }
+
+    #header #add-activity {
+        bottom: 10px;
+    }
+
+    #header #add-activity * {
+        font-size: 13px;
+    }
+
+    #header #add-activity a {
+        display: block;
+        width: 40px;
+        margin: 10px auto;
+    }
 }

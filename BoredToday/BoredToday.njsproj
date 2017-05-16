@@ -70,6 +70,8 @@
       <SubType>Content</SubType>
       <DependentUpon>public\css\_default.css</DependentUpon>
     </Content>
+    <Content Include="public\images\bg-mountains.jpg" />
+    <Content Include="public\images\boredpass.svg" />
     <Content Include="public\images\colour-black.svg" />
     <Content Include="public\images\colour-white.svg" />
     <Content Include="public\images\logo.png" />
@@ -94,6 +96,7 @@
     <Folder Include="server\controllers\api\v1\" />
     <Folder Include="server\views\" />
     <Folder Include="server\services\" />
+    <Folder Include="server\views\partials\" />
     <Folder Include="typings\" />
     <Folder Include="typings\globals\" />
     <Folder Include="typings\globals\body-parser\" />

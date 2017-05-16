@@ -6,6 +6,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
+    box-sizing: border-box;
+    line-height: 1;
+    outline: none;
 }
 
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
@@ -42,7 +45,7 @@ body {
 #header {
     margin: 0 auto;
     padding: 20px 10px 0 10px;
-    width: 1260px;
+    width: 1280px;
 }
 
 #header > div:first-child {
@@ -103,7 +106,11 @@ body {
 #header > div > .search-wrapper > div {
     width: 50%;
     box-sizing: border-box;
-    float: left;
+    position: absolute;
+}
+
+#header > div > .search-wrapper > div:last-of-type {
+    left: 50%;
 }
 
 #header > div > .search-wrapper > div > input {
@@ -112,13 +119,16 @@ body {
     border: none;
     outline: none;
     font-size: 16px;
-    padding: 12px;
+    padding: 10px;
     transition: all 0.2s;
     display: block;
     box-sizing: border-box;
+    border-radius: 0;
+    height: 38px;
 }
 
 #search-button {
+    text-align: center;
     display: block;
     position: absolute;
     right: 0;
@@ -133,6 +143,17 @@ body {
     cursor: pointer;
     border-radius: 25px;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+#search-button > span {
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
 }
 
 #search-button:hover, #search-button:focus {
@@ -158,7 +179,7 @@ body {
 }
 
 ::-webkit-input-placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: #F2F2F2;
 }
 
 input:focus::-webkit-input-placeholder {
@@ -166,7 +187,7 @@ input:focus::-webkit-input-placeholder {
 }
 
 ::-moz-placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: #F2F2F2;
 }
 
 input:focus::-moz-placeholder {
@@ -174,7 +195,7 @@ input:focus::-moz-placeholder {
 }
 
 :-ms-input-placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: #F2F2F2;
 }
 
 input:focus:-ms-input-placeholder {
@@ -182,7 +203,7 @@ input:focus:-ms-input-placeholder {
 }
 
 :-moz-placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: #F2F2F2;
 }
 
 input:focus:-moz-placeholder {
@@ -266,7 +287,7 @@ input:focus:-moz-placeholder {
     }
 
     #header > div > .search-wrapper {
-        height: 84px;
+        height: 80px;
         left: 10px;
         right: 54px;
         bottom: 95px;
@@ -274,12 +295,16 @@ input:focus:-moz-placeholder {
 
     #header > div > .search-wrapper > div {
         display: block;
-        float: none;
         width: 100%;
     }
 
+    #header > div > .search-wrapper > div:last-of-type {
+        left: 0;
+        top: 50%;
+    }
+
     #search-button {
-        margin-top: 21px;
+        margin-top: 20px;
     }
 
     #header #add-activity {
@@ -290,9 +315,13 @@ input:focus:-moz-placeholder {
         font-size: 13px;
     }
 
+    #header #add-activity span {
+        font-size: 12px;
+    }
+
     #header #add-activity a {
         display: block;
-        width: 40px;
+        width: 70px;
         margin: 10px auto;
     }
 }

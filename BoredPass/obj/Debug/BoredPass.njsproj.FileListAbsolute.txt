@@ -1,2 +1,0 @@
-D:\Work\Personal\nodejs\BoredPass\BoredPass\obj\Debug\BoredPass.njsprojResolveAssemblyReference.cache
-D:\Work\Personal\nodejs\BoredPass\BoredPass\bin\Microsoft.NodejsTools.WebRole.dll

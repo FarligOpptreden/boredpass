@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "BoredToday", "BoredToday\BoredToday.njsproj", "{E4E2B1F4-C303-4737-A821-8681B1980D15}"
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "BoredPass", "BoredPass\BoredPass.njsproj", "{E4E2B1F4-C303-4737-A821-8681B1980D15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

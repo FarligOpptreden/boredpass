@@ -1,4 +1,6 @@
-﻿/* CSS Reset */
+﻿@import "__variables.less";
+
+/* CSS Reset */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
     margin: 0;
     padding: 0;
@@ -39,7 +41,56 @@ table {
 /* Standard styling */
 body {
     font-family: 'Raleway', sans-serif;
-    background-color: #E8E8E8;
+    background-color: @col-body-bg;
+    color: @col-body-fg;
+}
+
+.wrapper {
+    transition: transform 0.2s;
+    transform-origin: top center;
+}
+
+.mask {
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    transform: scale(0.95);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.overlay-content {
+    opacity: 0;
+    transition: transform 0.2s,opacity 0.2s;
+    transform: translateY(200px);
+    position: fixed;
+    z-index: 2;
+    height: 700px;
+    width: 600px;
+    top: 50%;
+    left: 50%;
+    margin: -350px 0 0 -300px;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+    border-radius: 3px;
+}
+
+.overlay.show, .overlay-content.show {
+    opacity: 1;
+    transform: none;
 }
 
 #header {
@@ -50,8 +101,8 @@ body {
 
 #header > div:first-child {
     height: 500px;
-    background-color: #25B9C5;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    background-color: @col-main;
+    box-shadow: @box-shadow;
     position: relative;
     background-image: url(../images/bg-mountains.jpg);
     background-size: cover;
@@ -100,7 +151,7 @@ body {
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 5px;
     border: solid 2px rgba(255, 255, 255, 0.8);
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: @box-shadow;
 }
 
 #header > div > .search-wrapper > div {
@@ -111,6 +162,7 @@ body {
 
 #header > div > .search-wrapper > div:last-of-type {
     left: 50%;
+    border-left: solid 2px rgba(255, 255, 255, 0.5);
 }
 
 #header > div > .search-wrapper > div > input {
@@ -128,25 +180,28 @@ body {
 }
 
 #search-button {
-    text-align: center;
-    display: block;
     position: absolute;
     right: 0;
     top: 0;
-    height: 42px;
-    width: 42px;
     margin-right: -50px;
+}
+
+.round-button {
+    text-align: center;
+    display: block;
+    height: 38px;
+    width: 38px;
     background-color: rgba(255, 255, 255, 0.7);
     border: none;
     outline: none;
     transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
     cursor: pointer;
     border-radius: 25px;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: @box-shadow;
 }
 
-#search-button > span {
-    font-size: 20px;
+.round-button > span {
+    font-size: 19px;
     height: 20px;
     width: 20px;
     position: absolute;
@@ -156,11 +211,15 @@ body {
     margin-top: -10px;
 }
 
-#search-button:hover, #search-button:focus {
+#search-button > span.search-text {
+    display: none;
+}
+
+.round-button:hover, .round-button:focus {
     background-color: rgba(255, 255, 255, 0.9);
 }
 
-#search-button:active {
+.round-button:active {
     transform: scale(0.93);
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
 }
@@ -231,23 +290,115 @@ input:focus:-moz-placeholder {
     display: inline-block;
     padding: 0 10px;
     margin: 0 10px;
-    background-color: #F8BD0B;
+    background-color: @col-secondary;
     color: #FFF;
     border: solid 2px rgba(255, 255, 255, 0.8);
     text-decoration: none;
     border-radius: 5px;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: @box-shadow;
     transition: all 0.2s;
 }
 
 #header #add-activity a:hover {
-    background-color: #FADF2D;
+    background-color: @col-secondary-lightened;
 }
 
 #header #add-activity a:active {
     transform: scale(0.95);
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
-} 
+}
+
+.field-wrapper {
+    display: block;
+    position: relative;
+    margin: 20px 0;
+    box-shadow: @box-shadow;
+    background-color: #FFFFFF;
+    height: 50px;
+    border-radius: 3px;
+}
+
+.field-wrapper label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    padding: 19px 10px;
+    color: #AAAAAA;
+    transition: all 0.2s;
+    font-weight: 600;
+}
+
+.field-wrapper input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-radius: 0;
+    font-size: 16px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    box-sizing: border-box;
+    padding: 25px 10px 0 10px;
+}
+
+.field-wrapper:hover label, .field-wrapper.focus label {
+    color: @col-main;
+}
+
+.field-wrapper.focus label, .field-wrapper.has-value label {
+    font-size: 11px;
+    padding-top: 7px;
+}
+
+.toggle-wrapper {
+    display: block;
+    position: relative;
+    margin: 20px 0;
+    height: 50px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.toggle-wrapper label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    padding: 19px 10px;
+    transition: all 0.2s;
+    font-weight: 600;
+}
+
+.toggle-wrapper .options {
+    float: right;
+    overflow: hidden;
+    text-align: right;
+    box-sizing: border-box;
+}
+
+.toggle-wrapper .options button {
+    outline: none;
+    border: none;
+    background-color: #FFFFFF;
+    color: @col-main;
+    font-size: 16px;
+    padding: 16px;
+    box-sizing: border-box;
+    display: block;
+    float: left;
+    font-weight: 600;
+    min-width: 100px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.toggle-wrapper .options button.active {
+    background-color: @col-main;
+    color: #FFFFFF;
+    cursor: default;
+}
 
 @media all and (max-width: 1310px) {
     #header, #body {
@@ -268,16 +419,28 @@ input:focus:-moz-placeholder {
     }
 }
 
+@media all and (max-width: 960px) {
+    .overlay-content {
+        width: auto !important;
+        height: auto !important;
+        margin: 0 !important;
+        top: 5px !important;
+        bottom: 5px !important;
+        left: 5px !important;
+        right: 5px !important;
+    }
+}
+
 @media all and (max-width: 660px) {
     #header #logo {
         height: 50px;
         width: 200px;
         margin-left: -100px;
-        margin-top: -120px;
+        margin-top: -135px;
     }
 
     #header > div:first-child {
-        height: 350px;
+        height: 400px;
     }
 
     #search-location {
@@ -289,8 +452,8 @@ input:focus:-moz-placeholder {
     #header > div > .search-wrapper {
         height: 80px;
         left: 10px;
-        right: 54px;
-        bottom: 95px;
+        right: 10px;
+        bottom: 140px;
     }
 
     #header > div > .search-wrapper > div {
@@ -301,10 +464,35 @@ input:focus:-moz-placeholder {
     #header > div > .search-wrapper > div:last-of-type {
         left: 0;
         top: 50%;
+        border-left: none;
+        border-top: solid 1px rgba(255, 255, 255, 0.5);
     }
 
     #search-button {
-        margin-top: 20px;
+        display: block;
+        width: 100%;
+        top: 100%;
+        right: auto;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    #search-button > span {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        margin: 0;
+        width: auto;
+    }
+
+    #search-button > span.search-text {
+        display: inline-block;
+        margin-left: 5px;
+    }
+
+    #search-button:active {
+        transform: scale(0.98);
     }
 
     #header #add-activity {
@@ -323,5 +511,28 @@ input:focus:-moz-placeholder {
         display: block;
         width: 70px;
         margin: 10px auto;
+    }
+
+    .field-wrapper, .toggle-wrapper {
+        margin: 10px 0;
+    }
+
+    .toggle-wrapper {
+        text-align: center;
+        height: auto;
+    }
+
+    .toggle-wrapper label {
+        position: relative;
+        display: block;
+        width: auto;
+    }
+
+    .toggle-wrapper .options {
+        float: none;
+    }
+
+    .toggle-wrapper .options button {
+        width: 50%;
     }
 }

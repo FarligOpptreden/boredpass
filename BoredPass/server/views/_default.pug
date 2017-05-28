@@ -2,6 +2,10 @@
 
 block css
   link(rel='stylesheet', href='/css/_default.min.css')
+  link(rel='stylesheet', href='/css/add_activity.min.css')
+
+block js
+  script(type='text/javascript', src='/js/add_activity.js')
 
 block content
   header(id="header")
@@ -14,8 +18,9 @@ block content
           input(id="search-activity" type="text" placeholder="Find activities or events in")
         div(id="search-location-wrapper")
           input(id="search-location" type="text" placeholder="[LOCATION]")
-        button(id="search-button")
+        button(id="search-button" class='round-button')
           span(class="fa fa-search")
+          span(class="search-text") Search
       div(id="add-activity")
         span Still haven't found what you're looking for?
         a(href="/#add") Add it!

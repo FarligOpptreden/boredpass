@@ -42,7 +42,12 @@
     <Compile Include="handlr\Mongo.js" />
     <Compile Include="handlr\_arrayExtensions.js" />
     <Compile Include="bin\www" />
+    <Compile Include="public\js\shared.js" />
+    <Compile Include="public\js\add_activity.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="server\controllers\api\v1\activities.js" />
+    <Compile Include="server\controllers\html\activity.js" />
     <Compile Include="server\controllers\_default.js" />
     <Compile Include="server\services\activities.js" />
     <Compile Include="server\services\_default.js" />
@@ -53,6 +58,14 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
     <Content Include="package.json" />
+    <Content Include="public\css\add_activity.css" />
+    <Content Include="public\css\add_activity.less">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\css\add_activity.min.css">
+      <SubType>Content</SubType>
+      <DependentUpon>public\css\add_activity.css</DependentUpon>
+    </Content>
     <Content Include="public\css\shared.css">
       <SubType>Content</SubType>
       <DependentUpon>public\css\shared.less</DependentUpon>
@@ -71,12 +84,20 @@
       <SubType>Content</SubType>
       <DependentUpon>public\css\_default.css</DependentUpon>
     </Content>
+    <Content Include="public\css\__variables.less">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="public\images\bg-mountains.jpg" />
     <Content Include="public\images\boredpass.svg" />
+    <Content Include="public\images\overlay-motocross.jpg" />
+    <Content Include="public\images\overlay-kite-surfing.jpg" />
+    <Content Include="public\images\overlay-climbing.jpg" />
     <Content Include="public\images\colour-black.svg" />
     <Content Include="public\images\colour-white.svg" />
     <Content Include="public\images\logo.png" />
+    <Content Include="public\images\overlay-surfing.jpg" />
     <Content Include="README.md" />
+    <Content Include="server\views\partials\add_activity.pug" />
     <Content Include="server\views\_default.pug" />
     <Content Include="typings.json" />
     <Content Include="server\views\layout.jade" />
@@ -95,6 +116,7 @@
     <Folder Include="server\controllers\" />
     <Folder Include="server\controllers\api\" />
     <Folder Include="server\controllers\api\v1\" />
+    <Folder Include="server\controllers\html\" />
     <Folder Include="server\views\" />
     <Folder Include="server\services\" />
     <Folder Include="server\views\partials\" />

@@ -6,5 +6,9 @@
   {
     "outputFile": "public/css/_default.css",
     "inputFile": "public/css/_default.less"
+  },
+  {
+    "outputFile": "public/css/add_activity.css",
+    "inputFile": "public/css/add_activity.less"
   }
 ]

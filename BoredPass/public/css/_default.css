@@ -89,6 +89,17 @@
     padding-right: 10px;
   }
 }
+@media all and (max-width: 1310px) and (min-width: 660px) {
+  .activities > .activity > .content {
+    background-color: #FFFFFF !important;
+    color: #25B9C5 !important;
+  }
+  .activities > .activity:nth-child(4n+2) > .content,
+  .activities > .activity:nth-child(4n+3) > .content {
+    background-color: #25B9C5 !important;
+    color: #FFFFFF !important;
+  }
+}
 @media all and (max-width: 660px) {
   .activities > .activity {
     width: 100% !important;

@@ -83,6 +83,9 @@ span.strong {
   overflow: auto;
   background-color: #e8e8e8;
   padding: 20px 60px;
+  overflow-y: scroll;
+  /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
 }
 .add-activity .step.shift.right1 {
   transform: translateX(100%);

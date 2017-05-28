@@ -17,6 +17,6 @@
         });
     });
     setTimeout(function () {
-        $("#add-activity > a").trigger("click");
+        //$("#add-activity > a").trigger("click");
     }, 1000);
 });

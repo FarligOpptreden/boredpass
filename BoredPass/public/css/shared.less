@@ -378,26 +378,51 @@ input:focus:-moz-placeholder {
     box-sizing: border-box;
 }
 
-.toggle-wrapper .options button {
+button {
     outline: none;
     border: none;
-    background-color: #FFFFFF;
-    color: @col-main;
     font-size: 16px;
     padding: 16px;
     box-sizing: border-box;
-    display: block;
-    float: left;
     font-weight: 600;
-    min-width: 100px;
     cursor: pointer;
     transition: all 0.2s;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.toggle-wrapper .options button {
+    background-color: #FFFFFF;
+    color: @col-main;
+    display: block;
+    float: left;
+    min-width: 100px;
 }
 
 .toggle-wrapper .options button.active {
     background-color: @col-main;
     color: #FFFFFF;
     cursor: default;
+}
+
+.toggle-wrapper .options button.active:active {
+    transform: none;
+}
+
+button.button {
+    outline: none;
+    border: none;
+    background-color: @col-main;
+    color: #FFFFFF;
+    font-size: 16px;
+    padding: 16px;
+    box-sizing: border-box;
+    display: block;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 @media all and (max-width: 1310px) {

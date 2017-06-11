@@ -41,13 +41,14 @@ span.strong {
 .add-activity nav.breadcrumb > a {
   display: inline-block;
   font-size: 18px;
-  padding: 10px;
+  padding: 8px 10px;
   border-radius: 30px;
   height: 40px;
   width: 40px;
+  color: #25B9C5;
   box-sizing: border-box;
-  color: #FFFFFF;
-  background-color: #25B9C5;
+  border: solid 2px #25B9C5;
+  background-color: #FFFFFF;
   text-decoration: none;
   line-height: 1;
   font-weight: 700;
@@ -55,6 +56,11 @@ span.strong {
   left: 50%;
   margin-left: -20px;
   z-index: 1;
+  transition: all 0.3s;
+}
+.add-activity nav.breadcrumb > a.active {
+  background-color: #25B9C5;
+  color: #FFFFFF;
 }
 .add-activity nav.breadcrumb > a:first-of-type {
   left: 60px;
@@ -83,9 +89,16 @@ span.strong {
   overflow: auto;
   background-color: #e8e8e8;
   padding: 20px 60px;
-  overflow-y: scroll;
+  overflow-y: auto;
   /* has to be scroll, not auto */
   -webkit-overflow-scrolling: touch;
+  transition: transform 0.3s;
+}
+.add-activity .step.shift.left1 {
+  transform: translateX(-100%);
+}
+.add-activity .step.shift.left2 {
+  transform: translateX(-200%);
 }
 .add-activity .step.shift.right1 {
   transform: translateX(100%);
@@ -95,6 +108,24 @@ span.strong {
 }
 .add-activity p {
   line-height: 1.5;
+}
+button.done {
+  background-color: #F8BD0B;
+}
+button.next,
+button.prev {
+  width: 100%;
+}
+button.next.half,
+button.done.half {
+  margin-left: 1%;
+}
+button.prev.half {
+  margin-right: 1%;
+}
+button.half {
+  width: 49%;
+  display: inline-block;
 }
 @media all and (max-width: 600px) {
   .add-activity .cover-image {

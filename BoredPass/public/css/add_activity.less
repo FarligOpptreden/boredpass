@@ -49,13 +49,15 @@ span.strong {
 .add-activity nav.breadcrumb > a {
     display: inline-block;
     font-size: 18px;
-    padding: 10px;
+    padding: 8px 10px;
     border-radius: 30px;
     height: 40px;
     width: 40px;
     box-sizing: border-box;
-    color: #FFFFFF;
-    background-color: @col-main;
+    color: @col-main;
+    box-sizing: border-box;
+    border: solid 2px @col-main;
+    background-color: #FFFFFF;
     text-decoration: none;
     line-height: 1;
     font-weight: 700;
@@ -63,6 +65,12 @@ span.strong {
     left: 50%;
     margin-left: -20px;
     z-index: 1;
+    transition: all 0.3s;
+}
+
+.add-activity nav.breadcrumb > a.active {
+    background-color: @col-main;
+    color: #FFFFFF;
 }
 
 .add-activity nav.breadcrumb > a:first-of-type {
@@ -95,8 +103,17 @@ span.strong {
     overflow: auto;
     background-color: @col-body-bg;
     padding: 20px 60px;
-    overflow-y: scroll; /* has to be scroll, not auto */
+    overflow-y: auto; /* has to be scroll, not auto */
     -webkit-overflow-scrolling: touch;
+    transition: transform 0.3s;
+}
+
+.add-activity .step.shift.left1 {
+    transform: translateX(-100%);
+}
+
+.add-activity .step.shift.left2 {
+    transform: translateX(-200%);
 }
 
 .add-activity .step.shift.right1 {
@@ -109,6 +126,27 @@ span.strong {
 
 .add-activity p {
     line-height: 1.5;
+}
+
+button.done {
+    background-color: @col-secondary;
+}
+
+button.next, button.prev {
+    width: 100%;
+}
+
+button.next.half, button.done.half {
+    margin-left: 1%;
+}
+
+button.prev.half {
+    margin-right: 1%;
+}
+
+button.half {
+    width: 49%;
+    display: inline-block;
 }
 
 @media all and (max-width: 600px) {

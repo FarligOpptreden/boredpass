@@ -6,7 +6,7 @@
       span(class='fa fa-close')
   nav(class='breadcrumb')
     span(class='line')
-    a(href='javascript:void(0);') 1
+    a(href='javascript:void(0);' class='active') 1
     a(href='javascript:void(0);') 2
     a(href='javascript:void(0);') 3
   div(class='step')
@@ -28,7 +28,12 @@
       div(class='options')
         button(class='active') Yes
         button No
+    button(class='button next') Next
   div(class='step shift right1')
     p BoredPass thrives on information, so the more you supply us, the better we can serve you and your clients. You deserve to be found, so do us a solid and fill in as much as you can, even if the fields in question aren't mandatory.
+    button(class='button prev half') Previous
+    button(class='button next half') Next
   div(class='step shift right2')
     p Images speak a thousand words, especially good ones. We recommend quality over quantity to ensure your listing leaves people wanting more. Sounds good, doesn't it?
+    button(class='button prev half') Previous
+    button(class='button done half') Done!

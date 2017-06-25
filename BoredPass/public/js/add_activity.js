@@ -34,7 +34,7 @@
                 var amount = $(this)[0].className.replace(/step|shift|left/g, "");
                 amount = parseInt(amount.trim());
                 $(this).removeClass("shift left" + amount);
-                if (direction === "prev" && amount == 1)
+                if (direction === "prev" && amount === 1)
                     return;
                 $(this).addClass("shift left" + (direction === "prev" ? --amount : ++amount));
             });
@@ -42,7 +42,7 @@
                 var amount = $(this)[0].className.replace(/step|shift|right/g, "");
                 amount = parseInt(amount.trim());
                 $(this).removeClass("shift right" + amount);
-                if (direction === "next" && amount == 1)
+                if (direction === "next" && amount === 1)
                     return;
                 $(this).addClass("shift right" + (direction === "next" ? --amount : ++amount));
             });
@@ -52,6 +52,6 @@
         });
     };
     setTimeout(function () {
-        $("#add-activity > a").trigger("click");
+        //$("#add-activity > a").trigger("click");
     }, 500);
 });

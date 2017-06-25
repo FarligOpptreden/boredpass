@@ -1,0 +1,61 @@
+﻿extends layout_content
+
+block css
+  link(rel='stylesheet', href='/css/activity.min.css')
+
+block js
+  script(type='text/javascript', src='/js/activity.js')
+
+block content
+  section(class='banner')
+  section(class='overview')
+    div
+      div(class='logo')
+      label(class='location') address goes here
+      label(class='telephone') +0000 000 0000
+      a(class='email') email@address.com
+      a(class='website') www.address.com
+      div(class='social')
+        a(class='twitter')
+        a(class='facebook')
+        a(class='google')
+        a(class='claimed grey') Claimed
+    div
+      h1 Title goes here
+      p Some content goes here
+      p Another paragraph of content
+      p Last paragraph of content
+      button(class='message') Send a message
+  section(class='facilities')
+    div
+      h1 Our Facilities
+      span(class='facility children') Child Friendly
+      span(class='facility dogs') Dog Friendly
+      span(class='facility wheelchairs') Wheelchair Friendly
+      span(class='facility picnic') Picnic Facilities
+  section(class='photos')
+    div
+      a(class='prev')
+      a(class='photo photo1')
+      a(class='photo photo2')
+      a(class='photo photo3')
+      a(class='photo photo4')
+      a(class='next')
+  section(class='activities')
+    div
+      h1 Our Activities
+      div(class='activity')
+        div(class='photo')
+        h2 Title of activity
+        p Description of activity
+        button(class='read-more') Read More
+      div(class='activity')
+        div(class='photo')
+        h2 Title of activity
+        p Description of activity
+        button(class='read-more') Read More
+      div(class='activity')
+        div(class='photo')
+        h2 Title of activity
+        p Description of activity
+        button(class='read-more') Read More

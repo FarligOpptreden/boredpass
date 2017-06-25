@@ -10,5 +10,9 @@
   {
     "outputFile": "public/css/add_activity.css",
     "inputFile": "public/css/add_activity.less"
+  },
+  {
+    "outputFile": "public/css/boredpass.css",
+    "inputFile": "public/css/boredpass.less"
   }
 ]

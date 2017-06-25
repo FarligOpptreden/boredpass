@@ -1,0 +1,55 @@
+﻿doctype html
+html
+  head
+    title= title
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0")
+    block meta
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Raleway')
+    link(rel='stylesheet', href='/css/boredpass.min.css')
+    block css
+    script(type='text/javascript', src='https://use.fontawesome.com/bd0f643562.js')
+    script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    script(type='text/javascript', src='/js/boredpass.js')
+    block js
+  body
+    header(id="header")
+      nav
+        div
+          a(class="find") Find
+          a(class="add") Add
+          a(class="claim") Claim
+          a(class="sign-in") Sign In
+      nav
+        div
+          a(class="logo")
+          a Lorem Ipsum
+          a Lorem Ipsum
+          a Contact
+    article(id="body")
+      block content
+    footer(id="footer")
+      div
+        nav
+          h1 Bored Pass
+          div
+            a Register
+            a Sign In
+        nav
+          h1
+          div
+            a Add a Listing
+            a Add an Activity
+        nav
+          h1
+          div
+            a Terms & Conditions
+            a FAQ
+        nav
+          h1 Get in touch
+          div
+            a Send a mail
+            div(class="social")
+              a(class="twitter")
+              a(class="facebook")
+              a(class="google")
+      div(class="copyright") Copyright &copy; #{moment().format("YYYY")} BoredPass. All rights reserved.

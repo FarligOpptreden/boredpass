@@ -5,6 +5,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>BoredPass</Name>
     <RootNamespace>BoredToday</RootNamespace>
+    <NameOfLastUsedPublishProfile>Disk</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -57,6 +58,7 @@
       <SubType>Content</SubType>
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
+    <None Include="Disk.pubxml" />
     <Content Include="package.json" />
     <Content Include="public\css\add_activity.css" />
     <Content Include="public\css\add_activity.less">
@@ -65,6 +67,14 @@
     <Content Include="public\css\add_activity.min.css">
       <SubType>Content</SubType>
       <DependentUpon>public\css\add_activity.css</DependentUpon>
+    </Content>
+    <Content Include="public\css\boredpass.css" />
+    <Content Include="public\css\boredpass.less">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\css\boredpass.min.css">
+      <SubType>Content</SubType>
+      <DependentUpon>public\css\boredpass.css</DependentUpon>
     </Content>
     <Content Include="public\css\shared.css">
       <SubType>Content</SubType>
@@ -97,7 +107,9 @@
     <Content Include="public\images\logo.png" />
     <Content Include="public\images\overlay-surfing.jpg" />
     <Content Include="README.md" />
+    <Content Include="server\views\layout_content.jade" />
     <Content Include="server\views\partials\add_activity.pug" />
+    <Content Include="server\views\activity.pug" />
     <Content Include="server\views\_default.pug" />
     <Content Include="typings.json" />
     <Content Include="server\views\layout.jade" />

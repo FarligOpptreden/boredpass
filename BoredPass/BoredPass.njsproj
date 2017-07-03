@@ -76,6 +76,14 @@
       <SubType>Content</SubType>
       <DependentUpon>public\css\boredpass.css</DependentUpon>
     </Content>
+    <Content Include="public\css\listing.css" />
+    <Content Include="public\css\listing.less">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\css\listing.min.css">
+      <SubType>Content</SubType>
+      <DependentUpon>public\css\listing.css</DependentUpon>
+    </Content>
     <Content Include="public\css\shared.css">
       <SubType>Content</SubType>
       <DependentUpon>public\css\shared.less</DependentUpon>

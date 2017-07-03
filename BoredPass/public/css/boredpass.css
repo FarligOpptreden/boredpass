@@ -128,7 +128,6 @@ table {
 /* Shared Styling */
 body {
   font-family: 'Raleway', sans-serif;
-  background-color: #e8e8e8;
   color: #555555;
 }
 #header > nav:first-of-type {
@@ -172,7 +171,6 @@ body {
 #body {
   border-top: solid 1px silver;
   border-bottom: solid 1px silver;
-  padding: 50px;
 }
 #footer {
   background-color: #444444;

@@ -14,5 +14,9 @@
   {
     "outputFile": "public/css/boredpass.css",
     "inputFile": "public/css/boredpass.less"
+  },
+  {
+    "outputFile": "public/css/listing.css",
+    "inputFile": "public/css/listing.less"
   }
 ]

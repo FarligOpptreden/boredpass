@@ -78,7 +78,7 @@ span.strong {
   left: 70px;
   right: 70px;
   height: 1px;
-  background-color: #e8e8e8;
+  background-color: #f5f5f5;
 }
 .add-activity .step {
   position: absolute;
@@ -87,7 +87,7 @@ span.strong {
   right: 0;
   bottom: 0;
   overflow: auto;
-  background-color: #e8e8e8;
+  background-color: #f5f5f5;
   padding: 20px 60px;
   overflow-y: auto;
   /* has to be scroll, not auto */

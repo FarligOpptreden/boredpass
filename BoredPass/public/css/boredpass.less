@@ -49,6 +49,20 @@ body {
 
 #header > nav:first-of-type {
     background-color: @col-dark;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    transition: all 0.2s;
+}
+
+#header > nav:first-of-type.float {
+    box-shadow: 0 3px 3px rgba(50, 50, 50, 0.5);
+}
+
+#header > nav:last-of-type {
+    margin-top: 46px;
 }
 
 #header > nav > div {
@@ -142,11 +156,16 @@ body {
 }
 
 #footer > div:first-of-type > nav .social > a {
-    background-color: rgba(255,255,255,0.2);
-    height: 30px;
-    width: 30px;
+    background-color: @col-dark-fg;
+    color: @col-dark;
+    font-size: 20px;
+    padding: 10px 0;
+    text-align: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
     display: inline-block;
-    margin: 10px 20px 0 0;
+    margin: 10px 10px 0 0;
 }
 
 #footer .copyright {

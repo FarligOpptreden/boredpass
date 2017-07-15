@@ -1,4 +1,26 @@
-﻿section.banner {
+﻿.button {
+  text-transform: uppercase;
+  padding: 10px 30px;
+  color: #25B9C5;
+  border: solid 1px #25B9C5;
+  border-radius: 30px;
+  background-color: transparent;
+  font-size: 16px;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  outline: none;
+}
+.button.inverse {
+  color: #f5f5f5;
+  border-color: #f5f5f5;
+}
+.button.grey {
+  color: #444444;
+  border-color: #444444;
+}
+section.banner {
   height: 260px;
   background-color: #25B9C5;
 }
@@ -18,6 +40,7 @@
 .listing-section.overview > div:first-of-type {
   flex: 0 0 260px;
   padding-bottom: 10px;
+  max-width: 260px;
 }
 .listing-section.overview > div:first-of-type .logo {
   position: absolute;
@@ -33,13 +56,46 @@
   line-height: 1;
   font-size: 14px;
   padding: 10px 0;
+  text-decoration: none;
+  color: #555555;
+  position: relative;
+}
+.listing-section.overview > div:first-of-type > a .fa {
+  position: absolute;
+  left: 0;
+  top: 12px;
+  color: #25B9C5;
+  font-size: 18px;
+  text-align: center;
+  width: 20px;
+}
+.listing-section.overview > div:first-of-type > a .fa + span {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 25px;
+  line-height: 1.5;
+  transition: all 0.2s;
+}
+.listing-section.overview > div:first-of-type > a:hover .fa + span {
+  color: #25B9C5;
 }
 .listing-section.overview > div:first-of-type .location {
   margin-top: 140px;
 }
+.listing-section.overview > div:first-of-type .location .fa + span {
+  white-space: normal;
+  overflow: visible;
+}
 .listing-section.overview > div:first-of-type .website {
   color: #25B9C5;
   font-weight: 600;
+  padding-left: 0;
+  transition: all 0.2s;
+}
+.listing-section.overview > div:first-of-type .website:hover {
+  color: #37DBE7;
 }
 .listing-section.overview > div:first-of-type > .social {
   text-align: center;
@@ -52,6 +108,20 @@
   background-color: #DDDDDD;
   border-radius: 18px;
   margin-right: 12px;
+  color: #f5f5f5;
+  font-size: 17px;
+  padding: 8px 0;
+  text-align: center;
+  text-decoration: none;
+}
+.listing-section.overview > div:first-of-type > .social > a:link,
+.listing-section.overview > div:first-of-type > .social > a:visited {
+  background-color: #25B9C5;
+  transition: all 0.2s;
+}
+.listing-section.overview > div:first-of-type > .social > a:link:hover,
+.listing-section.overview > div:first-of-type > .social > a:visited:hover {
+  background-color: #37DBE7;
 }
 .listing-section.overview > div:first-of-type > .social > a:last-of-type {
   margin-right: 0;
@@ -66,18 +136,12 @@
 .listing-section.overview > div:nth-child(2) > p {
   padding: 0 0 20px 0;
   font-size: 15px;
+  line-height: 1.5;
 }
-.listing-section.overview > div:nth-child(2) > button {
-  text-transform: uppercase;
-  padding: 10px 30px;
-  color: #25B9C5;
-  border: solid 2px #25B9C5;
-  border-radius: 30px;
-  background-color: transparent;
+.listing-section.overview > div:nth-child(2) > .button {
   position: absolute;
   bottom: 0;
   right: 0;
-  font-size: 16px;
 }
 .listing-section.overview > div:last-of-type {
   border-top: solid 1px #DDDDDD;
@@ -88,27 +152,60 @@
   text-transform: uppercase;
   color: #25B9C5;
   font-weight: 600;
-  padding: 15px 0;
+  padding: 16px 0;
   display: inline-block;
   width: 260px;
   float: left;
   position: relative;
+  font-size: 14px;
 }
 .listing-section.overview > div:last-of-type .rating .stars {
-  background-color: #f5f5f5;
-  height: 40px;
-  width: 100px;
+  height: 30px;
+  width: 150px;
   display: inline-block;
   position: absolute;
   top: 0;
+  right: 0;
+  margin: 8px 0;
+  overflow: auto;
+}
+.listing-section.overview > div:last-of-type .rating .stars .fa-star {
+  display: block;
+  float: left;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  font-size: 20px;
+  padding: 5px 0;
+  border-radius: 15px;
+  color: #DDDDDD;
+}
+.listing-section.overview > div:last-of-type .rating .stars .fa-star.color {
+  color: #25B9C5;
 }
 .listing-section.overview > div:last-of-type .claimed {
   background-color: #25B9C5;
-  padding: 15px;
+  padding: 15px 15px 15px 35px;
   margin-left: 50px;
   color: #FFFFFF;
   text-transform: uppercase;
   float: left;
+  overflow: auto;
+  position: relative;
+}
+.listing-section.overview > div:last-of-type .claimed > span {
+  display: inline-block;
+  float: left;
+}
+.listing-section.overview > div:last-of-type .claimed > span:not(.fa) {
+  font-weight: 600;
+}
+.listing-section.overview > div:last-of-type .claimed > span.fa {
+  position: absolute;
+  font-size: 22px;
+  left: 10px;
+  top: 50%;
+  margin-top: -14px;
 }
 .listing-section.overview > div:last-of-type .add,
 .listing-section.overview > div:last-of-type .message,
@@ -140,6 +237,195 @@
   margin: 0 auto;
   padding: 50px 0;
 }
+.listing-section.facilities .facility {
+  margin-top: 20px;
+  display: block;
+  width: 25%;
+  float: left;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+.listing-section.facilities .facility > .icon {
+  display: block;
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
+  flex: 0 0 60px;
+  background-color: #25B9C5;
+}
+.listing-section.facilities .facility > span:last-of-type {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #25B9C5;
+  text-transform: uppercase;
+  padding: 0 20px 0 10px;
+  justify-content: center;
+}
 .listing-section.photos {
   min-height: 200px;
+}
+.listing-section.photos > div {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 102%;
+  margin: 0 -1%;
+  margin-top: 50px;
+}
+.listing-section.photos > div > .photo {
+  display: inline-block;
+  margin: 0;
+  height: 0;
+  width: 20%;
+  padding-bottom: 20%;
+  transition: all 0.2s;
+  position: relative;
+}
+.listing-section.photos > div > .photo a {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  background-color: #DDDDDD;
+}
+.listing-section.photos > a.prev,
+.listing-section.photos > a.next {
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  left: -50px;
+  width: 40px;
+  text-align: center;
+  font-size: 50px;
+  color: #DDDDDD;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.listing-section.photos > a:hover {
+  color: #25B9C5;
+}
+.listing-section.photos > a.next {
+  left: auto;
+  right: -50px;
+}
+.listing-section.photos > a.hidden {
+  opacity: 0;
+  cursor: default;
+}
+.listing-section.photos > a.prev.hidden {
+  left: -100px;
+}
+.listing-section.photos > a.next.hidden {
+  right: -100px;
+}
+.listing-section.activities > div > div {
+  margin: 0 -5px;
+}
+.listing-section.activities .activity {
+  display: inline-block;
+  width: 32.6%;
+  background-color: #25B9C5;
+  color: #f5f5f5;
+  margin-bottom: 1.1%;
+}
+.listing-section.activities .activity:nth-child(3n+2) {
+  margin: 0 1.1%;
+}
+.listing-section.activities .activity .photo {
+  height: 0;
+  width: 100%;
+  padding-bottom: 100%;
+  background-color: #DDDDDD;
+}
+.listing-section.activities .activity h2 {
+  padding: 10px;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.listing-section.activities .activity p {
+  line-height: 1.5;
+  padding: 0 10px 10px 10px;
+  font-size: 15px;
+}
+.listing-section.activities .activity .read-more {
+  margin: 10px;
+  float: right;
+}
+.listing-section.events {
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.listing-section.events div {
+  flex: 1;
+}
+.listing-section.events .calendar {
+  background-color: #25B9C5;
+}
+.listing-section.events .agenda {
+  background-color: #444444;
+}
+.listing-section.events .agenda > div {
+  padding: 50px 0 50px 50px;
+  color: #f5f5f5;
+}
+.listing-section.events .agenda > div > h1 {
+  overflow: auto;
+  font-weight: 100;
+  margin-left: 25px;
+}
+.listing-section.events .agenda > div > h1 > span {
+  float: left;
+}
+.listing-section.events .agenda > div > h1 .day {
+  font-size: 80px;
+}
+.listing-section.events .agenda > div > h1 .month {
+  font-size: 20px;
+  margin: 18px 0 0 5px;
+}
+.listing-section.events .agenda .activities > li {
+  margin: 20px 0 0 0;
+  overflow: visible;
+  line-height: 1.5;
+}
+.listing-section.events .agenda .activities > li > span {
+  display: inline-block;
+  font-size: 16px;
+  text-align: center;
+  float: left;
+  margin-right: 10px;
+}
+.listing-section.events .agenda .activities > li > span + h2 {
+  display: block;
+  font-size: 18px;
+}
+.listing-section.events .agenda .activities > li > ul {
+  margin-left: 30px;
+  list-style-type: none;
+}
+.listing-section.events .agenda .activities > li > ul > li {
+  text-indent: -5px;
+  line-height: 1.5;
+  font-size: 14px;
+}
+.listing-section.events .agenda .activities > li > ul > li:before {
+  text-indent: -5px;
+  content: "- ";
+}
+.listing-section.lower {
+  display: block;
+  padding: 50px 0;
+  text-align: right;
 }

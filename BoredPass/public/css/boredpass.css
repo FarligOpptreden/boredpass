@@ -132,6 +132,18 @@ body {
 }
 #header > nav:first-of-type {
   background-color: #444444;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  transition: all 0.2s;
+}
+#header > nav:first-of-type.float {
+  box-shadow: 0 3px 3px rgba(50, 50, 50, 0.5);
+}
+#header > nav:last-of-type {
+  margin-top: 46px;
 }
 #header > nav > div {
   width: 1280px;
@@ -211,11 +223,16 @@ body {
   padding-left: 10px;
 }
 #footer > div:first-of-type > nav .social > a {
-  background-color: rgba(255, 255, 255, 0.2);
-  height: 30px;
-  width: 30px;
+  background-color: #e8e8e8;
+  color: #444444;
+  font-size: 20px;
+  padding: 10px 0;
+  text-align: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
   display: inline-block;
-  margin: 10px 20px 0 0;
+  margin: 10px 10px 0 0;
 }
 #footer .copyright {
   background-color: #25B9C5;

@@ -621,6 +621,8 @@ section.banner {
 
     .listing-section.overview > div:nth-child(2) {
         padding: 20px 0 50px 0;
+        margin-top: 10px;
+        border-top: solid 1px @col-grey;
     }
 
     .listing-section.facilities .facility {
@@ -703,11 +705,62 @@ section.banner {
     .listing-section.lower {
         text-align: center;
     }
+
+    .listing-section.overview > div:last-of-type > .message {
+        right: 50px;
+    }
+
+    .listing-section.overview > div:last-of-type > .add {
+        right: 100px;
+    }
+
+    .listing-section.overview > div:nth-child(2) > .button {
+        right: 145px;
+    }
 }
 
 @media only screen and (max-width: 400px) {
     .listing-section.photos > div > .photo {
         width: 100%;
         padding-bottom: 100%;
+    }
+
+    .listing-section.overview > div:last-of-type .rating {
+        padding: 0;
+    }
+
+    .listing-section.overview > div:last-of-type .rating > label {
+        display: none;
+    }
+
+    .listing-section.overview > div:last-of-type .rating .stars {
+        position: relative;
+    }
+
+    .listing-section.overview > div:nth-child(2) {
+        padding-bottom: 90px;
+    }
+
+    .listing-section.overview > div:last-of-type > a {
+        left: 50%;
+    }
+
+    .listing-section.overview > div:last-of-type > .add {
+        margin-left: -76px;
+    }
+
+    .listing-section.overview > div:last-of-type > .message {
+        margin-left: -17px;
+    }
+
+    .listing-section.overview > div:last-of-type > .share {
+        margin-left: 42px;
+    }
+
+    .listing-section.overview > div:nth-child(2) > .button {
+        right: auto;
+        left: 50%;
+        margin-left: -77px;
+        bottom: 44px;
     }
 }

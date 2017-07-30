@@ -274,6 +274,7 @@ body {
   }
   #footer > div:first-of-type {
     padding: 0;
+    text-align: center;
   }
   #footer > div:first-of-type > nav {
     width: 100%;

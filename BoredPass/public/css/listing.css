@@ -191,10 +191,16 @@ section.banner .provider .logo + span {
   margin-bottom: 10px;
   flex: 1;
 }
-.listing-section.overview > div:nth-child(2) > p {
+.listing-section.overview > div:nth-child(2) > p,
+.listing-section.overview > div:nth-child(2) > h2 {
   padding: 0 0 20px 0;
   font-size: 15px;
   line-height: 1.5;
+}
+.listing-section.overview > div:nth-child(2) > h2 {
+  color: #25B9C5;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 .listing-section.overview > div:nth-child(2) > .button {
   position: absolute;
@@ -433,6 +439,8 @@ section.banner .provider .logo + span {
   max-width: 100%;
   display: flex;
   flex-direction: row;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .listing-section.events div {
   flex: 1;

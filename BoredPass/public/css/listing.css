@@ -1,4 +1,8 @@
-﻿.button {
+﻿.space-fixer {
+  height: 1px;
+  width: 100%;
+}
+.button {
   text-transform: uppercase;
   padding: 10px 30px;
   color: #25B9C5;
@@ -24,6 +28,36 @@ section.banner {
   height: 260px;
   background-color: #25B9C5;
 }
+section.banner > div {
+  max-width: 1024px;
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+section.banner .provider {
+  font-size: 26px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+section.banner .provider .logo {
+  flex: 0 0 80px;
+  height: 80px;
+  width: 80px;
+  background-color: #f5f5f5;
+  border-radius: 40px;
+  display: inline-block;
+}
+section.banner .provider .logo + span {
+  flex: 1;
+  padding-left: 10px;
+}
 .listing-section {
   max-width: none;
   margin: 0 auto;
@@ -45,6 +79,7 @@ section.banner {
 .listing-section.overview {
   max-width: 1024px;
   padding-top: 0;
+  padding-bottom: 0;
 }
 .listing-section.overview:not(.activity) {
   padding-bottom: 50px;
@@ -54,6 +89,10 @@ section.banner {
   padding-bottom: 10px;
   max-width: 260px;
   position: relative;
+}
+.listing-section.overview.activity > div:first-of-type {
+  flex: 0 0 340px;
+  max-width: 340px;
 }
 .listing-section.overview > div:first-of-type .logo {
   position: absolute;
@@ -66,7 +105,7 @@ section.banner {
 }
 .listing-section.overview.activity > div:first-of-type .photo {
   min-height: 260px;
-  width: 260px;
+  width: 100%;
   background-color: #333;
   margin-top: 50px;
 }
@@ -464,12 +503,37 @@ section.banner {
 .listing-section.find-more > div > a {
   float: right;
 }
+.listing-section.prices > div .price {
+  display: inline-block;
+  width: 25%;
+  border: solid 2px #FFFFFF;
+}
+.listing-section.prices > div .price > * {
+  display: block;
+  padding: 20px 10px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.listing-section.prices > div .price > label {
+  background-color: #25B9C5;
+  color: #FFFFFF;
+}
+.listing-section.prices > div .price > span {
+  background-color: #f5f5f5;
+  color: #25B9C5;
+  font-weight: 600;
+}
 @media only screen and (max-width: 1160px) {
   .listing-section.photos {
     max-width: 912px;
   }
 }
 @media only screen and (max-width: 1064px) {
+  section.banner > div {
+    margin: 0 20px;
+  }
   .listing-section {
     max-width: 100%;
     width: 100%;
@@ -480,6 +544,9 @@ section.banner {
     padding: 0 20px;
   }
   .listing-section.overview:not(.activity) {
+    padding-bottom: 20px;
+  }
+  .listing-section.overview:not(.activity, .photos) {
     padding-bottom: 20px;
   }
   .listing-section:not(.overview) > div {
@@ -511,13 +578,6 @@ section.banner {
   .listing-section.photos > a.prev.hidden {
     left: -50px;
   }
-  .listing-section.photos > a.prev,
-  .listing-section.photos > a.next {
-    top: 10px;
-  }
-  .listing-section.photos > div {
-    margin: 30px 0;
-  }
   .listing-section.events {
     margin: 0;
     padding: 0;
@@ -546,22 +606,32 @@ section.banner {
   }
 }
 @media only screen and (max-width: 768px) {
+  section.banner > div {
+    height: 130px;
+  }
   .listing-section.overview {
     display: block;
   }
   .listing-section.overview > div:first-of-type {
-    flex: none;
-    max-width: 100%;
+    flex: none !important;
+    max-width: 100% !important;
     padding-top: 1px;
   }
   .listing-section.overview > div:first-of-type .logo {
     left: 50%;
     margin-left: -130px;
   }
+  .listing-section.overview.activity > div:first-of-type .photo {
+    width: auto;
+    margin-top: -130px;
+  }
   .listing-section.overview > div:nth-child(2) {
     padding: 20px 0 50px 0;
     margin-top: 10px;
     border-top: solid 1px #DDDDDD;
+  }
+  .listing-section.overview.activity > div:nth-child(2) {
+    padding: 20px 0 0 0;
   }
   .listing-section.activities-overview .activity,
   .listing-section.facilities .facility {
@@ -588,10 +658,16 @@ section.banner {
     width: 100px;
     margin: 10px auto 0 auto;
   }
+  .listing-section.prices > div .price {
+    width: 50%;
+  }
 }
 @media only screen and (max-width: 670px) {
   .listing-section.overview > div:nth-child(2) > .button {
     right: 175px;
+  }
+  .listing-section.overview.activity > div:nth-child(2) {
+    padding: 20px 0 30px 0;
   }
   .listing-section.overview > div:last-of-type > a {
     top: -57px;
@@ -604,6 +680,11 @@ section.banner {
   .listing-section.photos > div > .photo {
     width: 25%;
     padding-bottom: 25%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  section.banner > div {
+    margin-top: 30px;
   }
 }
 @media only screen and (max-width: 550px) {
@@ -649,6 +730,9 @@ section.banner {
   .listing-section.overview > div:nth-child(2) > .button {
     right: 145px;
   }
+  .listing-section.prices > div .price {
+    width: 100%;
+  }
 }
 @media only screen and (max-width: 400px) {
   .listing-section.photos > div > .photo {
@@ -664,7 +748,7 @@ section.banner {
   .listing-section.overview > div:last-of-type .rating .stars {
     position: relative;
   }
-  .listing-section.overview > div:nth-child(2) {
+  .listing-section.overview:not(.activity) > div:nth-child(2) {
     padding-bottom: 90px;
   }
   .listing-section.overview > div:last-of-type > a {

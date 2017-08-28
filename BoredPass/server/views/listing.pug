@@ -50,7 +50,25 @@ block content
       a(class='add')
       a(class='message')
       a(class='share')
-  section(class='listing-section facilities')
+  section(class='listing-section activities-overview blue')
+    div
+      h1 Activities Offered
+      div(class='activity')
+        span(class='icon mountain-biking')
+        span Mountain Biking
+      div(class='activity')
+        span(class='icon swimming')
+        span Swimming
+      div(class='activity')
+        span(class='icon kayaking')
+        span Kayaking
+      div(class='activity')
+        span(class='icon surfing')
+        span Surfing
+      div(class='activity')
+        span(class='icon sup')
+        span Standup Paddle Boarding
+  section(class='listing-section facilities grey')
     div
       h1 Our Facilities
       div(class='facility')
@@ -68,7 +86,7 @@ block content
       span(class='facility')
         span(class='icon playground')
         span Playground Facilities
-  section(class='listing-section photos')
+  section(class='listing-section photos white')
     a(class='prev hidden fa fa-angle-left', href='prev-photo')
     div(data-current-scroll='0')
       div(class='photo')
@@ -86,7 +104,7 @@ block content
       div(class='photo')
         a(class='photo7')
     a(class='next fa fa-angle-right', href='next-photo')
-  section(class='listing-section activities')
+  section(class='listing-section activities grey')
     div
       h1 Our Activities
       div
@@ -141,5 +159,6 @@ block content
               li 6:30pm - 8:30/9:00pm
               li 2-2.5hr Group Trips (non-private)
         
-  section(class='listing-section lower')
-    a(class='report button grey', href='/report-listing') Report Listing
+  section(class='listing-section lower white')
+    div
+      a(class='report button grey', href='/report-listing') Report Listing

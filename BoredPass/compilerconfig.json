@@ -1,22 +1,26 @@
 ﻿[
   {
-    "outputFile": "public/css/shared.css",
-    "inputFile": "public/css/shared.less"
+    "inputFile": "server/less/shared.less",
+    "outputFile": "public/css/shared.css"
   },
   {
-    "outputFile": "public/css/_default.css",
-    "inputFile": "public/css/_default.less"
+    "inputFile": "server/less/_default.less",
+    "outputFile": "public/css/_default.css"
   },
   {
-    "outputFile": "public/css/add_activity.css",
-    "inputFile": "public/css/add_activity.less"
+    "inputFile": "server/less/add_activity.less",
+    "outputFile": "public/css/add_activity.css"
   },
   {
-    "outputFile": "public/css/boredpass.css",
-    "inputFile": "public/css/boredpass.less"
+    "inputFile": "server/less/boredpass.less",
+    "outputFile": "public/css/boredpass.css"
   },
   {
-    "outputFile": "public/css/listing.css",
-    "inputFile": "public/css/listing.less"
+    "inputFile": "server/less/listing.less",
+    "outputFile": "public/css/listing.css"
+  },
+  {
+    "inputFile": "server/less/add_activity.less",
+    "outputFile": "public/css/add_activity.css"
   }
 ]

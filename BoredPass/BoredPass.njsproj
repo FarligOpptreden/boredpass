@@ -64,7 +64,17 @@
     <None Include="Disk.pubxml" />
     <Content Include="package.json" />
     <Content Include="public\css\add_activity.css" />
-    <Content Include="public\css\add_activity.less">
+    <Content Include="public\css\shared.css" />
+    <Content Include="public\css\shared.min.css">
+      <SubType>Content</SubType>
+      <DependentUpon>public\css\shared.css</DependentUpon>
+    </Content>
+    <Content Include="public\css\_default.css" />
+    <Content Include="public\css\_default.min.css">
+      <SubType>Content</SubType>
+      <DependentUpon>public\css\_default.css</DependentUpon>
+    </Content>
+    <Content Include="server\less\add_activity.less">
       <SubType>Code</SubType>
     </Content>
     <Content Include="public\css\add_activity.min.css">
@@ -72,7 +82,7 @@
       <DependentUpon>public\css\add_activity.css</DependentUpon>
     </Content>
     <Content Include="public\css\boredpass.css" />
-    <Content Include="public\css\boredpass.less">
+    <Content Include="server\less\boredpass.less">
       <SubType>Code</SubType>
     </Content>
     <Content Include="public\css\boredpass.min.css">
@@ -80,32 +90,16 @@
       <DependentUpon>public\css\boredpass.css</DependentUpon>
     </Content>
     <Content Include="public\css\listing.css" />
-    <Content Include="public\css\listing.less">
+    <Content Include="server\less\listing.less">
       <SubType>Code</SubType>
     </Content>
     <Content Include="public\css\listing.min.css">
       <SubType>Content</SubType>
       <DependentUpon>public\css\listing.css</DependentUpon>
     </Content>
-    <Content Include="public\css\shared.css">
-      <SubType>Content</SubType>
-      <DependentUpon>public\css\shared.less</DependentUpon>
-    </Content>
-    <Content Include="public\css\shared.less" />
-    <Content Include="public\css\shared.min.css">
-      <SubType>Content</SubType>
-      <DependentUpon>public\css\shared.css</DependentUpon>
-    </Content>
-    <Content Include="public\css\_default.css">
-      <SubType>Content</SubType>
-      <DependentUpon>public\css\_default.less</DependentUpon>
-    </Content>
-    <Content Include="public\css\_default.less" />
-    <Content Include="public\css\_default.min.css">
-      <SubType>Content</SubType>
-      <DependentUpon>public\css\_default.css</DependentUpon>
-    </Content>
-    <Content Include="public\css\__variables.less">
+    <Content Include="server\less\shared.less" />
+    <Content Include="server\less\_default.less" />
+    <Content Include="server\less\__variables.less">
       <SubType>Code</SubType>
     </Content>
     <Content Include="public\images\bg-mountains.jpg" />
@@ -119,6 +113,7 @@
     <Content Include="public\images\overlay-surfing.jpg" />
     <Content Include="README.md" />
     <Content Include="server\views\layout_content.jade" />
+    <Content Include="server\views\activity.pug" />
     <Content Include="server\views\partials\add_activity.pug" />
     <Content Include="server\views\listing.pug" />
     <Content Include="server\views\_default.pug" />
@@ -140,6 +135,7 @@
     <Folder Include="server\controllers\api\" />
     <Folder Include="server\controllers\api\v1\" />
     <Folder Include="server\controllers\html\" />
+    <Folder Include="server\less\" />
     <Folder Include="server\views\" />
     <Folder Include="server\services\" />
     <Folder Include="server\views\partials\" />

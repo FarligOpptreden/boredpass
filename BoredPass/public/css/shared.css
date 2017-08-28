@@ -185,7 +185,7 @@ body {
   background-color: #25B9C5;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
   position: relative;
-  background-image: url(../images/bg-mountains.jpg);
+  background-image: url(../../server/images/bg-mountains.jpg);
   background-size: cover;
   background-position: center center;
   border-radius: 3px;
@@ -212,7 +212,7 @@ body {
   margin-top: -170px;
   margin-left: -100px;
   display: block;
-  background-image: url(../images/boredpass.svg);
+  background-image: url(../../server/images/boredpass.svg);
   width: 200px;
   height: 80px;
   box-sizing: border-box;

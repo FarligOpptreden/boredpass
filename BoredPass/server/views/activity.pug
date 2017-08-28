@@ -1,0 +1,109 @@
+﻿extends layout_content
+
+block css
+  link(rel='stylesheet', href='/css/listing.min.css')
+
+block js
+  script(type='text/javascript', src='/js/listing.js')
+
+block content
+  section(class='banner')
+  section(class='listing-section overview activity white')
+    div
+      div(class='photo')
+      a(class='location', target='_blank', href='https://google.com/maps/place/4290+Ashley+River+Rd,+Charleston,+South+Carolina,+29414')
+        span(class='fa fa-map-marker')
+        span 4290 Ashley River Rd, Charleston, South Carolina, 29414
+    div
+      h1 Folley Beach Salt Marsh Kayaking
+      p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis et ligula at risus efficitur dapibus id in dui. Phasellus eu porta purus. Etiam a aliquet mi, at ultricies mauris. Morbi tincidunt sit amet mauris eget mollis. Morbi tortor nulla, viverra eu porttitor a, ultricies et sapien. Fusce sit amet semper velit, euismod vulputate nibh. Nam porta pretium porta. Mauris eleifend interdum erat, eget ornare dolor sollicitudin eu. Aenean ornare nulla id vehicula gravida. In non sodales lacus, in imperdiet erat. Vivamus dignissim nunc nunc, et lobortis massa aliquet sed.
+      p Nam venenatis, arcu et suscipit consequat, dui ex suscipit dui, at cursus libero enim ut dolor. Sed enim libero, sodales a fringilla in, sollicitudin in est. In vel sagittis orci. Sed fermentum sit amet dui ut egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec id pharetra libero, quis consectetur tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque purus risus, auctor ut placerat in, vestibulum at arcu. Sed id turpis felis. Aenean malesuada leo vitae massa volutpat sagittis.
+      p Mauris sodales nisl nec consequat luctus. Curabitur condimentum, odio et pretium ornare, orci ligula imperdiet ligula, ac porta velit elit sit amet dolor. Phasellus maximus urna quis ultrices lacinia. Aliquam enim nulla, semper sit amet pharetra a, iaculis sodales nulla. Quisque dapibus enim eu vulputate pharetra. Integer sit amet dui sem. In volutpat enim lorem, nec ullamcorper purus faucibus at. Vestibulum consequat justo dolor, id vestibulum dui finibus vitae. In sodales blandit accumsan. Aliquam ullamcorper nulla risus, sed molestie dui imperdiet id. Nulla facilisi.
+      h2 Private guided tour
+      p Vestibulum et risus lorem. Suspendisse orci nisl, semper eget nisl nec, volutpat vestibulum arcu. Nullam sagittis metus nisi, quis bibendum augue porta tempus. Etiam eget tortor nec nisi pretium dapibus nec quis lorem. Vestibulum nisi purus, finibus ac velit feugiat, accumsan volutpat augue. Pellentesque sed orci nec diam elementum auctor sed et odio. Suspendisse potenti. Maecenas vel fringilla nibh.
+      p Cras ut suscipit erat, eget lacinia nunc. In sodales erat ac arcu tempor laoreet. Nullam sed porttitor est. In dignissim tristique neque, ut aliquam massa iaculis at. Aenean feugiat eleifend lorem, vel consequat massa ultrices sit amet. Proin lacinia, mauris nec tempus commodo, ligula velit euismod risus, a condimentum massa erat viverra risus. Quisque blandit mauris sit amet nisi tincidunt accumsan. Quisque a semper elit. Sed vulputate pretium dui, sit amet dictum felis finibus at.
+    div
+      span(class='rating')
+        label Rating Type 
+        span(class='stars')
+          span(class='fa fa-star color')
+          span(class='fa fa-star color')
+          span(class='fa fa-star color')
+          span(class='fa fa-star color')
+          span(class='fa fa-star')
+      a(class='add')
+      a(class='message')
+      a(class='share')
+  section(class='listing-section photos white')
+    a(class='prev hidden fa fa-angle-left', href='prev-photo')
+    div(data-current-scroll='0')
+      div(class='photo')
+        a(class='photo1')
+      div(class='photo')
+        a(class='photo2')
+      div(class='photo')
+        a(class='photo3')
+      div(class='photo')
+        a(class='photo4')
+      div(class='photo')
+        a(class='photo5')
+      div(class='photo')
+        a(class='photo6')
+      div(class='photo')
+        a(class='photo7')
+    a(class='next fa fa-angle-right', href='next-photo')
+  section(class='listing-section activities-overview blue')
+    div
+      h1 Activities Offered
+      div(class='activity')
+        span(class='icon mountain-biking')
+        span Mountain Biking
+      div(class='activity')
+        span(class='icon swimming')
+        span Swimming
+      div(class='activity')
+        span(class='icon kayaking')
+        span Kayaking
+      div(class='activity')
+        span(class='icon surfing')
+        span Surfing
+      div(class='activity')
+        span(class='icon sup')
+        span Standup Paddle Boarding
+  section(class='listing-section facilities grey')
+    div
+      h1 Our Facilities
+      div(class='facility')
+        span(class='icon children')
+        span Child Friendly
+      span(class='facility')
+        span(class='icon dogs')
+        span Dog Friendly
+      span(class='facility')
+        span(class='icon wheelchairs')
+        span Wheelchair Friendly
+      span(class='facility')
+        span(class='icon picnic')
+        span Picnic Facilities
+      span(class='facility')
+        span(class='icon playground')
+        span Playground Facilities 
+  section(class='listing-section prices white')
+    div
+      h1 Prices
+      div(class='price')
+        label Kids Price
+        span from $42.00
+      div(class='price')
+        label Adult Price
+        span from $54.00
+      div(class='price')
+        label Pensioner Price
+        span from $45.00
+      div(class='price')
+        label Price
+        span free
+  section(class='listing-section find-more grey')
+    div
+      h1 Still bored? Find more activities like this.
+      a(class='find button', href='/search') Find

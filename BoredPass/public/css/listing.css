@@ -25,17 +25,29 @@ section.banner {
   background-color: #25B9C5;
 }
 .listing-section {
-  max-width: 1024px;
+  max-width: none;
   margin: 0 auto;
+  padding: 50px 0;
   position: relative;
   display: flex;
   flex-wrap: wrap;
+}
+.listing-section:not(.overview) > div {
+  width: 1024px;
+  margin: 0 auto;
 }
 .listing-section h1 {
   font-size: 26px;
   font-weight: 900;
   text-transform: uppercase;
   padding: 0 0 20px 0;
+}
+.listing-section.overview {
+  max-width: 1024px;
+  padding-top: 0;
+}
+.listing-section.overview:not(.activity) {
+  padding-bottom: 50px;
 }
 .listing-section.overview > div:first-of-type {
   flex: 0 0 260px;
@@ -51,6 +63,12 @@ section.banner {
   left: 0;
   margin-top: -130px;
   background-color: #333;
+}
+.listing-section.overview.activity > div:first-of-type .photo {
+  min-height: 260px;
+  width: 260px;
+  background-color: #333;
+  margin-top: 50px;
 }
 .listing-section.overview > div:first-of-type > a {
   display: block;
@@ -82,7 +100,7 @@ section.banner {
 .listing-section.overview > div:first-of-type > a:hover .fa + span {
   color: #25B9C5;
 }
-.listing-section.overview > div:first-of-type .location {
+.listing-section.overview:not(.activity) > div:first-of-type .location {
   margin-top: 140px;
 }
 .listing-section.overview > div:first-of-type .location .fa + span {
@@ -227,18 +245,17 @@ section.banner {
 .listing-section.overview > div:last-of-type .add {
   right: 120px;
 }
-.listing-section.facilities,
-.listing-section.activities {
-  max-width: none;
+.listing-section.white {
+  background-color: transparent;
+}
+.listing-section.grey {
   background-color: #f5f5f5;
-  margin-top: 50px;
 }
-.listing-section.facilities > div,
-.listing-section.activities > div {
-  width: 1024px;
-  margin: 0 auto;
-  padding: 50px 0;
+.listing-section.blue {
+  background-color: #25B9C5;
+  color: #FFFFFF;
 }
+.listing-section.activities-overview .activity,
 .listing-section.facilities .facility {
   margin-top: 20px;
   display: block;
@@ -248,6 +265,7 @@ section.banner {
   flex-direction: row;
   align-items: stretch;
 }
+.listing-section.activities-overview .activity > .icon,
 .listing-section.facilities .facility > .icon {
   display: block;
   height: 60px;
@@ -256,6 +274,10 @@ section.banner {
   flex: 0 0 60px;
   background-color: #25B9C5;
 }
+.listing-section.activities-overview .activity > .icon {
+  border: solid 2px #FFFFFF;
+}
+.listing-section.activities-overview .activity > span:last-of-type,
 .listing-section.facilities .facility > span:last-of-type {
   flex: 1;
   display: flex;
@@ -267,6 +289,9 @@ section.banner {
   padding: 0 20px 0 10px;
   justify-content: center;
 }
+.listing-section.activities-overview .activity > span:last-of-type {
+  color: #FFFFFF;
+}
 .listing-section.photos {
   min-height: 200px;
   max-width: 1012px;
@@ -277,7 +302,6 @@ section.banner {
   white-space: nowrap;
   width: 102%;
   margin: 0 -1%;
-  margin-top: 50px;
 }
 .listing-section.photos > div > .photo {
   display: inline-block;
@@ -299,7 +323,7 @@ section.banner {
 .listing-section.photos > a.prev,
 .listing-section.photos > a.next {
   position: absolute;
-  top: 50px;
+  top: 0;
   bottom: 0;
   left: -50px;
   width: 40px;
@@ -430,8 +454,15 @@ section.banner {
 }
 .listing-section.lower {
   display: block;
-  padding: 50px 0;
   text-align: right;
+}
+.listing-section.find-more > div > h1 {
+  display: inline-block;
+  color: #25B9C5;
+  padding: 7px 0;
+}
+.listing-section.find-more > div > a {
+  float: right;
 }
 @media only screen and (max-width: 1160px) {
   .listing-section.photos {
@@ -445,11 +476,16 @@ section.banner {
     padding: 0 20px;
     margin: 0;
   }
-  .listing-section.facilities > div,
-  .listing-section.activities > div {
+  .listing-section.overview {
+    padding: 0 20px;
+  }
+  .listing-section.overview:not(.activity) {
+    padding-bottom: 20px;
+  }
+  .listing-section:not(.overview) > div {
     width: 100%;
     margin: 0;
-    padding: 30px 0 20px 0;
+    padding: 30px 0;
   }
   .listing-section.overview > div:nth-child(2) {
     width: auto;
@@ -480,7 +516,7 @@ section.banner {
     top: 10px;
   }
   .listing-section.photos > div {
-    margin-top: 10px;
+    margin: 30px 0;
   }
   .listing-section.events {
     margin: 0;
@@ -489,15 +525,12 @@ section.banner {
   .listing-section.activities > div {
     padding-bottom: 10px;
   }
-  .listing-section.facilities,
-  .listing-section.activities {
-    margin-top: 10px;
-  }
   .listing-section.lower {
     padding: 30px 10px;
   }
 }
 @media only screen and (max-width: 900px) {
+  .listing-section.activities-overview .activity,
   .listing-section.facilities .facility {
     width: 33.3%;
   }
@@ -530,6 +563,7 @@ section.banner {
     margin-top: 10px;
     border-top: solid 1px #DDDDDD;
   }
+  .listing-section.activities-overview .activity,
   .listing-section.facilities .facility {
     width: 50%;
   }
@@ -542,6 +576,17 @@ section.banner {
   }
   .listing-section.events .agenda > div {
     padding: 20px;
+  }
+  .listing-section.find-more > div > h1 {
+    display: block;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .listing-section.find-more > div > a {
+    float: none;
+    display: block;
+    width: 100px;
+    margin: 10px auto 0 auto;
   }
 }
 @media only screen and (max-width: 670px) {
@@ -562,6 +607,7 @@ section.banner {
   }
 }
 @media only screen and (max-width: 550px) {
+  .listing-section.activities-overview .activity,
   .listing-section.facilities .facility {
     width: 100%;
   }

@@ -31,11 +31,17 @@ section.banner {
 }
 
 .listing-section {
-    max-width: 1024px;
+    max-width: none;
     margin: 0 auto;
+    padding: 50px 0;
     position: relative;
     display: flex;
     flex-wrap: wrap;
+}
+
+.listing-section:not(.overview) > div {
+    width: 1024px;
+    margin: 0 auto;
 }
 
 .listing-section h1 {
@@ -43,6 +49,15 @@ section.banner {
     font-weight: 900;
     text-transform: uppercase;
     padding: 0 0 20px 0;
+}
+
+.listing-section.overview {
+    max-width: 1024px;
+    padding-top: 0;
+}
+
+.listing-section.overview:not(.activity) {
+    padding-bottom: 50px;
 }
 
 .listing-section.overview > div:first-of-type {
@@ -60,6 +75,13 @@ section.banner {
     left: 0;
     margin-top: -130px;
     background-color: #333;
+}
+
+.listing-section.overview.activity > div:first-of-type .photo {
+    min-height: 260px;
+    width: 260px;
+    background-color: #333;
+    margin-top: 50px;
 }
 
 .listing-section.overview > div:first-of-type > a {
@@ -96,7 +118,7 @@ section.banner {
     color: @col-main;
 }
 
-.listing-section.overview > div:first-of-type .location {
+.listing-section.overview:not(.activity) > div:first-of-type .location {
     margin-top: 140px;
 }
 
@@ -262,19 +284,20 @@ section.banner {
     right: 120px;
 }
 
-.listing-section.facilities, .listing-section.activities {
-    max-width: none;
+.listing-section.white {
+    background-color: transparent;
+}
+
+.listing-section.grey {
     background-color: @col-body-bg;
-    margin-top: 50px;
 }
 
-.listing-section.facilities > div, .listing-section.activities > div {
-    width: 1024px;
-    margin: 0 auto;
-    padding: 50px 0;
+.listing-section.blue {
+    background-color: @col-main;
+    color: @col-button-fg;
 }
 
-.listing-section.facilities .facility {
+.listing-section.activities-overview .activity, .listing-section.facilities .facility {
     margin-top: 20px;
     display: block;
     width: 25%;
@@ -284,7 +307,7 @@ section.banner {
     align-items: stretch;
 }
 
-.listing-section.facilities .facility > .icon {
+.listing-section.activities-overview .activity > .icon, .listing-section.facilities .facility > .icon {
     display: block;
     height: 60px;
     width: 60px;
@@ -293,7 +316,11 @@ section.banner {
     background-color: @col-main;
 }
 
-.listing-section.facilities .facility > span:last-of-type {
+.listing-section.activities-overview .activity > .icon {
+    border: solid 2px @col-button-fg;
+}
+
+.listing-section.activities-overview .activity > span:last-of-type, .listing-section.facilities .facility > span:last-of-type {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -303,6 +330,10 @@ section.banner {
     text-transform: uppercase;
     padding: 0 20px 0 10px;
     justify-content: center;
+}
+
+.listing-section.activities-overview .activity > span:last-of-type {
+    color: @col-button-fg;
 }
 
 .listing-section.photos {
@@ -316,7 +347,6 @@ section.banner {
     white-space: nowrap;
     width: 102%;
     margin: 0 -1%;
-    margin-top: 50px;
 }
 
 .listing-section.photos > div > .photo {
@@ -340,7 +370,7 @@ section.banner {
 
 .listing-section.photos > a.prev, .listing-section.photos > a.next {
     position: absolute;
-    top: 50px;
+    top: 0;
     bottom: 0;
     left: -50px;
     width: 40px;
@@ -375,9 +405,6 @@ section.banner {
 
 .listing-section.photos > a.next.hidden {
     right: -70px;
-}
-
-.listing-section.activities {
 }
 
 .listing-section.activities > div > div {
@@ -503,8 +530,17 @@ section.banner {
 
 .listing-section.lower {
     display: block;
-    padding: 50px 0;
     text-align: right;
+}
+
+.listing-section.find-more > div > h1 {
+    display: inline-block;
+    color: @col-main;
+    padding: 7px 0;
+}
+
+.listing-section.find-more > div > a {
+    float: right;
 }
 
 @media only screen and (max-width: 1160px) {
@@ -521,10 +557,18 @@ section.banner {
         margin: 0;
     }
 
-    .listing-section.facilities > div, .listing-section.activities > div {
+    .listing-section.overview {
+        padding: 0 20px;
+    }
+
+    .listing-section.overview:not(.activity) {
+        padding-bottom: 20px;
+    }
+
+    .listing-section:not(.overview) > div {
         width: 100%;
         margin: 0;
-        padding: 30px 0 20px 0;
+        padding: 30px 0;
     }
 
     .listing-section.overview > div:nth-child(2) {
@@ -563,7 +607,7 @@ section.banner {
     }
 
     .listing-section.photos > div {
-        margin-top: 10px;
+        margin: 30px 0;
     }
 
     .listing-section.events {
@@ -575,17 +619,13 @@ section.banner {
         padding-bottom: 10px;
     }
 
-    .listing-section.facilities, .listing-section.activities {
-        margin-top: 10px;
-    }
-
     .listing-section.lower {
         padding: 30px 10px;
     }
 }
 
 @media only screen and (max-width: 900px) {
-    .listing-section.facilities .facility {
+    .listing-section.activities-overview .activity, .listing-section.facilities .facility {
         width: 33.3%;
     }
 
@@ -625,7 +665,7 @@ section.banner {
         border-top: solid 1px @col-grey;
     }
 
-    .listing-section.facilities .facility {
+    .listing-section.activities-overview .activity, .listing-section.facilities .facility {
         width: 50%;
     }
 
@@ -640,6 +680,19 @@ section.banner {
 
     .listing-section.events .agenda > div {
         padding: 20px;
+    }
+
+    .listing-section.find-more > div > h1 {
+        display: block;
+        text-align: center;
+        line-height: 1.3;
+    }
+
+    .listing-section.find-more > div > a {
+        float: none;
+        display: block;
+        width: 100px;
+        margin: 10px auto 0 auto;
     }
 }
 
@@ -665,7 +718,7 @@ section.banner {
 }
 
 @media only screen and (max-width: 550px) {
-    .listing-section.facilities .facility {
+    .listing-section.activities-overview .activity, .listing-section.facilities .facility {
         width: 100%;
     }
 

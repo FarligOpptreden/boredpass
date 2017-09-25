@@ -1,10 +1,11 @@
 ﻿var babel = require('babel-register')({ presets: ['es2015'] });
-var debug = require('debug')('LCBM.Api');
+var polyFill = require('babel-polyfill');
+var debug = require('debug')('BoredPass.Api');
 var app = require('./app.js').default;
-var config = require('./config.js');
+var config = require('./config.js').default;
 
 app.set('port', process.env.PORT || config.port || 3000);
 
 var server = app.listen(app.get('port'), function () {
-    debug('Express server listening on port ' + server.address().port);
+    console.log('Express server listening on port ' + server.address().port);
 });

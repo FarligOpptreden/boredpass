@@ -74,6 +74,7 @@
       <SubType>Content</SubType>
       <DependentUpon>public\css\_default.css</DependentUpon>
     </Content>
+    <Content Include="run.bat" />
     <Content Include="server\less\add_activity.less">
       <SubType>Code</SubType>
     </Content>
@@ -112,6 +113,7 @@
     <Content Include="public\images\logo.png" />
     <Content Include="public\images\overlay-surfing.jpg" />
     <Content Include="README.md" />
+    <Content Include="server\views\add_listing.pug" />
     <Content Include="server\views\layout_content.jade" />
     <Content Include="server\views\activity.pug" />
     <Content Include="server\views\partials\add_activity.pug" />

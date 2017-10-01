@@ -1,0 +1,23 @@
+﻿extends _layout
+
+block css
+  link(rel='stylesheet', href='/css/listing.min.css')
+  link(rel='stylesheet', href='/css/adding.min.css')
+
+block js
+  script(type='text/javascript', src='/js/adding.js')
+
+block content
+  section.banner
+    div
+      h1 Add a <strong>new listing</strong>
+  section.listing-section.white
+    div.wizard-content.success
+      span.thumbs-up
+      h1 Your business has been successfully listed
+  section.listing-section.grey
+    div.wizard-content.no-flex
+      h2.center Why not give it a share
+      p Nice job, you've done the hard part, now comes the fun. It's time to start adding your personalised activities for people to view, book and experience. Below you can create an activity. If you are wondering about this process, please read our helpful FAQ section.
+      div.button-wrapper
+        button.button.large-top-margin Create an activity

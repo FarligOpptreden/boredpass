@@ -1,4 +1,8 @@
-﻿extends layout_content
+﻿extends _layout
+
+include mixins/activities
+include mixins/facilities
+include mixins/photos
 
 block css
   link(rel='stylesheet', href='/css/listing.min.css')
@@ -7,16 +11,16 @@ block js
   script(type='text/javascript', src='/js/listing.js')
 
 block content
-  section(class='banner')
+  section.banner
     div
-      a(class='provider')
-        span(class='logo')
+      a.provider
+        span.logo
         span Provider Name
-  section(class='listing-section overview activity white')
+  section.listing-section.overview.activity.white
     div
-      div(class='photo')
-      a(class='location', target='_blank', href='https://google.com/maps/place/4290+Ashley+River+Rd,+Charleston,+South+Carolina,+29414')
-        span(class='fa fa-map-marker')
+      div.photo
+      a.location(target='_blank', href='https://google.com/maps/place/4290+Ashley+River+Rd,+Charleston,+South+Carolina,+29414')
+        span.fa.fa-map-marker
         span 4290 Ashley River Rd, Charleston, South Carolina, 29414
     div
       h1 Folley Beach Salt Marsh Kayaking
@@ -27,88 +31,37 @@ block content
       p Vestibulum et risus lorem. Suspendisse orci nisl, semper eget nisl nec, volutpat vestibulum arcu. Nullam sagittis metus nisi, quis bibendum augue porta tempus. Etiam eget tortor nec nisi pretium dapibus nec quis lorem. Vestibulum nisi purus, finibus ac velit feugiat, accumsan volutpat augue. Pellentesque sed orci nec diam elementum auctor sed et odio. Suspendisse potenti. Maecenas vel fringilla nibh.
       p Cras ut suscipit erat, eget lacinia nunc. In sodales erat ac arcu tempor laoreet. Nullam sed porttitor est. In dignissim tristique neque, ut aliquam massa iaculis at. Aenean feugiat eleifend lorem, vel consequat massa ultrices sit amet. Proin lacinia, mauris nec tempus commodo, ligula velit euismod risus, a condimentum massa erat viverra risus. Quisque blandit mauris sit amet nisi tincidunt accumsan. Quisque a semper elit. Sed vulputate pretium dui, sit amet dictum felis finibus at.
     div
-      span(class='rating')
+      span.rating
         label Rating Type 
-        span(class='stars')
-          span(class='fa fa-star color')
-          span(class='fa fa-star color')
-          span(class='fa fa-star color')
-          span(class='fa fa-star color')
-          span(class='fa fa-star')
-      a(class='add')
-      a(class='message')
-      a(class='share')
-  section(class='space-fixer')
-  section(class='listing-section photos white')
-    a(class='prev hidden fa fa-angle-left', href='prev-photo')
-    div(data-current-scroll='0')
-      div(class='photo')
-        a(class='photo1')
-      div(class='photo')
-        a(class='photo2')
-      div(class='photo')
-        a(class='photo3')
-      div(class='photo')
-        a(class='photo4')
-      div(class='photo')
-        a(class='photo5')
-      div(class='photo')
-        a(class='photo6')
-      div(class='photo')
-        a(class='photo7')
-    a(class='next fa fa-angle-right', href='next-photo')
-  section(class='listing-section activities-overview blue')
-    div
-      h1 Activities Offered
-      div(class='activity')
-        span(class='icon mountain-biking')
-        span Mountain Biking
-      div(class='activity')
-        span(class='icon swimming')
-        span Swimming
-      div(class='activity')
-        span(class='icon kayaking')
-        span Kayaking
-      div(class='activity')
-        span(class='icon surfing')
-        span Surfing
-      div(class='activity')
-        span(class='icon sup')
-        span Standup Paddle Boarding
-  section(class='listing-section facilities grey')
-    div
-      h1 Our Facilities
-      div(class='facility')
-        span(class='icon children')
-        span Child Friendly
-      span(class='facility')
-        span(class='icon dogs')
-        span Dog Friendly
-      span(class='facility')
-        span(class='icon wheelchairs')
-        span Wheelchair Friendly
-      span(class='facility')
-        span(class='icon picnic')
-        span Picnic Facilities
-      span(class='facility')
-        span(class='icon playground')
-        span Playground Facilities 
-  section(class='listing-section prices white')
+        span.stars
+          span.fa.fa-star.color
+          span.fa.fa-star.color
+          span.fa.fa-star.color
+          span.fa.fa-star.color
+          span.fa.fa-star
+      a.add
+      a.message
+      a.share
+  section.space-fixer
+  +photos([]).white
+  +activities([]).blue
+  +facilities([]).grey
+  section.listing-section.prices.white
     div
       h1 Prices
-      div(class='price')
+      div.price
         label Kids Price
         span from $42.00
-      div(class='price')
+      div.price
         label Adult Price
         span from $54.00
-      div(class='price')
+      div.price
         label Pensioner Price
         span from $45.00
-      div(class='price')
+      div.price
         label Price
         span free
-  section(class='listing-section find-more grey')
+  section.listing-section.find-more.grey
     div
       h1 Still bored? Find more activities like this.
-      a(class='find button', href='/search') Find
+      a.find.button(href='/search') Find

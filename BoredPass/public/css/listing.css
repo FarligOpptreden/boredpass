@@ -58,6 +58,16 @@ section.banner .provider .logo + span {
   flex: 1;
   padding-left: 10px;
 }
+section.banner > div > h1 {
+  font-size: 30px;
+  color: #FFFFFF;
+  display: inline-block;
+  border-bottom: solid 1px #FFFFFF;
+  padding: 0 0 5px 0;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  align-self: flex-end;
+}
 .listing-section {
   max-width: none;
   margin: 0 auto;

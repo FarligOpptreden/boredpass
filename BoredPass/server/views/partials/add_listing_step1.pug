@@ -1,0 +1,24 @@
+﻿form#add_listing_1.active
+  div.instructions-template
+    p Do you know of a business or venue that provides fun or interesting activities? Of course you do!
+    p Help cure boredom and list it on BoredPass today for free. All you need to do is complete our simple 3 part form.
+    p If you are unsure about anything, please check out our FAQ page. 
+  div.field-wrapper
+    label(for='businessname') Name of business/venue
+    input#businessname(type='text')
+  div.field-wrapper
+    label(for='tags') Tag the activities offered*
+    input#tags(type='text')
+  div.field-wrapper
+    label(for='address') Address*
+    input#address(type='text')
+  div.field-wrapper
+    label(for='website') Website link
+    input#website(type='text')
+  div.toggle-wrapper
+    label Is this your business?*
+    div.options
+      button.active Yes
+      button No
+  div.button-wrapper
+    button.button.next Next

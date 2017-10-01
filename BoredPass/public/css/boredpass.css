@@ -140,6 +140,7 @@ body {
   transition: all 0.2s;
 }
 #header > nav:first-of-type.float {
+  z-index: 100;
   box-shadow: 0 3px 3px rgba(50, 50, 50, 0.5);
 }
 #header > nav:last-of-type {
@@ -238,6 +239,143 @@ body {
   background-color: #25B9C5;
   text-align: center;
   padding: 20px;
+}
+.field-wrapper {
+  display: block;
+  position: relative;
+  margin: 20px 0;
+  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
+  background-color: #FFFFFF;
+  height: 60px;
+  border-radius: 3px;
+}
+.field-wrapper.textarea {
+  height: 300px;
+}
+.field-wrapper label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  font-size: 16px;
+  padding: 22px 10px 5px 10px;
+  border-radius: 3px;
+  color: #AAAAAA;
+  transition: all 0.2s;
+  font-weight: 600;
+  background-color: rgba(255, 255, 255, 0.95);
+}
+.field-wrapper input,
+.field-wrapper textarea {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  border-radius: 0;
+  font-size: 16px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  padding: 30px 10px 12px 10px;
+  border-radius: 3px;
+}
+.field-wrapper textarea {
+  height: 300px;
+  resize: none;
+}
+.field-wrapper:hover label,
+.field-wrapper.focus label {
+  color: #25B9C5;
+}
+.field-wrapper.focus label,
+.field-wrapper.has-value label {
+  font-size: 11px;
+  padding-top: 11px;
+}
+.toggle-wrapper {
+  display: block;
+  position: relative;
+  margin: 20px 0;
+  height: 50px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.toggle-wrapper label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 16px;
+  padding: 19px 10px;
+  transition: all 0.2s;
+}
+.toggle-wrapper .options {
+  float: right;
+  overflow: hidden;
+  text-align: right;
+  box-sizing: border-box;
+}
+button {
+  outline: none;
+  border: none;
+  font-size: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+button:active {
+  transform: scale(0.95);
+}
+.toggle-wrapper .options button {
+  background-color: #FFFFFF;
+  color: #25B9C5;
+  display: block;
+  float: left;
+  min-width: 100px;
+}
+.toggle-wrapper .options button.active {
+  background-color: #25B9C5;
+  color: #FFFFFF;
+  cursor: default;
+}
+.toggle-wrapper .options button.active:active {
+  transform: none;
+}
+button.button {
+  outline: none;
+  border: none;
+  background-color: #25B9C5;
+  color: #FFFFFF;
+  font-size: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+  display: block;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+strong {
+  font-weight: 600;
+}
+h2 {
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+h2.center {
+  text-align: center;
+}
+hr {
+  margin: 20px 0 20px 10px;
+  border: none;
+  height: 1px;
+  background-color: #DDDDDD;
+}
+.large-top-margin {
+  margin-top: 40px;
 }
 @media only screen and (max-width: 1300px) {
   #header > nav > div,

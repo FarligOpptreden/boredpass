@@ -183,7 +183,7 @@ body {
 #header > div:first-child {
   height: 500px;
   background-color: #25B9C5;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
   position: relative;
   background-image: url(../../server/images/bg-mountains.jpg);
   background-size: cover;
@@ -230,7 +230,7 @@ body {
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 5px;
   border: solid 2px rgba(255, 255, 255, 0.8);
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
 }
 #header > div > .search-wrapper > div {
   width: 50%;
@@ -271,7 +271,7 @@ body {
   transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
   cursor: pointer;
   border-radius: 25px;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
 }
 .round-button > span {
   font-size: 19px;
@@ -351,7 +351,7 @@ input:focus:-moz-placeholder {
   border: solid 2px rgba(255, 255, 255, 0.8);
   text-decoration: none;
   border-radius: 5px;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
   transition: all 0.2s;
 }
 #header #add-activity a:hover {
@@ -365,7 +365,7 @@ input:focus:-moz-placeholder {
   display: block;
   position: relative;
   margin: 20px 0;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
   background-color: #FFFFFF;
   height: 50px;
   border-radius: 3px;

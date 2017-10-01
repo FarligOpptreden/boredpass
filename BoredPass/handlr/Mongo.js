@@ -45,8 +45,9 @@ class Mongo {
    * @param {Object} args.paging.pageSize - The number of documents in a paged set when performing a 'pagedData' operation.
    * @param {Object[]} args.pipeline? - The aggregation pipeline to apply during an 'aggregate' operation.
    * @param {function(Object):void} args.callback - The function to call when the operation has been completed.
+   * @param {Object} [config] - A configuration object defining the debug logging.
    */
-  mongo(args) {
+  mongo(args, config) {
     let client = mongo.MongoClient;
     if (args.data)
       for (let k in args.data) {
@@ -63,14 +64,16 @@ class Mongo {
     toLog += '\n    > Url        : ' + args.url;
     toLog += '\n    > Collection : ' + args.collection;
     toLog += '\n    > Operation  : ' + args.operation;
-    toLog += '\n    > Filter     : ' + JSON.stringify(args.filter);
-    toLog += '\n    > Data       : ' + JSON.stringify(args.data);
-    toLog += '\n    > Sort       : ' + JSON.stringify(args.sort);
-    toLog += '\n    > Project    : ' + JSON.stringify(args.project);
-    toLog += '\n    > Group      : ' + JSON.stringify(args.group);
-    toLog += '\n    > Skip       : ' + JSON.stringify(args.skip);
-    toLog += '\n    > Limit      : ' + JSON.stringify(args.limit);
-    toLog += '\n    > Pipeline   : ' + JSON.stringify(args.pipeline);
+    if (config && config.loggingLevel && config.loggingLevel.mongo > 1) {
+      toLog += '\n    > Filter     : ' + JSON.stringify(args.filter);
+      toLog += '\n    > Data       : ' + JSON.stringify(args.data);
+      toLog += '\n    > Sort       : ' + JSON.stringify(args.sort);
+      toLog += '\n    > Project    : ' + JSON.stringify(args.project);
+      toLog += '\n    > Group      : ' + JSON.stringify(args.group);
+      toLog += '\n    > Skip       : ' + JSON.stringify(args.skip);
+      toLog += '\n    > Limit      : ' + JSON.stringify(args.limit);
+      toLog += '\n    > Pipeline   : ' + JSON.stringify(args.pipeline);
+    }
     console.log(toLog);
     let execute = (db, callback) => {
       let operation = args.operation;

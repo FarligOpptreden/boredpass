@@ -1,13 +1,34 @@
-﻿extends layout_content
+﻿extends _layout
 
 block css
   link(rel='stylesheet', href='/css/listing.min.css')
+  link(rel='stylesheet', href='/css/adding.min.css')
 
 block js
-  script(type='text/javascript', src='/js/listing.js')
+  script(type='text/javascript', src='/js/adding.js')
 
 block content
-  section(class='banner')
+  section.banner
     div
-      h1 Add a new listing
-  
+      h1 Add a <strong>new listing</strong>
+  section.listing-section.white
+    div.wizard-instructions
+      div.wizard-instructions-content
+        p Do you know of a business or venue that provides fun or interesting activities? Of course you do!
+        p Help cure boredom and list it on BoredPass today for free. All you need to do is complete our simple 3 part form.
+        p If you are unsure about anything, please check out our FAQ page.
+      div.wizard-steps
+        span.wizard-line
+          span.completed
+        div
+          a.active(href='step-1') 1
+        div
+          a(href='step-2') 2
+        div
+          a(href='step-3') 3
+  section.listing-section.grey.wizard
+    div.wizard-content
+      include partials/add_listing_step1
+      include partials/add_listing_step2
+      include partials/add_listing_step3
+    div.wizard-cover

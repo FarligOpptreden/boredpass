@@ -113,4 +113,12 @@ export default class Controller {
     });
     return router;
   }
+
+  /**
+   * Creates a new controller using the supplied parameters.
+   * @param {string} root - The base part of the URL to handle for every request in this controller.
+   */
+  static create(root) {
+    return new Controller(root);
+  }
 }

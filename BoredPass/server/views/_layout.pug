@@ -10,24 +10,25 @@ html
     script(type='text/javascript', src='https://use.fontawesome.com/bd0f643562.js')
     script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
     script(type='text/javascript', src='/js/boredpass.js')
+    script(type='text/javascript', src='/js/shared.js')
     block js
   body
-    header(id="header")
+    header#header
       nav
         div
-          a(class="find") Find
-          a(class="add" href="/listings/add") Add
-          a(class="claim") Claim
-          a(class="sign-in") Sign In
+          a.find Find
+          a.add(href="/listings/add") Add
+          a.claim Claim
+          a.sign-in Sign In
       nav
         div
-          a(class="logo")
+          a.logo(href='/')
           a Lorem Ipsum
           a Lorem Ipsum
           a Contact
-    article(id="body")
+    article#body
       block content
-    footer(id="footer")
+    footer#footer
       div
         nav
           h1 Bored Pass
@@ -35,12 +36,12 @@ html
             a Register
             a Sign In
         nav
-          h1(class="no-content")
+          h1.no-content
           div
             a Add a Listing
             a Add an Activity
         nav
-          h1(class="no-content")
+          h1.no-content
           div
             a Terms & Conditions
             a FAQ
@@ -48,8 +49,8 @@ html
           h1 Get in touch
           div
             a Send a mail
-            div(class="social")
-              a(class="twitter fa fa-twitter")
-              a(class="facebook fa fa-facebook")
-              a(class="google fa fa-google-plus")
-      div(class="copyright") Copyright &copy; #{moment().format("YYYY")} BoredPass. All rights reserved.
+            div.social
+              a.twitter.fa.fa-twitter
+              a.facebook.fa.fa-facebook
+              a.google.fa.fa-google-plus
+      div.copyright Copyright &copy; #{moment().format("YYYY")} BoredPass. All rights reserved.

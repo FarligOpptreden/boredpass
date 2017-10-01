@@ -41,8 +41,12 @@
     <Compile Include="handlr\Handlr.js" />
     <Compile Include="handlr\ListMap.js" />
     <Compile Include="handlr\Mongo.js" />
+    <Compile Include="handlr\_all.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="handlr\_arrayExtensions.js" />
     <Compile Include="bin\www" />
+    <Compile Include="public\js\adding.js" />
     <Compile Include="public\js\listing.js" />
     <Compile Include="public\js\boredpass.js" />
     <Compile Include="public\js\shared.js" />
@@ -53,8 +57,9 @@
     <Compile Include="server\controllers\html\listing.js" />
     <Compile Include="server\controllers\html\activity.js" />
     <Compile Include="server\controllers\_default.js" />
-    <Compile Include="server\services\activities.js" />
-    <Compile Include="server\services\_default.js" />
+    <Compile Include="server\services\activitiesService.js" />
+    <Compile Include="server\services\_all.js" />
+    <Compile Include="server\services\defaultService.js" />
     <None Include="compilerconfig.json" />
     <Content Include="Bored2Day.pem" />
     <Content Include="compilerconfig.json.defaults">
@@ -63,6 +68,8 @@
     </Content>
     <None Include="Disk.pubxml" />
     <Content Include="package.json" />
+    <Content Include="public\css\adding.css" />
+    <Content Include="public\css\adding.min.css" />
     <Content Include="public\css\add_activity.css" />
     <Content Include="public\css\shared.css" />
     <Content Include="public\css\shared.min.css">
@@ -91,6 +98,7 @@
       <DependentUpon>public\css\boredpass.css</DependentUpon>
     </Content>
     <Content Include="public\css\listing.css" />
+    <Content Include="server\less\adding.less" />
     <Content Include="server\less\listing.less">
       <SubType>Code</SubType>
     </Content>
@@ -113,14 +121,19 @@
     <Content Include="public\images\logo.png" />
     <Content Include="public\images\overlay-surfing.jpg" />
     <Content Include="README.md" />
+    <Content Include="server\views\add_listing_done.pug" />
     <Content Include="server\views\add_listing.pug" />
-    <Content Include="server\views\layout_content.jade" />
+    <Content Include="server\views\_layout.pug" />
     <Content Include="server\views\activity.pug" />
-    <Content Include="server\views\partials\add_activity.pug" />
     <Content Include="server\views\listing.pug" />
-    <Content Include="server\views\_default.pug" />
+    <Content Include="server\views\mixins\activities.pug" />
+    <Content Include="server\views\mixins\facilities.pug" />
+    <Content Include="server\views\mixins\photos.pug" />
+    <Content Include="server\views\partials\add_listing_step3.pug" />
+    <Content Include="server\views\partials\add_listing_step2.pug" />
+    <Content Include="server\views\partials\add_listing_step1.pug" />
+    <Content Include="server\views\home.pug" />
     <Content Include="typings.json" />
-    <Content Include="server\views\layout.jade" />
     <Content Include="server\views\error.pug" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -130,7 +143,6 @@
     <Folder Include="public\css\" />
     <Folder Include="public\js\" />
     <Folder Include="public\images\" />
-    <Folder Include="routes\" />
     <Folder Include="server\" />
     <Folder Include="public\" />
     <Folder Include="server\controllers\" />
@@ -140,6 +152,7 @@
     <Folder Include="server\less\" />
     <Folder Include="server\views\" />
     <Folder Include="server\services\" />
+    <Folder Include="server\views\mixins\" />
     <Folder Include="server\views\partials\" />
     <Folder Include="typings\" />
     <Folder Include="typings\globals\" />

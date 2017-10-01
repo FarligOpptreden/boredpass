@@ -1,4 +1,8 @@
-﻿extends layout_content
+﻿extends _layout
+
+include mixins/activities
+include mixins/facilities
+include mixins/photos
 
 block css
   link(rel='stylesheet', href='/css/listing.min.css')
@@ -7,158 +11,106 @@ block js
   script(type='text/javascript', src='/js/listing.js')
 
 block content
-  section(class='banner')
-  section(class='listing-section overview')
+  section.banner
+  section.listing-section.overview
     div
-      div(class='logo')
-      a(class='location', target='_blank', href='https://google.com/maps/place/4290+Ashley+River+Rd,+Charleston,+South+Carolina,+29414')
-        span(class='fa fa-map-marker')
+      div.logo
+      a.location(target='_blank', href='https://google.com/maps/place/4290+Ashley+River+Rd,+Charleston,+South+Carolina,+29414')
+        span.fa.fa-map-marker
         span 4290 Ashley River Rd, Charleston, South Carolina, 29414
-      a(class='telephone', target='_blank', href='tel:+18436282879')
-        span(class='fa fa-phone')
+      a.telephone(target='_blank', href='tel:+18436282879')
+        span.fa.fa-phone
         span +1843-628-2879
-      a(class='email', target='_blank', href='mailto:info@charlestonkayakcompany.com', title='info@charlestonkayakcompany.com')
-        span(class='fa fa-envelope')
+      a.email(target='_blank', href='mailto:info@charlestonkayakcompany.com', title='info@charlestonkayakcompany.com')
+        span.fa.fa-envelope
         span info@charlestonkayakcompany.com
-      a(class='website', target='_blank', href='http://www.charlestonkayakcompany.com', title='www.charlestonkayakcompany.com') www.charlestonkayakcompany.com
-      div(class='social')
-        a(class='facebook fa fa-facebook', title='Facebook', target='_blank', href='https://www.facebook.com')
-        a(class='twitter fa fa-twitter', title='Twitter')
-        a(class='google fa fa-google-plus', title='Google+')
-        a(class='instagram fa fa-instagram', title='Instagram')
-        a(class='pinterest fa fa-pinterest-p', title='Pinterest', target='_blank', href='https://www.pinterest.com')
-        a(class='youtube fa fa-youtube-play', title='Youtube', target='_blank', href='https://www.youtube.com')
+      a.website(target='_blank', href='http://www.charlestonkayakcompany.com', title='www.charlestonkayakcompany.com') www.charlestonkayakcompany.com
+      div.social
+        a.facebook.fa.fa-facebook(title='Facebook', target='_blank', href='https://www.facebook.com')
+        a.twitter.fa.fa-twitter(title='Twitter')
+        a.google.fa.fa-google-plus(title='Google+')
+        a.instagram.fa.fa-instagram(title='Instagram')
+        a.pinterest.fa.fa-pinterest-p(title='Pinterest', target='_blank', href='https://www.pinterest.com')
+        a.youtube.fa.fa-youtube-play(title='Youtube', target='_blank', href='https://www.youtube.com')
     div
       h1 Charleston Kayak Company
       p At Charleston Kayak Company, we are a small guide-run outfitter, passionate about all things outdoors. 
       p Our goal is to have a good time on the water, while helping to foster a conservation minded ethic within our own community and with visitors to the Charleston area. We specialize in professional naturalist guided tours with low guest-to-guide ratios. 
       p This focus helps to insure an intimate experience on the water, and ability to customize the experience to any skill level. Wether its via guided kayak tours, kayak rentals, and boat charters, our activities get you closer to the natural world, and offer a unique access to a host of different eco-sytems. We are passionate about  the history, ecology, and wildlife that makes the low-country of South Carolina so special.
       p See you on the water.
-      button(class='subscribe button') Subscribe
+      button.subscribe.button Subscribe
     div
-      span(class='rating')
+      span.rating
         label Rating Type 
-        span(class='stars')
-          span(class='fa fa-star color')
-          span(class='fa fa-star color')
-          span(class='fa fa-star color')
-          span(class='fa fa-star color')
-          span(class='fa fa-star')
-      span(class='claimed')
-        span(class='fa fa-thumbs-o-up')
+        span.stars
+          span.fa.fa-star.color
+          span.fa.fa-star.color
+          span.fa.fa-star.color
+          span.fa.fa-star.color
+          span.fa.fa-star
+      span.claimed
+        span.fa.fa-thumbs-o-up
         span Claimed
-      a(class='add')
-      a(class='message')
-      a(class='share')
-  section(class='listing-section activities-overview blue')
-    div
-      h1 Activities Offered
-      div(class='activity')
-        span(class='icon mountain-biking')
-        span Mountain Biking
-      div(class='activity')
-        span(class='icon swimming')
-        span Swimming
-      div(class='activity')
-        span(class='icon kayaking')
-        span Kayaking
-      div(class='activity')
-        span(class='icon surfing')
-        span Surfing
-      div(class='activity')
-        span(class='icon sup')
-        span Standup Paddle Boarding
-  section(class='listing-section facilities grey')
-    div
-      h1 Our Facilities
-      div(class='facility')
-        span(class='icon children')
-        span Child Friendly
-      span(class='facility')
-        span(class='icon dogs')
-        span Dog Friendly
-      span(class='facility')
-        span(class='icon wheelchairs')
-        span Wheelchair Friendly
-      span(class='facility')
-        span(class='icon picnic')
-        span Picnic Facilities
-      span(class='facility')
-        span(class='icon playground')
-        span Playground Facilities
-  section(class='listing-section photos white')
-    a(class='prev hidden fa fa-angle-left', href='prev-photo')
-    div(data-current-scroll='0')
-      div(class='photo')
-        a(class='photo1')
-      div(class='photo')
-        a(class='photo2')
-      div(class='photo')
-        a(class='photo3')
-      div(class='photo')
-        a(class='photo4')
-      div(class='photo')
-        a(class='photo5')
-      div(class='photo')
-        a(class='photo6')
-      div(class='photo')
-        a(class='photo7')
-    a(class='next fa fa-angle-right', href='next-photo')
-  section(class='listing-section activities grey')
+      a.add
+      a.message
+      a.share
+  +activities([]).blue
+  +facilities([]).grey
+  +photos([]).white
+  section.listing-section.activities.grey
     div
       h1 Our Activities
       div
-        div(class='activity')
-          div(class='photo')
+        div.activity
+          div.photo
           h2 Title of activity
           p Description of activity
-          a(class='read-more button inverse', href='/activities/test') Read More
-        div(class='activity')
-          div(class='photo')
+          a.read-more.button.inverse(href='/activities/test') Read More
+        div.activity
+          div.photo
           h2 Title of activity
           p Description of activity
-          a(class='read-more button inverse', href='/activities/test') Read More
-        div(class='activity')
-          div(class='photo')
+          a.read-more.button.inverse(href='/activities/test') Read More
+        div.activity
+          div.photo
           h2 Title of activity
           p Description of activity
-          a(class='read-more button inverse', href='/activities/test') Read More
-        div(class='activity')
-          div(class='photo')
+          a.read-more.button.inverse(href='/activities/test') Read More
+        div.activity
+          div.photo
           h2 Title of activity
           p Description of activity
-          a(class='read-more button inverse', href='/activities/test') Read More
-        div(class='activity')
-          div(class='photo')
+          a.read-more.button.inverse(href='/activities/test') Read More
+        div.activity
+          div.photo
           h2 Title of activity
           p Description of activity
-          a(class='read-more button inverse', href='/activities/test') Read More
-  section(class='listing-section events')
-    div(class='calendar')
-    div(class='agenda')
+          a.read-more.button.inverse(href='/activities/test') Read More
+  section.listing-section.events
+    div.calendar
+    div.agenda
       div
         h1
-          span(class='day') 04
-          span(class='month') July
-        ul(class='activities')
+          span.day 04
+          span.month July
+        ul.activities
           li
-            span(class='fa fa-dot-circle-o')
+            span.fa.fa-dot-circle-o
             h2 Stand Up Paddle Boarding
             ul
               li 2:30pm - 4:30pm
               li 2hr
           li
-            span(class='fa fa-dot-circle-o')
+            span.fa.fa-dot-circle-o
             h2 Marsh Kayak Tour
             ul
               li N/A
           li
-            span(class='fa fa-dot-circle-o')
+            span.fa.fa-dot-circle-o
             h2 Private Boat Tours
             ul
               li 6:30pm - 8:30/9:00pm
               li 2-2.5hr Group Trips (non-private)
-        
-  section(class='listing-section lower white')
+  section.listing-section.lower.white
     div
-      a(class='report button grey', href='/report-listing') Report Listing
+      a.report.button.grey(href='/report-listing') Report Listing

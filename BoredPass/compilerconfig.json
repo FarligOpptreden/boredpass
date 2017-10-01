@@ -22,5 +22,9 @@
   {
     "inputFile": "server/less/add_activity.less",
     "outputFile": "public/css/add_activity.css"
+  },
+  {
+    "inputFile": "server/less/adding.less",
+    "outputFile": "public/css/adding.css"
   }
 ]

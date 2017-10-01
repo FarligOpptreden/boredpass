@@ -26,7 +26,7 @@ export default class CrudController {
     return this.sortFields;
   }
   get controllers() {
-    return new Controller(this.resourceContext)
+    return Controller.create(this.resourceContext)
       // Page service data
       .handle({ route: '/page/:pageNo', method: 'get', produces: 'json' }, (req, res) => {
         this.service.page({

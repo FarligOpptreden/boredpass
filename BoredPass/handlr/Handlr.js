@@ -6,6 +6,12 @@ import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
+const rawBodySaver = (req, res, buf, encoding) => {
+  if (buf && buf.length) {
+    req.bodyBuffer = buf;
+  }
+}
+
 export default class Handlr {
   start() {
     console.log('');
@@ -17,8 +23,9 @@ export default class Handlr {
     app.set('view engine', 'pug');
     //app.use(favicon(__dirname + '/public/favicon.ico'));
     app.use(logger('dev'));
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.raw({ verify: rawBodySaver, type: 'application/octet-stream' }));
+    app.use(bodyParser.json({ verify: rawBodySaver }));
+    app.use(bodyParser.urlencoded({ verify: rawBodySaver, extended: false }));
     app.use(cookieParser());
     app.use(express.static(path.join(__dirname, '../public')));
     // Initialize middleware
@@ -32,9 +39,8 @@ export default class Handlr {
           return;
         if (file.toLowerCase().indexOf('.js')) {
           let module = require('../' + fullName).default;
-          console.log(module);
           console.log('[H:i] Registering middleware: ' + fullName);
-          module.get(app);
+          if (module) module.get(app);
         }
       });
     }

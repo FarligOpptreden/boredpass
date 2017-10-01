@@ -5,6 +5,7 @@ import favicon from 'serve-favicon';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import moment from 'moment';
 
 const rawBodySaver = (req, res, buf, encoding) => {
   if (buf && buf.length) {
@@ -76,7 +77,8 @@ export default class Handlr {
         res.status(err.status || 500);
         res.render('error', {
           message: err.message,
-          error: err
+          error: err,
+          moment: moment
         });
       });
     }
@@ -84,7 +86,8 @@ export default class Handlr {
       res.status(err.status || 500);
       res.render('error', {
         message: err.message,
-        error: {}
+        error: {},
+          moment: moment
       });
     });
     return app;

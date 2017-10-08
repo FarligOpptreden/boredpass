@@ -57,6 +57,7 @@
     <Compile Include="server\controllers\html\listing.js" />
     <Compile Include="server\controllers\html\activity.js" />
     <Compile Include="server\controllers\_default.js" />
+    <Compile Include="server\services\listingsService.js" />
     <Compile Include="server\services\activitiesService.js" />
     <Compile Include="server\services\_all.js" />
     <Compile Include="server\services\defaultService.js" />
@@ -121,6 +122,7 @@
     <Content Include="public\images\logo.png" />
     <Content Include="public\images\overlay-surfing.jpg" />
     <Content Include="README.md" />
+    <Content Include="server\views\add_activity.pug" />
     <Content Include="server\views\add_listing_done.pug" />
     <Content Include="server\views\add_listing.pug" />
     <Content Include="server\views\_layout.pug" />

@@ -248,6 +248,13 @@ body {
   background-color: #FFFFFF;
   height: 60px;
   border-radius: 3px;
+  border: solid 2px #FFFFFF;
+  box-sizing: border-box;
+  transition: all 0.25s;
+  font-family: 'Raleway', sans-serif;
+}
+.field-wrapper:hover {
+  border-color: #25B9C5;
 }
 .field-wrapper.textarea {
   height: 300px;
@@ -279,10 +286,14 @@ body {
   box-sizing: border-box;
   padding: 30px 10px 12px 10px;
   border-radius: 3px;
+  font-family: 'Raleway', sans-serif;
 }
 .field-wrapper textarea {
   height: 300px;
   resize: none;
+}
+.field-wrapper.focus {
+  border-color: #25B9C5;
 }
 .field-wrapper:hover label,
 .field-wrapper.focus label {
@@ -343,7 +354,71 @@ button:active {
 .toggle-wrapper .options button.active:active {
   transform: none;
 }
-button.button {
+.checkbox-wrapper {
+  display: block;
+  position: relative;
+  margin: 20px 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.checkbox-wrapper .checkbox-option {
+  display: inline-block;
+  position: relative;
+  transition: all 0.25s;
+}
+.checkbox-wrapper .checkbox-option:hover {
+  color: #25B9C5;
+}
+.checkbox-wrapper .checkbox-option:hover .faux-input {
+  border-color: #25B9C5;
+}
+.checkbox-wrapper .checkbox-option input {
+  display: none;
+}
+.checkbox-wrapper .checkbox-option .faux-input {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 30px;
+  width: 30px;
+  margin: -15px 0 0 0;
+  background-color: #FFFFFF;
+  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
+  border-radius: 3px;
+  border: solid 2px #FFFFFF;
+  transition: all 0.25s;
+  cursor: pointer;
+  color: #FFFFFF;
+  padding: 4px 0;
+  text-align: center;
+}
+.checkbox-wrapper .checkbox-option.checked .faux-input {
+  background-color: #25B9C5;
+  border-color: #25B9C5;
+  box-shadow: none;
+  text-decoration: none;
+}
+.checkbox-wrapper .checkbox-option .faux-input:focus {
+  border-color: #25B9C5;
+}
+.checkbox-wrapper .checkbox-option.checked .faux-input:focus {
+  border-color: #FFFFFF;
+}
+.checkbox-wrapper .checkbox-option .faux-input:focus + label {
+  color: #25B9C5;
+}
+.checkbox-wrapper .checkbox-option label {
+  display: inline-block;
+  font-size: 14px;
+  padding: 13px;
+  margin: 0 10px 0 30px;
+  cursor: pointer;
+}
+.hidden {
+  display: none;
+}
+.button {
   outline: none;
   border: none;
   background-color: #25B9C5;

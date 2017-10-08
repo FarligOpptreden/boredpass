@@ -45,5 +45,36 @@ $(document).ready(function () {
         $(this).addClass("active");
       });
     });
+    $(".checkbox-wrapper .checkbox-option:not(.has-events)").each(function () {
+      var wrapper = $(this);
+      wrapper.addClass("has-events");
+      var fauxInput = $("<a class='faux-input' href='javascript:void(0);' />");
+      wrapper.prepend(fauxInput);
+      var label = wrapper.find("label");
+      var currentInput = wrapper.find("input");
+      var input = $("<input type=\"text\" />");
+      input.attr("id", currentInput.attr("id"));
+      input.attr("className", currentInput.attr("className"));
+      currentInput.replaceWith(input);
+      input = wrapper.find("input");
+      input.val(wrapper.hasClass("checked"));
+      if (wrapper.hasClass("checked"))
+        fauxInput.addClass("fa fa-check");
+      var toggle = function (e) {
+        if (!wrapper.hasClass("checked")) {
+          input.val("true");
+          wrapper.addClass("checked");
+          fauxInput.addClass("fa fa-check");
+        }
+        else {
+          input.val("false");
+          wrapper.removeClass("checked");
+          fauxInput.removeClass("fa fa-check");
+        }
+        input.trigger("change");
+      };
+      label.click(toggle);
+      fauxInput.click(toggle);
+    });
   };
 });

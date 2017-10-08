@@ -35,7 +35,15 @@ $(document).ready(function () {
     }, 500);
   });
   $("button.finish").click(function () {
-    window.location.href = "/listings/add/done";
+    $.ajax({
+      url: '/listings/add',
+      method: 'post',
+      contentType: 'application/json',
+      data: JSON.stringify({}),
+      success: function (d, s, x) {
+        window.location.href = '/listings/' + d.id + '/added';
+      }
+    });
   });
   $(".social a").click(function () {
     var linkList = $(this).closest(".links");
@@ -48,6 +56,15 @@ $(document).ready(function () {
   $(".social input").on("keyup", function () {
     var inputIndex = $(".social").find("input").index($(this));
     var operation = $(this).val() ? "addClass" : "removeClass";
-    $(".social .links a").eq(inputIndex)[operation]("has-value");      
+    $(".social .links a").eq(inputIndex)[operation]("has-value");
+  });
+  $(".add-activity").click(function () {
+    window.location.href = $(this).data("link");
+  });
+  $(".prices input").change(function () {
+    var isChecked = $(this).closest(".checkbox-option").hasClass("checked");
+    var priceField = $(".field-wrapper." + $(this).attr("id"));
+    if (priceField.length)
+      priceField[isChecked ? "removeClass" : "addClass"]("hidden");
   });
 });

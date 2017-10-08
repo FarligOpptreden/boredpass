@@ -1,0 +1,65 @@
+﻿extends _layout
+
+block css
+  link(rel='stylesheet', href='/css/listing.min.css')
+  link(rel='stylesheet', href='/css/adding.min.css')
+
+block js
+  script(type='text/javascript', src='/js/adding.js')
+
+block content
+  section.banner
+    div
+      h1 Add a <strong>new activity</strong>
+  section.listing-section.white
+    div.wizard-instructions
+      div.wizard-instructions-content
+        p This is it, this is what it's all been building up to. Create your activity by filling in the fields below. We have kept this as simple as possible but still flexible enough to ensure your activity listing is as relevant and detailed enough as one may want. Remember, you can always edit your activity via your dashboard, even after you've submitted it, so don't stress if something changes. It's free and instant. BoredPass lives by the "KISS" principle, you know, Keep It Simple Stupid. :)
+  section.listing-section.grey
+    div.adding-content
+      div.field-wrapper
+        label(for='activity_name') Activity name, e.g. Awesome hike & abseil combo
+        input#activity_name(type='text')
+      div.field-wrapper.textarea
+        label(for='activity_description') Describe the activity
+        textarea#activity_description
+      div.field-wrapper
+        label(for='activity_tags') Add activity tags (e.g. Kayaking)
+        input#activity_tags(type='text')
+      div.tag-container
+      div.field-wrapper
+        label(for='activity_address') Activity address
+        input#activity_address(type='text')
+      div.checkbox-wrapper.prices
+        div.checkbox-option
+          label(for='price_kids') Kids (4-15)
+          input#price_kids(type='checkbox')
+        div.checkbox-option
+          label(for='price_adult') Adult (16+)
+          input#price_adult(type='checkbox')
+        div.checkbox-option
+          label(for='price_pensioner') Pensioner (65+)
+          input#price_pensioner(type='checkbox')
+        div.checkbox-option
+          label(for='price_free') Free
+          input#price_free(type='checkbox')
+      div.field-wrapper.price_kids.hidden
+        label(for='activity_name') Kids price from
+        input#activity_name(type='number')
+      div.field-wrapper.price_adult.hidden
+        label(for='activity_name') Adult price from
+        input#activity_name(type='number')
+      div.field-wrapper.price_pensioner.hidden
+        label(for='activity_name') Pensioner price from
+        input#activity_name(type='number')
+      h2 Trading Hours
+      h2 Add Photos & Videos
+      div.add-photos
+        div
+          a
+            span.plus +
+        div
+          a
+            span.plus +
+      div.button-wrapper
+        button.button.dark.large-top-margin.post-activity Post Activity

@@ -1,19 +1,15 @@
-﻿form#add_listing_3
+﻿include ../mixins/photo_upload
+
+form#add_listing_3
   div.instructions-template
     p Images speak a thousand words, especially good ones. We recommend using quality over quantity to ensure your listing leaves people wanting more. Sounds good, doesn't it?
   div.add-overview
     div
       h2 Adding Imagery
       p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    a.add-logo(href='add-logo')
-      span.plus +
+    +photoUpload().add-logo(data-url='/content/upload', data-allow-change='true')
   div.add-photos
-    div
-      a
-        span.plus +
-    div
-      a
-        span.plus +
+    +photoUpload()(data-url='/content/upload')
   hr
   h2 Do you offer?
   div.toggle-wrapper

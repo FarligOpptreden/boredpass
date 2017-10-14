@@ -138,7 +138,7 @@
   display: none;
 }
 .listing-section .wizard-content p {
-  padding: 20px 10px;
+  padding: 20px 10px 20px 0;
   white-space: normal;
   line-height: 1.25;
 }
@@ -155,7 +155,16 @@
   flex: 0 0 200px;
   position: relative;
 }
-.listing-section span.plus {
+.listing-section .wizard-content .add-overview .add-logo > a {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border: none;
+  background-size: contain;
+}
+.listing-section span.plus,
+.listing-section span.close {
+  background-color: #25B9C5;
   color: #FFFFFF;
   height: 50px;
   width: 50px;
@@ -166,12 +175,25 @@
   padding: 0;
   text-align: center;
 }
+.listing-section span.close {
+  top: 5px;
+  right: 5px;
+  left: auto;
+  bottom: auto;
+  border-radius: 25px;
+  opacity: 0.5;
+  transform: rotate(45deg);
+  transition: all 0.25s;
+}
+.listing-section .has-image:hover span.close {
+  opacity: 1;
+}
 .listing-section .wizard-content .add-overview .add-logo > span {
   background-color: rgba(255, 255, 255, 0.2);
 }
 .listing-section .add-photos {
   padding: 0;
-  margin: 10px -10px 0 0;
+  margin: 10px -10px 0 -10px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -181,7 +203,7 @@
 }
 .listing-section .add-photos > div > a {
   display: block;
-  height: 200px;
+  height: 280px;
   background-color: #FFFFFF;
   position: relative;
 }
@@ -214,6 +236,77 @@
   color: #25B9C5;
   white-space: normal;
   font-size: 30px;
+}
+.trading-hours {
+  padding: 10px 0;
+}
+.day-time-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+.day-time-wrapper select {
+  flex: 0 0 100px;
+  padding: 3px 0 3px 20px;
+  margin: 5px 2px;
+  border: none;
+  outline: none;
+  font-family: 'Raleway', sans-serif;
+  color: #555555;
+  border: solid 2px #FFFFFF;
+  transition: all 0.25s;
+  background-color: #FFFFFF;
+  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
+}
+.day-time-wrapper select:hover {
+  border-color: #25B9C5;
+}
+.day-time-wrapper select:focus,
+.day-time-wrapper select:active {
+  color: #25B9C5;
+  border-color: #25B9C5;
+}
+.day-time-wrapper select:disabled {
+  color: #DDDDDD;
+  border-color: #FFFFFF;
+  box-shadow: none;
+}
+.day-time-wrapper .checkbox-option {
+  display: flex;
+  flex: 1;
+}
+.day-time-wrapper .checkbox-option > a {
+  flex: 0 0 30px;
+}
+.day-time-wrapper .checkbox-option label {
+  background-color: #FFFFFF;
+  margin: 5px 2px 5px 33px;
+  padding: 8px 13px;
+  flex: 1;
+}
+.listing-section h2 {
+  padding-left: 0;
+}
+.listing-section hr {
+  margin-left: 0;
+}
+.photo-upload {
+  cursor: pointer;
+}
+.photo-upload > a {
+  transition: all 0.25s;
+  border: solid 2px #FFFFFF;
+  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
+}
+.photo-upload > a:hover {
+  border-color: #25B9C5;
+}
+.photo-upload > a.has-image {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.photo-upload form {
+  display: none !important;
 }
 @keyframes active-pulse {
   0% {

@@ -317,7 +317,7 @@ body {
   top: 0;
   left: 0;
   font-size: 16px;
-  padding: 19px 10px;
+  padding: 19px 10px 19px 0;
   transition: all 0.2s;
 }
 .toggle-wrapper .options {
@@ -361,21 +361,21 @@ button:active {
   overflow: hidden;
   box-sizing: border-box;
 }
-.checkbox-wrapper .checkbox-option {
+.checkbox-option {
   display: inline-block;
   position: relative;
   transition: all 0.25s;
 }
-.checkbox-wrapper .checkbox-option:hover {
+.checkbox-option:hover {
   color: #25B9C5;
 }
-.checkbox-wrapper .checkbox-option:hover .faux-input {
+.checkbox-option:hover .faux-input {
   border-color: #25B9C5;
 }
-.checkbox-wrapper .checkbox-option input {
+.checkbox-option input {
   display: none;
 }
-.checkbox-wrapper .checkbox-option .faux-input {
+.checkbox-option .faux-input {
   display: block;
   position: absolute;
   top: 50%;
@@ -393,22 +393,22 @@ button:active {
   padding: 4px 0;
   text-align: center;
 }
-.checkbox-wrapper .checkbox-option.checked .faux-input {
+.checkbox-option.checked .faux-input {
   background-color: #25B9C5;
   border-color: #25B9C5;
   box-shadow: none;
   text-decoration: none;
 }
-.checkbox-wrapper .checkbox-option .faux-input:focus {
+.checkbox-option .faux-input:focus {
   border-color: #25B9C5;
 }
-.checkbox-wrapper .checkbox-option.checked .faux-input:focus {
+.checkbox-option.checked .faux-input:focus {
   border-color: #FFFFFF;
 }
-.checkbox-wrapper .checkbox-option .faux-input:focus + label {
+.checkbox-option .faux-input:focus + label {
   color: #25B9C5;
 }
-.checkbox-wrapper .checkbox-option label {
+.checkbox-option label {
   display: inline-block;
   font-size: 14px;
   padding: 13px;
@@ -451,6 +451,9 @@ hr {
 }
 .large-top-margin {
   margin-top: 40px;
+}
+.photo-upload form {
+  display: none;
 }
 @media only screen and (max-width: 1300px) {
   #header > nav > div,

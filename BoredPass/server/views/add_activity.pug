@@ -1,5 +1,8 @@
 ﻿extends _layout
 
+include mixins/time_picker
+include mixins/photo_upload
+
 block css
   link(rel='stylesheet', href='/css/listing.min.css')
   link(rel='stylesheet', href='/css/adding.min.css')
@@ -35,31 +38,69 @@ block content
           label(for='price_kids') Kids (4-15)
           input#price_kids(type='checkbox')
         div.checkbox-option
-          label(for='price_adult') Adult (16+)
-          input#price_adult(type='checkbox')
+          label(for='price_adults') Adult (16+)
+          input#price_adults(type='checkbox')
         div.checkbox-option
-          label(for='price_pensioner') Pensioner (65+)
-          input#price_pensioner(type='checkbox')
+          label(for='price_pensioners') Pensioner (65+)
+          input#price_pensioners(type='checkbox')
         div.checkbox-option
           label(for='price_free') Free
           input#price_free(type='checkbox')
       div.field-wrapper.price_kids.hidden
-        label(for='activity_name') Kids price from
-        input#activity_name(type='number')
-      div.field-wrapper.price_adult.hidden
-        label(for='activity_name') Adult price from
-        input#activity_name(type='number')
-      div.field-wrapper.price_pensioner.hidden
-        label(for='activity_name') Pensioner price from
-        input#activity_name(type='number')
+        label(for='price_kids_value') Kids price from
+        input#price_kids_value(type='number')
+      div.field-wrapper.price_adults.hidden
+        label(for='price_adults_value') Adult price from
+        input#price_adults_value(type='number')
+      div.field-wrapper.price_pensioners.hidden
+        label(for='price_pensioners_value') Pensioner price from
+        input#price_pensioners_value(type='number')
       h2 Trading Hours
+      div.trading-hours
+        div.day-time-wrapper
+          div.checkbox-option
+            label(for='day_monday') Monday
+            input#day_monday(type='checkbox')
+          +timePicker()#day_monday_from(disabled='disabled')
+          +timePicker()#day_monday_to(disabled='disabled')
+        div.day-time-wrapper
+          div.checkbox-option
+            label(for='day_tuesday') Tuesday
+            input#day_tuesday(type='checkbox')
+          +timePicker()#day_tuesday_from(disabled='disabled')
+          +timePicker()#day_tuesday_to(disabled='disabled')
+        div.day-time-wrapper
+          div.checkbox-option
+            label(for='day_wednesday') Wednesday
+            input#day_wednesday(type='checkbox')
+          +timePicker()#day_wednesday_from(disabled='disabled')
+          +timePicker()#day_wednesday_to(disabled='disabled')
+        div.day-time-wrapper
+          div.checkbox-option
+            label(for='day_thursday') Thursday
+            input#day_thursday(type='checkbox')
+          +timePicker()#day_thursday_from(disabled='disabled')
+          +timePicker()#day_thursday_to(disabled='disabled')
+        div.day-time-wrapper
+          div.checkbox-option
+            label(for='day_friday') Friday
+            input#day_friday(type='checkbox')
+          +timePicker()#day_friday_from(disabled='disabled')
+          +timePicker()#day_friday_to(disabled='disabled')
+        div.day-time-wrapper
+          div.checkbox-option
+            label(for='day_saturday') Saturday
+            input#day_saturday(type='checkbox')
+          +timePicker()#day_saturday_from(disabled='disabled')
+          +timePicker()#day_saturday_to(disabled='disabled')
+        div.day-time-wrapper
+          div.checkbox-option
+            label(for='day_sunday') Sunday
+            input#day_sunday(type='checkbox')
+          +timePicker()#day_sunday_from(disabled='disabled')
+          +timePicker()#day_sunday_to(disabled='disabled')
       h2 Add Photos & Videos
       div.add-photos
-        div
-          a
-            span.plus +
-        div
-          a
-            span.plus +
+        +photoUpload()(data-url='/content/upload')
       div.button-wrapper
-        button.button.dark.large-top-margin.post-activity Post Activity
+        button#post-activity.button.dark.large-top-margin Post Activity

@@ -1,6 +1,50 @@
 ﻿var Shared = {};
 
 $(document).ready(function () {
+  var uploadField = function () {
+    var wrapper = $(this);
+    var anchor = wrapper.find("a");
+    var form = $("<form method='post' enctype='multipart/form-data' />");
+    wrapper.append(form);
+    var input = $("<input type=\"file\" id='file-upload' name='file-upload' />");
+    input.change(function () {
+      if (!$(this).val())
+        return;
+      var data = new FormData(form[0]);
+      $.ajax({
+        url: wrapper.data("url") + '?v=' + new Date().getTime(),
+        type: "POST",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (d) {
+          wrapper.trigger("boredpass.upload");
+          anchor.data("upload", d);
+          anchor.addClass("has-image");
+          anchor.css("background-image", "url(" + d.location + ")");
+          if (wrapper.data("allow-change"))
+            return;
+          form.remove();
+          anchor.find("span").remove();
+          anchor.unbind("click");
+          anchor.append("<span class=\"close\">+</span>");
+          anchor.bind("click", function () {
+            wrapper.trigger("boredpass.delete");
+            wrapper.remove();
+          });
+        },
+        error: function (e) {
+          alert(e);
+        }
+      });
+    });
+    form.append(input);
+    wrapper.addClass("has-events");
+    anchor.bind("click", function () {
+      input.trigger("click");
+    });
+  };
   Shared.showOverlay = function (args) {
     var overlay = $("<div class=\"overlay\" />");
     args.content.addClass("overlay-content");
@@ -45,7 +89,7 @@ $(document).ready(function () {
         $(this).addClass("active");
       });
     });
-    $(".checkbox-wrapper .checkbox-option:not(.has-events)").each(function () {
+    $(".checkbox-option:not(.has-events)").each(function () {
       var wrapper = $(this);
       wrapper.addClass("has-events");
       var fauxInput = $("<a class='faux-input' href='javascript:void(0);' />");
@@ -76,5 +120,22 @@ $(document).ready(function () {
       label.click(toggle);
       fauxInput.click(toggle);
     });
+    $(".photo-upload:not(.has-events)").each(uploadField);
+  };
+  Shared.photoUpload = function (args) {
+    var field = $("<div class=\"photo-upload\"><a><span class=\"plus\">+</span></a></div>");
+    field.addClass(args.classes);
+    if (args.data && args.data.length) {
+      for (var d = 0; d < args.data.length; d++) {
+        var data = args.data[d];
+        field.data(data.key, data.value);
+      }
+    }
+    if (args.onUpload)
+      field.on("boredpass.upload", args.onUpload);
+    if (args.onDelete)
+      field.on("boredpass.delete", args.onDelete);
+    field.each(uploadField);
+    return field;
   };
 });

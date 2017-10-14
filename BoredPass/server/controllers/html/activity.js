@@ -1,5 +1,11 @@
 ﻿import Controller from '../../../handlr/Controller';
 import { ActivitiesService } from '../../services/_all';
+import marked from 'marked';
+
+marked.setOptions({
+  gfm: true,
+  breaks: true
+});
 
 export default new Controller('/activities')
   .handle({ route: '/add', method: 'get', produces: 'html' }, (req, res) => {
@@ -25,8 +31,14 @@ export default new Controller('/activities')
     });
   })
   .handle({ route: '/:id', method: 'get', produces: 'html' }, (req, res) => {
-    res.render('activity', {
-      title: 'Activity Name - BoredPass',
-      moment: require('moment')
+    ActivitiesService.findOne({
+      filter: req.params.id
+    }, (activity) => {
+      res.render('activity', {
+        title: 'Activity Name - BoredPass',
+        activity: activity,
+        marked: marked,
+        moment: require('moment')
+      });
     });
   });

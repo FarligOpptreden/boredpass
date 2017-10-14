@@ -2,18 +2,7 @@
   section.listing-section.photos&attributes(attributes)
     a.prev.hidden.fa.fa-angle-left(href='prev-photo')
     div(data-current-scroll='0')
-      div.photo
-        a.photo1
-      div.photo
-        a.photo2
-      div.photo
-        a.photo3
-      div.photo
-        a.photo4
-      div.photo
-        a.photo5
-      div.photo
-        a.photo6
-      div.photo
-        a.photo7
+      each photo, index in data
+        div.photo
+          a(class='photo' + index, style='background-image: url(/content/' + photo.fileType + '/' + photo.fileId + ');')
     a.next.fa.fa-angle-right(href='next-photo')

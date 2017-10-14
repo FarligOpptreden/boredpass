@@ -19,17 +19,12 @@ block content
   section.listing-section.overview.activity.white
     div
       div.photo
-      a.location(target='_blank', href='https://google.com/maps/place/4290+Ashley+River+Rd,+Charleston,+South+Carolina,+29414')
+      a.location(target='_blank', href='https://google.com/maps/place/' + encodeURIComponent(activity.address))
         span.fa.fa-map-marker
-        span 4290 Ashley River Rd, Charleston, South Carolina, 29414
+        span= activity.address
     div
-      h1 Folley Beach Salt Marsh Kayaking
-      p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis et ligula at risus efficitur dapibus id in dui. Phasellus eu porta purus. Etiam a aliquet mi, at ultricies mauris. Morbi tincidunt sit amet mauris eget mollis. Morbi tortor nulla, viverra eu porttitor a, ultricies et sapien. Fusce sit amet semper velit, euismod vulputate nibh. Nam porta pretium porta. Mauris eleifend interdum erat, eget ornare dolor sollicitudin eu. Aenean ornare nulla id vehicula gravida. In non sodales lacus, in imperdiet erat. Vivamus dignissim nunc nunc, et lobortis massa aliquet sed.
-      p Nam venenatis, arcu et suscipit consequat, dui ex suscipit dui, at cursus libero enim ut dolor. Sed enim libero, sodales a fringilla in, sollicitudin in est. In vel sagittis orci. Sed fermentum sit amet dui ut egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec id pharetra libero, quis consectetur tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque purus risus, auctor ut placerat in, vestibulum at arcu. Sed id turpis felis. Aenean malesuada leo vitae massa volutpat sagittis.
-      p Mauris sodales nisl nec consequat luctus. Curabitur condimentum, odio et pretium ornare, orci ligula imperdiet ligula, ac porta velit elit sit amet dolor. Phasellus maximus urna quis ultrices lacinia. Aliquam enim nulla, semper sit amet pharetra a, iaculis sodales nulla. Quisque dapibus enim eu vulputate pharetra. Integer sit amet dui sem. In volutpat enim lorem, nec ullamcorper purus faucibus at. Vestibulum consequat justo dolor, id vestibulum dui finibus vitae. In sodales blandit accumsan. Aliquam ullamcorper nulla risus, sed molestie dui imperdiet id. Nulla facilisi.
-      h2 Private guided tour
-      p Vestibulum et risus lorem. Suspendisse orci nisl, semper eget nisl nec, volutpat vestibulum arcu. Nullam sagittis metus nisi, quis bibendum augue porta tempus. Etiam eget tortor nec nisi pretium dapibus nec quis lorem. Vestibulum nisi purus, finibus ac velit feugiat, accumsan volutpat augue. Pellentesque sed orci nec diam elementum auctor sed et odio. Suspendisse potenti. Maecenas vel fringilla nibh.
-      p Cras ut suscipit erat, eget lacinia nunc. In sodales erat ac arcu tempor laoreet. Nullam sed porttitor est. In dignissim tristique neque, ut aliquam massa iaculis at. Aenean feugiat eleifend lorem, vel consequat massa ultrices sit amet. Proin lacinia, mauris nec tempus commodo, ligula velit euismod risus, a condimentum massa erat viverra risus. Quisque blandit mauris sit amet nisi tincidunt accumsan. Quisque a semper elit. Sed vulputate pretium dui, sit amet dictum felis finibus at.
+      h1= activity.name
+      != marked(activity.description)
     div
       span.rating
         label Rating Type 
@@ -43,7 +38,7 @@ block content
       a.message
       a.share
   section.space-fixer
-  +photos([]).white
+  +photos(activity.photos).white
   +activities([]).blue
   +facilities([]).grey
   section.listing-section.prices.white

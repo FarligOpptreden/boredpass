@@ -11,6 +11,7 @@ block js
   script(type='text/javascript', src='/js/adding.js')
 
 block content
+  input#listing(type='hidden', value=listing_id)
   section.banner
     div
       h1 Add a <strong>new activity</strong>
@@ -21,14 +22,14 @@ block content
   section.listing-section.grey
     div.adding-content
       div.field-wrapper
-        label(for='activity_name') Activity name, e.g. Awesome hike & abseil combo
-        input#activity_name(type='text')
+        label(for='activity_name') Activity name, e.g. Awesome hike & abseil combo*
+        input#activity_name.mandatory(type='text')
       div.field-wrapper.textarea
-        label(for='activity_description') Describe the activity
-        textarea#activity_description
+        label(for='activity_description') Describe the activity*
+        textarea#activity_description.mandatory
       div.field-wrapper
-        label(for='activity_tags') Add activity tags (e.g. Kayaking)
-        input#activity_tags(type='text')
+        label(for='activity_tags') Add activity tags (e.g. Kayaking)*
+        input#activity_tags.mandatory(type='text')
       div.tag-container
       div.field-wrapper
         label(for='activity_address') Activity address

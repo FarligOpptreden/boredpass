@@ -1,5 +1,6 @@
 ﻿import Controller from '../../../handlr/Controller';
-import { ListingsService } from '../../services/_all';
+import { ListingsService, ActivitiesService } from '../../services/_all';
+import marked from 'marked';
 
 export default new Controller('/listings')
   .handle({ route: '/add', method: 'get', produces: 'html' }, (req, res) => {
@@ -32,8 +33,20 @@ export default new Controller('/listings')
     });
   })
   .handle({ route: '/:id', method: 'get', produces: 'html' }, (req, res) => {
-    res.render('listing', {
-      title: 'Listing Name - BoredPass',
-      moment: require('moment')
+    ListingsService.findOne({
+      filter: req.params.id
+    }, (listing) => {
+      ActivitiesService.findMany({
+        filter: { listing_id: listing._id },
+        sort: { name: 1 }
+      }, (activities) => {
+        res.render('listing', {
+          title: listing.name + ' - BoredPass',
+          moment: require('moment'),
+          marked: marked,
+          listing: listing,
+          activities: activities
+        });
+      });
     });
   });

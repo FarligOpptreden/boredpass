@@ -26,5 +26,9 @@
   {
     "inputFile": "server/less/adding.less",
     "outputFile": "public/css/adding.css"
+  },
+  {
+    "inputFile": "server/less/home.less",
+    "outputFile": "public/css/home.css"
   }
 ]

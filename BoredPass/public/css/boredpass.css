@@ -253,6 +253,9 @@ body {
   transition: all 0.25s;
   font-family: 'Raleway', sans-serif;
 }
+.field-wrapper.error {
+  border-color: #FFAAAA;
+}
 .field-wrapper:hover {
   border-color: #25B9C5;
 }

@@ -1,5 +1,11 @@
 ﻿extends _layout
 
+block css
+  link(rel='stylesheet', href='/css/home.min.css')
+
 block content
-  section
-    p Todo...
+  section.listings
+    each listing in listings
+      div.listing
+        a(href='/listings/' + listing._id)
+          span= listing.name

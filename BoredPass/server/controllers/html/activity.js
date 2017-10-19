@@ -1,5 +1,5 @@
 ﻿import Controller from '../../../handlr/Controller';
-import { ActivitiesService } from '../../services/_all';
+import { ActivitiesService, ListingsService } from '../../services/_all';
 import marked from 'marked';
 
 marked.setOptions({
@@ -11,12 +11,15 @@ export default new Controller('/activities')
   .handle({ route: '/add', method: 'get', produces: 'html' }, (req, res) => {
     res.render('add_activity', {
       title: 'Add Activity - BoredPass',
-      moment: require('moment')
+      moment: require('moment'),
+      listing_id: req.query.listing
     });
   })
-  .handle({ route: '/add', method: 'post', produces: 'json' }, (req, res) => {
+  .handle({ route: '/:id/add', method: 'post', produces: 'json' }, (req, res) => {
+    let activity = req.body;
+    activity.listing_id = ActivitiesService.db.objectId(req.params.id);
     ActivitiesService.create({
-      data: req.body
+      data: activity
     }, (result) => {
       res.json({
         success: result && result._id && true,
@@ -34,11 +37,16 @@ export default new Controller('/activities')
     ActivitiesService.findOne({
       filter: req.params.id
     }, (activity) => {
-      res.render('activity', {
-        title: 'Activity Name - BoredPass',
-        activity: activity,
-        marked: marked,
-        moment: require('moment')
+      ListingsService.findOne({
+        filter: { _id: activity.listing_id }
+      }, (listing) => {
+        res.render('activity', {
+          title: activity.name + ' - BoredPass',
+          listing: listing,
+          activity: activity,
+          marked: marked,
+          moment: require('moment')
+        });
       });
     });
   });

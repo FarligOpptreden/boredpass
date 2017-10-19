@@ -74,6 +74,11 @@
     <Content Include="public\css\adding.css" />
     <Content Include="public\css\adding.min.css" />
     <Content Include="public\css\add_activity.css" />
+    <Content Include="public\css\home.css" />
+    <Content Include="public\css\home.min.css">
+      <SubType>Content</SubType>
+      <DependentUpon>public\css\home.css</DependentUpon>
+    </Content>
     <Content Include="public\css\shared.css" />
     <Content Include="public\css\shared.min.css">
       <SubType>Content</SubType>
@@ -102,6 +107,7 @@
     </Content>
     <Content Include="public\css\listing.css" />
     <Content Include="server\less\adding.less" />
+    <Content Include="server\less\home.less" />
     <Content Include="server\less\listing.less">
       <SubType>Code</SubType>
     </Content>

@@ -13,13 +13,14 @@ block js
 block content
   section.banner
     div
-      a.provider
-        span.logo
-        span Provider Name
+      a.provider(href='/listings/' + listing._id)
+        span.logo(style='background-image:url(/content/' + listing.logo.fileType + '/' + listing.logo.fileId + ');')
+        span= listing.name
   section.listing-section.overview.activity.white
     div
       div.photo
-      a.location(target='_blank', href='https://google.com/maps/place/' + encodeURIComponent(activity.address))
+      - var locationAddress = 'https://google.com/maps/place/' + encodeURIComponent(activity.address)
+      a.location(target='_blank', href=locationAddress)
         span.fa.fa-map-marker
         span= activity.address
     div
@@ -38,24 +39,38 @@ block content
       a.message
       a.share
   section.space-fixer
-  +photos(activity.photos).white
-  +activities([]).blue
-  +facilities([]).grey
+  if activity.photos && activity.photos.length
+    +photos(activity.photos).white
+  if activity.tags && activity.tags.length
+    +activities(activity.tags).blue
+  - var facilities = []
+  - if (activity.facilities && activity.facilities.children) facilities.push('Child Friendly')
+  - if (activity.facilities && activity.facilities.dogs) facilities.push('Dog Friendly')
+  - if (activity.facilities && activity.facilities.wheelchair) facilities.push('Wheelchair Friendly')
+  - if (activity.facilities && activity.facilities.picnic) facilities.push('Picnic Facilities')
+  if facilities.length
+    +facilities(facilities).grey
   section.listing-section.prices.white
     div
-      h1 Prices
-      div.price
-        label Kids Price
-        span from $42.00
-      div.price
-        label Adult Price
-        span from $54.00
-      div.price
-        label Pensioner Price
-        span from $45.00
-      div.price
-        label Price
-        span free
+      - var hasPrice = activity.prices.free || activity.prices.child || activity.prices.adult || activity.prices.pensioner
+      if hasPrice
+        h1 Prices
+        if activity.prices.child
+          div.price
+            label Kids Price
+            span= 'from ' + activity.prices.child
+        if activity.prices.adult
+          div.price
+            label Adult Price
+            span= 'from ' + activity.prices.adult
+        if activity.prices.pensioner
+          div.price
+            label Pensioner Price
+            span= 'from ' + activity.prices.pensioner
+        if activity.prices.free
+          div.price
+            label Price
+            span free
   section.listing-section.find-more.grey
     div
       h1 Still bored? Find more activities like this.

@@ -79,10 +79,60 @@ $(document).ready(function () {
           $(this).closest(".field-wrapper").removeClass("has-value");
         $(this).closest(".field-wrapper").removeClass("focus");
       });
+      if ($(this).hasClass("mandatory"))
+        $(this).keyup(function () {
+          if ($(this).val())
+            $(this).closest(".field-wrapper").removeClass("error");
+          else
+            $(this).closest(".field-wrapper").addClass("error");
+        });
+      if ($(this).hasClass("validate-number"))
+        $(this).keydown(function (e) {
+          if ((e.keyCode != 32 && e.keyCode <= 46) || (e.keyCode >= 112 && e.keyCode <= 145))
+            return true;
+          var keyCode = e.which;
+          if (keyCode >= 96)
+            keyCode -= 48;
+          var keyVal = String.fromCharCode(keyCode);
+          if (!/\d/.test(keyVal)) {
+            e.preventDefault();
+            return false;
+          }
+          var fld = $(this);
+          if (fld.attr("type") == "number") {
+            var min = $(this).attr("min");
+            var max = $(this).attr("max");
+            var val = parseFloat($(this).val() + parseFloat(keyVal));
+            if (val < min || val > max) {
+              e.preventDefault();
+              return false;
+            }
+            return true;
+          }
+          var maxLength = $(this).attr("maxlength");
+          var val = $(this).val() + keyVal;
+          if (val.length > maxLength) {
+            e.preventDefault();
+            return false;
+          }
+          return true;
+        });
+      if ($(this).hasClass("validate-email"))
+        $(this).keyup(function () {
+          var valid = /^[a-zA-Z0-9\-\.]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9]+){1,2}$/.test($(this).val());
+          if (valid)
+            $(this).closest(".field-wrapper").removeClass("error");
+          else
+            $(this).closest(".field-wrapper").addClass("error");
+        });
     });
     $(".toggle-wrapper button:not(.has-events)").each(function () {
+      var wrapper = $(this).closest(".toggle-wrapper");
       $(this).addClass("has-events");
+      var input = wrapper.find("input");
+      input.val(wrapper.find(".active").text());
       $(this).click(function () {
+        input.val($(this).text());
         if ($(this).hasClass("active"))
           return;
         $(this).closest(".toggle-wrapper").find("button.active").removeClass("active");

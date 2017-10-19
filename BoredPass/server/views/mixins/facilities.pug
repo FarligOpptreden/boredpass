@@ -1,19 +1,10 @@
 ﻿mixin facilities(data)
-  section.listing-section.facilities&attributes(attributes)
-    div
-      h1 Our Facilities
-      div.facility
-        span.icon.children
-        span Child Friendly
-      span.facility
-        span.icon.dogs
-        span Dog Friendly
-      span.facility
-        span.icon.wheelchairs
-        span Wheelchair Friendly
-      span.facility
-        span.icon.picnic
-        span Picnic Facilities
-      span.facility
-        span.icon.playground
-        span Playground Facilities 
+  if data && data.length
+    section.listing-section.facilities&attributes(attributes)
+      div
+        h1 Our Facilities
+        each facility, index in data
+          - var className = facility.toLowerCase().replace(/ /g, '-')
+          div.facility
+            span(class='icon ' + className)
+            span=facility

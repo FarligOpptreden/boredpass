@@ -1,0 +1,1 @@
+﻿section.listings{max-width:1024px;margin:20px auto;display:flex;flex-direction:row;flex-wrap:wrap;align-content:flex-start;}section.listings>.listing{flex:0 0 33.3%;padding:10px;}section.listings>.listing>a{display:block;width:auto;box-shadow:0 3px 5px rgba(80,80,80,.3);border:solid 2px #25b9c5;border-radius:3px;padding:10px;text-decoration:none;color:#25b9c5;}

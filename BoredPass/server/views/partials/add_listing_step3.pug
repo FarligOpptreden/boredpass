@@ -7,28 +7,32 @@ form#add_listing_3
     div
       h2 Adding Imagery
       p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    +photoUpload().add-logo(data-url='/content/upload', data-allow-change='true')
+    +photoUpload()#logo-upload.add-logo(data-url='/content/upload', data-allow-change='true')
   div.add-photos
     +photoUpload()(data-url='/content/upload')
   hr
   h2 Do you offer?
-  div.toggle-wrapper
+  div.toggle-wrapper.facility
     label Wheelchair friendly venue or activities
+    input#facility_wheelchair(type='hidden')
     div.options
       button Yes
       button.active No
-  div.toggle-wrapper
+  div.toggle-wrapper.facility
     label Child friendly venue or activities
+    input#facility_children(type='hidden')
     div.options
       button Yes
       button.active No
-  div.toggle-wrapper
+  div.toggle-wrapper.facility
     label Dog friendly venue or activities
+    input#facility_dogs(type='hidden')
     div.options
       button Yes
       button.active No
-  div.toggle-wrapper
+  div.toggle-wrapper.facility
     label Picnic facilities
+    input#facility_picnic(type='hidden')
     div.options
       button Yes
       button.active No

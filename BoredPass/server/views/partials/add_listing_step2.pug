@@ -4,13 +4,13 @@
     p You deserve to be found, so do us a solid and fill in as much as you can, even if the fields in question aren't mandatory.
   div.field-wrapper
     label(for='telephone') Telephone number
-    input#telephone(type='text')
+    input#telephone.validate-number(type='text')
   div.field-wrapper
     label(for='cellphone') Cell phone number*
-    input#cellphone(type='text')
+    input#cellphone.mandatory.validate-number(type='text')
   div.field-wrapper
     label(for='email') Email address*
-    input#email(type='email')
+    input#email.mandatory.validate-email(type='email')
   div.social
     div.links
       a.facebook.fa.fa-facebook.active(title='Facebook')
@@ -27,7 +27,7 @@
     input#social-youtube.hidden(type='text', placeholder='Paste your Youtube link here')
   div.field-wrapper.textarea
     label(for='description') Give a brief description about your business*
-    textarea#description
+    textarea#description.mandatory
   div.button-wrapper
     button.button.prev Prev
     button.button.dark.next Next

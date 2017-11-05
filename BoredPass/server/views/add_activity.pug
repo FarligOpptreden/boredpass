@@ -57,13 +57,13 @@ block content
         div.checkbox-option(class=(isEdit && activity.prices && activity.prices.free ? 'checked' : ''))
           label(for='price_free') Free
           input#price_free(type='checkbox')
-      div.field-wrapper.price_kids(class=(isEdit && activity.name && 'has-value' || 'hidden'))
+      div.field-wrapper.price_kids(class=(isEdit && activity.prices&& activity.prices.child && 'has-value' || 'hidden'))
         label(for='price_kids_value') Kids price from
         input#price_kids_value(type='number', value=(isEdit && activity.prices && activity.prices.child || ''))
-      div.field-wrapper.price_adults(class=(isEdit && activity.name && 'has-value' || 'hidden'))
+      div.field-wrapper.price_adults(class=(isEdit && activity.prices && activity.prices.adult && 'has-value' || 'hidden'))
         label(for='price_adults_value') Adult price from
         input#price_adults_value(type='number', value=(isEdit && activity.prices && activity.prices.adult || ''))
-      div.field-wrapper.price_pensioners(class=(isEdit && activity.name && 'has-value' || 'hidden'))
+      div.field-wrapper.price_pensioners(class=(isEdit && activity.prices && activity.prices.pensioner && 'has-value' || 'hidden'))
         label(for='price_pensioners_value') Pensioner price from
         input#price_pensioners_value(type='number', value=(isEdit && activity.prices && activity.prices.pensioner || ''))
       h2 Trading Hours

@@ -52,10 +52,10 @@ block content
   - if (activity.facilities && activity.facilities.picnic) facilities.push('Picnic Facilities')
   if facilities.length
     +facilities(facilities).alternating
-  section.listing-section.prices.alternating
-    div
-      - var hasPrice = activity.prices.free || activity.prices.child || activity.prices.adult || activity.prices.pensioner
-      if hasPrice
+  - var hasPrice = activity.prices.free || activity.prices.child || activity.prices.adult || activity.prices.pensioner
+  if hasPrice
+    section.listing-section.prices.alternating
+      div
         h1 Prices
         if activity.prices.child
           div.price

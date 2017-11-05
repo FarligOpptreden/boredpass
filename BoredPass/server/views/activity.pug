@@ -16,6 +16,7 @@ block content
       a.provider(href='/listings/' + listing._id)
         span.logo(style='background-image:url(/content/' + listing.logo.fileType + '/' + listing.logo.fileId + ');')
         span= listing.name
+      a.edit(href='/activities/' + activity._id + '/edit') Edit
   section.listing-section.overview.activity.white
     div
       div.photo
@@ -39,8 +40,9 @@ block content
       a.message
       a.share
   section.space-fixer
+  section.space-fixer
   if activity.photos && activity.photos.length
-    +photos(activity.photos).white
+    +photos(activity.photos).alternating
   if activity.tags && activity.tags.length
     +activities(activity.tags).blue
   - var facilities = []
@@ -49,8 +51,8 @@ block content
   - if (activity.facilities && activity.facilities.wheelchair) facilities.push('Wheelchair Friendly')
   - if (activity.facilities && activity.facilities.picnic) facilities.push('Picnic Facilities')
   if facilities.length
-    +facilities(facilities).grey
-  section.listing-section.prices.white
+    +facilities(facilities).alternating
+  section.listing-section.prices.alternating
     div
       - var hasPrice = activity.prices.free || activity.prices.child || activity.prices.adult || activity.prices.pensioner
       if hasPrice
@@ -71,7 +73,7 @@ block content
           div.price
             label Price
             span free
-  section.listing-section.find-more.grey
+  section.listing-section.find-more.alternating
     div
       h1 Still bored? Find more activities like this.
       a.find.button(href='/search') Find

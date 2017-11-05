@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
   var numVisible = 5;
-  var count = $(".photos > div > .photo").length;
+  var count = $(".photos > div > div > .photo").length;
   var setNumVisible = function () {
     var getNum = function () {
       if ($("body").width() > 670) {
@@ -20,12 +20,15 @@ $(document).ready(function () {
       numVisible = 1;
     }
     getNum();
-    if (numVisible >= count)
+    $(".photos .next, .photos .prev").removeClass("hidden");
+    if (numVisible >= count) {
+      console.log("NOTHING VISIBLE");
       $(".photos .next, .photos .prev").addClass("hidden");
+    }
   };
   var doScroll = function (factor) {
-    var currentScroll = parseInt($(".photos > div").data("current-scroll"), 10);
-    $(".photos > div").data("current-scroll", (factor > 0 ? ++currentScroll : --currentScroll));
+    var currentScroll = parseInt($(".photos > div > div").data("current-scroll"), 10);
+    $(".photos > div > div").data("current-scroll", (factor > 0 ? ++currentScroll : --currentScroll));
     $(".photos .photo").css("transform", "translateX(" + (-currentScroll * 100) + "%)");
     if (count - numVisible > currentScroll) {
       $(".photos .next").removeClass("hidden");

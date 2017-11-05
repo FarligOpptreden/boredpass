@@ -14,7 +14,8 @@ block content
   section.banner
   section.listing-section.overview
     div
-      div.logo(style='background-image:url(/content/' + listing.logo.fileType + '/' + listing.logo.fileId + ');')
+      - var logo = listing.logo ? 'background-image:url(/content/' + listing.logo.fileType + '/' + listing.logo.fileId + ');' : null
+      div.logo(style=logo)
       a.location(target='_blank', href='https://google.com/maps/place/' + encodeURIComponent(listing.address))
         span.fa.fa-map-marker
         span= listing.address
@@ -65,20 +66,20 @@ block content
   - if (listing.facilities.dogs) facilities.push('Dog Friendly')
   - if (listing.facilities.wheelchair) facilities.push('Wheelchair Friendly')
   - if (listing.facilities.picnic) facilities.push('Picnic Facilities')
-  +facilities(facilities).grey
-  +photos(listing.photos).white
+  +facilities(facilities).alternating
+  +photos(listing.photos).alternating
   if activities && activities.length
-    section.listing-section.activities.grey
+    section.listing-section.activities.alternating
       div
         h1 Our Activities
         div
           each activity, index in activities
-            div.activity
+            a.activity(href='/activities/' + activity._id)
               div.photo
               h2= activity.name
               - var desc = activity.description.length > 100 ? activity.description.substring(0, 100) : activity.description
               p= desc
-              a.read-more.button.inverse(href='/activities/' + activity._id) Read More
+              span.read-more.button.inverse(href='/activities/' + activity._id) Read More
   section.listing-section.events
     div.calendar
     div.agenda

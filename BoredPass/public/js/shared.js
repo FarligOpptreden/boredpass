@@ -41,7 +41,16 @@ $(document).ready(function () {
     });
     form.append(input);
     wrapper.addClass("has-events");
+    if (anchor.hasClass("has-image")) {
+      anchor.find("span").remove();
+      anchor.append("<span class=\"close\">+</span>");
+    }
     anchor.bind("click", function () {
+      if (anchor.hasClass("has-image")) {
+        wrapper.trigger("boredpass.delete");
+        wrapper.remove();
+        return;
+      }
       input.trigger("click");
     });
   };
@@ -79,13 +88,25 @@ $(document).ready(function () {
           $(this).closest(".field-wrapper").removeClass("has-value");
         $(this).closest(".field-wrapper").removeClass("focus");
       });
-      if ($(this).hasClass("mandatory"))
+      if ($(this).hasClass("mandatory")) {
+        if ($(this).closest(".field-wrapper").hasClass("no-grow")) {
+          var field = $(this);
+          field.blur(function () {
+            setTimeout(function () {
+              if (field.val())
+                field.closest(".field-wrapper").removeClass("error");
+              else
+                field.closest(".field-wrapper").addClass("error");
+            }, 100);
+          });
+        }
         $(this).keyup(function () {
           if ($(this).val())
             $(this).closest(".field-wrapper").removeClass("error");
           else
             $(this).closest(".field-wrapper").addClass("error");
         });
+      }
       if ($(this).hasClass("validate-number"))
         $(this).keydown(function (e) {
           if ((e.keyCode != 32 && e.keyCode <= 46) || (e.keyCode >= 112 && e.keyCode <= 145))

@@ -1,4 +1,5 @@
 ﻿@import "__variables.less";
+@import "__for.less";
 
 /* CSS Reset */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
@@ -231,6 +232,14 @@ body {
     font-family: 'Raleway',sans-serif;
 }
 
+.field-wrapper.no-grow input {
+    opacity: 0;
+}
+
+.field-wrapper.auto-height {
+    height: auto;
+}
+
 .field-wrapper textarea {
     height: 300px;
     resize: none;
@@ -244,7 +253,7 @@ body {
     color: @col-main;
 }
 
-.field-wrapper.focus label, .field-wrapper.has-value label {
+.field-wrapper.focus:not(.no-grow) label, .field-wrapper.has-value:not(.no-grow) label {
     font-size: 11px;
     padding-top: 11px;
 }
@@ -425,6 +434,25 @@ hr {
 
 .photo-upload form {
     display: none;
+}
+
+.icon.activity {
+    .for(@activities);
+
+    .-each(@name) {
+        &.@{name}.colour {
+            background-image: url("/content/svg/activities/@{name}?colour=@{col-main-nohash}");
+        }
+
+        &.@{name}.white {
+            background-image: url("/content/svg/activities/@{name}?colour=FFFFFF");
+        }
+    }
+}
+
+em {
+    font-style: italic;
+    font-weight: 600;
 }
 
 @media only screen and (max-width: 1300px) {

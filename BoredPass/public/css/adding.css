@@ -308,6 +308,63 @@
 .photo-upload form {
   display: none !important;
 }
+.tag-search {
+  position: relative;
+  margin: 56px -2px 0 -2px;
+  z-index: 2;
+  background-color: #FFFFFF;
+  border: solid 2px #25B9C5;
+  border-top: none;
+  border-radius: 0 0 3px 3px;
+  text-align: left;
+  padding: 5px;
+}
+.tag-search > a,
+.tag-container > span {
+  position: relative;
+  display: inline-block;
+  padding: 15px 30px 15px 55px;
+  border-radius: 30px;
+  color: #25B9C5;
+  border: solid 1px #25B9C5;
+  margin: 5px;
+  text-decoration: none;
+  background-position: left center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.tag-search > a.selected {
+  background-color: #25B9C5;
+  color: #FFFFFF;
+}
+.tag-search .close {
+  position: absolute;
+  top: -44px;
+  right: 10px;
+  height: 32px;
+  width: 32px;
+  border-radius: 17px;
+  transform: rotate(45deg);
+  background-color: #25B9C5;
+  color: #FFFFFF;
+  font-size: 20px;
+  padding: 5px 0;
+  text-align: center;
+}
+.tag-search:not(.hidden) + .tag-container {
+  display: none;
+}
+.tag-container {
+  margin-top: 56px;
+  padding: 0 5px;
+  cursor: pointer;
+}
+.tag-container > span:first-of-type {
+  margin-top: 10px;
+}
+.tag-container > span:last-of-type {
+  margin-bottom: 10px;
+}
 @keyframes active-pulse {
   0% {
     border-color: #FFF;

@@ -2,6 +2,16 @@
 import { ContentService } from '../../services/_all';
 
 export default new Controller('/content')
+  .handle({ route: '/svg/:type/:name' }, (req, res) => {
+    ContentService.svg({
+      type: req.params.type,
+      name: req.params.name,
+      colour: req.query.colour
+    }, (svg) => {
+      res.setHeader('content-type', 'image/svg+xml');
+      res.send(svg);
+    });
+  })
   .handle({ route: '/upload', method: 'post', produces: 'json' }, (req, res) => {
     ContentService.upload({
       req: req

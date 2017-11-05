@@ -160,6 +160,69 @@ $(document).ready(function () {
       else
         wrapper.find("select").attr("disabled", "disabled");
     });
+    $("#activity_tags").focus(function () {
+      var search = $(this);
+      var tags = $(this).next(".tag-search");
+      if (tags.length) {
+        tags.removeClass("hidden");
+        return;
+      }
+      var container = $("<div class=\"tag-search hidden\" />");
+      $.ajax({
+        url: "/tags/search",
+        method: "get",
+        success: function (d, s, x) {
+          container.removeClass("hidden");
+          for (var i in d) {
+            (function (tag) {
+              var anchor = $("<a href=\"javascript:void(0);\" class=\"tag icon activity colour " + tag.icon + "\">" + tag.name + "</a>");
+              if ($(".tag-container > ." + tag.icon).length)
+                anchor.addClass("selected");
+              anchor.click(function () {
+                search.addClass("keep-open");
+                var operation = anchor.hasClass("selected") ? "removeClass" : "addClass";
+                anchor[operation]("selected");
+                if (operation === "removeClass")
+                  $(".tag-container").find("." + tag.icon).remove();
+                else {
+                  var addedTag = $("<span class=\"tag icon activity colour " + tag.icon + "\">" + tag.name + "</span>");
+                  addedTag.data("tag", tag);
+                  $(".tag-container").append(addedTag);
+                }
+                $("#activity_tags").focus();
+                var addedTags = "";
+                $(".tag-container > span").each(function () {
+                  addedTags += $(this).data("tag").name + ";";
+                });
+                search.val(addedTags);
+                setTimeout(function () {
+                  search.removeClass("keep-open");
+                }, 100);
+              });
+              container.append(anchor);
+            })(d[i]);
+          }
+        }
+      });
+      $(this).after(container);
+      var close = $("<button class=\"close\">+</button>");
+      close.click(function () {
+        container.addClass("hidden");
+        search.blur();
+      });
+      container.prepend(close);
+    });
+    $("#activity_tags").blur(function () {
+      var search = $(this);
+      setTimeout(function () {
+        if (search.hasClass("keep-open"))
+          return;
+        search.next(".tag-search").addClass("hidden");
+      }, 150);
+    });
+    $("#activity_tags + .tag-container").click(function () {
+      $("#activity_tags").focus();
+    });
     $("#post-activity").click(function () {
       $(".mandatory").trigger("keyup");
       if ($(".error").length) {
@@ -169,7 +232,13 @@ $(document).ready(function () {
       var activity = {
         name: $("#activity_name").val(),
         description: $("#activity_description").val(),
-        tags: $("#activity_tags").data("tags"),
+        tags: (function () {
+          var tags = [];
+          $(".tag-container > span").each(function () {
+            tags.push($(this).data("tag"));
+          });
+          return tags;
+        })(),
         address: $("#activity_address").val(),
         prices: {
           free: $("#price_free").val() === "true",
@@ -219,15 +288,14 @@ $(document).ready(function () {
           return arr;
         })()
       };
+      var mode = $("#mode").val();
       $.ajax({
-        url: "/activities/" + $("#listing").val() + "/add",
-        method: "post",
+        url: "/activities/" + $("#" + (mode === "add" ? "listing" : "activity")).val() + "/" + mode + "?v=" + new Date().getTime(),
+        method: $("#mode").val() === "add" ? "post" : "put",
         contentType: "application/json",
         data: JSON.stringify(activity),
         success: function (d, s, x) {
-          console.log(d);
-          return;
-          window.location.href = "/activities/" + d.id + "/added";
+          window.location.href = "/activities/" + d.id;
         }
       });
     });

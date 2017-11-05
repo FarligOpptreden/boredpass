@@ -72,6 +72,16 @@ section.banner > div > h1 {
   text-transform: uppercase;
   align-self: flex-end;
 }
+section.banner .edit {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  background-color: #FFFFFF;
+  color: #25B9C5;
+  padding: 10px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+}
 .listing-section {
   max-width: none;
   margin: 0 auto;
@@ -93,9 +103,6 @@ section.banner > div > h1 {
 .listing-section.overview {
   max-width: 1024px;
   padding-top: 0;
-  padding-bottom: 0;
-}
-.listing-section.overview:not(.activity) {
   padding-bottom: 50px;
 }
 .listing-section.overview > div:first-of-type {
@@ -313,6 +320,12 @@ section.banner > div > h1 {
 .listing-section.grey {
   background-color: #f5f5f5;
 }
+.listing-section.alternating:nth-of-type(even) {
+  background-color: transparent;
+}
+.listing-section.alternating:nth-of-type(odd) {
+  background-color: #f5f5f5;
+}
 .listing-section.blue {
   background-color: #25B9C5;
   color: #FFFFFF;
@@ -329,12 +342,16 @@ section.banner > div > h1 {
 }
 .listing-section.activities-overview .activity > .icon,
 .listing-section.facilities .facility > .icon {
+  margin-top: 0 !important;
   display: block;
   height: 60px;
   width: 60px;
   border-radius: 30px;
   flex: 0 0 60px;
-  background-color: #25B9C5;
+  background-color: #FFFFFF;
+  background-size: 120%;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 .listing-section.activities-overview .activity > .icon {
   border: solid 2px #FFFFFF;
@@ -354,18 +371,19 @@ section.banner > div > h1 {
 .listing-section.activities-overview .activity > span:last-of-type {
   color: #FFFFFF;
 }
-.listing-section.photos {
+.listing-section.photos > div {
   min-height: 200px;
   max-width: 1012px;
   overflow: visible;
+  position: relative;
 }
-.listing-section.photos > div {
+.listing-section.photos > div > div {
   overflow: hidden;
   white-space: nowrap;
   width: 102%;
   margin: 0 -1%;
 }
-.listing-section.photos > div > .photo {
+.listing-section.photos > div > div > .photo {
   display: inline-block;
   margin: 0;
   height: 0;
@@ -374,7 +392,7 @@ section.banner > div > h1 {
   transition: all 0.2s;
   position: relative;
 }
-.listing-section.photos > div > .photo a {
+.listing-section.photos > div > div > .photo a {
   position: absolute;
   top: 5px;
   left: 5px;
@@ -385,8 +403,8 @@ section.banner > div > h1 {
   background-repeat: no-repeat;
   background-position: center center;
 }
-.listing-section.photos > a.prev,
-.listing-section.photos > a.next {
+.listing-section.photos > div > a.prev,
+.listing-section.photos > div > a.next {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -401,21 +419,21 @@ section.banner > div > h1 {
   text-decoration: none;
   transition: all 0.2s;
 }
-.listing-section.photos > a:hover {
+.listing-section.photos > div > a:hover {
   color: #25B9C5;
 }
-.listing-section.photos > a.next {
+.listing-section.photos > div > a.next {
   left: auto;
   right: -50px;
 }
-.listing-section.photos > a.hidden {
+.listing-section.photos > div > a.hidden {
   opacity: 0;
   cursor: default;
 }
-.listing-section.photos > a.prev.hidden {
+.listing-section.photos > div > a.prev.hidden {
   left: -70px;
 }
-.listing-section.photos > a.next.hidden {
+.listing-section.photos > div > a.next.hidden {
   right: -70px;
 }
 .listing-section.activities > div > div {
@@ -427,6 +445,11 @@ section.banner > div > h1 {
   background-color: #25B9C5;
   color: #f5f5f5;
   margin-bottom: 1.1%;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.listing-section.activities .activity:hover {
+  box-shadow: 0 5px 15px rgba(80, 80, 80, 0.7);
 }
 .listing-section.activities .activity:nth-child(3n+2) {
   margin: 0 1.1%;
@@ -536,6 +559,9 @@ section.banner > div > h1 {
   width: 25%;
   border: solid 2px #FFFFFF;
 }
+.listing-section.alternating:nth-of-type(odd).prices > div .price {
+  border-color: #f5f5f5;
+}
 .listing-section.prices > div .price > * {
   display: block;
   padding: 20px 10px;
@@ -553,8 +579,11 @@ section.banner > div > h1 {
   color: #25B9C5;
   font-weight: 600;
 }
+.listing-section.alternating:nth-of-type(odd).prices > div .price > span {
+  background-color: #FFFFFF;
+}
 @media only screen and (max-width: 1160px) {
-  .listing-section.photos {
+  .listing-section.photos > div {
     max-width: 912px;
   }
 }
@@ -570,11 +599,9 @@ section.banner > div > h1 {
   }
   .listing-section.overview {
     padding: 0 20px;
-  }
-  .listing-section.overview:not(.activity) {
     padding-bottom: 20px;
   }
-  .listing-section.overview:not(.activity, .photos) {
+  .listing-section.overview:not(.photos) {
     padding-bottom: 20px;
   }
   .listing-section:not(.overview) > div {
@@ -591,19 +618,23 @@ section.banner > div > h1 {
   }
   .listing-section.photos {
     width: auto;
+    min-height: 0;
+    padding: 0;
+  }
+  .listing-section.photos > div {
     margin: 0 50px;
     min-height: 0;
   }
-  .listing-section.photos > a.next {
-    right: -30px;
+  .listing-section.photos > div > a.next {
+    right: -45px;
   }
-  .listing-section.photos > a.next.hidden {
+  .listing-section.photos > div > a.next.hidden {
     right: -50px;
   }
-  .listing-section.photos > a.prev {
-    left: -30px;
+  .listing-section.photos > div > a.prev {
+    left: -45px;
   }
-  .listing-section.photos > a.prev.hidden {
+  .listing-section.photos > div > a.prev.hidden {
     left: -50px;
   }
   .listing-section.events {
@@ -705,7 +736,7 @@ section.banner > div > h1 {
     right: 0;
     top: 0;
   }
-  .listing-section.photos > div > .photo {
+  .listing-section.photos > div > div > .photo {
     width: 25%;
     padding-bottom: 25%;
   }
@@ -732,7 +763,7 @@ section.banner > div > h1 {
     margin-left: -10px;
     margin-top: -11px;
   }
-  .listing-section.photos > div > .photo {
+  .listing-section.photos > div > div > .photo {
     width: 50%;
     padding-bottom: 50%;
   }
@@ -763,7 +794,7 @@ section.banner > div > h1 {
   }
 }
 @media only screen and (max-width: 400px) {
-  .listing-section.photos > div > .photo {
+  .listing-section.photos > div > div > .photo {
     width: 100%;
     padding-bottom: 100%;
   }

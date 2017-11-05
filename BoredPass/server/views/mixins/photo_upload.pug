@@ -1,4 +1,8 @@
-﻿mixin photoUpload()
+﻿mixin photoUpload(photo)
+  - var photoLocation = photo && '/content/' + photo.fileType + '/' + photo.fileId;
+  - var backgroundImage = (photo && 'background-image: url(' + photoLocation + ');') || null
+  - var classes = photo && 'has-image'
+  - var data = photo && { fileId: photo.fileId, fileType: photo.fileType, location: photoLocation }
   div.photo-upload&attributes(attributes)
-    a
+    a(class=classes, style=backgroundImage, data-upload=data)
       span.plus +

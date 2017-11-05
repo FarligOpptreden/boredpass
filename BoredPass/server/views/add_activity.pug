@@ -11,97 +11,110 @@ block js
   script(type='text/javascript', src='/js/adding.js')
 
 block content
-  input#listing(type='hidden', value=listing_id)
+  - var isEdit = mode === 'edit'
+  if !activity
+    input#listing(type='hidden', value=listing_id)
+  if activity
+    input#activity(type='hidden', value=(activity ? activity._id : ''))
+  input#mode(type='hidden', value=(activity ? 'edit' : 'add'))
   section.banner
     div
-      h1 Add a <strong>new activity</strong>
-  section.listing-section.white
-    div.wizard-instructions
-      div.wizard-instructions-content
-        p This is it, this is what it's all been building up to. Create your activity by filling in the fields below. We have kept this as simple as possible but still flexible enough to ensure your activity listing is as relevant and detailed enough as one may want. Remember, you can always edit your activity via your dashboard, even after you've submitted it, so don't stress if something changes. It's free and instant. BoredPass lives by the "KISS" principle, you know, Keep It Simple Stupid. :)
+      h1 #{isEdit ? 'Edit an' : 'Add a'} <strong>#{isEdit ? 'activity' : 'new activity'}</strong>
+  if !isEdit
+    section.listing-section.white
+      div.wizard-instructions
+        div.wizard-instructions-content
+          p This is it, this is what it's all been building up to. Create your activity by filling in the fields below. We have kept this as simple as possible but still flexible enough to ensure your activity listing is as relevant and detailed enough as one may want. Remember, you can always edit your activity via your dashboard, even after you've submitted it, so don't stress if something changes. It's free and instant. BoredPass lives by the "KISS" principle, you know, Keep It Simple Stupid. :)
   section.listing-section.grey
     div.adding-content
-      div.field-wrapper
+      div.field-wrapper(class=(isEdit && activity.name && 'has-value' || ''))
         label(for='activity_name') Activity name, e.g. Awesome hike & abseil combo*
-        input#activity_name.mandatory(type='text')
-      div.field-wrapper.textarea
+        input#activity_name.mandatory(type='text', value=(isEdit && activity.name || ''))
+      div.field-wrapper.textarea(class=(isEdit && activity.name && 'has-value' || ''))
         label(for='activity_description') Describe the activity*
-        textarea#activity_description.mandatory
-      div.field-wrapper
+        textarea#activity_description.mandatory= (isEdit && activity.description || '')
+      div.field-wrapper.no-grow.auto-height
+        - var tagValues = activity && activity.tags && activity.tags.length ? activity.tags.join(';') : null
         label(for='activity_tags') Add activity tags (e.g. Kayaking)*
-        input#activity_tags.mandatory(type='text')
-      div.tag-container
-      div.field-wrapper
+        input#activity_tags.mandatory(type='text', readonly=true, value=tagValues)
+        div.tag-container
+          if activity && activity.tags && activity.tags.length
+            each tag in activity.tags
+              span.tag.icon.activity.colour(class=tag.icon, data-tag=tag)=tag.name
+      div.field-wrapper(class=(isEdit && activity.name && 'has-value' || ''))
         label(for='activity_address') Activity address
-        input#activity_address(type='text')
+        input#activity_address(type='text', value=(isEdit && activity.address || ''))
       div.checkbox-wrapper.prices
-        div.checkbox-option
+        div.checkbox-option(class=(isEdit && activity.prices && activity.prices.child ? 'checked' : ''))
           label(for='price_kids') Kids (4-15)
           input#price_kids(type='checkbox')
-        div.checkbox-option
+        div.checkbox-option(class=(isEdit && activity.prices && activity.prices.adult ? 'checked' : ''))
           label(for='price_adults') Adult (16+)
           input#price_adults(type='checkbox')
-        div.checkbox-option
+        div.checkbox-option(class=(isEdit && activity.prices && activity.prices.pensioner ? 'checked' : ''))
           label(for='price_pensioners') Pensioner (65+)
           input#price_pensioners(type='checkbox')
-        div.checkbox-option
+        div.checkbox-option(class=(isEdit && activity.prices && activity.prices.free ? 'checked' : ''))
           label(for='price_free') Free
           input#price_free(type='checkbox')
-      div.field-wrapper.price_kids.hidden
+      div.field-wrapper.price_kids(class=(isEdit && activity.name && 'has-value' || 'hidden'))
         label(for='price_kids_value') Kids price from
-        input#price_kids_value(type='number')
-      div.field-wrapper.price_adults.hidden
+        input#price_kids_value(type='number', value=(isEdit && activity.prices && activity.prices.child || ''))
+      div.field-wrapper.price_adults(class=(isEdit && activity.name && 'has-value' || 'hidden'))
         label(for='price_adults_value') Adult price from
-        input#price_adults_value(type='number')
-      div.field-wrapper.price_pensioners.hidden
+        input#price_adults_value(type='number', value=(isEdit && activity.prices && activity.prices.adult || ''))
+      div.field-wrapper.price_pensioners(class=(isEdit && activity.name && 'has-value' || 'hidden'))
         label(for='price_pensioners_value') Pensioner price from
-        input#price_pensioners_value(type='number')
+        input#price_pensioners_value(type='number', value=(isEdit && activity.prices && activity.prices.pensioner || ''))
       h2 Trading Hours
       div.trading-hours
         div.day-time-wrapper
-          div.checkbox-option
+          div.checkbox-option(class=(isEdit && activity.tradingHours && activity.tradingHours.monday ? 'checked' : ''))
             label(for='day_monday') Monday
             input#day_monday(type='checkbox')
-          +timePicker()#day_monday_from(disabled='disabled')
-          +timePicker()#day_monday_to(disabled='disabled')
+          +timePicker(isEdit && activity.tradingHours && activity.tradingHours.monday && activity.tradingHours.monday.from)#day_monday_from
+          +timePicker(isEdit && activity.tradingHours && activity.tradingHours.monday && activity.tradingHours.monday.to)#day_monday_to
         div.day-time-wrapper
-          div.checkbox-option
+          div.checkbox-option(class=(isEdit && activity.tradingHours && activity.tradingHours.tuesday ? 'checked' : ''))
             label(for='day_tuesday') Tuesday
             input#day_tuesday(type='checkbox')
-          +timePicker()#day_tuesday_from(disabled='disabled')
-          +timePicker()#day_tuesday_to(disabled='disabled')
+          +timePicker(isEdit && activity.tradingHours && activity.tradingHours.tuesday && activity.tradingHours.tuesday.from)#day_tuesday_from
+          +timePicker(isEdit && activity.tradingHours && activity.tradingHours.tuesday && activity.tradingHours.tuesday.to)#day_tuesday_to
         div.day-time-wrapper
-          div.checkbox-option
+          div.checkbox-option(class=(isEdit && activity.tradingHours && activity.tradingHours.wednesday ? 'checked' : ''))
             label(for='day_wednesday') Wednesday
             input#day_wednesday(type='checkbox')
-          +timePicker()#day_wednesday_from(disabled='disabled')
-          +timePicker()#day_wednesday_to(disabled='disabled')
+          +timePicker(isEdit && activity.tradingHours && activity.tradingHours.wednesday && activity.tradingHours.wednesday.from)#day_wednesday_from
+          +timePicker(isEdit && activity.tradingHours && activity.tradingHours.wednesday && activity.tradingHours.wednesday.to)#day_wednesday_to
         div.day-time-wrapper
-          div.checkbox-option
+          div.checkbox-option(class=(isEdit && activity.tradingHours && activity.tradingHours.thursday ? 'checked' : ''))
             label(for='day_thursday') Thursday
             input#day_thursday(type='checkbox')
-          +timePicker()#day_thursday_from(disabled='disabled')
-          +timePicker()#day_thursday_to(disabled='disabled')
+          +timePicker(isEdit && activity.tradingHours && activity.tradingHours.thursday && activity.tradingHours.thursday.from)#day_thursday_from
+          +timePicker(isEdit && activity.tradingHours && activity.tradingHours.thursday && activity.tradingHours.thursday.to)#day_thursday_to
         div.day-time-wrapper
-          div.checkbox-option
+          div.checkbox-option(class=(isEdit && activity.tradingHours && activity.tradingHours.friday ? 'checked' : ''))
             label(for='day_friday') Friday
             input#day_friday(type='checkbox')
-          +timePicker()#day_friday_from(disabled='disabled')
-          +timePicker()#day_friday_to(disabled='disabled')
+          +timePicker(isEdit && activity.tradingHours && activity.tradingHours.friday && activity.tradingHours.friday.from)#day_friday_from
+          +timePicker(isEdit && activity.tradingHours && activity.tradingHours.friday && activity.tradingHours.friday.to)#day_friday_to
         div.day-time-wrapper
-          div.checkbox-option
+          div.checkbox-option(class=(isEdit && activity.tradingHours && activity.tradingHours.saturday ? 'checked' : ''))
             label(for='day_saturday') Saturday
             input#day_saturday(type='checkbox')
-          +timePicker()#day_saturday_from(disabled='disabled')
-          +timePicker()#day_saturday_to(disabled='disabled')
+          +timePicker(isEdit && activity.tradingHours && activity.tradingHours.saturday && activity.tradingHours.saturday.from)#day_saturday_from
+          +timePicker(isEdit && activity.tradingHours && activity.tradingHours.saturday && activity.tradingHours.saturday.to)#day_saturday_to
         div.day-time-wrapper
-          div.checkbox-option
+          div.checkbox-option(class=(isEdit && activity.tradingHours && activity.tradingHours.sunday ? 'checked' : ''))
             label(for='day_sunday') Sunday
             input#day_sunday(type='checkbox')
-          +timePicker()#day_sunday_from(disabled='disabled')
-          +timePicker()#day_sunday_to(disabled='disabled')
+          +timePicker(isEdit && activity.tradingHours && activity.tradingHours.sunday && activity.tradingHours.sunday.from)#day_sunday_from
+          +timePicker(isEdit && activity.tradingHours && activity.tradingHours.sunday && activity.tradingHours.sunday.to)#day_sunday_to
       h2 Add Photos & Videos
       div.add-photos
+        if isEdit
+          each photo in activity.photos
+            +photoUpload(photo)(data-url='/content/upload')
         +photoUpload()(data-url='/content/upload')
       div.button-wrapper
-        button#post-activity.button.dark.large-top-margin Post Activity
+        button#post-activity.button.dark.large-top-margin #{activity ? 'Update Activity' : 'Post Activity'}

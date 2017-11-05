@@ -4,6 +4,7 @@ import path from 'path';
 import fs from 'fs';
 
 const UPLOAD_DIR = path.join(__dirname, '../../data/uploads');
+const SVG_DIR = path.join(__dirname, '../../public/images/icons');
 
 class Content {
   constructor() { }
@@ -35,6 +36,15 @@ class Content {
   }
   readResource(args, callback) {
     callback(path.join(UPLOAD_DIR, args.fileId + '.' + args.fileType));
+  }
+  svg(args, callback) {
+    fs.readFile(SVG_DIR + '/' + args.type + '/' + args.name + '.svg', (err, data) => {
+      if (err) {
+        callback(null);
+        return;
+      }
+      callback(data);
+    });
   }
 }
 

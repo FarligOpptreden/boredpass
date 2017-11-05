@@ -291,6 +291,12 @@ body {
   border-radius: 3px;
   font-family: 'Raleway', sans-serif;
 }
+.field-wrapper.no-grow input {
+  opacity: 0;
+}
+.field-wrapper.auto-height {
+  height: auto;
+}
 .field-wrapper textarea {
   height: 300px;
   resize: none;
@@ -302,8 +308,8 @@ body {
 .field-wrapper.focus label {
   color: #25B9C5;
 }
-.field-wrapper.focus label,
-.field-wrapper.has-value label {
+.field-wrapper.focus:not(.no-grow) label,
+.field-wrapper.has-value:not(.no-grow) label {
   font-size: 11px;
   padding-top: 11px;
 }
@@ -457,6 +463,118 @@ hr {
 }
 .photo-upload form {
   display: none;
+}
+.icon.activity.abseiling.colour {
+  background-image: url("/content/svg/activities/abseiling?colour=25B9C5");
+}
+.icon.activity.abseiling.white {
+  background-image: url("/content/svg/activities/abseiling?colour=FFFFFF");
+}
+.icon.activity.bodyboarding.colour {
+  background-image: url("/content/svg/activities/bodyboarding?colour=25B9C5");
+}
+.icon.activity.bodyboarding.white {
+  background-image: url("/content/svg/activities/bodyboarding?colour=FFFFFF");
+}
+.icon.activity.bus-tours.colour {
+  background-image: url("/content/svg/activities/bus-tours?colour=25B9C5");
+}
+.icon.activity.bus-tours.white {
+  background-image: url("/content/svg/activities/bus-tours?colour=FFFFFF");
+}
+.icon.activity.golf.colour {
+  background-image: url("/content/svg/activities/golf?colour=25B9C5");
+}
+.icon.activity.golf.white {
+  background-image: url("/content/svg/activities/golf?colour=FFFFFF");
+}
+.icon.activity.hiking.colour {
+  background-image: url("/content/svg/activities/hiking?colour=25B9C5");
+}
+.icon.activity.hiking.white {
+  background-image: url("/content/svg/activities/hiking?colour=FFFFFF");
+}
+.icon.activity.karting.colour {
+  background-image: url("/content/svg/activities/karting?colour=25B9C5");
+}
+.icon.activity.karting.white {
+  background-image: url("/content/svg/activities/karting?colour=FFFFFF");
+}
+.icon.activity.kayaking.colour {
+  background-image: url("/content/svg/activities/kayaking?colour=25B9C5");
+}
+.icon.activity.kayaking.white {
+  background-image: url("/content/svg/activities/kayaking?colour=FFFFFF");
+}
+.icon.activity.kite-boarding.colour {
+  background-image: url("/content/svg/activities/kite-boarding?colour=25B9C5");
+}
+.icon.activity.kite-boarding.white {
+  background-image: url("/content/svg/activities/kite-boarding?colour=FFFFFF");
+}
+.icon.activity.mountain-biking.colour {
+  background-image: url("/content/svg/activities/mountain-biking?colour=25B9C5");
+}
+.icon.activity.mountain-biking.white {
+  background-image: url("/content/svg/activities/mountain-biking?colour=FFFFFF");
+}
+.icon.activity.movies.colour {
+  background-image: url("/content/svg/activities/movies?colour=25B9C5");
+}
+.icon.activity.movies.white {
+  background-image: url("/content/svg/activities/movies?colour=FFFFFF");
+}
+.icon.activity.museum.colour {
+  background-image: url("/content/svg/activities/museum?colour=25B9C5");
+}
+.icon.activity.museum.white {
+  background-image: url("/content/svg/activities/museum?colour=FFFFFF");
+}
+.icon.activity.paintball.colour {
+  background-image: url("/content/svg/activities/paintball?colour=25B9C5");
+}
+.icon.activity.paintball.white {
+  background-image: url("/content/svg/activities/paintball?colour=FFFFFF");
+}
+.icon.activity.put-put.colour {
+  background-image: url("/content/svg/activities/put-put?colour=25B9C5");
+}
+.icon.activity.put-put.white {
+  background-image: url("/content/svg/activities/put-put?colour=FFFFFF");
+}
+.icon.activity.road-cycling.colour {
+  background-image: url("/content/svg/activities/road-cycling?colour=25B9C5");
+}
+.icon.activity.road-cycling.white {
+  background-image: url("/content/svg/activities/road-cycling?colour=FFFFFF");
+}
+.icon.activity.sup.colour {
+  background-image: url("/content/svg/activities/sup?colour=25B9C5");
+}
+.icon.activity.sup.white {
+  background-image: url("/content/svg/activities/sup?colour=FFFFFF");
+}
+.icon.activity.surfing.colour {
+  background-image: url("/content/svg/activities/surfing?colour=25B9C5");
+}
+.icon.activity.surfing.white {
+  background-image: url("/content/svg/activities/surfing?colour=FFFFFF");
+}
+.icon.activity.swimming.colour {
+  background-image: url("/content/svg/activities/swimming?colour=25B9C5");
+}
+.icon.activity.swimming.white {
+  background-image: url("/content/svg/activities/swimming?colour=FFFFFF");
+}
+.icon.activity.tennis.colour {
+  background-image: url("/content/svg/activities/tennis?colour=25B9C5");
+}
+.icon.activity.tennis.white {
+  background-image: url("/content/svg/activities/tennis?colour=FFFFFF");
+}
+em {
+  font-style: italic;
+  font-weight: 600;
 }
 @media only screen and (max-width: 1300px) {
   #header > nav > div,

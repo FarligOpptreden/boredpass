@@ -54,10 +54,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="server\controllers\api\v1\activities.js" />
+    <Compile Include="server\controllers\html\tag.js" />
     <Compile Include="server\controllers\html\content.js" />
     <Compile Include="server\controllers\html\listing.js" />
     <Compile Include="server\controllers\html\activity.js" />
     <Compile Include="server\controllers\_default.js" />
+    <Compile Include="server\services\tagsService.js" />
     <Compile Include="server\services\contentService.js" />
     <Compile Include="server\services\listingsService.js" />
     <Compile Include="server\services\activitiesService.js" />
@@ -89,6 +91,28 @@
       <SubType>Content</SubType>
       <DependentUpon>public\css\_default.css</DependentUpon>
     </Content>
+    <Content Include="public\images\icons\activities\abseiling.svg" />
+    <Content Include="public\images\icons\activities\bodyboarding.svg" />
+    <Content Include="public\images\icons\activities\bus-tours.svg" />
+    <Content Include="public\images\icons\activities\golf.svg" />
+    <Content Include="public\images\icons\activities\hiking.svg" />
+    <Content Include="public\images\icons\activities\karting.svg" />
+    <Content Include="public\images\icons\activities\kayaking.svg" />
+    <Content Include="public\images\icons\activities\kite-boarding.svg" />
+    <Content Include="public\images\icons\activities\mountain-biking.svg" />
+    <Content Include="public\images\icons\activities\movies.svg" />
+    <Content Include="public\images\icons\activities\museum.svg" />
+    <Content Include="public\images\icons\activities\paintball.svg" />
+    <Content Include="public\images\icons\activities\put-put.svg" />
+    <Content Include="public\images\icons\activities\road-cycling.svg" />
+    <Content Include="public\images\icons\activities\sup.svg" />
+    <Content Include="public\images\icons\activities\surfing.svg" />
+    <Content Include="public\images\icons\activities\swimming.svg" />
+    <Content Include="public\images\icons\activities\tennis.svg" />
+    <Content Include="public\images\icons\facilities\child-friendly.svg" />
+    <Content Include="public\images\icons\facilities\disabled.svg" />
+    <Content Include="public\images\icons\facilities\dog-friendly.svg" />
+    <Content Include="public\images\icons\facilities\picnic.svg" />
     <Content Include="run.bat" />
     <Content Include="server\less\add_activity.less">
       <SubType>Code</SubType>
@@ -107,6 +131,7 @@
     </Content>
     <Content Include="public\css\listing.css" />
     <Content Include="server\less\adding.less" />
+    <Content Include="server\less\__for.less" />
     <Content Include="server\less\home.less" />
     <Content Include="server\less\listing.less">
       <SubType>Code</SubType>
@@ -155,6 +180,9 @@
     <Folder Include="handlr\" />
     <Folder Include="data\" />
     <Folder Include="public\css\" />
+    <Folder Include="public\images\icons\" />
+    <Folder Include="public\images\icons\facilities\" />
+    <Folder Include="public\images\icons\activities\" />
     <Folder Include="public\js\" />
     <Folder Include="public\images\" />
     <Folder Include="server\" />

@@ -155,13 +155,12 @@
     <Content Include="public\images\logo.png" />
     <Content Include="public\images\overlay-surfing.jpg" />
     <Content Include="README.md" />
+    <Content Include="server\views\activity.pug" />
     <Content Include="server\views\add_activity.pug" />
-    <Content Include="server\views\add_listing_done.pug" />
     <Content Include="server\views\add_listing.pug" />
+    <Content Include="server\views\add_listing_done.pug" />
     <Content Include="server\views\mixins\photo_upload.pug" />
     <Content Include="server\views\mixins\time_picker.pug" />
-    <Content Include="server\views\_layout.pug" />
-    <Content Include="server\views\activity.pug" />
     <Content Include="server\views\listing.pug" />
     <Content Include="server\views\mixins\activities.pug" />
     <Content Include="server\views\mixins\facilities.pug" />
@@ -170,6 +169,7 @@
     <Content Include="server\views\partials\add_listing_step2.pug" />
     <Content Include="server\views\partials\add_listing_step1.pug" />
     <Content Include="server\views\home.pug" />
+    <Content Include="server\views\_layout.pug" />
     <Content Include="typings.json" />
     <Content Include="server\views\error.pug" />
     <Content Include="Web.config" />

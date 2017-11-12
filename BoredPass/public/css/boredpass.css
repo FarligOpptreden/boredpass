@@ -572,6 +572,30 @@ hr {
 .icon.activity.tennis.white {
   background-image: url("/content/svg/activities/tennis?colour=FFFFFF");
 }
+.icon.facility.child-friendly.colour {
+  background-image: url("/content/svg/facilities/child-friendly?colour=25B9C5");
+}
+.icon.facility.child-friendly.white {
+  background-image: url("/content/svg/facilities/child-friendly?colour=FFFFFF");
+}
+.icon.facility.disabled.colour {
+  background-image: url("/content/svg/facilities/disabled?colour=25B9C5");
+}
+.icon.facility.disabled.white {
+  background-image: url("/content/svg/facilities/disabled?colour=FFFFFF");
+}
+.icon.facility.dog-friendly.colour {
+  background-image: url("/content/svg/facilities/dog-friendly?colour=25B9C5");
+}
+.icon.facility.dog-friendly.white {
+  background-image: url("/content/svg/facilities/dog-friendly?colour=FFFFFF");
+}
+.icon.facility.picnic.colour {
+  background-image: url("/content/svg/facilities/picnic?colour=25B9C5");
+}
+.icon.facility.picnic.white {
+  background-image: url("/content/svg/facilities/picnic?colour=FFFFFF");
+}
 em {
   font-style: italic;
   font-weight: 600;

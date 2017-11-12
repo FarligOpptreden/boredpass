@@ -1,5 +1,5 @@
-﻿mixin activities(data)
-  if data && data.length
+﻿mixin activities(data, editable)
+  if (data && data.length) || editable
     section.listing-section.activities-overview&attributes(attributes)
       div
         h1 Activities Offered

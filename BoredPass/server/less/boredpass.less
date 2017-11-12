@@ -450,6 +450,20 @@ hr {
     }
 }
 
+.icon.facility {
+    .for(@facilities);
+
+    .-each(@name) {
+        &.@{name}.colour {
+            background-image: url("/content/svg/facilities/@{name}?colour=@{col-main-nohash}");
+        }
+
+        &.@{name}.white {
+            background-image: url("/content/svg/facilities/@{name}?colour=FFFFFF");
+        }
+    }
+}
+
 em {
     font-style: italic;
     font-weight: 600;

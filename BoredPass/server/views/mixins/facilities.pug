@@ -1,10 +1,10 @@
-﻿mixin facilities(data)
-  if data && data.length
+﻿mixin facilities(data, edit)
+  if (data && data.length) || edit
     section.listing-section.facilities&attributes(attributes)
       div
         h1 Our Facilities
         each facility, index in data
-          - var className = facility.toLowerCase().replace(/ /g, '-')
-          div.facility
-            span(class='icon ' + className)
-            span=facility
+          - var className = facility.icon.toLowerCase().replace(/ /g, '-')
+          div.facility(class=(edit ? 'editing ' + (facility.selected ? 'selected' : '') : ''), data-facility=(edit ? facility : false))
+            span.facility.icon.colour(class=className)
+            span=facility.name

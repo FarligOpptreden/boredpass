@@ -6,29 +6,30 @@ include mixins/photos
 
 block css
   link(rel='stylesheet', href='/css/listing.min.css')
+  link(rel='stylesheet', href='/css/listing_edit.min.css')
 
 block js
   script(type='text/javascript', src='/js/listing.js')
+  script(type='text/javascript', src='/js/editing.js')
 
 block content
   section.banner
-    a.edit(href='/listings/' + listing._id + '/edit') Edit
   section.listing-section.overview
-    div
+    div.contact-info
       - var logo = listing.logo ? 'background-image:url(/content/' + listing.logo.fileType + '/' + listing.logo.fileId + ');' : null
-      div.logo(style=logo)
-      a.location(target='_blank', href='https://google.com/maps/place/' + encodeURIComponent(listing.address))
+      div.logo(style=logo)      
+      a.location
         span.fa.fa-map-marker
-        span= listing.address
-      a.telephone(target='_blank', href='tel:' + listing.telephone)
+        input#listing-address.content-editable(type='text', value=listing.address, placeholder='Address')
+      a.telephone
         span.fa.fa-phone
         - var telephone = listing.telephone || listing.cellphone
-        span= telephone
-      a.email(target='_blank', href='mailto:' + listing.email, title=listing.email)
+        input#listing-telephone.content-editable(type='text', value=listing.telephone, placeholder='Telephone Number')
+      a.email
         span.fa.fa-envelope
-        span= listing.email
-      - var website = listing.website && listing.website.indexOf('http') >= 0 ? listing.website : 'http://' + listing.website
-      a.website(target='_blank', href=website, title=listing.website)= listing.website
+        input#listing-email.content-editable(type='text', value=listing.email, placeholder='Email Address')
+      a.website
+        input#listing-website.content-editable(type='text', value=listing.website, placeholder='Website')
       div.social
         - var socialFacebook = listing.social.facebook ? (listing.social.facebook.indexOf('http') >= 0 ? listing.social.facebook : 'https://' + listing.social.facebook) : null
         a.facebook.fa.fa-facebook(title='Facebook', target=(socialFacebook ? '_blank' : false), href=(socialFacebook ? socialFacebook : false))
@@ -43,69 +44,24 @@ block content
         - var socialYoutube = listing.social.youtube ? (listing.social.youtube.indexOf('http') >= 0 ? listing.social.youtube : 'https://' + listing.social.youtube) : null
         a.youtube.fa.fa-youtube-play(title='Youtube', target=(socialYutube ? '_blank' : false), href=(socialYutube ? socialYutube : false))
     div
-      h1= listing.name
-      != marked(listing.description)
-      button.subscribe.button Subscribe
+      input#listing-name.content-editable(type='text', value=listing.name, placeholder='Listing Name')
+      textarea#listing-description.content-editable(placeholder='Description')
+        =listing.description
     div
-      span.rating
-        label Rating Type 
-        span.stars
-          span.fa.fa-star.color
-          span.fa.fa-star.color
-          span.fa.fa-star.color
-          span.fa.fa-star.color
-          span.fa.fa-star
-      span.claimed
-        span.fa.fa-thumbs-o-up
-        span Claimed
-      a.add
-      a.message
-      a.share
-  +activities([]).blue
-  - var facilities = []
-  - if (listing.facilities.children) facilities.push('Child Friendly')
-  - if (listing.facilities.dogs) facilities.push('Dog Friendly')
-  - if (listing.facilities.wheelchair) facilities.push('Wheelchair Friendly')
-  - if (listing.facilities.picnic) facilities.push('Picnic Facilities')
-  +facilities(facilities).alternating
-  +photos(listing.photos).alternating
-  if activities && activities.length
-    section.listing-section.activities.alternating
+  +activities([], true).blue
+  +facilities(facilities, true).alternating
+  +photos(listing.photos, true).alternating
+  section.listing-section.activities.alternating
+    div
+      h1 Our Activities
       div
-        h1 Our Activities
-        div
-          each activity, index in activities
-            a.activity(href='/activities/' + activity._id)
-              div.photo
-              h2= activity.name
-              - var desc = activity.description.length > 100 ? activity.description.substring(0, 100) : activity.description
-              p= desc
-              span.read-more.button.inverse(href='/activities/' + activity._id) Read More
-  section.listing-section.events
-    div.calendar
-    div.agenda
-      div
-        h1
-          span.day 04
-          span.month July
-        ul.activities
-          li
-            span.fa.fa-dot-circle-o
-            h2 Stand Up Paddle Boarding
-            ul
-              li 2:30pm - 4:30pm
-              li 2hr
-          li
-            span.fa.fa-dot-circle-o
-            h2 Marsh Kayak Tour
-            ul
-              li N/A
-          li
-            span.fa.fa-dot-circle-o
-            h2 Private Boat Tours
-            ul
-              li 6:30pm - 8:30/9:00pm
-              li 2-2.5hr Group Trips (non-private)
+        each activity, index in activities
+          a.activity(href='/activities/' + activity._id)
+            div.photo
+            h2= activity.name
+            - var desc = activity.description.length > 100 ? activity.description.substring(0, 100) : activity.description
+            p= desc
+            span.read-more.button.inverse(href='/activities/' + activity._id) Read More
   section.listing-section.lower.white
     div
       a.report.button.grey(href='/report-listing') Report Listing

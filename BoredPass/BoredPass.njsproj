@@ -46,6 +46,7 @@
     </Compile>
     <Compile Include="handlr\_arrayExtensions.js" />
     <Compile Include="bin\www" />
+    <Compile Include="public\js\editing.js" />
     <Compile Include="public\js\adding.js" />
     <Compile Include="public\js\listing.js" />
     <Compile Include="public\js\boredpass.js" />
@@ -59,6 +60,7 @@
     <Compile Include="server\controllers\html\listing.js" />
     <Compile Include="server\controllers\html\activity.js" />
     <Compile Include="server\controllers\_default.js" />
+    <Compile Include="server\services\facilitiesService.js" />
     <Compile Include="server\services\tagsService.js" />
     <Compile Include="server\services\contentService.js" />
     <Compile Include="server\services\listingsService.js" />
@@ -80,6 +82,11 @@
     <Content Include="public\css\home.min.css">
       <SubType>Content</SubType>
       <DependentUpon>public\css\home.css</DependentUpon>
+    </Content>
+    <Content Include="public\css\listing_edit.css" />
+    <Content Include="public\css\listing_edit.min.css">
+      <SubType>Content</SubType>
+      <DependentUpon>public\css\listing_edit.css</DependentUpon>
     </Content>
     <Content Include="public\css\shared.css" />
     <Content Include="public\css\shared.min.css">
@@ -131,6 +138,7 @@
     </Content>
     <Content Include="public\css\listing.css" />
     <Content Include="server\less\adding.less" />
+    <Content Include="server\less\listing_edit.less" />
     <Content Include="server\less\__for.less" />
     <Content Include="server\less\home.less" />
     <Content Include="server\less\listing.less">
@@ -159,6 +167,7 @@
     <Content Include="server\views\add_activity.pug" />
     <Content Include="server\views\add_listing.pug" />
     <Content Include="server\views\add_listing_done.pug" />
+    <Content Include="server\views\listing_edit.pug" />
     <Content Include="server\views\mixins\photo_upload.pug" />
     <Content Include="server\views\mixins\time_picker.pug" />
     <Content Include="server\views\listing.pug" />

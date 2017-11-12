@@ -1,5 +1,5 @@
 ﻿import Controller from '../../../handlr/Controller';
-import { ListingsService, ActivitiesService } from '../../services/_all';
+import { ListingsService, ActivitiesService, FacilitiesService, TagsService } from '../../services/_all';
 import marked from 'marked';
 
 export default new Controller('/listings')
@@ -46,6 +46,41 @@ export default new Controller('/listings')
           marked: marked,
           listing: listing,
           activities: activities
+        });
+      });
+    });
+  })
+  .handle({ route: '/:id/edit', method: 'get', produces: 'html' }, (req, res) => {
+    FacilitiesService.findMany({
+      sort: { name: 1 }
+    }, (facilities) => {
+      TagsService.findMany({
+        sort: { name: 1 }
+      }, (tags) => {
+        ListingsService.findOne({
+          filter: req.params.id
+        }, (listing) => {
+          ActivitiesService.findMany({
+            filter: { listing_id: listing._id },
+            sort: { name: 1 }
+          }, (activities) => {
+            if (listing.facilities && listing.facilities.length)
+              listing.facilities.map((facility) => {
+                facilities.map((f) => {
+                  if (f._id === facility._id)
+                    f.selected = true;
+                });
+              });
+            res.render('listing_edit', {
+              title: listing.name + ' - BoredPass',
+              moment: require('moment'),
+              marked: marked,
+              listing: listing,
+              activities: activities,
+              facilities: facilities,
+              tags: tags
+            });
+          });
         });
       });
     });

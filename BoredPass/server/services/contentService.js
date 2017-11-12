@@ -5,6 +5,7 @@ import fs from 'fs';
 
 const UPLOAD_DIR = path.join(__dirname, '../../data/uploads');
 const SVG_DIR = path.join(__dirname, '../../public/images/icons');
+const TO_REPLACE = '#25B9C5';
 
 class Content {
   constructor() { }

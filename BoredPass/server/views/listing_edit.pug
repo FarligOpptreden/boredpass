@@ -6,6 +6,7 @@ include mixins/photos
 
 block css
   link(rel='stylesheet', href='/css/listing.min.css')
+  link(rel='stylesheet', href='/css/editing.min.css')
   link(rel='stylesheet', href='/css/listing_edit.min.css')
 
 block js
@@ -50,7 +51,7 @@ block content
     div
   +activities([], true).blue
   +facilities(facilities, true).alternating
-  +photos(listing.photos, true).alternating
+  +photos(listing.photos, true).alternating.add-photos
   section.listing-section.activities.alternating
     div
       h1 Our Activities
@@ -61,7 +62,12 @@ block content
             h2= activity.name
             - var desc = activity.description.length > 100 ? activity.description.substring(0, 100) : activity.description
             p= desc
-            span.read-more.button.inverse(href='/activities/' + activity._id) Read More
+            span.read-more.button.inverse Read More
+        a.activity.new(href='/activities/add?listing=' + listing._id)
+          div.photo
+          h2 Add Activity
+          p Create an activity to flesh out your listing.
+          span.read-more.button.inverse Add
   section.listing-section.lower.white
     div
       a.report.button.grey(href='/report-listing') Report Listing

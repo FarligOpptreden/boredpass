@@ -32,6 +32,10 @@
     "outputFile": "public/css/adding.css"
   },
   {
+    "inputFile": "server/less/editing.less",
+    "outputFile": "public/css/editing.css"
+  },
+  {
     "inputFile": "server/less/home.less",
     "outputFile": "public/css/home.css"
   }

@@ -511,6 +511,7 @@ section.banner .edit {
     margin-bottom: 1.1%;
     text-decoration: none;
     transition: all 0.2s;
+    position: relative;
 }
 
 .listing-section.activities .activity:hover {
@@ -675,6 +676,35 @@ section.banner .edit {
 
 .listing-section.alternating:nth-of-type(odd).prices > div .price > span {
     background-color: @col-button-fg;
+}
+
+.listing-section span.plus,
+.listing-section span.close {
+    background-color: #25B9C5;
+    color: #FFFFFF;
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 50px;
+    padding: 0;
+    text-align: center;
+}
+
+.listing-section span.close {
+    top: 5px;
+    right: 5px;
+    left: auto;
+    bottom: auto;
+    border-radius: 25px;
+    opacity: 0.5;
+    transform: rotate(45deg);
+    transition: all 0.25s;
+}
+
+.listing-section .has-image:hover span.close {
+    opacity: 1;
 }
 
 @media only screen and (max-width: 1160px) {
@@ -853,7 +883,7 @@ section.banner .edit {
     .listing-section.overview > div:nth-child(2) > .button {
         right: 175px;
     }
-    
+
     .listing-section.overview.activity > div:nth-child(2) {
         padding: 20px 0 30px 0;
     }

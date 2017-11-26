@@ -162,32 +162,6 @@
   border: none;
   background-size: contain;
 }
-.listing-section span.plus,
-.listing-section span.close {
-  background-color: #25B9C5;
-  color: #FFFFFF;
-  height: 50px;
-  width: 50px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  font-size: 50px;
-  padding: 0;
-  text-align: center;
-}
-.listing-section span.close {
-  top: 5px;
-  right: 5px;
-  left: auto;
-  bottom: auto;
-  border-radius: 25px;
-  opacity: 0.5;
-  transform: rotate(45deg);
-  transition: all 0.25s;
-}
-.listing-section .has-image:hover span.close {
-  opacity: 1;
-}
 .listing-section .wizard-content .add-overview .add-logo > span {
   background-color: rgba(255, 255, 255, 0.2);
 }

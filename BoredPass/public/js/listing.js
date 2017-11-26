@@ -21,10 +21,8 @@ $(document).ready(function () {
     }
     getNum();
     $(".photos .next, .photos .prev").removeClass("hidden");
-    if (numVisible >= count) {
-      console.log("NOTHING VISIBLE");
+    if (numVisible >= count)
       $(".photos .next, .photos .prev").addClass("hidden");
-    }
   };
   var doScroll = function (factor) {
     var currentScroll = parseInt($(".photos > div > div").data("current-scroll"), 10);

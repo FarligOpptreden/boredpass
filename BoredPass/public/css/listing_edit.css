@@ -63,3 +63,9 @@
 .listing-section div.facility:hover > span:not(.icon) {
   opacity: 1 !important;
 }
+.listing-section.photos.edit > div > div {
+  flex-wrap: wrap;
+}
+.listing-section.photos.edit > div > div > div {
+  flex: 0 0 33.3%;
+}

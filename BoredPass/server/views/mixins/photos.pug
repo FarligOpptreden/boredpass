@@ -1,10 +1,16 @@
-﻿mixin photos(data)
-  if data && data.length
-    section.listing-section.photos&attributes(attributes)
+﻿include photo_upload
+
+mixin photos(data, edit)
+  if (data && data.length) || edit
+    section.listing-section.photos(class=edit && 'edit')&attributes(attributes)
       div
-        a.prev.hidden.fa.fa-angle-left(href='prev-photo')
+        if !edit
+          a.prev.hidden.fa.fa-angle-left(href='prev-photo')
         div(data-current-scroll='0')
           each photo, index in data
             div.photo
               a(class='photo' + index, style='background-image: url(/content/' + photo.fileType + '/' + photo.fileId + ');')
-        a.next.fa.fa-angle-right(href='next-photo')
+          if edit
+            +photoUpload()(data-url='/content/upload')
+        if !edit
+          a.next.fa.fa-angle-right(href='next-photo')

@@ -1,23 +1,4 @@
-﻿.photo-upload {
-  cursor: pointer;
-}
-.photo-upload > a {
-  transition: all 0.25s;
-  border: solid 2px #FFFFFF;
-  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
-}
-.photo-upload > a:hover {
-  border-color: #25B9C5;
-}
-.photo-upload > a.has-image {
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-.photo-upload form {
-  display: none !important;
-}
-.listing-section.photos.edit > div {
+﻿.listing-section.photos.edit > div {
   max-width: 1024px;
 }
 .listing-section.photos.edit > div > div {
@@ -48,4 +29,11 @@
   font-size: 50px;
   padding: 0;
   text-align: center;
+}
+.listing-section .photo-upload.logo > a {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }

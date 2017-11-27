@@ -78,6 +78,8 @@
     <Content Include="public\css\adding.css" />
     <Content Include="public\css\adding.min.css" />
     <Content Include="public\css\add_activity.css" />
+    <Content Include="public\css\content_management.css" />
+    <Content Include="public\css\content_management.min.css" />
     <Content Include="public\css\editing.css" />
     <Content Include="public\css\editing.min.css">
       <SubType>Content</SubType>
@@ -126,6 +128,7 @@
     <Content Include="public\images\icons\facilities\dog-friendly.svg" />
     <Content Include="public\images\icons\facilities\picnic.svg" />
     <Content Include="run.bat" />
+    <Content Include="server\less\content_management.less" />
     <Content Include="server\less\editing.less" />
     <Content Include="server\less\add_activity.less">
       <SubType>Code</SubType>

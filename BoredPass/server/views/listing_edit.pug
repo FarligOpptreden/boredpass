@@ -2,10 +2,12 @@
 
 include mixins/activities
 include mixins/facilities
+include mixins/photo_upload
 include mixins/photos
 
 block css
   link(rel='stylesheet', href='/css/listing.min.css')
+  link(rel='stylesheet', href='/css/content_management.min.css')
   link(rel='stylesheet', href='/css/editing.min.css')
   link(rel='stylesheet', href='/css/listing_edit.min.css')
 
@@ -14,11 +16,11 @@ block js
   script(type='text/javascript', src='/js/editing.js')
 
 block content
+  input#listing-id(type='hidden', value=listing._id)
   section.banner
   section.listing-section.overview
     div.contact-info
-      - var logo = listing.logo ? 'background-image:url(/content/' + listing.logo.fileType + '/' + listing.logo.fileId + ');' : null
-      div.logo(style=logo)      
+      +photoUpload(listing.logo)(data-url='/content/upload', data-allow-change='true').logo
       a.location
         span.fa.fa-map-marker
         input#listing-address.content-editable(type='text', value=listing.address, placeholder='Address')
@@ -49,7 +51,7 @@ block content
       textarea#listing-description.content-editable(placeholder='Description')
         =listing.description
     div
-  +activities([], true).blue
+  +activities(listing.tags, true).blue
   +facilities(facilities, true).alternating
   +photos(listing.photos, true).alternating.add-photos
   section.listing-section.activities.alternating
@@ -68,6 +70,6 @@ block content
           h2 Add Activity
           p Create an activity to flesh out your listing.
           span.read-more.button.inverse Add
-  section.listing-section.lower.white
+  section.listing-section.lower.alternating
     div
-      a.report.button.grey(href='/report-listing') Report Listing
+      button#post-listing.button.dark Update Listing

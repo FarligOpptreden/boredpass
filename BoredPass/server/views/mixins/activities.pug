@@ -8,3 +8,12 @@
           div.activity
             span.activity.icon.colour(class=className)
             span=activity.name
+        if editable
+          div.field-wrapper.no-grow.auto-height
+            - var tagValues = data && data.length ? data.join(';') : null
+            label(for='activity_tags') Add activity tags (e.g. Kayaking)*
+            input#activity-tags.activity-tags(type='text', readonly=true, value=tagValues)
+            div.tag-container
+              if data && data.length
+                each tag in data
+                  span.tag.icon.activity.colour(class=tag.icon, data-tag=tag)=tag.name

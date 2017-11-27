@@ -5,6 +5,7 @@ include mixins/photo_upload
 
 block css
   link(rel='stylesheet', href='/css/listing.min.css')
+  link(rel='stylesheet', href='/css/content_management.min.css')
   link(rel='stylesheet', href='/css/adding.min.css')
 
 block js
@@ -36,7 +37,7 @@ block content
       div.field-wrapper.no-grow.auto-height
         - var tagValues = activity && activity.tags && activity.tags.length ? activity.tags.join(';') : null
         label(for='activity_tags') Add activity tags (e.g. Kayaking)*
-        input#activity_tags.mandatory(type='text', readonly=true, value=tagValues)
+        input#activity_tags.activity-tags.mandatory(type='text', readonly=true, value=tagValues)
         div.tag-container
           if activity && activity.tags && activity.tags.length
             each tag in activity.tags

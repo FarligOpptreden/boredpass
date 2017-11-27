@@ -38,5 +38,9 @@
   {
     "inputFile": "server/less/home.less",
     "outputFile": "public/css/home.css"
+  },
+  {
+    "inputFile": "server/less/content_management.less",
+    "outputFile": "public/css/content_management.css"
   }
 ]

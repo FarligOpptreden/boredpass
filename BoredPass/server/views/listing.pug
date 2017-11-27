@@ -12,7 +12,8 @@ block js
 
 block content
   section.banner
-    a.edit(href='/listings/' + listing._id + '/edit') Edit
+    div
+      a.edit(href='/listings/' + listing._id + '/edit') Edit
   section.listing-section.overview
     div
       - var logo = listing.logo ? 'background-image:url(/content/' + listing.logo.fileType + '/' + listing.logo.fileId + ');' : null
@@ -61,13 +62,8 @@ block content
       a.add
       a.message
       a.share
-  +activities([]).blue
-  - var facilities = []
-  - if (listing.facilities.children) facilities.push('Child Friendly')
-  - if (listing.facilities.dogs) facilities.push('Dog Friendly')
-  - if (listing.facilities.wheelchair) facilities.push('Wheelchair Friendly')
-  - if (listing.facilities.picnic) facilities.push('Picnic Facilities')
-  +facilities(facilities).alternating
+  +activities(listing.tags).blue
+  +facilities(listing.facilities).alternating
   +photos(listing.photos).alternating
   if activities && activities.length
     section.listing-section.activities.alternating
@@ -81,31 +77,32 @@ block content
               - var desc = activity.description.length > 100 ? activity.description.substring(0, 100) : activity.description
               p= desc
               span.read-more.button.inverse(href='/activities/' + activity._id) Read More
-  section.listing-section.events
-    div.calendar
-    div.agenda
-      div
-        h1
-          span.day 04
-          span.month July
-        ul.activities
-          li
-            span.fa.fa-dot-circle-o
-            h2 Stand Up Paddle Boarding
-            ul
-              li 2:30pm - 4:30pm
-              li 2hr
-          li
-            span.fa.fa-dot-circle-o
-            h2 Marsh Kayak Tour
-            ul
-              li N/A
-          li
-            span.fa.fa-dot-circle-o
-            h2 Private Boat Tours
-            ul
-              li 6:30pm - 8:30/9:00pm
-              li 2-2.5hr Group Trips (non-private)
-  section.listing-section.lower.white
+  //-
+    section.listing-section.events
+      div.calendar
+      div.agenda
+        div
+          h1
+            span.day 04
+            span.month July
+          ul.activities
+            li
+              span.fa.fa-dot-circle-o
+              h2 Stand Up Paddle Boarding
+              ul
+                li 2:30pm - 4:30pm
+                li 2hr
+            li
+              span.fa.fa-dot-circle-o
+              h2 Marsh Kayak Tour
+              ul
+                li N/A
+            li
+              span.fa.fa-dot-circle-o
+              h2 Private Boat Tours
+              ul
+                li 6:30pm - 8:30/9:00pm
+                li 2-2.5hr Group Trips (non-private)
+  section.listing-section.lower.alternating
     div
       a.report.button.grey(href='/report-listing') Report Listing

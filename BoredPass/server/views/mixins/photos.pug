@@ -8,8 +8,11 @@ mixin photos(data, edit)
           a.prev.hidden.fa.fa-angle-left(href='prev-photo')
         div(data-current-scroll='0')
           each photo, index in data
-            div.photo
-              a(class='photo' + index, style='background-image: url(/content/' + photo.fileType + '/' + photo.fileId + ');')
+            if edit
+              +photoUpload(photo)(data-url='/content/upload')
+            else
+              div.photo
+                a(class='photo' + index, style='background-image: url(/content/' + photo.fileType + '/' + photo.fileId + ');')
           if edit
             +photoUpload()(data-url='/content/upload')
         if !edit

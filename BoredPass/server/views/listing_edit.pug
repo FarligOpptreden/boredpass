@@ -62,7 +62,7 @@ block content
           a.activity(href='/activities/' + activity._id)
             div.photo
             h2= activity.name
-            - var desc = activity.description.length > 100 ? activity.description.substring(0, 100) : activity.description
+            - var desc = activity.description.length > 100 ? activity.description.substring(0, 100) + '...' : activity.description
             p= desc
             span.read-more.button.inverse Read More
         a.activity.new(href='/activities/add?listing=' + listing._id)

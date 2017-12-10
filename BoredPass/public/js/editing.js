@@ -44,6 +44,14 @@ $(document).ready(function () {
                 telephone: $("#listing-telephone").val(),
                 cellphone: $("#listing-cellphone").val(),
                 email: $("#listing-email").val(),
+                social: {
+                    facebook: $("#listing-facebook").val(),
+                    twitter: $("#listing-twitter").val(),
+                    google: $("#listing-google").val(),
+                    instagram: $("#listing-instagram").val(),
+                    pinterest: $("#listing-pinterest").val(),
+                    youtube: $("#listing-youtube").val()
+                },
                 logo: (function () {
                     var upload = $(".photo-upload.logo .has-image");
                     if (upload && upload.length)

@@ -19,14 +19,19 @@ block content
   section.listing-section.overview
     div
       - var logo = listing.logo ? 'background-image:url(/content/' + listing.logo.fileType + '/' + listing.logo.fileId + ');' : null
-      div.logo(style=logo)
+      - var logoClass = !listing.logo ? 'no-logo' : ''
+      div.logo(style=logo, class=logoClass)
       a.location(target='_blank', href='https://google.com/maps/place/' + encodeURIComponent(listing.address))
         span.fa.fa-map-marker
         span= listing.address
-      a.telephone(target='_blank', href='tel:' + listing.telephone)
-        span.fa.fa-phone
-        - var telephone = listing.telephone || listing.cellphone
-        span= telephone
+      if listing.telephone
+        a.telephone(target='_blank', href='tel:' + listing.telephone)
+          span.fa.fa-phone
+          span= listing.telephone
+      if listing.cellphone
+        a.cellphone(target='_blank', href='tel:' + listing.cellphone)
+          span.fa.fa-mobile
+          span= listing.cellphone
       a.email(target='_blank', href='mailto:' + listing.email, title=listing.email)
         span.fa.fa-envelope
         span= listing.email
@@ -44,7 +49,7 @@ block content
         - var socialPinterest = listing.social.pinterest ? (listing.social.pinterest.indexOf('http') >= 0 ? listing.social.pinterest : 'https://' + listing.social.pinterest) : null
         a.pinterest.fa.fa-pinterest-p(title='Pinterest', target=(socialPinterest ? '_blank' : false), href=(socialPinterest ? socialPinterest : false))
         - var socialYoutube = listing.social.youtube ? (listing.social.youtube.indexOf('http') >= 0 ? listing.social.youtube : 'https://' + listing.social.youtube) : null
-        a.youtube.fa.fa-youtube-play(title='Youtube', target=(socialYutube ? '_blank' : false), href=(socialYutube ? socialYutube : false))
+        a.youtube.fa.fa-youtube-play(title='Youtube', target=(socialYoutube ? '_blank' : false), href=(socialYoutube ? socialYoutube : false))
     div
       h1= listing.name
       != marked(listing.description)

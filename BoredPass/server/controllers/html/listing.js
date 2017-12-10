@@ -4,9 +4,14 @@ import marked from 'marked';
 
 export default new Controller('/listings')
     .handle({ route: '/add', method: 'get', produces: 'html' }, (req, res) => {
-        res.render('add_listing', {
-            title: 'Add Listing - BoredPass',
-            moment: require('moment')
+        FacilitiesService.findMany({
+            sort: { name: 1 }
+        }, (facilities) => {
+            res.render('add_listing', {
+                title: 'Add Listing - BoredPass',
+                moment: require('moment'),
+                facilities: facilities
+            });
         });
     })
     .handle({ route: '/add', method: 'post', produces: 'json' }, (req, res) => {

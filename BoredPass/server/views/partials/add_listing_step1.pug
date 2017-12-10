@@ -6,9 +6,14 @@
   div.field-wrapper
     label(for='businessname') Name of business/venue*
     input#businessname.mandatory(type='text')
-  div.field-wrapper
-    label(for='tags') Tag the activities offered*
-    input#tags.mandatory(type='text')
+  div.field-wrapper.no-grow.auto-height
+    - var tagValues = activity && activity.tags && activity.tags.length ? activity.tags.join(';') : null
+    label(for='activity_tags') Add activity tags (e.g. Kayaking)*
+    input#activity_tags.activity-tags.mandatory(type='text', readonly=true, value=tagValues)
+    div.tag-container
+      if activity && activity.tags && activity.tags.length
+        each tag in activity.tags
+          span.tag.icon.activity.colour(class=tag.icon, data-tag=tag)=tag.name
   div.field-wrapper
     label(for='address') Address*
     input#address.mandatory(type='text')

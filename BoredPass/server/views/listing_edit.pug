@@ -26,26 +26,34 @@ block content
         input#listing-address.content-editable(type='text', value=listing.address, placeholder='Address')
       a.telephone
         span.fa.fa-phone
-        - var telephone = listing.telephone || listing.cellphone
         input#listing-telephone.content-editable(type='text', value=listing.telephone, placeholder='Telephone Number')
+      a.cellphone
+        span.fa.fa-mobile
+        input#listing-cellphone.content-editable(type='text', value=listing.cellphone, placeholder='Cellphone Number')
       a.email
         span.fa.fa-envelope
         input#listing-email.content-editable(type='text', value=listing.email, placeholder='Email Address')
       a.website
+        span.fa.fa-globe
         input#listing-website.content-editable(type='text', value=listing.website, placeholder='Website')
-      div.social
-        - var socialFacebook = listing.social.facebook ? (listing.social.facebook.indexOf('http') >= 0 ? listing.social.facebook : 'https://' + listing.social.facebook) : null
-        a.facebook.fa.fa-facebook(title='Facebook', target=(socialFacebook ? '_blank' : false), href=(socialFacebook ? socialFacebook : false))
-        - var socialTwitter = listing.social.twitter ? (listing.social.twitter.indexOf('http') >= 0 ? listing.social.twitter : 'https://' + listing.social.twitter) : null
-        a.twitter.fa.fa-twitter(title='Twitter', target=(socialTwitter ? '_blank' : false), href=(socialTwitter ? socialTwitter : false))
-        - var socialGoogle = listing.social.google ? (listing.social.google.indexOf('http') >= 0 ? listing.social.google : 'https://' + listing.social.google) : null
-        a.google.fa.fa-google-plus(title='Google+', target=(socialGoogle ? '_blank' : false), href=(socialGoogle ? socialGoogle : false))
-        - var socialInstagram = listing.social.instagram ? (listing.social.instagram.indexOf('http') >= 0 ? listing.social.instagram : 'https://' + listing.social.instagram) : null
-        a.instagram.fa.fa-instagram(title='Instagram', target=(socialInstagram ? '_blank' : false), href=(socialInstagram ? socialInstagram : false))
-        - var socialPinterest = listing.social.pinterest ? (listing.social.pinterest.indexOf('http') >= 0 ? listing.social.pinterest : 'https://' + listing.social.pinterest) : null
-        a.pinterest.fa.fa-pinterest-p(title='Pinterest', target=(socialPinterest ? '_blank' : false), href=(socialPinterest ? socialPinterest : false))
-        - var socialYoutube = listing.social.youtube ? (listing.social.youtube.indexOf('http') >= 0 ? listing.social.youtube : 'https://' + listing.social.youtube) : null
-        a.youtube.fa.fa-youtube-play(title='Youtube', target=(socialYutube ? '_blank' : false), href=(socialYutube ? socialYutube : false))
+      a.facebook
+        span.fa.fa-facebook
+        input#listing-facebook.content-editable(type='text', value=listing.social.facebook, placeholder='Facebook')
+      a.twitter
+        span.fa.fa-twitter
+        input#listing-twitter.content-editable(type='text', value=listing.social.twitter, placeholder='Twitter')
+      a.google-plus
+        span.fa.fa-google-plus
+        input#listing-google.content-editable(type='text', value=listing.social.google, placeholder='Google+')
+      a.instagram
+        span.fa.fa-instagram
+        input#listing-instagram.content-editable(type='text', value=listing.social.instagram, placeholder='Instagram')
+      a.pinterest
+        span.fa.fa-pinterest-p
+        input#listing-pinterest.content-editable(type='text', value=listing.social.pinterest, placeholder='Pinterest')
+      a.youtube
+        span.fa.fa-youtube-play
+        input#listing-youtube.content-editable(type='text', value=listing.social.youtube, placeholder='YouTube')
     div
       input#listing-name.content-editable(type='text', value=listing.name, placeholder='Listing Name')
       textarea#listing-description.content-editable(placeholder='Description')

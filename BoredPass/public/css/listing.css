@@ -51,12 +51,15 @@ section.banner .provider .logo {
   flex: 0 0 80px;
   height: 80px;
   width: 80px;
-  background-color: #f5f5f5;
+  background-color: transparent;
   border-radius: 40px;
   display: inline-block;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center center;
+}
+section.banner .provider .logo.no-logo {
+  background-color: #333;
 }
 section.banner .provider .logo + span {
   flex: 1;
@@ -132,10 +135,13 @@ section.banner .delete {
   top: 0;
   left: 0;
   margin-top: -130px;
-  background-color: #333;
+  background-color: transparent;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center center;
+}
+.listing-section.overview > div:first-of-type .logo.no-logo {
+  background-color: #333;
 }
 .listing-section.overview.activity > div:first-of-type .photo {
   min-height: 260px;

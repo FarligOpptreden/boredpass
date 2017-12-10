@@ -73,7 +73,13 @@ $(document).ready(function () {
             var listing = {
                 name: $("#businessname").val(),
                 description: $("#description").val(),
-                tags: $("#tags").data("tags"),
+                tags: (function () {
+                    var tags = [];
+                    $(".tag-container > span").each(function () {
+                        tags.push($(this).data("tag"));
+                    });
+                    return tags;
+                })(),
                 address: $("#address").val(),
                 website: $("#website").val(),
                 owner: $("#yourbusiness").val().toLowerCase() === "yes",
@@ -110,12 +116,16 @@ $(document).ready(function () {
                     });
                     return arr;
                 })(),
-                facilities: {
-                    wheelchair: $("#facility_wheelchair").val().toLowerCase() === "yes",
-                    children: $("#facility_children").val().toLowerCase() === "yes",
-                    dogs: $("#facility_dogs").val().toLowerCase() === "yes",
-                    picnic: $("#facility_picnic").val().toLowerCase() === "yes"
-                }
+                facilities: (function () {
+                    var arr = [];
+                    $("#add_listing_3 .facility").each(function () {
+                        var selected = $(this).find(".options .active");
+                        if (selected.text() === "No")
+                            return;
+                        arr.push($(this).data("facility"));
+                    });
+                    return arr;
+                })()
             };
             $.ajax({
                 url: "/listings/add",
@@ -142,6 +152,19 @@ $(document).ready(function () {
         });
         $(".add-activity").click(function () {
             window.location.href = $(this).data("link");
+        });
+        $(".wizard-content .activity-tags").each(function () {
+            var search = $(this);
+            search.focus(function () {
+                setTimeout(function () {
+                    $(".wizard-content").height(search.closest("form").outerHeight());
+                }, 100);
+            });
+            search.blur(function () {
+                setTimeout(function () {
+                    $(".wizard-content").height(search.closest("form").outerHeight());
+                }, 200);
+            });
         });
     })();
     /* Activity Events */

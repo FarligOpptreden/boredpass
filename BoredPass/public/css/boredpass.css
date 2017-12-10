@@ -600,6 +600,57 @@ em {
   font-style: italic;
   font-weight: 600;
 }
+.confirm-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 101;
+  background-color: rgba(0, 0, 0, 0.75);
+  transition: all 0.2s;
+  opacity: 1;
+}
+.confirm-box {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 400px;
+  margin: 0 0 0 -200px;
+  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
+  border-radius: 0 0 5px 5px;
+  background-color: #FFFFFF;
+  z-index: 102;
+  transition: all 0.2s;
+  transform: none;
+  opacity: 1;
+}
+.confirm-box.out {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.confirm-overlay.out {
+  opacity: 0;
+}
+.confirm-box > p {
+  padding: 20px;
+  color: #25B9C5;
+}
+.confirm-box > .buttons {
+  padding: 20px;
+  text-align: right;
+}
+.confirm-box > .buttons > button {
+  padding: 10px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  color: #25B9C5;
+  margin-left: 10px;
+}
+.confirm-box > .buttons > .positive {
+  color: #FFFFFF;
+  background-color: #25B9C5;
+}
 @media only screen and (max-width: 1300px) {
   #header > nav > div,
   #footer > div:first-of-type {

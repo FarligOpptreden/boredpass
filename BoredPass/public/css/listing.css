@@ -75,6 +75,16 @@ section.banner > div > h1 {
 section.banner .edit {
   position: absolute;
   top: 10px;
+  right: 120px;
+  background-color: #FFFFFF;
+  color: #25B9C5;
+  padding: 10px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+}
+section.banner .delete {
+  position: absolute;
+  top: 10px;
   right: 0;
   background-color: #FFFFFF;
   color: #25B9C5;
@@ -610,6 +620,17 @@ section.banner .edit {
 }
 .listing-section .has-image:hover span.close {
   opacity: 1;
+}
+.listing-section.overview > div > ul,
+.listing-section.overview > div > ol {
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+.listing-section.overview > div > ul > li {
+  list-style: disc;
+}
+.listing-section.overview > div > ol > li {
+  list-style: decimal;
 }
 @media only screen and (max-width: 1160px) {
   .listing-section.photos > div {

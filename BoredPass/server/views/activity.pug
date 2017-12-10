@@ -11,12 +11,17 @@ block js
   script(type='text/javascript', src='/js/listing.js')
 
 block content
+  input#record-id(type='hidden', value=activity._id)
   section.banner
     div
       a.provider(href='/listings/' + listing._id)
-        span.logo(style='background-image:url(/content/' + listing.logo.fileType + '/' + listing.logo.fileId + ');')
+        if listing.logo
+          span.logo(style='background-image:url(/content/' + listing.logo.fileType + '/' + listing.logo.fileId + ');')
+        if !listing.logo
+          span.logo
         span= listing.name
       a.edit(href='/activities/' + activity._id + '/edit') Edit
+      a.delete.activity(href='/activities/' + activity._id + '/delete') Delete
   section.listing-section.overview.activity.white
     div
       div.photo
@@ -75,5 +80,5 @@ block content
             span free
   section.listing-section.find-more.alternating
     div
-      h1 Still bored? Find more activities like this.
+      h1 Still bored? Find more experiences like this.
       a.find.button(href='/search') Find

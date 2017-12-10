@@ -276,4 +276,37 @@ $(document).ready(function () {
         field.each(uploadField);
         return field;
     };
+    Shared.confirm = function (args) {
+        var close = function () {
+            box.addClass("out");
+            overlay.addClass("out");
+            setTimeout(function () {
+                box.remove();
+                overlay.remove();
+            }, 200);
+        };
+        var overlay = $("<div class=\"confirm-overlay out\" />");
+        var box = $("<div class=\"confirm-box out\" />");
+        box.append("<p>" + args.message + "</p>");
+        var positive = $("<button class=\"positive\">" + args.positive.text + "</button>");
+        positive.click(function () {
+            if (!args.positive.click || args.positive.click())
+                close();
+        });
+        var negative = $("<button class=\"negative\">" + args.negative.text + "</button>");
+        negative.click(function () {
+            if (!args.negative.click || args.negative.click())
+                close();
+        });
+        var buttons = $("<div class=\"buttons\" />");
+        buttons.append(negative);
+        buttons.append(positive);
+        box.append(buttons);
+        $("body").append(box);
+        $("body").append(overlay);
+        setTimeout(function () {
+            box.removeClass("out");
+            overlay.removeClass("out");
+        }, 50);
+    };
 });

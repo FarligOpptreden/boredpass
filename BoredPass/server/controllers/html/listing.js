@@ -102,4 +102,17 @@ export default new Controller('/listings')
                 id: result && req.params.id
             });
         });
+    })
+    .handle({ route: '/:id/delete', method: 'delete', produces: 'json' }, (req, res) => {
+        res.setHeader('Expires', '-1');
+        res.setHeader('Cache-Control', 'no-cache');
+        ActivitiesService.deleteMany({
+            filter: { listing_id: ActivitiesService.db.objectId(req.params.id) }
+        }, (r) => {
+            ListingsService.delete({
+                filter: req.params.id
+            }, (r) => {
+                res.json(r);
+            });
+        });
     });

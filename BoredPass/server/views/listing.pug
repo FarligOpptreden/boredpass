@@ -11,9 +11,11 @@ block js
   script(type='text/javascript', src='/js/listing.js')
 
 block content
+  input#record-id(type='hidden', value=listing._id)
   section.banner
     div
       a.edit(href='/listings/' + listing._id + '/edit') Edit
+      a.delete.listing(href='/listings/' + listing._id + '/delete') Delete
   section.listing-section.overview
     div
       - var logo = listing.logo ? 'background-image:url(/content/' + listing.logo.fileType + '/' + listing.logo.fileId + ');' : null
@@ -68,7 +70,7 @@ block content
   if activities && activities.length
     section.listing-section.activities.alternating
       div
-        h1 Our Activities
+        h1 Our Experiences
         div
           each activity, index in activities
             a.activity(href='/activities/' + activity._id)

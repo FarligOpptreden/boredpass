@@ -59,7 +59,6 @@ export default new Controller('/activities')
         ActivitiesService.findOne({
             filter: req.params.id
         }, (activity) => {
-            console.log(activity);
             res.render('add_activity', {
                 title: `Edit ${activity.name} - BoredPass`,
                 mode: 'edit',
@@ -80,5 +79,14 @@ export default new Controller('/activities')
                 success: result && true,
                 id: result && req.params.id
             });
+        });
+    })
+    .handle({ route: '/:id/delete', method: 'delete', produces: 'json' }, (req, res) => {
+        res.setHeader('Expires', '-1');
+        res.setHeader('Cache-Control', 'no-cache');
+        ActivitiesService.delete({
+            filter: req.params.id
+        }, (r) => {
+            res.json(r);
         });
     });

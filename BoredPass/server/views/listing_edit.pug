@@ -56,7 +56,7 @@ block content
   +photos(listing.photos, true).alternating.add-photos
   section.listing-section.activities.alternating
     div
-      h1 Our Activities
+      h1 Our Experiences
       div
         each activity, index in activities
           a.activity(href='/activities/' + activity._id)
@@ -67,8 +67,8 @@ block content
             span.read-more.button.inverse Read More
         a.activity.new(href='/activities/add?listing=' + listing._id)
           div.photo
-          h2 Add Activity
-          p Create an activity to flesh out your listing.
+          h2 Add Experience
+          p Create an experience to flesh out your listing.
           span.read-more.button.inverse Add
   section.listing-section.lower.alternating
     div

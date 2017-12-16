@@ -5,10 +5,11 @@
         h1 Activities Offered
         if data && data.length
           each activity, index in data
-            - var className = activity.icon.toLowerCase().replace(/ /g, '-')
-            div.activity
-              span.activity.icon.colour(class=className)
-              span=activity.name
+            if activity && activity.icon
+              - var className = activity.icon.toLowerCase().replace(/ /g, '-')
+              div.activity
+                span.activity.icon.colour(class=className)
+                span=activity.name
         if editable
           div.field-wrapper.no-grow.auto-height
             - var tagValues = data && data.length ? data.join(';') : null

@@ -477,6 +477,7 @@ section.banner .delete {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
+    cursor: pointer;
 }
 
 .listing-section.photos > div > a.prev, .listing-section.photos > div > a.next {
@@ -505,7 +506,7 @@ section.banner .delete {
     right: -50px;
 }
 
-.listing-section.photos > div > a.hidden {
+.listing-section.photos > div > a.hidden, .light-box a.hidden {
     opacity: 0;
     cursor: default;
 }
@@ -516,6 +517,82 @@ section.banner .delete {
 
 .listing-section.photos > div > a.next.hidden {
     right: -70px;
+}
+
+.light-box {
+    position: fixed;
+    top: 46px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: transparent;
+    -moz-animation: fade-in 0.2s forwards;
+    -webkit-animation: fade-in 0.2s forwards;
+    animation: fade-in 0.2s forwards;
+}
+
+.light-box .close {
+    transition: all 0.2s;
+    text-align: center;
+    font-size: 100px;
+    color: @col-grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.2s;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -350px 0 0 400px;
+    height: 50px;
+    width: 50px;
+    transform: rotate(45deg);
+}
+
+.light-box .next, .light-box .prev {
+    transition: all 0.2s;
+    text-align: center;
+    font-size: 50px;
+    color: @col-grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.2s;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 600px;
+    width: 50px;
+}
+
+.light-box .next {
+    margin: -300px 0 0 400px;
+}
+
+.light-box .prev {
+    margin: -300px 0 0 -450px;
+}
+
+.light-box .photo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -300px 0 0 -400px;
+    height: 600px;
+    width: 800px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
+    transition: all 0.2s;
+}
+
+.light-box .photo.hidden {
+    opacity: 0;
+    z-index: 0;
+    display: block;
 }
 
 .listing-section.activities > div > div {
@@ -699,8 +776,7 @@ section.banner .delete {
     background-color: @col-button-fg;
 }
 
-.listing-section span.plus,
-.listing-section span.close {
+.listing-section span.plus, .listing-section span.close {
     background-color: #25B9C5;
     color: #FFFFFF;
     height: 50px;
@@ -739,6 +815,36 @@ section.banner .delete {
 
 .listing-section.overview > div > ol > li {
     list-style: decimal;
+}
+
+@-moz-keyframes fade-in {
+    0% {
+        background-color: transparent;
+    }
+
+    100% {
+        background-color: rgba(0,0,0,0.75);
+    }
+}
+
+@-webkit-keyframes fade-in {
+    0% {
+        background-color: transparent;
+    }
+
+    100% {
+        background-color: rgba(0,0,0,0.75);
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        background-color: transparent;
+    }
+
+    100% {
+        background-color: rgba(0,0,0,0.75);
+    }
 }
 
 @media only screen and (max-width: 1160px) {
@@ -841,6 +947,41 @@ section.banner .delete {
     .listing-section.activities .activity:nth-child(even) {
         margin-right: 0 !important;
     }
+
+    .light-box .close {
+        top: 0;
+        left: auto;
+        right: 0;
+        margin: 0;
+    }
+
+    .light-box .next {
+        top: 50px;
+        bottom: 0;
+        right: 0;
+        left: auto;
+        margin: 0;
+        height: auto;
+    }
+
+    .light-box .prev {
+        top: 50px;
+        bottom: 0;
+        right: auto;
+        left: 0;
+        margin: 0;
+        height: auto;
+    }
+
+    .light-box .photo {
+        left: 50px;
+        right: 50px;
+        bottom: 0;
+        top: 50px;
+        margin: auto;
+        height: auto;
+        width: auto;
+    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -941,6 +1082,10 @@ section.banner .delete {
 @media only screen and (max-width: 600px) {
     section.banner > div {
         margin-top: 30px;
+    }
+
+    .light-box {
+        top: 30px;
     }
 }
 

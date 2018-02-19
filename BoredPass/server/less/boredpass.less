@@ -253,9 +253,42 @@ body {
     color: @col-main;
 }
 
-.field-wrapper.focus:not(.no-grow) label, .field-wrapper.has-value:not(.no-grow) label {
+.field-wrapper.focus:not(.no-grow) label, .field-wrapper.has-value:not(.no-grow) label, .field-wrapper.no-shrink label {
     font-size: 11px;
     padding-top: 11px;
+}
+
+.field-wrapper .search-results {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 56px;
+    background-color: #FFFFFF;
+    box-shadow: @box-shadow;
+    z-index: 10;
+    margin: 0 -2px;
+    border-top: solid 2px @col-main;
+    border-radius: 0 0 3px 3px;
+}
+
+.field-wrapper .search-results li {
+    display: block;
+}
+
+.field-wrapper .search-results li a, .field-wrapper .search-results li a:link, .field-wrapper .search-results li a:visited {
+    display: block;
+    text-decoration: none;
+    color: @col-body-fg;
+    padding: 20px;
+    transition: all 0.2s;
+}
+
+.field-wrapper .search-results li a.active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.field-wrapper .search-results li a:not(.active):hover {
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .toggle-wrapper {

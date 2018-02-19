@@ -37,7 +37,7 @@ block content
       div.field-wrapper.no-grow.auto-height
         - var tagValues = activity && activity.tags && activity.tags.length ? activity.tags.join(';') : null
         label(for='activity_tags') Add activity tags (e.g. Kayaking)*
-        input#activity_tags.activity-tags.mandatory(type='text', readonly=true, value=tagValues)
+        input#activity_tags.activity-tags.mandatory(type='text', data-value=tagValues)
         div.tag-container
           if activity && activity.tags && activity.tags.length
             each tag in activity.tags

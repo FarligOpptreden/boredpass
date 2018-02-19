@@ -2,9 +2,9 @@
 import { BasicCrud } from '../../handlr/_all';
 
 class Activities extends BasicCrud {
-  constructor() {
-    super(config.connectionStrings.boredPass, 'activities');
-  }
+    constructor() {
+        super(config.connectionStrings.boredPass, 'activities');
+    }
 }
 
 export const ActivitiesService = new Activities();

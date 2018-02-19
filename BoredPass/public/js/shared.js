@@ -141,7 +141,7 @@ $(document).ready(function () {
                 return;
             }
 
-            if (["8", "16", "17", "18", "35", "36", "37", "38", "39", "40", "46", "45"].includes(e.keyCode.toString()))
+            if (["16", "17", "18", "35", "36", "37", "38", "39", "40", "45"].includes(e.keyCode.toString()))
                 return false;
 
             $.ajax({
@@ -154,6 +154,10 @@ $(document).ready(function () {
                     }
 
                     resultContainer.empty();
+
+                    if (!d || !d.length)
+                        return resultContainer.append("<p>No tags found</p>");
+
                     d.map(function (tag) {
                         var item = $("<li><a href=\"/tag/" + tag.name.toLowerCase().replace(/\s/g, "-") + "\" tabIndex=\"-1\">" + tag.name + "</a></li>");
                         item.find("a").mousedown(function (e) {
@@ -219,6 +223,7 @@ $(document).ready(function () {
             return true;
         });
         search.blur(function () {
+            return;
             resultContainer && resultContainer.remove();
             resultContainer = null;
             search.val("");

@@ -138,6 +138,7 @@ body {
   top: 0;
   z-index: 1;
   transition: all 0.2s;
+  overflow: hidden;
 }
 #header > nav:first-of-type.float {
   z-index: 100;
@@ -180,6 +181,20 @@ body {
   background-size: contain;
   background-position: center left;
   background-repeat: no-repeat;
+}
+#header > nav:first-of-type .logo {
+  top: 3px;
+  bottom: 5px;
+  left: 5px;
+  right: auto;
+  height: auto;
+  background-color: transparent;
+  background-image: url(/images/boredpass-inverse.svg);
+  transform: translateY(-120%);
+  transition: all 0.5s;
+}
+#header > nav:first-of-type.float .logo {
+  transform: none;
 }
 #body {
   border-top: solid 1px silver;
@@ -349,6 +364,9 @@ body {
 }
 .field-wrapper .search-results li a:not(.active):hover {
   background-color: rgba(0, 0, 0, 0.05);
+}
+.field-wrapper .search-results.out {
+  opacity: 0;
 }
 .toggle-wrapper {
   display: block;
@@ -687,6 +705,87 @@ em {
 .confirm-box > .buttons > .positive {
   color: #FFFFFF;
   background-color: #25B9C5;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 101;
+  background-color: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.overlay-content {
+  opacity: 0;
+  transition: transform 0.2s, opacity 0.2s;
+  transform: translateY(200px);
+  position: fixed;
+  z-index: 102;
+  width: 800px;
+  top: 40px;
+  bottom: 40px;
+  left: 50%;
+  margin: 0 0 0 -400px;
+  background-color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  border-radius: 3px;
+}
+.overlay.show,
+.overlay-content.show {
+  opacity: 1;
+  transform: none;
+}
+.toolbar {
+  background-color: #222;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 0;
+  overflow: hidden;
+  transition: all 0.5s;
+}
+.toolbar > div {
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: right;
+}
+.toolbar > div > a {
+  display: inline-block;
+  padding: 10px;
+  color: #FFF;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 5px 0 5px 5px;
+  border-radius: 5px;
+  padding-left: 25px;
+  text-decoration: none;
+  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
+  text-transform: uppercase;
+  font-weight: 600;
+  position: relative;
+}
+.toolbar > div > a > .fa,
+.toolbar > div > a > .fas {
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  margin-top: -9px;
+  font-size: 15px;
+}
+.toolbar.show {
+  height: 46px;
+}
+#header > nav:first-of-type.has-toolbar {
+  transition: all 0.5s;
+  margin-top: 46px;
+}
+#header > nav:last-of-type.has-toolbar {
+  transition: all 0.5s;
+  margin-top: 92px;
 }
 @media only screen and (max-width: 1300px) {
   #header > nav > div,

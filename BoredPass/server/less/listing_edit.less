@@ -87,3 +87,36 @@
 .listing-section.overview .photo-upload.logo {
     background-color: #333 !important;
 }
+
+.banner {
+    position: relative;
+}
+
+.banner .edit-banner {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    right: 20px;
+    top: 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: @col-dark;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: @box-shadow;
+}
+
+.banner .edit-banner:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.banner .edit-banner > i {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 30px;
+    font-size: 30px;
+    margin: -15px 0 0 0;
+    text-align: center;
+}

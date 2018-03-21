@@ -6,6 +6,7 @@ html
     block meta
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Raleway:400,700,900')
     link(rel='stylesheet', href='/css/boredpass.min.css')
+    link(rel='stylesheet', href='/css/sign_in.min.css')
     block css
     script(type='text/javascript', src='https://use.fontawesome.com/bd0f643562.js')
     script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
@@ -16,10 +17,11 @@ html
     header#header
       nav
         div
+          a.logo.small(href='/')
           a.find Find
           a.add(href="/listings/add") Add
           a.claim Claim
-          a.sign-in Sign In
+          a.sign-in(href="/secure/sign-in") Sign In
       nav
         div
           a.logo(href='/')
@@ -53,4 +55,4 @@ html
               a.twitter.fa.fa-twitter
               a.facebook.fa.fa-facebook
               a.google.fa.fa-google-plus
-      div.copyright Copyright &copy; #{moment().format("YYYY")} BoredPass. All rights reserved.
+      div.copyright Copyright &copy; #{moment && moment().format("YYYY")} BoredPass. All rights reserved.

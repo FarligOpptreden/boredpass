@@ -14,64 +14,61 @@ $(document).ready(function () {
             $(this).closest(".field-wrapper").removeClass("focus");
         });
         if ($(this).hasClass("mandatory")) {
-            if ($(this).closest(".field-wrapper").hasClass("no-grow")) {
+            if ($(this).closest(".tag-field").length) {
                 var field = $(this);
-                field.blur(function () {
-                    setTimeout(function () {
-                        if (field.val())
-                            field.closest(".field-wrapper").removeClass("error");
-                        else
-                            field.closest(".field-wrapper").addClass("error");
-                    }, 100);
+                field.keyup(function () {
+                    if (field.data("value") && field.data("value").length)
+                        field.closest(".field-wrapper").removeClass("error");
+                    else
+                        field.closest(".field-wrapper").addClass("error");
                 });
             }
-            $(this).keyup(function () {
-                if ($(this).val())
-                    $(this).closest(".field-wrapper").removeClass("error");
-                else
-                    $(this).closest(".field-wrapper").addClass("error");
-            });
+            else
+                $(this).keyup(function () {
+                    if ($(this).val())
+                        $(this).closest(".field-wrapper").removeClass("error");
+                    else
+                        $(this).closest(".field-wrapper").addClass("error");
+                });
         }
-        if ($(this).hasClass("validate-number"))
-            $(this).keydown(function (e) {
-                if ((e.keyCode !== 32 && e.keyCode <= 46) || (e.keyCode >= 112 && e.keyCode <= 145))
-                    return true;
-                var keyCode = e.which;
-                var val;
-                if (keyCode >= 96)
-                    keyCode -= 48;
-                var keyVal = String.fromCharCode(keyCode);
-                if (!/\d/.test(keyVal)) {
-                    e.preventDefault();
-                    return false;
-                }
-                var fld = $(this);
-                if (fld.attr("type") === "number") {
-                    var min = $(this).attr("min");
-                    var max = $(this).attr("max");
-                    val = parseFloat($(this).val() + parseFloat(keyVal));
-                    if (val < min || val > max) {
-                        e.preventDefault();
-                        return false;
-                    }
-                    return true;
-                }
-                var maxLength = $(this).attr("maxlength");
-                val = $(this).val() + keyVal;
-                if (val.length > maxLength) {
+        $(this).hasClass("validate-number") && $(this).keydown(function (e) {
+            if ((e.keyCode !== 32 && e.keyCode <= 46) || (e.keyCode >= 112 && e.keyCode <= 145))
+                return true;
+            var keyCode = e.which;
+            var val;
+            if (keyCode >= 96)
+                keyCode -= 48;
+            var keyVal = String.fromCharCode(keyCode);
+            if (!/\d/.test(keyVal)) {
+                e.preventDefault();
+                return false;
+            }
+            var fld = $(this);
+            if (fld.attr("type") === "number") {
+                var min = $(this).attr("min");
+                var max = $(this).attr("max");
+                val = parseFloat($(this).val() + parseFloat(keyVal));
+                if (val < min || val > max) {
                     e.preventDefault();
                     return false;
                 }
                 return true;
-            });
-        if ($(this).hasClass("validate-email"))
-            $(this).keyup(function () {
-                var valid = /^[a-zA-Z0-9\-\.]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9]+){1,2}$/.test($(this).val());
-                if (valid)
-                    $(this).closest(".field-wrapper").removeClass("error");
-                else
-                    $(this).closest(".field-wrapper").addClass("error");
-            });
+            }
+            var maxLength = $(this).attr("maxlength");
+            val = $(this).val() + keyVal;
+            if (val.length > maxLength) {
+                e.preventDefault();
+                return false;
+            }
+            return true;
+        });
+        $(this).hasClass("validate-email") && $(this).keyup(function () {
+            var valid = /^[a-zA-Z0-9\-\.]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9]+){1,2}$/.test($(this).val());
+            if (valid)
+                $(this).closest(".field-wrapper").removeClass("error");
+            else
+                $(this).closest(".field-wrapper").addClass("error");
+        });
     };
 
     var uploadField = function () {
@@ -131,8 +128,84 @@ $(document).ready(function () {
     var activityTags = function () {
         var search = $(this);
         var wrapper = search.closest(".field-wrapper");
+        var tagField = wrapper.closest(".tag-field");
         var resultContainer = null;
-        var values = (search.data("value") && search.data("value").split(",")) || [];
+        var values = search.data("value") || [];
+        var clear = function () {
+            resultContainer && resultContainer.remove();
+            resultContainer = null;
+            search.val("");
+            wrapper.removeClass("has-value");
+        };
+        var updateTags = function (container, events) {
+            var tags = container || tagField.find(".tag-container");
+            tags.empty();
+            values.map(function (tag, index) {
+                events && events.render && events.render(tag);
+                var a = $("<a id=\"" + tag._id + "\" href=\"/remove-tag\"><label>" + tag.name + "</label><span>+</span></a>");
+                a.click(function (e) {
+                    e.preventDefault();
+                    values.splice(index, 1);
+                    container && updateTags(container, events);
+                    updateTags(null, events);
+                    events && events.click && events.click(tag);
+                    return false;
+                });
+                tags.append(a);
+            });
+            search.data("value", values);
+        };
+        var renderAllTags = function () {
+            var allTags = $("<a href=\"/actvity-tags\" class=\"all-tags\">View all tags</a>");
+            allTags.click(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "/libraries/tags/list",
+                    method: "get",
+                    success: function (d, s, x) {
+                        var content = $(d);
+                        content.find(".close").click(function (e) {
+                            e.preventDefault();
+                            Shared.hideOverlay();
+                            return false;
+                        });
+                        content.find(".tags > a").click(function (e) {
+                            e.preventDefault();
+                            var tag = $(this).data("value");
+                            if ($(this).hasClass("selected")) {
+                                content.find(".added #" + tag._id).trigger("click");
+                                $(this).removeClass("selected");
+                            }
+                            else {
+                                values.push(tag);
+                                $(this).addClass("selected");
+                            }
+                            updateTags(content.find(".tag-container"), {
+                                click: function (tag) {
+                                    content.find("#" + tag._id).removeClass("selected");
+                                }
+                            });
+                            updateTags();
+                            return false;
+                        });
+                        updateTags(content.find(".tag-container"), {
+                            render: function (tag) {
+                                content.find("#" + tag._id).addClass("selected");
+                            },
+                            click: function (tag) {
+                                console.log(tag);
+                                content.find("#" + tag._id).removeClass("selected");
+                            }
+                        });
+                        Shared.showOverlay({
+                            content: content
+                        });
+                    }
+                });
+                return false;
+            });
+            tagField.prepend(allTags);
+        };
         search.addClass("has-search-events");
         search.keyup(function (e) {
             if (!$(this).val()) {
@@ -145,7 +218,7 @@ $(document).ready(function () {
                 return false;
 
             $.ajax({
-                url: "/tags/search?search=" + $(this).val(),
+                url: "/libraries/tags/search?search=" + $(this).val(),
                 method: "get",
                 success: function (d, s, x) {
                     if (!resultContainer) {
@@ -164,10 +237,10 @@ $(document).ready(function () {
                             wrapper.addClass("no-shrink");
                             values.push(tag);
                             setTimeout(function () {
-                                console.log(values);
                                 search.focus();
                                 wrapper.removeClass("no-shrink");
                             }, 100);
+                            updateTags();
                         }).click(function (e) {
                             e.preventDefault();
                             return false;
@@ -205,8 +278,12 @@ $(document).ready(function () {
 
             switch (e.keyCode) {
                 case 13: //enter
+                    resultContainer.find("a.active").trigger("mousedown");
+                    clear();
                     return false;
                 case 32: //space
+                    resultContainer.find("a.active").trigger("mousedown");
+                    clear();
                     return false;
                 case 38: //up
                     return selectItem(-1);
@@ -223,12 +300,13 @@ $(document).ready(function () {
             return true;
         });
         search.blur(function () {
-            return;
-            resultContainer && resultContainer.remove();
-            resultContainer = null;
-            search.val("");
-            wrapper.removeClass("has-value");
+            resultContainer && resultContainer.addClass("out");
+            setTimeout(function () {
+                clear();
+            }, 100);
         });
+        updateTags();
+        renderAllTags();
     };
 
     var toggleField = function () {
@@ -279,11 +357,11 @@ $(document).ready(function () {
 
     Shared.showOverlay = function (args) {
         var overlay = $("<div class=\"overlay\" />");
+        overlay.click(Shared.hideOverlay);
         args.content.addClass("overlay-content");
         $("body").append(overlay);
         $("body").append(args.content);
-        if (args.callback)
-            args.callback();
+        args.callback && args.callback();
         Shared.inputFields();
         setTimeout(function () {
             $(".wrapper").addClass("mask");

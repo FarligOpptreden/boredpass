@@ -1,4 +1,4 @@
-﻿import db from './Mongo';
+import db from './Mongo';
 import Memcached from 'memcached';
 
 let memcached = null;
@@ -18,8 +18,11 @@ export default class BasicCrud {
     this.url = url;
     this.collection = collection;
     this.cache = cache ? true : false;
-    if (this.cache)
+
+    if (this.cache) {
+      this.mcache = cache;
       memcached = new Memcached(cache.server, cache.port);
+    }
   }
 
   /**
@@ -35,18 +38,20 @@ export default class BasicCrud {
    * @param {Object} args.filter - The filter to apply to the find operation.
    * @param {Object} args.data? - The properties of the document to select.
    * @param {Object} args.sort? - The sort clause(s) to apply to the collection.
-   * @param {function(Object):void} callback - A function to execute once the document has been retrieved.
+   * @param {function(Object, Object):void} callback - A function to execute once the document has been retrieved.
    */
   findOne(args, callback) {
     if (!callback)
       return;
-    if (!args || !args.filter) {
-      callback(null);
-      return;
-    }
+
+    if (!args || !args.filter)
+      return callback(null);
+
+    let mcache = this.cache;
     let filter = args.filter;
     filter = typeof filter === 'object' ? filter : { _id: db.objectId(filter) };
     let key = this.collection + '-' + filter._id;
+
     let m = () => {
       db.mongo({
         url: this.url,
@@ -56,10 +61,13 @@ export default class BasicCrud {
         filter: filter,
         sort: args.sort,
         limit: 1,
-        callback: (res) => {
-          let d = res.data && res.data.length ? res.data[0] : null;
-          if (this.cache) {
-            memcached.set(key, d, cache.lifetime, (err) => {
+        callback: (res, err) => {
+          if (err)
+            return callback(null, err);
+
+          let d = res && res.data && res.data.length ? res.data[0] : null;
+          if (mcache) {
+            memcached.set(key, d, this.mcache.lifetime, (err) => {
               if (err) { console.log('>>> MEMCACHED ERROR <<<'); console.log(err); }
               callback(d);
             });
@@ -69,7 +77,7 @@ export default class BasicCrud {
         }
       });
     };
-    if (this.cache) {
+    if (mcache)
       memcached.get(key, (err, cache) => {
         if (!cache) {
           m();
@@ -77,7 +85,6 @@ export default class BasicCrud {
         }
         callback(cache);
       });
-    }
     else
       m();
   }
@@ -89,15 +96,15 @@ export default class BasicCrud {
    * @param {Object} args.filter? - The filter to apply to the find operation.
    * @param {Object} args.sort? - The sort clause(s) to apply to the collection.
    * @param {number} args.limit? - The amount of documents to limit in the selection.
-   * @param {function(Object):void} callback - A function to execute once the documents have been retrieved.
+   * @param {function(Object, Object):void} callback - A function to execute once the documents have been retrieved.
    */
   findMany(args, callback) {
     if (!callback)
       return;
-    if (!args) {
-      callback(null);
-      return;
-    }
+
+    if (!args)
+      return callback(null);
+
     db.mongo({
       url: this.url,
       collection: this.collection,
@@ -106,8 +113,38 @@ export default class BasicCrud {
       filter: args.filter,
       sort: args.sort,
       limit: args.limit,
-      callback: (res) => {
-        callback(res.data);
+      callback: (res, err) => {
+        if (err)
+          return callback(null, err);
+
+        callback((res && res.data) || null);
+      }
+    });
+  }
+
+  /**
+   * Find numerous documents in the bound collection based on the supplied aggregation pipeline.
+   * @param {Object} [args] - The arguments detailing the find operation.
+   * @param {number} args.pipeline? - The aggregation pipeline to apply.
+   * @param {function(Object, Object):void} callback - A function to execute once the documents have been retrieved.
+   */
+  aggregate(args, callback) {
+    if (!callback)
+      return;
+
+    if (!args)
+      return callback(null);
+
+    db.mongo({
+      url: this.url,
+      collection: this.collection,
+      operation: db.operations.aggregate,
+      pipeline: args.pipeline,
+      callback: (res, err) => {
+        if (err)
+          return callback(null, err);
+
+        callback(res || null);
       }
     });
   }
@@ -120,15 +157,15 @@ export default class BasicCrud {
    * @param {Object} args.data? - The properties of the document to select.
    * @param {Object} args.filter? - The filter to apply to the find operation.
    * @param {Object} args.sort? - The sort clause(s) to apply to the collection.
-   * @param {function(Object):void} callback - A function to execute once the paged documents have been retrieved.
+   * @param {function(Object, Object):void} callback - A function to execute once the paged documents have been retrieved.
    */
   page(args, callback) {
     if (!callback)
       return;
-    if (!args || !args.pageNo || !args.pageSize) {
-      callback(null);
-      return;
-    }
+
+    if (!args || !args.pageNo || !args.pageSize)
+      return callback(null);
+
     db.mongo({
       url: this.url,
       collection: this.collection,
@@ -140,8 +177,11 @@ export default class BasicCrud {
         pageNo: args.pageNo,
         pageSize: args.pageSize
       },
-      callback: (res) => {
-        callback(res);
+      callback: (res, err) => {
+        if (err)
+          return callback(null, err);
+
+        callback(res, err);
       }
     });
   }
@@ -150,28 +190,32 @@ export default class BasicCrud {
    * Insert a document into the bound collection.
    * @param {Object} args - The arguments detailing the insert operation.
    * @param {Object} args.data - The document to insert into the collection.
-   * @param {function(Object):void} [callback] - A function to execute once the document has been inserted.
+   * @param {function(Object, Object):void} [callback] - A function to execute once the document has been inserted.
    */
   create(args, callback) {
-    if (!args || !args.data) {
-      if (callback) callback(null);
-      return;
-    }
+    if (!args || !args.data)
+      return callback && callback(null);
+
+    let mcache = this.cache;
+
     db.mongo({
       url: this.url,
       collection: this.collection,
       operation: db.operations.insertOne,
       data: args.data,
-      callback: (res) => {
-        let key = this.collection + '-' + res.data._id;
-        if (this.cache) {
-          memcached.set(key, res.data, cache.lifetime, (err) => {
-            if (err) { console.log('>>> MEMCACHED ERROR <<<'); console.log(err); }
-            if (callback) callback(res.data);
-          });
+      callback: (res, err) => {
+        if (!res || err) {
+          callback(null, err);
           return;
         }
-        if (callback) callback(res.data);
+        let key = this.collection + '-' + res.data._id;
+        if (mcache)
+          return memcached.set(key, res.data, this.mcache.lifetime, (err) => {
+            if (err) { console.log('>>> MEMCACHED ERROR <<<'); console.log(err); }
+            callback && callback(res.data);
+          });
+
+        callback && callback(res.data);
       }
     });
   }
@@ -180,64 +224,106 @@ export default class BasicCrud {
    * Insert many documents into the bound collection.
    * @param {Object} args - The arguments detailing the insert operation.
    * @param {Object[]} args.data - The documents to insert into the collection.
-   * @param {function(Object):void} [callback] - A function to execute once the document has been inserted.
+   * @param {function(Object, Object):void} [callback] - A function to execute once the document has been inserted.
    */
   createMany(args, callback) {
-    if (!args || !args.data || !args.data.length) {
-      if (callback) callback(null);
-      return;
-    }
+    if (!args || !args.data || !args.data.length)
+      return callback && callback(null);
+
     db.mongo({
       url: this.url,
       collection: this.collection,
       operation: db.operations.insertMany,
       data: args.data,
-      callback: (res) => {
-        if (callback) callback(res.data);
+      callback: (res, err) => {
+        if (err)
+          return callback(null, err);
+
+        callback && callback(res && res.data);
       }
     });
   }
 
   /**
-   * Updates documents in the bound collection.
+   * Updates a document in the bound collection.
    * @param {Object} args - The arguments detailing the update operation.
    * @param {Object} args.data - The properties to update each matched document in the collection.
    * @param {Object} args.filter - The filter to apply to the update operation.
-   * @param {function(Object):void} [callback] - A function to execute once the documents have been updated.
+   * @param {function(Object, Object):void} [callback] - A function to execute once the documents have been updated.
    */
   update(args, callback) {
-    if (!args || !args.filter || !args.data) {
-      if (callback) callback(null);
-      return;
-    }
+    if (!args || !args.filter || !args.data)
+      return callback && callback(null);
+
     let filter = args.filter;
+    let mcache = this.cache;
     let obj = args.data;
+
     db.mongo({
       url: this.url,
       collection: this.collection,
       operation: db.operations.updateOne,
       filter: typeof filter === 'object' ? filter : { _id: db.objectId(filter) },
       data: obj,
-      callback: (res) => {
+      callback: (res, err) => {
+        if (err)
+          return callback(null, err);
+
+        if (!res)
+          return callback(null);
+
         obj = res.data;
         let key = this.collection + '-' + obj._id;
-        if (this.cache) {
-          memcached.get(key, (err, cache) => {
-            if (!cache) {
-              memcached.set(key, obj, cache.lifetime, (err) => {
+
+        if (mcache)
+          return memcached.get(key, (err, cache) => {
+            if (!cache)
+              return memcached.set(key, obj, this.mcache.lifetime, (err) => {
                 if (err) { console.log('>>> MEMCACHED ERROR <<<'); console.log(err); }
-                if (callback) callback(res.data);
+                callback && callback(res.data);
               });
-              return;
-            }
-            memcached.replace(key, obj, cache.lifetime, (err) => {
+
+            memcached.replace(key, obj, this.mcache.lifetime, (err) => {
               if (err) { console.log('>>> MEMCACHED ERROR <<<'); console.log(err); }
-              if (callback) callback(res.data);
+              callback && callback(res.data);
             });
           });
-          return;
-        }
-        if (callback) callback(obj);
+
+        callback && callback(obj);
+      }
+    });
+  }
+
+  /**
+   * Updates multiple documents in the bound collection.
+   * @param {Object} args - The arguments detailing the update operation.
+   * @param {Object} args.data - The properties to update each matched document in the collection.
+   * @param {Object} args.filter - The filter to apply to the update operation.
+   * @param {function(Object, Object):void} [callback] - A function to execute once the documents have been updated.
+   */
+  updateMany(args, callback) {
+    if (!args || !args.filter || !args.data)
+      return callback && callback(null);
+
+    let filter = args.filter;
+    let mcache = this.cache;
+    let obj = args.data;
+
+    db.mongo({
+      url: this.url,
+      collection: this.collection,
+      operation: db.operations.updateMany,
+      filter: typeof filter === 'object' ? filter : { _id: db.objectId(filter) },
+      data: obj,
+      callback: (res, err) => {
+        if (err)
+          return callback(null, err);
+
+        if (!res)
+          return callback(null);
+
+        obj = res.data;
+        callback && callback(obj);
       }
     });
   }
@@ -246,30 +332,33 @@ export default class BasicCrud {
    * Deletes a document from the bound collection.
    * @param {Object} args - The arguments detailing the delete operation.
    * @param {Object} args.filter - The filter to apply to the delete operation.
-   * @param {function(Object):void} [callback] - A function to execute once the document has been deleted.
+   * @param {function(Object, Object):void} [callback] - A function to execute once the document has been deleted.
    */
   delete(args, callback) {
-    if (!args || !args.filter) {
-      if (callback) callback(null);
-      return;
-    }
+    if (!args || !args.filter)
+      return callback && callback(null);
+
     let filter = args.filter;
+    let mcache = this.cache;
     filter = typeof filter === 'object' ? filter : { _id: db.objectId(filter) };
+
     db.mongo({
       url: this.url,
       collection: this.collection,
       operation: db.operations.deleteOne,
       filter: filter,
-      callback: (res) => {
+      callback: (res, err) => {
+        if (err)
+          return callback && callback(null, err);
+
         let key = this.collection + '-' + filter._id;
-        if (this.cache) {
-          memcached.del(key, (err) => {
+        if (mcache)
+          return memcached.del(key, (err) => {
             if (err) { console.log('>>> MEMCACHED ERROR <<<'); console.log(err); }
-            if (callback) callback(res.data);
+            callback && callback(res.data);
           });
-          return;
-        }
-        if (callback) callback(res);
+
+        callback && callback(res);
       }
     });
   }
@@ -278,22 +367,25 @@ export default class BasicCrud {
    * Delete many documents from the bound collection.
    * @param {Object} args - The arguments detailing the delete operation.
    * @param {Object} args.filter - The filter to apply to the delete operation.
-   * @param {function(Object):void} [callback] - A function to execute once the documents have been deleted.
+   * @param {function(Object, Object):void} [callback] - A function to execute once the documents have been deleted.
    */
   deleteMany(args, callback) {
-    if (!args || !args.filter) {
-      if (callback) callback(null);
-      return;
-    }
+    if (!args || !args.filter)
+      return callback && callback(null);
+
     let filter = args.filter;
     filter = typeof filter === 'object' ? filter : { _id: db.objectId(filter) };
+
     db.mongo({
       url: this.url,
       collection: this.collection,
       operation: db.operations.deleteMany,
       filter: filter,
-      callback: (res) => {
-        if (callback) callback(res);
+      callback: (res, err) => {
+        if (err)
+          return callback && callback(null, err);
+
+        callback && callback(res);
       }
     });
   }

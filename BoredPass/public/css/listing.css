@@ -27,6 +27,9 @@
 section.banner {
   height: 260px;
   background-color: #25B9C5;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 section.banner > div {
   max-width: 1024px;

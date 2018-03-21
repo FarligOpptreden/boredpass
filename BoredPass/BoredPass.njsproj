@@ -21,7 +21,7 @@
     <OutputPath>.</OutputPath>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
-    <ProjectView>ProjectFiles</ProjectView>
+    <ProjectView>ShowAllFiles</ProjectView>
     <NodejsPort>1337</NodejsPort>
     <StartWebBrowser>true</StartWebBrowser>
   </PropertyGroup>
@@ -36,11 +36,15 @@
     <Compile Include="app.js" />
     <Compile Include="config.js" />
     <Compile Include="handlr\BasicCrud.js" />
+    <Compile Include="handlr\BasicCrudPromises.js" />
+    <Compile Include="handlr\CliColors.js" />
     <Compile Include="handlr\Controller.js" />
     <Compile Include="handlr\CrudController.js" />
     <Compile Include="handlr\Handlr.js" />
+    <Compile Include="handlr\Konsole.js" />
     <Compile Include="handlr\ListMap.js" />
     <Compile Include="handlr\Mongo.js" />
+    <Compile Include="handlr\Utils.js" />
     <Compile Include="handlr\_all.js">
       <SubType>Code</SubType>
     </Compile>
@@ -55,7 +59,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="server\controllers\api\v1\activities.js" />
-    <Compile Include="server\controllers\html\tag.js" />
+    <Compile Include="server\controllers\html\security.js" />
+    <Compile Include="server\controllers\html\libraries.js" />
     <Compile Include="server\controllers\html\content.js" />
     <Compile Include="server\controllers\html\listing.js" />
     <Compile Include="server\controllers\html\activity.js" />
@@ -77,7 +82,6 @@
     <Content Include="package.json" />
     <Content Include="public\css\adding.css" />
     <Content Include="public\css\adding.min.css" />
-    <Content Include="public\css\add_activity.css" />
     <Content Include="public\css\content_management.css" />
     <Content Include="public\css\content_management.min.css" />
     <Content Include="public\css\editing.css" />
@@ -100,11 +104,31 @@
       <SubType>Content</SubType>
       <DependentUpon>public\css\shared.css</DependentUpon>
     </Content>
-    <Content Include="public\css\_default.css" />
-    <Content Include="public\css\_default.min.css">
+    <Content Include="public\css\sign_in.css" />
+    <Content Include="public\css\sign_in.min.css">
       <SubType>Content</SubType>
-      <DependentUpon>public\css\_default.css</DependentUpon>
+      <DependentUpon>public\css\sign_in.css</DependentUpon>
     </Content>
+    <Content Include="public\images\banners\city_2x.jpg" />
+    <Content Include="public\images\banners\farm_2x.jpg" />
+    <Content Include="public\images\banners\field_2x.jpg" />
+    <Content Include="public\images\banners\forest_2x.jpg" />
+    <Content Include="public\images\banners\ice_2x.jpg" />
+    <Content Include="public\images\banners\mountains_2x.jpg" />
+    <Content Include="public\images\banners\picnic_2x.jpg" />
+    <Content Include="public\images\banners\road_2x.jpg" />
+    <Content Include="public\images\banners\rocks_2x.jpg" />
+    <Content Include="public\images\banners\safari_2x.jpg" />
+    <Content Include="public\images\banners\sand_2x.jpg" />
+    <Content Include="public\images\banners\skyline_2x.jpg" />
+    <Content Include="public\images\banners\sky_2x.jpg" />
+    <Content Include="public\images\banners\snow_2x.jpg" />
+    <Content Include="public\images\banners\stones_2x.jpg" />
+    <Content Include="public\images\banners\trail_2x.jpg" />
+    <Content Include="public\images\banners\vineyard_2x.jpg" />
+    <Content Include="public\images\banners\water_2x.jpg" />
+    <Content Include="public\images\boredpass-inverse.svg" />
+    <Content Include="public\images\boredpass-white.svg" />
     <Content Include="public\images\icons\activities\abseiling.svg" />
     <Content Include="public\images\icons\activities\bodyboarding.svg" />
     <Content Include="public\images\icons\activities\bus-tours.svg" />
@@ -128,15 +152,9 @@
     <Content Include="public\images\icons\facilities\dog-friendly.svg" />
     <Content Include="public\images\icons\facilities\picnic.svg" />
     <Content Include="run.bat" />
+    <Content Include="server\less\sign_in.less" />
     <Content Include="server\less\content_management.less" />
     <Content Include="server\less\editing.less" />
-    <Content Include="server\less\add_activity.less">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="public\css\add_activity.min.css">
-      <SubType>Content</SubType>
-      <DependentUpon>public\css\add_activity.css</DependentUpon>
-    </Content>
     <Content Include="public\css\boredpass.css" />
     <Content Include="server\less\boredpass.less">
       <SubType>Code</SubType>
@@ -158,7 +176,6 @@
       <DependentUpon>public\css\listing.css</DependentUpon>
     </Content>
     <Content Include="server\less\shared.less" />
-    <Content Include="server\less\_default.less" />
     <Content Include="server\less\__variables.less">
       <SubType>Code</SubType>
     </Content>
@@ -183,6 +200,9 @@
     <Content Include="server\views\mixins\activities.pug" />
     <Content Include="server\views\mixins\facilities.pug" />
     <Content Include="server\views\mixins\photos.pug" />
+    <Content Include="server\views\partials\sign_in_modal.pug" />
+    <Content Include="server\views\partials\banner_library.pug" />
+    <Content Include="server\views\partials\tag_library.pug" />
     <Content Include="server\views\partials\add_listing_step3.pug" />
     <Content Include="server\views\partials\add_listing_step2.pug" />
     <Content Include="server\views\partials\add_listing_step1.pug" />
@@ -201,6 +221,7 @@
     <Folder Include="public\images\icons\" />
     <Folder Include="public\images\icons\facilities\" />
     <Folder Include="public\images\icons\activities\" />
+    <Folder Include="public\images\banners\" />
     <Folder Include="public\js\" />
     <Folder Include="public\images\" />
     <Folder Include="server\" />

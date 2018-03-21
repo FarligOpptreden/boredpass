@@ -30,7 +30,42 @@ $(document).ready(function () {
     })();
     /* Activity Events */
     (function () {
-        $("#post-listing").click(function () {
+        $(".edit-banner").click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: "/libraries/banners/list",
+                method: "get",
+                success: function (d, s, x) {
+                    var content = $(d);
+                    content.find(".close").click(function (e) {
+                        e.preventDefault();
+                        Shared.hideOverlay();
+                        return false;
+                    });
+                    console.log($("section.banner").data("banner"));
+                    content.find(".banners a").each(function () {
+                        var image = $(this).data("value");
+                        var url = "url(/images/banners/" + image + ")";
+                        image === $("section.banner").data("banner") && $(this).addClass("selected");
+                        $(this).css("background-image", url);
+                        $(this).click(function (e) {
+                            e.preventDefault();
+                            $("section.banner")
+                                .data("banner", image)
+                                .css("background-image", url);
+                            Shared.hideOverlay();
+                            return false;
+                        });
+                    });
+                    Shared.showOverlay({
+                        content: content
+                    });
+                }
+            });
+            return false;
+        });
+        $("#post-listing").click(function (e) {
+            e.preventDefault();
             $(".mandatory").trigger("keyup");
             if ($(".error").length) {
                 $(".error:first").find("input, textarea").focus();
@@ -69,20 +104,15 @@ $(document).ready(function () {
                     });
                     return arr;
                 })(),
-                tags: (function () {
-                    var tags = [];
-                    $(".tag-container > span").each(function () {
-                        tags.push($(this).data("tag"));
-                    });
-                    return tags;
-                })(),
+                tags: $(".activity-tags").data("value"),
                 facilities: (function () {
                     var facilities = [];
                     $(".facilities .facility.selected").each(function () {
                         facilities.push($(this).data("facility"));
                     });
                     return facilities;
-                })()
+                })(),
+                banner: $("section.banner").data("banner")
             };
             var mode = $("#mode").val();
             $.ajax({
@@ -94,6 +124,7 @@ $(document).ready(function () {
                     window.location.href = "/listings/" + d.id;
                 }
             });
+            return false;
         });
     })();
 });

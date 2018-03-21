@@ -1,0 +1,23 @@
+﻿div.sign-in-modal
+  div.logo
+  nav.options
+    div
+      a.log-in.active(href='/log-in') Log In
+    div
+      a.sign-up(href='/sign-up') Sign Up
+  p Use your preferred social network or login using your account details.
+  nav.social
+    a.fa.fa-twitter-square(href='/social-twitter')
+    a.fa.fa-facebook-square(href='/social-facebook')
+    a.fa.fa-google-plus-square(href='/social-google')
+  form.sign-in
+    div.field-wrapper
+      label(for='sign-in-email') Email Address
+      input#sign-in-email(type='text')
+    div.field-wrapper
+      label(for='sign-in-password') Password
+      input#sign-in-password(type='password')
+    button.button.sign-in Sign In
+    div.password-options
+      a Remember Me
+      a Forgot Password?

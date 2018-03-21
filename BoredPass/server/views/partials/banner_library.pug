@@ -1,0 +1,6 @@
+﻿div.banner-library
+  h1 Banners
+    a.close(href='close') +
+  div.banners
+    each banner in banners
+      a('data-value'=banner, href='select-banner')=banner

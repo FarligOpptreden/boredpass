@@ -1,0 +1,14 @@
+﻿div.tag-library
+  h1 Tags
+    a.close(href='close') +
+  div.tags
+    - var currentAlpha = 'A'
+    if tags && tags.length
+      each tag in tags
+        - var thisAlpha = tag.name[0].toUpperCase()
+        if thisAlpha !== currentAlpha
+          - currentAlpha = thisAlpha
+          h3=currentAlpha
+          hr
+        a(id=tag._id, 'data-value'=tag, href='add-tag')=tag.name
+  div.added.tag-container

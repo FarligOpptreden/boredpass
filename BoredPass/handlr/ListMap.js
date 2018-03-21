@@ -1,4 +1,4 @@
-﻿export default class ListMap {
+export default class ListMap {
   constructor() {
     this.objects = [];
   }

@@ -73,13 +73,7 @@ $(document).ready(function () {
             var listing = {
                 name: $("#businessname").val(),
                 description: $("#description").val(),
-                tags: (function () {
-                    var tags = [];
-                    $(".tag-container > span").each(function () {
-                        tags.push($(this).data("tag"));
-                    });
-                    return tags;
-                })(),
+                tags: $(".activity-tags").data("value"),
                 address: $("#address").val(),
                 website: $("#website").val(),
                 owner: $("#yourbusiness").val().toLowerCase() === "yes",
@@ -125,7 +119,8 @@ $(document).ready(function () {
                         arr.push($(this).data("facility"));
                     });
                     return arr;
-                })()
+                })(),
+                banner: $(".edit-banner").data("banner")
             };
             $.ajax({
                 url: "/listings/add",
@@ -183,6 +178,40 @@ $(document).ready(function () {
             else
                 wrapper.find("select").attr("disabled", "disabled");
         });
+        $(".edit-banner").click(function (e) {
+            var editButton = $(this);
+            e.preventDefault();
+            $.ajax({
+                url: "/libraries/banners/list",
+                method: "get",
+                success: function (d, s, x) {
+                    var content = $(d);
+                    content.find(".close").click(function (e) {
+                        e.preventDefault();
+                        Shared.hideOverlay();
+                        return false;
+                    });
+                    content.find(".banners a").each(function () {
+                        var image = $(this).data("value");
+                        var url = "url(/images/banners/" + image + ")";
+                        image === editButton.data("banner") && $(this).addClass("selected");
+                        $(this).css("background-image", url);
+                        $(this).click(function (e) {
+                            e.preventDefault();
+                            editButton
+                                .data("banner", image)
+                                .css("background-image", url);
+                            Shared.hideOverlay();
+                            return false;
+                        });
+                    });
+                    Shared.showOverlay({
+                        content: content
+                    });
+                }
+            });
+            return false;
+        });
         $("#post-activity").click(function () {
             $(".mandatory").trigger("keyup");
             if ($(".error").length) {
@@ -192,13 +221,7 @@ $(document).ready(function () {
             var activity = {
                 name: $("#activity_name").val(),
                 description: $("#activity_description").val(),
-                tags: (function () {
-                    var tags = [];
-                    $(".tag-container > span").each(function () {
-                        tags.push($(this).data("tag"));
-                    });
-                    return tags;
-                })(),
+                tags: $(".activity-tags").data("value"),
                 address: $("#activity_address").val(),
                 prices: {
                     free: $("#price_free").val() === "true",
@@ -246,7 +269,8 @@ $(document).ready(function () {
                         });
                     });
                     return arr;
-                })()
+                })(),
+                banner: $(".edit-banner").data("banner")
             };
             var mode = $("#mode").val();
             $.ajax({

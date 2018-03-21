@@ -1,5 +1,5 @@
-﻿import express from 'express';
-import ListMap from './ListMap';
+import express from 'express';
+import { ListMap, konsole, CliColors } from './_all';
 import config from '../config';
 import moment from 'moment';
 
@@ -15,10 +15,10 @@ const register = (root, routes) => {
     routes.forEach((route) => {
       if (route.secure) {
         if (config && config.accounts && config.accounts.url) {
-          console.log('[H:i:' + moment().format('YYYY-MM-DDTHH:mm:ss:SSS') + '] Route "' + root + route.route + '" is secure. Redirecting to "' + config.accounts.url + '".');
+          konsole.log(`Route "${root}${route.route}" is secure. Redirecting to "${config.accounts.url}".`);
           return { redirect: config.accounts.url };
         } else
-          console.log('[H:w:' + moment().format('YYYY-MM-DDTHH:mm:ss:SSS') + '] Route "' + root + route.route + '" is secure. "config.accounts.url" not specified.');
+          konsole.log(`Route "${root}${route.route}" is secure. "config.accounts.url" not specified.`);
         return { status: 401 };
       }
       retVal = {
@@ -31,21 +31,22 @@ const register = (root, routes) => {
 }
 
 const executeRoute = (root, route, delegate, req, res, next) => {
-  console.log(route);
   if (!route.consumes || req.accepts(route.consumes)) {
     let toLog = '';
-    toLog += '[H:i:' + moment().format('YYYY-MM-DDTHH:mm:ss:SSS') + '] Routing to "' + root + route.route + '"';
-    toLog += '\n    > Method         : ' + route.method;
-    toLog += '\n    > Consumes       : ' + route.consumes;
-    toLog += '\n    > Produces       : ' + route.produces;
-    toLog += '\n    > Request query  : ' + JSON.stringify(req.query);
-    toLog += '\n    > Request body   : ' + JSON.stringify(req.body);
-    toLog += '\n    > Request params : ' + JSON.stringify(req.params);
-    console.log(toLog);
+    toLog += `${CliColors.FgMagenta}START > ${CliColors.Reset}Routing to "${root}${route.route}"`;
+    if (config && config.loggingLevel.http > 1) {
+      toLog += '\n    > Method         : ' + route.method;
+      toLog += '\n    > Consumes       : ' + route.consumes;
+      toLog += '\n    > Produces       : ' + route.produces;
+      toLog += '\n    > Request query  : ' + JSON.stringify(req.query);
+      toLog += '\n    > Request body   : ' + (req.bodyBuffer ? "<Buffer>" : JSON.stringify(req.body));
+      toLog += '\n    > Request params : ' + JSON.stringify(req.params);
+    }
+    konsole.log(toLog, `h${CliColors.BgMagenta}${CliColors.FgWhite}.ctrl`);
     delegate(req, res, next);
     return;
   }
-  console.log('[H:e' + moment().format('YYYY-MM-DDTHH:mm:ss:SSS') + '] HTTP 400: Bad request');
+  konsole.error('HTTP 400: Bad request');
   res.status(400).end();
 }
 
@@ -104,7 +105,19 @@ export default class Controller {
       let routePost = filterRoutes(handlr, 'post');
       let routePut = filterRoutes(handlr, 'put');
       let routeDelete = filterRoutes(handlr, 'delete');
-      console.log('[H:i] > Registering route: ' + route + ' at root ' + this.root + ': ' + routeGet.length + ' GET, ' + routePost.length + ' POST, ' + routePut.length + ' PUT, ' + routeDelete.length + ' DELETE');
+      let logAmount = (amount, type) => {
+        let bgCol = '';
+        switch (type) {
+          case 'GET': bgCol = CliColors.BgMagenta; break;
+          case 'POST': bgCol = CliColors.BgBlue; break;
+          case 'PUT': bgCol = CliColors.BgCyan; break;
+          case 'DELETE': bgCol = CliColors.BgGreen; break;
+        }
+        if (amount > 0)
+          return `${bgCol}${CliColors.FgWhite}${amount} ${type}${CliColors.Reset}`;
+        return `${amount} ${type}`;
+      };
+      konsole.log(`Registering route: ${route} at root ${this.root}: ${logAmount(routeGet.length, 'GET')}, ${logAmount(routePost.length, 'POST')}, ${logAmount(routePut.length, 'PUT')}, ${logAmount(routeDelete.length, 'DELETE')}`);
       router.route(route)
         .get(doRegistration(this.root, register(this.root, routeGet)))
         .post(doRegistration(this.root, register(this.root, routePost)))

@@ -16,8 +16,17 @@ block js
   script(type='text/javascript', src='/js/editing.js')
 
 block content
+  div.toolbar
+    div
+      a.cancel(href='/listings/' + listing._id) Cancel
+        i.fa.fa-times
+      a#post-listing.edit(href='update') Update Listing
+        i.fa.fa-check
   input#listing-id(type='hidden', value=listing._id)
-  section.banner
+  - var banner = listing.banner ? 'background-image:url(/images/banners/' + listing.banner + ')' : ''
+  section.banner(style=banner, data-banner=listing.banner)
+    a.edit-banner
+      i.fa.fa-image
   section.listing-section.overview
     div.contact-info
       +photoUpload(listing.logo)(data-url='/content/upload', data-allow-change='true').logo
@@ -78,6 +87,3 @@ block content
           h2 Add Experience
           p Create an experience to flesh out your listing.
           span.read-more.button.inverse Add
-  section.listing-section.lower.alternating
-    div
-      button#post-listing.button.dark Update Listing

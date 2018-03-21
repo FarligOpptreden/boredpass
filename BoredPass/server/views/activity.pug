@@ -11,8 +11,15 @@ block js
   script(type='text/javascript', src='/js/listing.js')
 
 block content
+  div.toolbar
+    div
+      a.edit(href='/activities/' + activity._id + '/edit') Edit
+        i.fa.fa-edit
+      a.delete.activity(href='/activities/' + activity._id + '/delete') Delete
+        i.fa.fa-trash
   input#record-id(type='hidden', value=activity._id)
-  section.banner
+  - var banner = activity.banner ? 'background-image:url(/images/banners/' + activity.banner + ')' : ''
+  section.banner(style=banner)
     div
       a.provider(href='/listings/' + listing._id)
         if listing.logo
@@ -20,8 +27,6 @@ block content
         if !listing.logo
           span.logo
         span= listing.name
-      a.edit(href='/activities/' + activity._id + '/edit') Edit
-      a.delete.activity(href='/activities/' + activity._id + '/delete') Delete
   section.listing-section.overview.activity.white
     div
       div.photo

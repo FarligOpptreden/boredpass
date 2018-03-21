@@ -34,14 +34,12 @@ block content
       div.field-wrapper.textarea(class=(isEdit && activity.name && 'has-value' || ''))
         label(for='activity_description') Describe the activity*
         textarea#activity_description.mandatory= (isEdit && activity.description || '')
-      div.field-wrapper.no-grow.auto-height
-        - var tagValues = activity && activity.tags && activity.tags.length ? activity.tags.join(';') : null
-        label(for='activity_tags') Add activity tags (e.g. Kayaking)*
-        input#activity_tags.activity-tags.mandatory(type='text', data-value=tagValues)
+      div.tag-field
+        div.field-wrapper
+          - var tagValues = activity && activity.tags && activity.tags.length ? activity.tags : []
+          label(for='activity_tags', 'data-value'=tagValues) Add activity tags (e.g. Kayaking)*
+          input#activity_tags.activity-tags.mandatory(type='text', data-value=tagValues)
         div.tag-container
-          if activity && activity.tags && activity.tags.length
-            each tag in activity.tags
-              span.tag.icon.activity.colour(class=tag.icon, data-tag=tag)=tag.name
       div.field-wrapper(class=(isEdit && activity.name && 'has-value' || ''))
         label(for='activity_address') Activity address
         input#activity_address(type='text', value=(isEdit && activity.address || ''))
@@ -117,5 +115,8 @@ block content
           each photo in activity.photos
             +photoUpload(photo)(data-url='/content/upload')
         +photoUpload()(data-url='/content/upload')
+      h2 Banner
+      - var banner = activity && activity.banner ? 'background-image: url(/images/banners/' + activity.banner + ')' : ''
+      a.edit-banner(style=banner, data-banner=(activity && activity.banner), href='/select-banner')
       div.button-wrapper
         button#post-activity.button.dark.large-top-margin #{activity ? 'Update Experience' : 'Post Experience'}

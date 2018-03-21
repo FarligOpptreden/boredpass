@@ -1,4 +1,4 @@
-﻿import { Controller } from '../../handlr/_all';
+﻿import { Controller, konsole } from '../../handlr/_all';
 import { ListingsService } from '../services/_all';
 import moment from 'moment';
 

@@ -1,4 +1,4 @@
-﻿import express from 'express';
+import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import favicon from 'serve-favicon';
@@ -6,6 +6,7 @@ import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import moment from 'moment';
+import { konsole } from './_all';
 
 const rawBodySaver = (req, res, buf, encoding) => {
   if (buf && buf.length) {
@@ -13,10 +14,14 @@ const rawBodySaver = (req, res, buf, encoding) => {
   }
 }
 
+const SIZE_LIMIT = '5mb';
+const PARAMETER_LIMIT = 10000;
+const MIDDLEWARE = [];
+
 export default class Handlr {
   start() {
-    console.log('');
-    console.log('[H:i] Starting Handlr application...');
+    konsole.empty();
+    konsole.log('Starting Handlr application...');
     // Initialize Express
     let app = express();
     // Initialize server variables
@@ -24,9 +29,9 @@ export default class Handlr {
     app.set('view engine', 'pug');
     //app.use(favicon(__dirname + '/public/favicon.ico'));
     app.use(logger('dev'));
-    app.use(bodyParser.raw({ verify: rawBodySaver, type: 'application/octet-stream' }));
-    app.use(bodyParser.json({ verify: rawBodySaver }));
-    app.use(bodyParser.urlencoded({ verify: rawBodySaver, extended: false }));
+    app.use(bodyParser.raw({ verify: rawBodySaver, type: 'application/octet-stream', limit: SIZE_LIMIT }));
+    app.use(bodyParser.json({ verify: rawBodySaver, limit: SIZE_LIMIT }));
+    app.use(bodyParser.urlencoded({ verify: rawBodySaver, extended: false, limit: SIZE_LIMIT, parameterLimit: PARAMETER_LIMIT }));
     app.use(cookieParser());
     app.use(express.static(path.join(__dirname, '../public')));
     // Initialize middleware
@@ -40,8 +45,11 @@ export default class Handlr {
           return;
         if (file.toLowerCase().indexOf('.js')) {
           let module = require('../' + fullName).default;
-          console.log('[H:i] Registering middleware: ' + fullName);
-          if (module) module.get(app);
+          konsole.log(`Registering middleware: ${fullName}`);
+          if (module) {
+            MIDDLEWARE.push(module);
+            module.get(app);
+          }
         }
       });
     }
@@ -59,13 +67,13 @@ export default class Handlr {
           let module = require('../' + fullName).default;
           if (!module || !module.root)
             return;
-          console.log('[H:i] Registering module: ' + fullName + ' at root ' + module.root);
+          konsole.log(`Registering module: ${fullName} at root ${module.root}`);
           app.use(module.root, module.registerRoutes());
         }
       });
     }
     traverseRoutes('server/controllers');
-    console.log('[H:i] All modules successfully registered!');
+    konsole.log(`All modules successfully registered!`);
     // Error handling
     app.use((req, res, next) => {
       let err = new Error('Not Found');
@@ -74,22 +82,27 @@ export default class Handlr {
     });
     if (app.get('env') === 'development') {
       app.use((err, req, res, next) => {
+        konsole.error(`Uncaught controller exception: ${JSON.stringify(err)}`);
         res.status(err.status || 500);
         res.render('error', {
           message: err.message,
-          error: err,
-          moment: moment
+          error: err
         });
       });
     }
     app.use((err, req, res, next) => {
       res.status(err.status || 500);
+      konsole.error(`Uncaught controller exception: ${JSON.stringify(err)}`);
       res.render('error', {
         message: err.message,
-        error: {},
-          moment: moment
+        error: {}
       });
     });
+    if (MIDDLEWARE && MIDDLEWARE.length)
+      MIDDLEWARE.map((mw) => {
+        if (mw.error)
+          mw.error(app);
+      });
     return app;
   }
 }

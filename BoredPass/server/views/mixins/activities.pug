@@ -3,7 +3,7 @@
     section.listing-section.activities-overview&attributes(attributes)
       div
         h1 Activities Offered
-        if data && data.length
+        if data && data.length && !editable
           each activity, index in data
             if activity && activity.icon
               - var className = activity.icon.toLowerCase().replace(/ /g, '-')
@@ -11,11 +11,9 @@
                 span.activity.icon.colour(class=className)
                 span=activity.name
         if editable
-          div.field-wrapper.no-grow.auto-height
-            - var tagValues = data && data.length ? data.join(';') : null
-            label(for='activity_tags') Add activity tags (e.g. Kayaking)*
-            input#activity-tags.activity-tags(type='text', readonly=true, value=tagValues)
+          div.tag-field
+            div.field-wrapper
+              - var tagValues = data && data.length ? data : []
+              label(for='activity_tags', 'data-value'=tagValues) Search for activity tags (e.g. Kayaking)*
+              input#activity_tags.activity-tags.mandatory(type='text', data-value=tagValues)
             div.tag-container
-              if data && data.length
-                each tag in data
-                  span.tag.icon.activity.colour(class=tag.icon, data-tag=tag)=tag.name

@@ -42,7 +42,6 @@ $(document).ready(function () {
                         Shared.hideOverlay();
                         return false;
                     });
-                    console.log($("section.banner").data("banner"));
                     content.find(".banners a").each(function () {
                         var image = $(this).data("value");
                         var url = "url(/images/banners/" + image + ")";
@@ -52,10 +51,18 @@ $(document).ready(function () {
                             e.preventDefault();
                             $("section.banner")
                                 .data("banner", image)
+                                .data("custom-banner", null)
                                 .css("background-image", url);
                             Shared.hideOverlay();
                             return false;
                         });
+                    });
+                    content.find(".photo-upload a").data("uploaded", function (d) {
+                        $("section.banner")
+                            .data("banner", null)
+                            .data("custom-banner", d.location)
+                            .css("background-image", "url(" + d.location + ")");
+                        Shared.hideOverlay();
                     });
                     Shared.showOverlay({
                         content: content
@@ -112,7 +119,8 @@ $(document).ready(function () {
                     });
                     return facilities;
                 })(),
-                banner: $("section.banner").data("banner")
+                banner: $("section.banner").data("banner"),
+                customBanner: $("section.banner").data("custom-banner")
             };
             var mode = $("#mode").val();
             $.ajax({

@@ -121,7 +121,7 @@
   flex: 0 0 20px;
 }
 .tag-library > .tags,
-.banner-library > .banners {
+.banner-library > div {
   flex: 1;
   overflow: auto;
   padding: 10px;
@@ -156,12 +156,12 @@
 .tag-library > .tags > a:hover {
   color: #25B9C5;
 }
-.banner-library > .banners {
+.banner-library > div > .banners {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
-.banner-library > .banners > a {
+.banner-library > div > .banners > a {
   min-width: 40%;
   flex: 1;
   box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
@@ -176,11 +176,33 @@
   opacity: 0.5;
   transition: all 0.2s;
 }
-.banner-library > .banners > a.selected {
+.banner-library > div > .banners > a.selected {
   opacity: 1;
   border-color: #25B9C5;
 }
-.banner-library > .banners > a:hover {
+.banner-library p {
+  font-size: 16px;
+  padding: 10px;
+}
+.banner-library .custom-banner > a {
+  display: block;
+  height: 120px;
+  margin: 10px;
+  background-color: #EEE;
+}
+.banner-library .custom-banner > a span.plus {
+  background-color: #25B9C5;
+  color: #fff;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 50px;
+  padding: 0;
+  text-align: center;
+}
+.banner-library > div > .banners > a:hover {
   opacity: 1;
 }
 .tag-library > .added {

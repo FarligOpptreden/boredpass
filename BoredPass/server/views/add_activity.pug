@@ -116,7 +116,7 @@ block content
             +photoUpload(photo)(data-url='/content/upload')
         +photoUpload()(data-url='/content/upload')
       h2 Banner
-      - var banner = activity && activity.banner ? 'background-image: url(/images/banners/' + activity.banner + ')' : ''
+      - var banner = (activity && activity.customBanner && 'background-image:url(' + activity.customBanner + ')') || (activity && activity.banner && 'background-image:url(/images/banners/' + activity.banner + ')') || ''
       a.edit-banner(style=banner, data-banner=(activity && activity.banner), href='/select-banner')
       div.button-wrapper
         button#post-activity.button.dark.large-top-margin #{activity ? 'Update Experience' : 'Post Experience'}

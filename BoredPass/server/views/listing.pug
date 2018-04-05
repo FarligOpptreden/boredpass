@@ -18,7 +18,7 @@ block content
       a.delete.listing(href='/listings/' + listing._id + '/delete') Delete
         i.fa.fa-trash
   input#record-id(type='hidden', value=listing._id)
-  - var banner = listing.banner ? 'background-image:url(/images/banners/' + listing.banner + ')' : ''
+  - var banner = (listing.customBanner && 'background-image:url(' + listing.customBanner + ')') || (listing.banner && 'background-image:url(/images/banners/' + listing.banner + ')') || ''
   section.banner(style=banner)
   section.listing-section.overview
     div

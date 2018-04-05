@@ -93,6 +93,8 @@ $(document).ready(function () {
                     anchor.data("upload", d);
                     anchor.addClass("has-image");
                     anchor.css("background-image", "url(" + d.location + ")");
+                    if (anchor.data("uploaded"))
+                        anchor.data("uploaded")(d);
                     if (wrapper.data("allow-change"))
                         return;
                     form.remove();

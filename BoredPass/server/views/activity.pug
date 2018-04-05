@@ -18,7 +18,7 @@ block content
       a.delete.activity(href='/activities/' + activity._id + '/delete') Delete
         i.fa.fa-trash
   input#record-id(type='hidden', value=activity._id)
-  - var banner = activity.banner ? 'background-image:url(/images/banners/' + activity.banner + ')' : ''
+  - var banner = (activity.customBanner && 'background-image:url(' + activity.customBanner + ')') || (activity.banner && 'background-image:url(/images/banners/' + activity.banner + ')') || ''
   section.banner(style=banner)
     div
       a.provider(href='/listings/' + listing._id)

@@ -23,7 +23,7 @@ block content
       a#post-listing.edit(href='update') Update Listing
         i.fa.fa-check
   input#listing-id(type='hidden', value=listing._id)
-  - var banner = listing.banner ? 'background-image:url(/images/banners/' + listing.banner + ')' : ''
+  - var banner = (listing.customBanner && 'background-image:url(' + listing.customBanner + ')') || (listing.banner && 'background-image:url(/images/banners/' + listing.banner + ')') || ''
   section.banner(style=banner, data-banner=listing.banner)
     a.edit-banner
       i.fa.fa-image

@@ -200,10 +200,18 @@ $(document).ready(function () {
                             e.preventDefault();
                             editButton
                                 .data("banner", image)
+                                .data("custom-banner", null)
                                 .css("background-image", url);
                             Shared.hideOverlay();
                             return false;
                         });
+                    });
+                    content.find(".photo-upload a").data("uploaded", function (d) {
+                        editButton
+                            .data("banner", null)
+                            .data("custom-banner", d.location)
+                            .css("background-image", "url(" + d.location + ")");
+                        Shared.hideOverlay();
                     });
                     Shared.showOverlay({
                         content: content
@@ -270,7 +278,8 @@ $(document).ready(function () {
                     });
                     return arr;
                 })(),
-                banner: $(".edit-banner").data("banner")
+                banner: $(".edit-banner").data("banner"),
+                customBanner: $(".edit-banner").data("customBanner")
             };
             var mode = $("#mode").val();
             $.ajax({

@@ -4,8 +4,9 @@ block css
   link(rel='stylesheet', href='/css/home.min.css')
 
 block content
+  section.banner
   section.listings
     each listing in listings
       div.listing
         a(href='/listings/' + listing._id)
-          span= listing.name
+          span.icon.boredpass.film= listing.name

@@ -31,11 +31,12 @@
 }
 
 section.banner {
-    height: 260px;
+    height: 460px;
     background-color: @col-main;
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+    border-bottom: solid 5px @col-main;
 }
 
 section.banner > div {
@@ -48,23 +49,27 @@ section.banner > div {
 }
 
 section.banner .provider {
+    height: 100px;
     font-size: 26px;
     font-weight: 900;
     text-transform: uppercase;
     color: @col-button-fg;
     display: flex;
+    align-self: flex-end;
+    margin-bottom: 20px;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     text-decoration: none;
+    text-shadow: @box-shadow;
 }
 
 section.banner .provider .logo {
     flex: 0 0 80px;
     height: 80px;
     width: 80px;
-    background-color: transparent;
-    border-radius: 40px;
+    box-shadow: @box-shadow;
+    background-color: #FFF;
     display: inline-block;
     background-repeat: no-repeat;
     background-size: contain;
@@ -159,10 +164,12 @@ section.banner .delete {
     top: 0;
     left: 0;
     margin-top: -130px;
-    background-color: transparent;
+    background-color: #FFF;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
+    border: solid 5px #FFF;
+    box-shadow: @box-shadow;
 }
 
 .listing-section.overview > div:first-of-type .logo.no-logo {
@@ -420,10 +427,22 @@ section.banner .delete {
     width: 60px;
     border-radius: 30px;
     flex: 0 0 60px;
-    background-color: #FFFFFF;
+    background-color: @col-main;
     background-size: 120%;
     background-position: center center;
     background-repeat: no-repeat;
+    position: relative;
+}
+
+.listing-section.activities-overview .activity > .icon:before, .listing-section.facilities .facility > .icon:before {
+    color: #FFF;
+    height: 70px;
+    width: 70px;
+    font-size: 70px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -35px 0 0 -35px;
 }
 
 .listing-section.activities-overview .activity > .icon {

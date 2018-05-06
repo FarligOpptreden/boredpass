@@ -46,10 +46,16 @@ body {
 }
 
 #header {
+    background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+    height: 460px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
 }
 
 #header > nav:first-of-type {
-    background-color: @col-dark;
+    border-top: solid 5px @col-main;
     position: fixed;
     left: 0;
     right: 0;
@@ -62,10 +68,21 @@ body {
 #header > nav:first-of-type.float {
     z-index: 100;
     box-shadow: 0 3px 3px rgba(50, 50, 50, 0.5);
+    background-color: @col-dark;
 }
 
 #header > nav:last-of-type {
-    margin-top: 46px;
+    z-index: 2;
+    margin-top: 5px;
+    height: 100px;
+    position: absolute;
+    left: 0;
+    right: 50%;
+}
+
+#header > nav:first-of-type > div {
+    margin-top: 27px;
+    transition: all 0.25s;
 }
 
 #header > nav > div {
@@ -80,13 +97,13 @@ body {
     padding: 15px 20px;
     font-size: 16px;
     margin: 0;
-    background-color: rgba(255,255,255,0.2);
-    color: #FFFFFF;
+    color: @col-main;
     text-transform: uppercase;
+    font-weight: 600;
 }
 
 #header > nav:last-of-type a:not(.logo) {
-    display: inline-block;
+    display: block;
     padding: 15px 20px;
     margin: 35px 0;
     font-size: 16px;
@@ -96,11 +113,10 @@ body {
 
 #header .logo {
     position: absolute;
-    left: 0;
-    top: 50%;
+    right: 440px;
+    top: 10px;
     width: 200px;
     height: 80px;
-    margin: -40px 0 0 0;
     background-image: url(/images/boredpass.svg);
     background-size: contain;
     background-position: center left;
@@ -115,12 +131,20 @@ body {
     height: auto;
     background-color: transparent;
     background-image: url(/images/boredpass-inverse.svg);
-    transform: translateY(-120%);
+    transform: translateY(-200%);
     transition: all 0.5s;
+}
+
+#header > nav:first-of-type.float > div {
+    margin-top: 0;
 }
 
 #header > nav:first-of-type.float .logo {
     transform: none;
+}
+
+#header > nav:first-of-type.float a {
+    color: #FFF;
 }
 
 #body {
@@ -609,7 +633,7 @@ em {
     z-index: 102;
     width: 800px;
     top: 40px;
-    bottom: 40px; 
+    bottom: 40px;
     left: 50%;
     margin: 0 0 0 -400px;
     background-color: #fff;
@@ -676,7 +700,7 @@ em {
 
 #header > nav:last-of-type.has-toolbar {
     transition: all 0.5s;
-    margin-top: 92px;
+    margin-top: 46px;
 }
 
 @media only screen and (max-width: 1300px) {
@@ -703,6 +727,11 @@ em {
 
     #footer > div:first-of-type > nav > h1 {
         padding-left: 20px;
+    }
+
+    #header .logo {
+        right: auto;
+        left: 10px;
     }
 }
 

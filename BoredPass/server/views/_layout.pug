@@ -5,6 +5,7 @@ html
     meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0")
     block meta
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Raleway:400,700,900')
+    link(rel='stylesheet', href='/css/boredpass-icons.css')
     link(rel='stylesheet', href='/css/boredpass.min.css')
     link(rel='stylesheet', href='/css/sign_in.min.css')
     block css
@@ -23,11 +24,7 @@ html
           a.claim Claim
           a.sign-in(href="/secure/sign-in") Sign In
       nav
-        div
-          a.logo(href='/')
-          a Lorem Ipsum
-          a Lorem Ipsum
-          a Contact
+        a.logo(href='/')
     article#body
       block content
     footer#footer

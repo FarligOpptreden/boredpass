@@ -7,5 +7,5 @@
           if facility && facility.icon
             - var className = facility.icon.toLowerCase().replace(/ /g, '-')
             div.facility(class=(edit ? 'editing ' + (facility.selected ? 'selected' : '') : ''), data-facility=(edit ? facility : false))
-              span.facility.icon.colour(class=className)
+              span.facility.icon.boredpass(class=className)
               span=facility.name

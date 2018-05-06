@@ -1,5 +1,13 @@
 ﻿@import '__variables.less';
 
+section.banner {
+    height: 460px;
+    background-color: @col-main;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
 section.listings {
     max-width: 1024px;
     margin: 20px auto;
@@ -20,7 +28,20 @@ section.listings > .listing > a {
     box-shadow: @box-shadow;
     border: solid 2px @col-main;
     border-radius: 3px;
-    padding: 10px;
+    padding: 20px 10px 20px 60px;
     text-decoration: none;
     color: @col-main;
+    position: relative;
+}
+
+.icon.boredpass:before {
+    color: @col-main;
+    font-size: 60px;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin: -30px 0 0 0;
+    height: 60px;
+    width: 60px;
 }

@@ -11,7 +11,7 @@
         url: 'http://www.boredpass.dev:85/sign-in'
     },
     connectionStrings: {
-        boredPass: 'mongodb://localhost:27017/boredpass'
+        boredPass: 'mongodb://localhost:27017/boredpass_uat'
         //boredToday: 'mongodb://BoredToday:bor3dT0DaY@localhost:27017/boredtoday'
     },
     mongo: {

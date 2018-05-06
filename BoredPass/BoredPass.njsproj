@@ -82,6 +82,7 @@
     <Content Include="package.json" />
     <Content Include="public\css\adding.css" />
     <Content Include="public\css\adding.min.css" />
+    <Content Include="public\css\boredpass-icons.css" />
     <Content Include="public\css\content_management.css" />
     <Content Include="public\css\content_management.min.css" />
     <Content Include="public\css\editing.css" />
@@ -109,6 +110,11 @@
       <SubType>Content</SubType>
       <DependentUpon>public\css\sign_in.css</DependentUpon>
     </Content>
+    <Content Include="public\font\boredpass.eot" />
+    <Content Include="public\font\boredpass.svg" />
+    <Content Include="public\font\boredpass.ttf" />
+    <Content Include="public\font\boredpass.woff" />
+    <Content Include="public\font\boredpass.woff2" />
     <Content Include="public\images\banners\city_2x.jpg" />
     <Content Include="public\images\banners\farm_2x.jpg" />
     <Content Include="public\images\banners\field_2x.jpg" />
@@ -218,6 +224,7 @@
     <Folder Include="handlr\" />
     <Folder Include="data\" />
     <Folder Include="public\css\" />
+    <Folder Include="public\font\" />
     <Folder Include="public\images\icons\" />
     <Folder Include="public\images\icons\facilities\" />
     <Folder Include="public\images\icons\activities\" />

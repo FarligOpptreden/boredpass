@@ -1,4 +1,4 @@
-﻿import Controller from '../../../handlr/Controller';
+﻿import { Controller, konsole } from '../../../handlr/_all';
 import { ListingsService, ActivitiesService, FacilitiesService, TagsService } from '../../services/_all';
 import marked from 'marked';
 
@@ -60,39 +60,55 @@ export default new Controller('/listings')
     .handle({ route: '/:id/edit', method: 'get', produces: 'html' }, (req, res) => {
         res.setHeader('Expires', '-1');
         res.setHeader('Cache-Control', 'no-cache');
-        FacilitiesService.findMany({
-            sort: { name: 1 }
-        }, (facilities) => {
-            TagsService.findMany({
+
+        let _listing, _facilities, _activities;
+
+        let getListing = _ => new Promise((resolve, reject) =>
+            ListingsService.findOne({
+                filter: req.params.id
+            }, listing => {
+                _listing = listing;
+                resolve(listing);
+            })
+        );
+
+        let getFacilities = listing => new Promise((resolve, reject) =>
+            FacilitiesService.findMany({
                 sort: { name: 1 }
-            }, (tags) => {
-                ListingsService.findOne({
-                    filter: req.params.id
-                }, (listing) => {
-                    ActivitiesService.findMany({
-                        filter: { listing_id: listing._id },
-                        sort: { name: 1 }
-                    }, (activities) => {
-                        if (listing.facilities && listing.facilities.length)
-                            listing.facilities.map((facility) => {
-                                facilities.map((f) => {
-                                    if (f._id.toString() === facility._id.toString())
-                                        f.selected = true;
-                                });
-                            });
-                        res.render('listing_edit', {
-                            title: listing.name + ' - BoredPass',
-                            moment: require('moment'),
-                            marked: marked,
-                            listing: listing,
-                            activities: activities,
-                            facilities: facilities,
-                            tags: tags
-                        });
-                    });
-                });
-            });
-        });
+            }, facilities => {
+                listing.facilities && listing.facilities.length && listing.facilities.map(facility =>
+                    facilities.map(f => {
+                        if (f && facility && f._id.toString() === facility._id.toString())
+                            f.selected = true;
+                    })
+                );
+                _facilities = facilities;
+                resolve(facilities);
+            })
+        );
+
+        let getActivities = listing => new Promise((resolve, reject) =>
+            ActivitiesService.findMany({
+                filter: { listing_id: listing._id },
+                sort: { name: 1 }
+            }, activities => {
+                _activities = activities;
+                resolve(activities);
+            })
+        );
+
+        Promise.resolve()
+            .then(_ => getListing())
+            .then(listing => Promise.all([getFacilities(listing), getActivities(listing)]))
+            .then(results => res.render('listing_edit', {
+                title: _listing.name + ' - BoredPass',
+                moment: require('moment'),
+                marked: marked,
+                listing: _listing,
+                activities: _activities,
+                facilities: _facilities
+            }))
+            .catch(err => konsole.error(err));
     })
     .handle({ route: '/:id/edit', method: 'put', produces: 'json' }, (req, res) => {
         res.setHeader('Expires', '-1');

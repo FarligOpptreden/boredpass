@@ -5,7 +5,14 @@ block css
 
 block content
   section.banner
+  section.statistics
+    h1 Tag Statistics
+    each tag in tags
+      div.statistic
+        label= tag._id
+        span= tag.count
   section.listings
+    h1 Listings
     each listing in listings
       div.listing
         a(href='/listings/' + listing._id)

@@ -8,7 +8,14 @@ section.banner {
     background-repeat: no-repeat;
 }
 
-section.listings {
+section h1 {
+    flex: 0 0 100%;
+    font-size: 24px;
+    padding: 10px;
+    font-weight: 600;
+}
+
+section.listings, section.statistics {
     max-width: 1024px;
     margin: 20px auto;
     display: flex;
@@ -44,4 +51,41 @@ section.listings > .listing > a {
     margin: -30px 0 0 0;
     height: 60px;
     width: 60px;
+}
+
+section.statistics > .statistic {
+    flex: 1;
+    min-width: 20%;
+    margin: 10px;
+    padding: 20px;
+    border: solid 2px @col-dark;
+    border-radius: 3px;
+    color: @col-dark;
+    box-shadow: @box-shadow;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    position: relative;
+}
+
+section.statistics > .statistic > label {
+    flex: 1;
+    align-content: center;
+
+}
+
+section.statistics > .statistic > span {
+    background-color: @col-dark;
+    color: #FFF;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    margin-top: -20px;
+    text-align: center;
+    font-size: 14px;
+    padding: 13px 0;
 }

@@ -23,6 +23,6 @@
         password: 'b0r3dt0d@y'
     },
     keys: {
-        google: 'AIzaSyA3LflqlszMEvTX1JuSxrekzeTzg8bYhjI'
+        google: 'PRIVATE'
     }
 }

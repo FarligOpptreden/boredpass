@@ -2,6 +2,7 @@
 import { konsole } from '../../handlr/_all';
 import formidable from 'formidable';
 import path from 'path';
+import sharp from 'sharp';
 
 const fs = require('fs');
 const UPLOAD_DIR = path.join(__dirname, '../../data/uploads');
@@ -41,6 +42,14 @@ class Content {
 
     readResource(args, callback) {
         callback(path.join(UPLOAD_DIR, args.fileId + '.' + args.fileType));
+    }
+
+    readThumb(args, callback) {
+        sharp(path.join(UPLOAD_DIR, args.fileId + '.' + args.fileType))
+            .resize(350)
+            .toBuffer()
+            .then(data => callback(data))
+            .catch(err => konsole.log(`Image thumbnail error: ${err}`));
     }
 
     svg(args, callback) {

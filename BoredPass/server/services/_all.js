@@ -3,6 +3,7 @@ import { ContentService } from './contentService';
 import { DefaultService } from './defaultService';
 import { FacilitiesService } from './facilitiesService';
 import { ListingsService } from './listingsService';
+import { LocationService } from './locationService';
 import { TagsService } from './tagsService';
 
 export {
@@ -11,5 +12,6 @@ export {
   DefaultService,
   FacilitiesService,
   ListingsService,
+  LocationService,
   TagsService
 }

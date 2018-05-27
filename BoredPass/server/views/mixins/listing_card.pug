@@ -1,0 +1,19 @@
+﻿mixin listing_card(listing)
+  - var description = listing.description && listing.description.length > 150 ? listing.description.substring(0, 150) + '...' : listing.description;
+  - var tags = listing.tags && listing.tags.length ? listing.tags.map(t => t.name) : [];
+  - tags = tags.length > 5 ? tags.slice(0, 5).join(', ') + ' + ' + tags.slice(5).length + ' more' : tags.join(', ');
+  - var banner = (listing.customBanner && 'background-image:url(/content/thumb/' + listing.customBanner.split('/').slice(2).join('/') + ')') || (listing.banner && 'background-image:url(/images/banners/' + listing.banner + ')') || ''
+  - var logo = listing.logo ? 'background-image:url(/content/' + listing.logo.fileType + '/' + listing.logo.fileId + ');' : null
+  div.listing.card&attributes(attributes)
+    if listing.distance
+      span.distance
+        label=Math.round(listing.distance / 1000)
+        span kms
+    a(href='/listings/' + listing._id)
+      div.banner(style=banner)
+        span.logo(style=logo)
+      h3= listing.name
+      p
+        !=marked(description)
+      span.tags= tags
+      button.button Read more

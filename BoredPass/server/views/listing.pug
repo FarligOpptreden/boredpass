@@ -43,19 +43,28 @@ block content
         span= listing.email
       - var website = listing.website && listing.website.indexOf('http') >= 0 ? listing.website : 'http://' + listing.website
       a.website(target='_blank', href=website, title=listing.website)= listing.website
-      div.social
-        - var socialFacebook = listing.social.facebook ? (listing.social.facebook.indexOf('http') >= 0 ? listing.social.facebook : 'https://' + listing.social.facebook) : null
-        a.facebook.fa.fa-facebook(title='Facebook', target=(socialFacebook ? '_blank' : false), href=(socialFacebook ? socialFacebook : false))
-        - var socialTwitter = listing.social.twitter ? (listing.social.twitter.indexOf('http') >= 0 ? listing.social.twitter : 'https://' + listing.social.twitter) : null
-        a.twitter.fa.fa-twitter(title='Twitter', target=(socialTwitter ? '_blank' : false), href=(socialTwitter ? socialTwitter : false))
-        - var socialGoogle = listing.social.google ? (listing.social.google.indexOf('http') >= 0 ? listing.social.google : 'https://' + listing.social.google) : null
-        a.google.fa.fa-google-plus(title='Google+', target=(socialGoogle ? '_blank' : false), href=(socialGoogle ? socialGoogle : false))
-        - var socialInstagram = listing.social.instagram ? (listing.social.instagram.indexOf('http') >= 0 ? listing.social.instagram : 'https://' + listing.social.instagram) : null
-        a.instagram.fa.fa-instagram(title='Instagram', target=(socialInstagram ? '_blank' : false), href=(socialInstagram ? socialInstagram : false))
-        - var socialPinterest = listing.social.pinterest ? (listing.social.pinterest.indexOf('http') >= 0 ? listing.social.pinterest : 'https://' + listing.social.pinterest) : null
-        a.pinterest.fa.fa-pinterest-p(title='Pinterest', target=(socialPinterest ? '_blank' : false), href=(socialPinterest ? socialPinterest : false))
-        - var socialYoutube = listing.social.youtube ? (listing.social.youtube.indexOf('http') >= 0 ? listing.social.youtube : 'https://' + listing.social.youtube) : null
-        a.youtube.fa.fa-youtube-play(title='Youtube', target=(socialYoutube ? '_blank' : false), href=(socialYoutube ? socialYoutube : false))
+
+      - var socialFacebook = listing.social.facebook ? (listing.social.facebook.indexOf('http') >= 0 ? listing.social.facebook : 'https://' + listing.social.facebook) : null
+      - var socialTwitter = listing.social.twitter ? (listing.social.twitter.indexOf('http') >= 0 ? listing.social.twitter : 'https://' + listing.social.twitter) : null
+      - var socialGoogle = listing.social.google ? (listing.social.google.indexOf('http') >= 0 ? listing.social.google : 'https://' + listing.social.google) : null
+      - var socialInstagram = listing.social.instagram ? (listing.social.instagram.indexOf('http') >= 0 ? listing.social.instagram : 'https://' + listing.social.instagram) : null
+      - var socialPinterest = listing.social.pinterest ? (listing.social.pinterest.indexOf('http') >= 0 ? listing.social.pinterest : 'https://' + listing.social.pinterest) : null
+      - var socialYoutube = listing.social.youtube ? (listing.social.youtube.indexOf('http') >= 0 ? listing.social.youtube : 'https://' + listing.social.youtube) : null
+
+      if (socialFacebook || socialTwitter || socialGoogle || socialInstagram || socialPinterest || socialYoutube)
+        div.social
+          if socialFacebook
+            a.facebook.fa.fa-facebook(title='Facebook', target=(socialFacebook ? '_blank' : false), href=(socialFacebook ? socialFacebook : false))
+          if (socialTwitter)
+            a.twitter.fa.fa-twitter(title='Twitter', target=(socialTwitter ? '_blank' : false), href=(socialTwitter ? socialTwitter : false))
+          if (socialGoogle)
+            a.google.fa.fa-google-plus(title='Google+', target=(socialGoogle ? '_blank' : false), href=(socialGoogle ? socialGoogle : false))
+          if (socialInstagram)
+            a.instagram.fa.fa-instagram(title='Instagram', target=(socialInstagram ? '_blank' : false), href=(socialInstagram ? socialInstagram : false))
+          if (socialPinterest)
+            a.pinterest.fa.fa-pinterest-p(title='Pinterest', target=(socialPinterest ? '_blank' : false), href=(socialPinterest ? socialPinterest : false))
+          if (socialYoutube)
+            a.youtube.fa.fa-youtube-play(title='Youtube', target=(socialYoutube ? '_blank' : false), href=(socialYoutube ? socialYoutube : false))
     div
       h1= listing.name
       != marked(listing.description)

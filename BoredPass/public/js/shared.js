@@ -434,4 +434,14 @@ $(document).ready(function () {
             overlay.removeClass("out");
         }, 50);
     };
+    Shared.location = function (args) {
+        if (!navigator.geolocation)
+            return;
+
+        return navigator.geolocation.getCurrentPosition(function (position) {
+            args && args.callback(position);
+        }, function (err) {
+			args && args.callback();
+        });
+    };
 });

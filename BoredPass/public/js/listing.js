@@ -93,6 +93,9 @@ $(document).ready(function () {
             return false;
         });
 
+        lightBox.click(function () {
+            close.trigger("click");
+        });
         lightBox.append(close);
         lightBox.append(prev);
         lightBox.append(next);

@@ -3,17 +3,16 @@
 block css
   link(rel='stylesheet', href='/css/home.min.css')
 
+block js
+  script(type='text/javascript', src='/js/home.js')
+
 block content
   section.banner
   section.statistics
     h1 Tag Statistics
+      a#showstats(href='javascript:void(0);') Show
     each tag in tags
-      div.statistic
+      div.statistic.hidden
         label= tag._id
         span= tag.count
   section.listings
-    h1 Listings
-    each listing in listings
-      div.listing
-        a(href='/listings/' + listing._id)
-          span.icon.boredpass.film= listing.name

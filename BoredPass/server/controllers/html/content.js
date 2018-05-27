@@ -26,4 +26,12 @@ export default new Controller('/content')
         }, (path) => {
             res.sendFile(path);
         });
+    })
+    .handle({ route: '/thumb/:type/:id/', method: 'get' }, (req, res) => {
+        ContentService.readThumb({
+            fileId: req.params.id,
+            fileType: req.params.type
+        }, (data) => {
+            res.end(data, 'binary');
+        });
     });

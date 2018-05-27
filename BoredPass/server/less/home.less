@@ -29,18 +29,6 @@ section.listings > .listing {
     padding: 10px;
 }
 
-section.listings > .listing > a {
-    display: block;
-    width: auto;
-    box-shadow: @box-shadow;
-    border: solid 2px @col-main;
-    border-radius: 3px;
-    padding: 20px 10px 20px 60px;
-    text-decoration: none;
-    color: @col-main;
-    position: relative;
-}
-
 .icon.boredpass:before {
     color: @col-main;
     font-size: 60px;
@@ -72,7 +60,6 @@ section.statistics > .statistic {
 section.statistics > .statistic > label {
     flex: 1;
     align-content: center;
-
 }
 
 section.statistics > .statistic > span {
@@ -88,4 +75,149 @@ section.statistics > .statistic > span {
     text-align: center;
     font-size: 14px;
     padding: 13px 0;
+}
+
+section.statistics > .statistic.hidden {
+    display: none;
+}
+
+section.statistics > h1 > a {
+    display: inline-block;
+    margin-left: 10px;
+    color: @col-dark;
+}
+
+.listing.card {
+    display: flex;
+    flex-direction: column;
+}
+
+.listing.card .distance {
+    display: block;
+    height: 40px;
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    background-color: @col-dark;
+    color: #FFF;
+    align-content: center;
+}
+
+.listing.card .distance > * {
+    font-weight: 600;
+    flex: 1;
+    align-self: center;
+    align-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.listing.card .distance > label {
+    font-size: 14px;
+}
+
+.listing.card .distance > span {
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.listing.card > a {
+    background-color: @col-main;
+    color: #FFF;
+    flex: 1;
+    position: relative;
+    padding-bottom: 46px;
+    transition: all 0.25s;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.listing.card:hover > a {
+    box-shadow: @box-shadow;
+    transform: translateY(-2px);
+}
+
+.listing.card > a > .banner {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: relative;
+    background-color: @col-grey;
+}
+
+.listing.card > a > .banner .logo {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    margin: 0 0 -50px -50px;
+    border: solid 5px #FFF;
+    background-color: #FFF;
+    display: block;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    box-shadow: @box-shadow;
+}
+
+.listing.card > a .tags {
+    display: block;
+    width: 100%;
+    padding: 10px 5px;
+    text-transform: uppercase;
+    background-color: @col-main;
+    color: #FFF;
+    font-weight: 600;
+    line-height: 1.5;
+    font-size: 12px;
+    text-align: left;
+}
+
+.listing.card > a > h3 {
+    margin-top: 55px;
+    font-size: 14px;
+    text-transform: uppercase;
+    line-height: 1.5;
+    padding: 5px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.listing.card > a p, .listing.card > a ul, .listing.card > a ol {
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 5px;
+}
+
+.listing.card > a ul, .listing.card > a ol {
+    margin-left: 20px;
+}
+
+.listing.card > a ul li {
+    list-style: disc;
+}
+
+.listing.card > a ol li {
+    list-style: decimal;
+}
+
+.listing.card .button {
+    text-transform: uppercase;
+    padding: 10px 30px;
+    color: @col-body-bg;
+    border: solid 1px @col-body-bg;
+    border-radius: 30px;
+    background-color: transparent;
+    font-size: 14px;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    outline: none;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
 }

@@ -147,7 +147,7 @@ section.banner .delete {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
-  border: solid 5px #FFF;
+  border: solid 10px #FFF;
   box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
 }
 .listing-section.overview > div:first-of-type .logo.no-logo {

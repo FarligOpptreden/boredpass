@@ -13,14 +13,6 @@
     connectionStrings: {
         boredPass: 'mongodb://localhost:27017/boredpass_uat'
     },
-    mongo: {
-        user: 'root',
-        password: 'V7AfIQTMc4Je'
-    },
-    b2dMongo: {
-        user: 'BoredTodayAdmin',
-        password: 'b0r3dt0d@y'
-    },
     keys: {
         google: 'PRIVATE'
     }

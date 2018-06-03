@@ -63,11 +63,36 @@ $(document).ready(function () {
             return true;
         });
         $(this).hasClass("validate-email") && $(this).keyup(function () {
-            var valid = /^[a-zA-Z0-9\-\.]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9]+){1,2}$/.test($(this).val());
+            var valid = /^[a-zA-Z0-9\-\.\_]+@[a-zA-Z0-9\-\_]+(\.[a-zA-Z]+){1,2}$/.test($(this).val());
+
             if (valid)
                 $(this).closest(".field-wrapper").removeClass("error");
             else
                 $(this).closest(".field-wrapper").addClass("error");
+        });
+        $(this).hasClass("validate-custom") && $(this).keyup(function () {
+            var func = $(this).data("validate");
+
+            if (!func)
+                return $(this).closest(".field-wrapper").addClass("error");
+
+            var funcParts = func.split('.');
+            var scope = null;
+
+            for (var i = 0; i < funcParts.length; i++) {
+                if (i == 0) {
+                    scope = eval(funcParts[i]);
+                    continue;
+                }
+
+                scope = scope[funcParts[i]];
+            }
+
+            if (!scope)
+                return $(this).closest(".field-wrapper").addClass("error");
+
+            var valid = scope($(this).val());
+            $(this).closest(".field-wrapper")[valid ? 'removeClass' : 'addClass']("error");
         });
     };
 
@@ -76,7 +101,7 @@ $(document).ready(function () {
         var anchor = wrapper.find("a");
         var form = $("<form method='post' enctype='multipart/form-data' />");
         wrapper.append(form);
-        var input = $("<input type=\"file\" id='file-upload' name='file-upload' />");
+        var input = $("<input type=\"file\" id='file-upload-" + ($("#file-upload").length + 1) + "' name='file-upload-" + ($("#file-upload").length + 1) + "' />");
         input.change(function () {
             if (!$(this).val())
                 return;
@@ -436,7 +461,7 @@ $(document).ready(function () {
     };
     Shared.location = function (args) {
         if (!navigator.geolocation)
-            return;
+            args && args.callback();
 
         return navigator.geolocation.getCurrentPosition(function (position) {
             args && args.callback(position);

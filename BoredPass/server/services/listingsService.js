@@ -13,8 +13,9 @@ class Listings extends BasicCrud {
                 args.data.geocodedAddress = coordinates;
                 args.data.location = coordinates.results && coordinates.results.length ? {
                     type: 'Point',
-                    coordinates: [coordinates.results[0].geometry.location.lat, coordinates.results[0].geometry.location.lng]
+                    coordinates: [coordinates.results[0].geometry.location.lng, coordinates.results[0].geometry.location.lat],
                 } : null;
+                args.data.formatted_address = (coordinates.results && coordinates.results.length && coordinates.results[0].formatted_address) || 'Could not geocode';
                 super.create(args, callback);
             })
             .catch(err => super.create(args, callback));
@@ -26,8 +27,9 @@ class Listings extends BasicCrud {
                 args.data.geocodedAddress = coordinates;
                 args.data.location = coordinates.results && coordinates.results.length ? {
                     type: 'Point',
-                    coordinates: [coordinates.results[0].geometry.location.lat, coordinates.results[0].geometry.location.lng]
+                    coordinates: [coordinates.results[0].geometry.location.lng, coordinates.results[0].geometry.location.lat]
                 } : null;
+                args.data.formatted_address = (coordinates.results && coordinates.results.length && coordinates.results[0].formatted_address) || 'Could not geocode';
                 super.update(args, callback);
             })
             .catch(err => super.update(args, callback));
@@ -68,7 +70,7 @@ class Listings extends BasicCrud {
                 pipeline: [
                     {
                         geoNear: {
-                            near: { type: 'Point', coordinates: [parseFloat(args.lat), parseFloat(args.lng)] },
+                            near: { type: 'Point', coordinates: [parseFloat(args.lng), parseFloat(args.lat)] },
                             maxDistance: 10 * 1000 * 1000, // 10,000km
                             spherical: true,
                             distanceField: 'distance'

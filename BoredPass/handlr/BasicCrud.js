@@ -50,7 +50,7 @@ export default class BasicCrud {
     let mcache = this.cache;
     let filter = args.filter;
     filter = typeof filter === 'object' ? filter : { _id: db.objectId(filter) };
-    let key = this.collection + '-' + filter._id;
+    let key = (filter.id && this.collection + '-' + filter._id) || null;
 
     let m = () => {
       db.mongo({
@@ -66,7 +66,7 @@ export default class BasicCrud {
             return callback(null, err);
 
           let d = res && res.data && res.data.length ? res.data[0] : null;
-          if (mcache) {
+          if (mcache && key) {
             memcached.set(key, d, this.mcache.lifetime, (err) => {
               if (err) { console.log('>>> MEMCACHED ERROR <<<'); console.log(err); }
               callback(d);
@@ -77,7 +77,7 @@ export default class BasicCrud {
         }
       });
     };
-    if (mcache)
+    if (mcache && key)
       memcached.get(key, (err, cache) => {
         if (!cache) {
           m();
@@ -208,12 +208,13 @@ export default class BasicCrud {
           callback(null, err);
           return;
         }
-        let key = this.collection + '-' + res.data._id;
-        if (mcache)
+        if (mcache) {
+          let key = this.collection + '-' + res.data._id;
           return memcached.set(key, res.data, this.mcache.lifetime, (err) => {
             if (err) { console.log('>>> MEMCACHED ERROR <<<'); console.log(err); }
             callback && callback(res.data);
           });
+        }
 
         callback && callback(res.data);
       }
@@ -273,9 +274,9 @@ export default class BasicCrud {
           return callback(null);
 
         obj = res.data;
-        let key = this.collection + '-' + obj._id;
 
-        if (mcache)
+        if (mcache) {
+          let key = this.collection + '-' + obj._id;
           return memcached.get(key, (err, cache) => {
             if (!cache)
               return memcached.set(key, obj, this.mcache.lifetime, (err) => {
@@ -288,6 +289,7 @@ export default class BasicCrud {
               callback && callback(res.data);
             });
           });
+        }
 
         callback && callback(obj);
       }
@@ -351,12 +353,13 @@ export default class BasicCrud {
         if (err)
           return callback && callback(null, err);
 
-        let key = this.collection + '-' + filter._id;
-        if (mcache)
+        if (mcache) {
+          let key = this.collection + '-' + filter._id;
           return memcached.del(key, (err) => {
             if (err) { console.log('>>> MEMCACHED ERROR <<<'); console.log(err); }
             callback && callback(res.data);
           });
+        }
 
         callback && callback(res);
       }

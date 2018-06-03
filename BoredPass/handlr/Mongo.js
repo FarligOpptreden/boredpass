@@ -203,6 +203,14 @@ class Mongo {
           args.data.$push = args.data.$set.$push;
           delete args.data.$set.$push;
         }
+        if (args.data.$set.$pull) {
+          args.data.$pull = args.data.$set.$pull;
+          delete args.data.$set.$pull;
+        }
+        if (args.data.$set.$pullAll) {
+          args.data.$pullAll = args.data.$set.$pullAll;
+          delete args.data.$set.$pullAll;
+        }
         if (!args.data.$set || Object.keys(args.data.$set).length === 0)
           delete args.data.$set;
         col.updateOne(args.filter, args.data, (err, res) => {

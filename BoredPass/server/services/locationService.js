@@ -12,25 +12,14 @@ class Location {
                     if (!listing)
                         return hasErrors ? reject('Could not geocode!') : resolve(data.length);
 
-                    LocationService.geocodeAddress(listing.address)
-                        .then(coordinates => {
-                            ListingsService.update({
-                                filter: { _id: listing._id },
-                                data: {
-                                    geocodedAddress: coordinates,
-                                    location: coordinates.results && coordinates.results.length ? {
-                                        type: 'Point',
-                                        coordinates: [coordinates.results[0].geometry.location.lat, coordinates.results[0].geometry.location.lng]
-                                    } : null
-                                }
-                            });
-                            doGeocode(data[++currIndex]);
-                        })
-                        .catch(err => {
-                            console.log(err);
-                            hasErrors = true;
-                            doGeocode(data[++currIndex]);
-                        });
+                    ListingsService.update({
+                        filter: { _id: listing._id },
+                        data: {
+                            address: listing.address
+                        }
+                    }, function () {
+                        doGeocode(data[++currIndex]);
+                    });
                 };
                 doGeocode(data[0]);
             })

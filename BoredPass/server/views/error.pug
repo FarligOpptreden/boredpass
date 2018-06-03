@@ -11,4 +11,5 @@ block content
   section.listing-section.white
     div
       h1 #{error.status}: #{message}
-      pre #{error.stack}
+      if error.stack
+        pre #{error.stack}

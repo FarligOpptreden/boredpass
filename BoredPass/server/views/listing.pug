@@ -11,7 +11,7 @@ block js
   script(type='text/javascript', src='/js/listing.js')
 
 block content
-  - var canEdit = true
+  - var canEdit = authentication && authentication.isAuthenticated
   if canEdit
     div.toolbar
       div

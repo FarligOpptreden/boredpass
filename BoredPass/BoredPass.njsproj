@@ -50,6 +50,7 @@
     </Compile>
     <Compile Include="handlr\_arrayExtensions.js" />
     <Compile Include="bin\www" />
+    <Compile Include="public\js\home.js" />
     <Compile Include="public\js\editing.js" />
     <Compile Include="public\js\adding.js" />
     <Compile Include="public\js\listing.js" />
@@ -58,6 +59,7 @@
     <Compile Include="public\js\add_activity.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="server\controllers\api\v1\location.js" />
     <Compile Include="server\controllers\api\v1\activities.js" />
     <Compile Include="server\controllers\html\security.js" />
     <Compile Include="server\controllers\html\libraries.js" />
@@ -65,6 +67,7 @@
     <Compile Include="server\controllers\html\listing.js" />
     <Compile Include="server\controllers\html\activity.js" />
     <Compile Include="server\controllers\_default.js" />
+    <Compile Include="server\services\locationService.js" />
     <Compile Include="server\services\facilitiesService.js" />
     <Compile Include="server\services\tagsService.js" />
     <Compile Include="server\services\contentService.js" />
@@ -200,6 +203,7 @@
     <Content Include="server\views\add_listing.pug" />
     <Content Include="server\views\add_listing_done.pug" />
     <Content Include="server\views\listing_edit.pug" />
+    <Content Include="server\views\mixins\listing_card.pug" />
     <Content Include="server\views\mixins\photo_upload.pug" />
     <Content Include="server\views\mixins\time_picker.pug" />
     <Content Include="server\views\listing.pug" />
@@ -208,6 +212,7 @@
     <Content Include="server\views\mixins\photos.pug" />
     <Content Include="server\views\partials\sign_in_modal.pug" />
     <Content Include="server\views\partials\banner_library.pug" />
+    <Content Include="server\views\partials\listing_cards.pug" />
     <Content Include="server\views\partials\tag_library.pug" />
     <Content Include="server\views\partials\add_listing_step3.pug" />
     <Content Include="server\views\partials\add_listing_step2.pug" />

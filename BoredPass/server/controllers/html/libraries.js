@@ -17,6 +17,7 @@ export default new Controller('/libraries')
             sort: { name: 1 }
         }, (tags) => {
             res.render('partials/tag_library', {
+                authentication: req.authentication,
                 tags: tags
             });
         });
@@ -24,6 +25,7 @@ export default new Controller('/libraries')
     .handle({ route: '/banners/list', method: 'get', produces: 'html' }, (req, res) => {
         ContentService.listBanners(null, (files) => {
             res.render('partials/banner_library', {
+                authentication: req.authentication,
                 banners: files
             });
         });

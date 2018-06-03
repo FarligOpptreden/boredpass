@@ -13,8 +13,10 @@ html
     script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
     script(type='text/javascript', src='/js/boredpass.js')
     script(type='text/javascript', src='/js/shared.js')
+    script(type='text/javascript', src='/js/auth.js')
     block js
   body
+    - var isAuthenticated = authentication && authentication.isAuthenticated
     header#header
       nav
         div
@@ -22,7 +24,10 @@ html
           a.find Find
           a.add(href="/listings/add") Add
           a.claim Claim
-          a.sign-in(href="/secure/sign-in") Sign In
+          if isAuthenticated
+            a.sign-out(href="/secure/sign-out") Sign Out
+          if !isAuthenticated
+            a.sign-in(href="/secure/sign-in") Sign In
       nav
         a.logo(href='/')
     article#body

@@ -12,6 +12,7 @@ export default Controller.create('/')
         if (req.query.lat && req.query.lng)
             return ListingsService.listingsWithProximity({ lat: req.query.lat, lng: req.query.lng })
                 .then(r => res.render('partials/listing_cards', {
+                    authentication: req.authentication,
                     listings: r.listings,
                     moment: moment,
                     marked: marked
@@ -20,12 +21,14 @@ export default Controller.create('/')
         if (req.query.all)
             return ListingsService.defaultListings()
                 .then(r => res.render('partials/listing_cards', {
+                    authentication: req.authentication,
                     listings: r.listings,
                     moment: moment,
                     marked: marked
                 }));
 
         ListingsService.statistics(tags => res.render('home', {
+            authentication: req.authentication,
             title: 'Activities Near You - Bored Today',
             tags: tags,
             moment: moment,

@@ -102,3 +102,12 @@
 .sign-in-modal .password-options a:last-of-type {
   text-align: right;
 }
+.sign-in-modal form {
+  display: none;
+}
+.sign-in-modal form.active {
+  display: block;
+}
+.sign-in-modal .hint {
+  color: #FFFFFF;
+}

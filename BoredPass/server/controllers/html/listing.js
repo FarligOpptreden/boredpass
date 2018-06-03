@@ -8,6 +8,7 @@ export default new Controller('/listings')
             sort: { name: 1 }
         }, (facilities) => {
             res.render('add_listing', {
+                authentication: req.authentication,
                 title: 'Add Listing - BoredPass',
                 moment: require('moment'),
                 facilities: facilities
@@ -31,6 +32,7 @@ export default new Controller('/listings')
             }
         }, (listing) => {
             res.render('add_listing_done', {
+                authentication: req.authentication,
                 title: 'Add Listing - BoredPass',
                 moment: require('moment'),
                 listing: listing
@@ -48,6 +50,7 @@ export default new Controller('/listings')
                 sort: { name: 1 }
             }, (activities) => {
                 res.render('listing', {
+                    authentication: req.authentication,
                     title: listing.name + ' - BoredPass',
                     moment: require('moment'),
                     marked: marked,
@@ -58,6 +61,17 @@ export default new Controller('/listings')
         });
     })
     .handle({ route: '/:id/edit', method: 'get', produces: 'html' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated) {
+            res.status(403);
+            res.render('error', {
+                error: {
+                    status: 403
+                },
+                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
+            });
+            return;
+        }
+
         res.setHeader('Expires', '-1');
         res.setHeader('Cache-Control', 'no-cache');
 
@@ -101,6 +115,7 @@ export default new Controller('/listings')
             .then(_ => getListing())
             .then(listing => Promise.all([getFacilities(listing), getActivities(listing)]))
             .then(results => res.render('listing_edit', {
+                authentication: req.authentication,
                 title: _listing.name + ' - BoredPass',
                 moment: require('moment'),
                 marked: marked,

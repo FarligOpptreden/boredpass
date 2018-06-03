@@ -10,6 +10,7 @@ marked.setOptions({
 export default new Controller('/activities')
     .handle({ route: '/add', method: 'get', produces: 'html' }, (req, res) => {
         res.render('add_activity', {
+            authentication: req.authentication,
             title: 'Add Activity - BoredPass',
             mode: 'new',
             moment: require('moment'),
@@ -30,6 +31,7 @@ export default new Controller('/activities')
     })
     .handle({ route: '/add/done', method: 'get', produces: 'html' }, (req, res) => {
         res.render('add_listing_done', {
+            authentication: req.authentication,
             title: 'Activity Added - BoredPass',
             moment: require('moment')
         });
@@ -44,6 +46,7 @@ export default new Controller('/activities')
                 filter: { _id: activity.listing_id }
             }, (listing) => {
                 res.render('activity', {
+                    authentication: req.authentication,
                     title: `${activity.name} - BoredPass`,
                     listing: listing,
                     activity: activity,
@@ -60,6 +63,7 @@ export default new Controller('/activities')
             filter: req.params.id
         }, (activity) => {
             res.render('add_activity', {
+                authentication: req.authentication,
                 title: `Edit ${activity.name} - BoredPass`,
                 mode: 'edit',
                 activity: activity,

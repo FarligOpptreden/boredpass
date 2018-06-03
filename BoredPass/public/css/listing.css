@@ -206,7 +206,7 @@ section.banner .delete {
   color: #37DBE7;
 }
 .listing-section.overview > div:first-of-type > .social {
-  text-align: center;
+  text-align: left;
   padding: 10px 0 0 0;
 }
 .listing-section.overview > div:first-of-type > .social > a {

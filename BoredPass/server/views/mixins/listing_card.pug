@@ -4,11 +4,14 @@
   - tags = tags.length > 5 ? tags.slice(0, 5).join(', ') + ' + ' + tags.slice(5).length + ' more' : tags.join(', ');
   - var banner = (listing.customBanner && 'background-image:url(/content/thumb/' + listing.customBanner.split('/').slice(2).join('/') + ')') || (listing.banner && 'background-image:url(/images/banners/' + listing.banner + ')') || ''
   - var logo = listing.logo ? 'background-image:url(/content/' + listing.logo.fileType + '/' + listing.logo.fileId + ');' : null
+  - var addressParts = listing.formatted_address && listing.formatted_address.split(',');
+  - var locality = addressParts ? addressParts[addressParts.length - 3] : null
+  - locality = locality || 'Unknown'
   div.listing.card&attributes(attributes)
-    if listing.distance
-      span.distance
+    span.distance
+      if listing.distance
         label=Math.round(listing.distance / 1000)
-        span kms
+      span=listing.distance ? 'kms away' : locality
     a(href='/listings/' + listing._id)
       div.banner(style=banner)
         span.logo(style=logo)
@@ -16,4 +19,3 @@
       p
         !=marked(description)
       span.tags= tags
-      button.button Read more

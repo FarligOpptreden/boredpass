@@ -50,6 +50,9 @@
     </Compile>
     <Compile Include="handlr\_arrayExtensions.js" />
     <Compile Include="bin\www" />
+    <Compile Include="public\js\auth.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="public\js\home.js" />
     <Compile Include="public\js\editing.js" />
     <Compile Include="public\js\adding.js" />
@@ -67,6 +70,10 @@
     <Compile Include="server\controllers\html\listing.js" />
     <Compile Include="server\controllers\html\activity.js" />
     <Compile Include="server\controllers\_default.js" />
+    <Compile Include="server\middleware\authentication.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="server\services\securityService.js" />
     <Compile Include="server\services\locationService.js" />
     <Compile Include="server\services\facilitiesService.js" />
     <Compile Include="server\services\tagsService.js" />
@@ -243,6 +250,7 @@
     <Folder Include="server\controllers\api\v1\" />
     <Folder Include="server\controllers\html\" />
     <Folder Include="server\less\" />
+    <Folder Include="server\middleware\" />
     <Folder Include="server\views\" />
     <Folder Include="server\services\" />
     <Folder Include="server\views\mixins\" />

@@ -77,7 +77,10 @@ class Security extends BasicCrudPromises {
                     })
                 })
                 .then(user => {
-                    res.cookie('bp', Buffer.from(`${userId}:${token}`).toString('base64'));
+                    res.cookie('bp', Buffer.from(`${userId}:${token}`).toString('base64'), {
+                        maxAge: 3600000 * 24 * 365, // 1 year
+                        httpOnly: true
+                    });
                     resolve({ success: true });
                 })
                 .catch(err => {

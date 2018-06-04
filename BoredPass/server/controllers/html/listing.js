@@ -4,6 +4,17 @@ import marked from 'marked';
 
 export default new Controller('/listings')
     .handle({ route: '/add', method: 'get', produces: 'html' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addListing) {
+            res.status(403);
+            res.render('error', {
+                error: {
+                    status: 403
+                },
+                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
+            });
+            return;
+        }
+
         FacilitiesService.findMany({
             sort: { name: 1 }
         }, (facilities) => {
@@ -16,6 +27,15 @@ export default new Controller('/listings')
         });
     })
     .handle({ route: '/add', method: 'post', produces: 'json' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addExperience) {
+            res.status(403);
+            res.send({
+                success: false,
+                message: 'Unauthorized'
+            });
+            return;
+        }
+
         ListingsService.create({
             data: req.body
         }, (result) => {
@@ -26,6 +46,17 @@ export default new Controller('/listings')
         });
     })
     .handle({ route: '/:id/added', method: 'get', produces: 'html' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addListing) {
+            res.status(403);
+            res.render('error', {
+                error: {
+                    status: 403
+                },
+                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
+            });
+            return;
+        }
+
         ListingsService.findOne({
             filter: {
                 _id: req.params.id
@@ -61,7 +92,7 @@ export default new Controller('/listings')
         });
     })
     .handle({ route: '/:id/edit', method: 'get', produces: 'html' }, (req, res) => {
-        if (!req.authentication || !req.authentication.isAuthenticated) {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.editListing) {
             res.status(403);
             res.render('error', {
                 error: {
@@ -126,6 +157,15 @@ export default new Controller('/listings')
             .catch(err => konsole.error(err));
     })
     .handle({ route: '/:id/edit', method: 'put', produces: 'json' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.editListing) {
+            res.status(403);
+            res.send({
+                success: false,
+                message: 'Unauthorized'
+            });
+            return;
+        }
+
         res.setHeader('Expires', '-1');
         res.setHeader('Cache-Control', 'no-cache');
         let listing = req.body;
@@ -140,6 +180,15 @@ export default new Controller('/listings')
         });
     })
     .handle({ route: '/:id/delete', method: 'delete', produces: 'json' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.deleteListing) {
+            res.status(403);
+            res.send({
+                success: false,
+                message: 'Unauthorized'
+            });
+            return;
+        }
+
         res.setHeader('Expires', '-1');
         res.setHeader('Cache-Control', 'no-cache');
         ActivitiesService.deleteMany({

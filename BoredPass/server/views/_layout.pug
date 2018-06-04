@@ -22,8 +22,10 @@ html
         div
           a.logo.small(href='/')
           a.find Find
-          a.add(href="/listings/add") Add
-          a.claim Claim
+          if isAuthenticated && authentication.user.permissions && authentication.user.permissions.addListing
+            a.add(href="/listings/add") Add
+          if isAuthenticated && authentication.user.permissions && authentication.user.permissions.claimListing
+            a.claim Claim
           if isAuthenticated
             a.sign-out(href="/secure/sign-out") Sign Out
           if !isAuthenticated

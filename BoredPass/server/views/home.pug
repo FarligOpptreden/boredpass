@@ -8,11 +8,12 @@ block js
 
 block content
   section.banner
-  section.statistics
-    h1 Tag Statistics
-      a#showstats(href='javascript:void(0);') Show
-    each tag in tags
-      div.statistic.hidden
-        label= tag._id
-        span= tag.count
+  if authentication && authentication.user && authentication.user.permissions && authentication.user.permissions.viewStatistics
+    section.statistics
+      h1 Tag Statistics
+        a#showstats(href='javascript:void(0);') Show
+      each tag in tags
+        div.statistic.hidden
+          label= tag._id
+          span= tag.count
   section.listings

@@ -42,6 +42,7 @@ $(document).ready(function () {
     Auth.signIn = function () {
         var signIn = content.find("form.sign-in");
         signIn.find("button").click(function (e) {
+            $(".sign-in-modal").removeClass("no-no");
             e.preventDefault();
             $.ajax({
                 url: "/secure/sign-in",
@@ -52,8 +53,13 @@ $(document).ready(function () {
                     password: signIn.find("#sign-in-password").val()
                 }),
                 success: function (d, s, x) {
-                    if (d && d.success)
+                    if (d && d.success) {
                         window.location.href = window.location.href;
+                        return;
+                    }
+
+                    $(".sign-in-modal").addClass("no-no");
+                    signIn.find("#sign-in-password").val("");
                 }
             });
             return false;
@@ -75,13 +81,31 @@ $(document).ready(function () {
                 passwordConfirm: signUp.find("#sign-up-confirm-password").val()
             };
 
+            $(".sign-in-modal").removeClass("no-no");
+
             $.ajax({
                 url: "/secure/sign-up",
                 method: "post",
                 contentType: "application/json",
                 data: JSON.stringify(user),
                 success: function (d, s, x) {
-                    console.log(d);
+                    if (d && d.success) {
+                        $.ajax({
+                            url: "/secure/sign-in",
+                            method: "post",
+                            contentType: "application/json",
+                            data: JSON.stringify({
+                                email: user.email,
+                                password: user.password
+                            }),
+                            success: function (d, s, x) {
+                                window.location.href = window.location.href;
+                            }
+                        });
+                        return;
+                    }
+
+                    $(".sign-in-modal").addClass("no-no");
                 }
             });
             return false;

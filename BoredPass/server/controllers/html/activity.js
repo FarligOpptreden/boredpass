@@ -9,6 +9,17 @@ marked.setOptions({
 
 export default new Controller('/activities')
     .handle({ route: '/add', method: 'get', produces: 'html' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addExperience) {
+            res.status(403);
+            res.render('error', {
+                error: {
+                    status: 403
+                },
+                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
+            });
+            return;
+        }
+
         res.render('add_activity', {
             authentication: req.authentication,
             title: 'Add Activity - BoredPass',
@@ -18,6 +29,15 @@ export default new Controller('/activities')
         });
     })
     .handle({ route: '/:id/add', method: 'post', produces: 'json' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addExperience) {
+            res.status(403);
+            res.send({
+                success: false,
+                message: 'Unauthorized'
+            });
+            return;
+        }
+
         let activity = req.body;
         activity.listing_id = ActivitiesService.db.objectId(req.params.id);
         ActivitiesService.create({
@@ -30,6 +50,17 @@ export default new Controller('/activities')
         });
     })
     .handle({ route: '/add/done', method: 'get', produces: 'html' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addExperience) {
+            res.status(403);
+            res.render('error', {
+                error: {
+                    status: 403
+                },
+                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
+            });
+            return;
+        }
+
         res.render('add_listing_done', {
             authentication: req.authentication,
             title: 'Activity Added - BoredPass',
@@ -57,6 +88,17 @@ export default new Controller('/activities')
         });
     })
     .handle({ route: '/:id/edit', method: 'get', produces: 'html' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.editExperience) {
+            res.status(403);
+            res.render('error', {
+                error: {
+                    status: 403
+                },
+                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
+            });
+            return;
+        }
+
         res.setHeader('Expires', '-1');
         res.setHeader('Cache-Control', 'no-cache');
         ActivitiesService.findOne({
@@ -72,6 +114,15 @@ export default new Controller('/activities')
         });
     })
     .handle({ route: '/:id/edit', method: 'put', produces: 'json' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.editExperience) {
+            res.status(403);
+            res.send({
+                success: false,
+                message: 'Unauthorized'
+            });
+            return;
+        }
+
         res.setHeader('Expires', '-1');
         res.setHeader('Cache-Control', 'no-cache');
         let activity = req.body;
@@ -86,6 +137,15 @@ export default new Controller('/activities')
         });
     })
     .handle({ route: '/:id/delete', method: 'delete', produces: 'json' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.deleteExperience) {
+            res.status(403);
+            res.send({
+                success: false,
+                message: 'Unauthorized'
+            });
+            return;
+        }
+
         res.setHeader('Expires', '-1');
         res.setHeader('Cache-Control', 'no-cache');
         ActivitiesService.delete({

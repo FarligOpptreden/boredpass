@@ -11,12 +11,15 @@ block js
   script(type='text/javascript', src='/js/listing.js')
 
 block content
-  div.toolbar
-    div
-      a.edit(href='/activities/' + activity._id + '/edit') Edit
-        i.fa.fa-edit
-      a.delete.activity(href='/activities/' + activity._id + '/delete') Delete
-        i.fa.fa-trash
+  - var canEdit = authentication && authentication.isAuthenticated && authentication.user.permissions && authentication.user.permissions.editExperience
+  if canEdit
+    div.toolbar
+      div
+        a.edit(href='/activities/' + activity._id + '/edit') Edit
+          i.fa.fa-edit
+        if authentication.user.permissions.deleteExperience
+          a.delete.activity(href='/activities/' + activity._id + '/delete') Delete
+            i.fa.fa-trash
   input#record-id(type='hidden', value=activity._id)
   - var banner = (activity.customBanner && 'background-image:url(' + activity.customBanner + ')') || (activity.banner && 'background-image:url(/images/banners/' + activity.banner + ')') || ''
   section.banner(style=banner)

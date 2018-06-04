@@ -11,14 +11,15 @@ block js
   script(type='text/javascript', src='/js/listing.js')
 
 block content
-  - var canEdit = authentication && authentication.isAuthenticated
+  - var canEdit = authentication && authentication.isAuthenticated && authentication.user.permissions && authentication.user.permissions.editListing
   if canEdit
     div.toolbar
       div
         a.edit(href='/listings/' + listing._id + '/edit') Edit
           i.fa.fa-edit
-        a.delete.listing(href='/listings/' + listing._id + '/delete') Delete
-          i.fa.fa-trash
+        if authentication.user.permissions.deleteListing
+          a.delete.listing(href='/listings/' + listing._id + '/delete') Delete
+            i.fa.fa-trash
   input#record-id(type='hidden', value=listing._id)
   - var banner = (listing.customBanner && 'background-image:url(' + listing.customBanner + ')') || (listing.banner && 'background-image:url(/images/banners/' + listing.banner + ')') || ''
   section.banner(style=banner)

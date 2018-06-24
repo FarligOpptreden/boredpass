@@ -1,10 +1,32 @@
 ﻿import config from '../../config';
-import { BasicCrud } from '../../handlr/_all';
-import { LocationService } from './_all';
+import { BasicCrud, konsole } from '../../handlr/_all';
+import { LocationService, TagsService } from './_all';
+
+const _MappedCategories = {
+    'adrenalin-and-extreme-sports': 'Adrenalin & Extreme Sports',
+    'cultural': 'Cultural',
+    'fun-and-games': 'Fun & Games',
+    'nature-and-adventure': 'Nature & Adventure',
+    'sightseeing': 'Sightseeing'
+};
 
 class Listings extends BasicCrud {
     constructor() {
         super(config.connectionStrings.boredPass, 'listings');
+    }
+
+    mappedCategory(category) {
+        return _MappedCategories[category] || 'Unknown Category';
+    }
+
+    unmappedCategories(category) {
+        let newObj = {};
+        Object.keys(_MappedCategories)
+            .filter(k => k !== category)
+            .map(k => {
+                newObj[k] = _MappedCategories[k];
+            });
+        return newObj;
     }
 
     create(args, callback) {
@@ -56,34 +78,83 @@ class Listings extends BasicCrud {
         }, callback);
     }
 
-    defaultListings() {
-        return new Promise((resolve, reject) =>
-            ListingsService.findMany({
-                sort: { _created: -1 }
-            }, (listings) => resolve({ listings: listings }))
-        );
+    listingsByCategory(args) {
+        konsole.log(args, ':::::::::::::::::::::::::::');
+        return new Promise((resolve, reject) => {
+            TagsService.tagsPerCategory(this.mappedCategory(args.category))
+                .then(tags => {
+                    ListingsService.findMany({
+                        filter: { 'tags.name': { $in: tags.map(t => t.name) } },
+                        sort: { _created: -1 },
+                        limit: parseInt(args.limit.toString(), 10),
+                        skip: parseInt(args.skip.toString(), 10)
+                    }, listings => resolve(listings));
+                })
+                .catch(err => reject(err));
+        });
+    }
+
+    defaultListings(args) {
+        return new Promise((resolve, reject) => {
+            let pipeline = [];
+
+            if (args.tags && args.tags.length)
+                pipeline.push({
+                    filter: {
+                        'tags.name': { $in: args.tags }
+                    }
+                });
+
+            pipeline.push({
+                sort: {
+                    _created: -1
+                }
+            });
+
+            if (args.limit)
+                pipeline.push({
+                    limit: args.limit
+                });
+
+            ListingsService.aggregate({
+                pipeline: pipeline
+            }, listings => resolve(listings))
+        });
     }
 
     listingsWithProximity(args) {
-        return new Promise((resolve, reject) =>
-            ListingsService.aggregate({
-                pipeline: [
-                    {
-                        geoNear: {
-                            near: { type: 'Point', coordinates: [parseFloat(args.lng), parseFloat(args.lat)] },
-                            maxDistance: 10 * 1000 * 1000, // 10,000km
-                            spherical: true,
-                            distanceField: 'distance'
-                        }
-                    },
-                    {
-                        sort: {
-                            _created: -1
-                        }
+        return new Promise((resolve, reject) => {
+            let pipeline = [{
+                geoNear: {
+                    near: { type: 'Point', coordinates: [parseFloat(args.lng), parseFloat(args.lat)] },
+                    maxDistance: 10 * 1000 * 1000, // 10,000km
+                    spherical: true,
+                    distanceField: 'distance'
+                }
+            }];
+
+            if (args.tags && args.tags.length)
+                pipeline.push({
+                    filter: {
+                        'tags.name': { $in: args.tags }
                     }
-                ]
-            }, listings => resolve({ listings: listings }))
-        );
+                });
+
+            pipeline.push({
+                sort: {
+                    _created: -1
+                }
+            });
+
+            if (args.limit)
+                pipeline.push({
+                    limit: args.limit
+                });
+
+            ListingsService.aggregate({
+                pipeline: pipeline
+            }, listings => resolve(listings))
+        });
     }
 }
 

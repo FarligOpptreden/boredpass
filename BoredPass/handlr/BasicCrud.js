@@ -96,6 +96,7 @@ export default class BasicCrud {
    * @param {Object} args.filter? - The filter to apply to the find operation.
    * @param {Object} args.sort? - The sort clause(s) to apply to the collection.
    * @param {number} args.limit? - The amount of documents to limit in the selection.
+   * @param {number} args.skip? - The amount of documents to skip in the selection.
    * @param {function(Object, Object):void} callback - A function to execute once the documents have been retrieved.
    */
   findMany(args, callback) {
@@ -113,6 +114,7 @@ export default class BasicCrud {
       filter: args.filter,
       sort: args.sort,
       limit: args.limit,
+      skip: args.skip,
       callback: (res, err) => {
         if (err)
           return callback(null, err);

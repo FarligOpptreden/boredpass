@@ -163,20 +163,14 @@
   }
 }
 section.banner {
-  height: 460px;
+  height: 260px;
   background-color: #25B9C5;
-  background-image: url(/images/bg-mountains.jpg);
   background-position: right bottom;
   background-repeat: no-repeat;
   background-size: 120%;
   animation: banner-scale 30s forwards ease-out;
 }
-section.banner.home {
-  display: flex;
-  flex-direction: column;
-  height: 660px;
-}
-section.banner.home div {
+section.banner div {
   max-width: 1280px;
   margin: 0 auto;
   padding-top: 100px;
@@ -184,10 +178,10 @@ section.banner.home div {
   z-index: 1;
   flex: 10;
 }
-section.banner.home div h1,
-section.banner.home div h2 {
+section.banner div h1,
+section.banner div h2 {
   display: block;
-  text-align: center;
+  text-align: left;
   padding: 0;
   margin: 0;
   line-height: 1;
@@ -195,77 +189,17 @@ section.banner.home div h2 {
   text-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
   text-transform: uppercase;
   letter-spacing: 5px;
-}
-section.banner.home div h2 {
-  font-weight: 400;
   font-size: 30px;
-  padding-right: 165px;
-  margin-top: 180px;
 }
-section.banner.home div h1 {
+section.banner div h2 {
+  font-weight: 400;
+  margin-top: 70px;
+}
+section.banner div h1 {
   font-weight: 600;
-  font-size: 60px;
-}
-section.banner.home div a {
-  text-decoration: none;
-  color: #FFF;
-  font-size: 80px;
-  width: 80px;
-  text-align: center;
-  display: block;
-  margin: 130px auto 0 auto;
-  animation: arrow-pulse 3s infinite;
-  transition: all 0.2s;
-  border-radius: 40px;
-}
-section.banner.home div a:hover {
-  animation: none;
-  color: #25B9C5;
-  background-color: rgba(255, 255, 255, 0.5);
-}
-section.banner.home nav {
-  display: block;
-  flex: 1;
-  background-color: #25B9C5;
-  color: #FFF;
-  text-align: center;
-  z-index: 1;
-}
-section.banner.home nav a {
-  display: inline-block;
-  padding: 20px 15px 20px 40px;
-  line-height: 24px;
-  font-size: 20px;
-  font-weight: 700;
-  color: #FFF;
-  text-transform: uppercase;
-  position: relative;
-  text-decoration: none;
-  letter-spacing: 1px;
-  transition: all 0.2s;
-}
-section.banner.home nav a:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-section.banner.home nav a .fa {
-  font-size: 26px;
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  height: 20px;
-  margin-top: -13px;
 }
 #header {
-  height: 660px;
-}
-section h1 {
-  flex: 0 0 100%;
-  font-size: 24px;
-  line-height: 30px;
-  padding: 30px 10px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  height: 260px;
 }
 section.listings,
 section.statistics {
@@ -281,46 +215,6 @@ section.statistics > .listing {
   flex: 0 0 33.3%;
   padding: 10px;
 }
-section.listings > .statistic,
-section.statistics > .statistic {
-  flex: 1;
-  min-width: 20%;
-  margin: 10px;
-  padding: 20px;
-  border: solid 2px #444444;
-  border-radius: 3px;
-  color: #444444;
-  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  align-items: center;
-  position: relative;
-}
-section.listings > .statistic > label,
-section.statistics > .statistic > label {
-  flex: 1;
-  align-content: center;
-}
-section.listings > .statistic > span,
-section.statistics > .statistic > span {
-  background-color: #444444;
-  color: #FFF;
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  height: 40px;
-  width: 40px;
-  border-radius: 20px;
-  margin-top: -20px;
-  text-align: center;
-  font-size: 14px;
-  padding: 13px 0;
-}
-section.listings > .statistic.hidden,
-section.statistics > .statistic.hidden {
-  display: none;
-}
 section.listings > h1 > a,
 section.statistics > h1 > a {
   display: inline-block;
@@ -330,8 +224,8 @@ section.statistics > h1 > a {
 section.listings .buttons,
 section.statistics .buttons {
   text-align: right;
-  padding-right: 10px;
   width: 100%;
+  margin-top: 20px;
 }
 section.listings .button,
 section.statistics .button {
@@ -347,6 +241,8 @@ section.statistics .button {
   cursor: pointer;
   outline: none;
   transition: all 0.2s;
+  width: 100%;
+  text-align: center;
 }
 section.listings .button.grey,
 section.statistics .button.grey {
@@ -358,38 +254,60 @@ section.statistics .button:hover {
   box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
   transform: translateY(-2px);
 }
-.icon.boredpass:before {
-  color: #25B9C5;
-  font-size: 60px;
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  margin: -30px 0 0 0;
-  height: 60px;
-  width: 60px;
+.adrenalin-and-extreme-sports {
+  background-image: url(/images/banners/rocks_2x.jpg);
 }
-@keyframes arrow-pulse {
-  0% {
-    opacity: 1;
-    transform: none;
-  }
-  50% {
-    opacity: 1;
-    transform: none;
-  }
-  70% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  80% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: none;
-  }
+.nature-and-adventure {
+  background-image: url(/images/banners/forest_2x.jpg);
+}
+.cultural {
+  background-image: url(/images/banners/vineyard_2x.jpg);
+}
+.fun-and-games {
+  background-image: url(/images/banners/picnic_2x.jpg);
+}
+.sightseeing {
+  background-image: url(/images/banners/city_2x.jpg);
+}
+.listing.template {
+  display: none;
+}
+.no-more-data {
+  padding: 20px 10px;
+}
+.no-more-data h1 {
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.no-more-data .recommendations {
+  display: flex;
+  flex-direction: row;
+}
+.no-more-data .recommendations a {
+  flex: 1;
+  align-content: flex-end;
+  padding: 10px;
+  background-color: #DDDDDD;
+  color: #FFF;
+  text-transform: uppercase;
+  position: relative;
+  height: 100px;
+  margin: 5px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.no-more-data .recommendations a span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  line-height: 20px;
+  font-size: 16px;
 }
 @media all and (max-width: 960px) {
   section.listings > .listing {

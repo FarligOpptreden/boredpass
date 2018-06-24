@@ -31,12 +31,12 @@
 }
 
 section.banner {
-    height: 460px;
+    height: 660px;
     background-color: @col-main;
-    background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     border-bottom: solid 5px @col-main;
+    background-size: cover;
 }
 
 section.banner > div {
@@ -193,7 +193,7 @@ section.banner .delete {
     position: relative;
 }
 
-.listing-section.overview > div:first-of-type > a .fa {
+.listing-section.overview > div:first-of-type > a .fa, .listing-section.overview > div:first-of-type > a .fab {
     position: absolute;
     left: 0;
     top: 12px;
@@ -203,7 +203,7 @@ section.banner .delete {
     width: 20px;
 }
 
-.listing-section.overview > div:first-of-type > a .fa + span {
+.listing-section.overview > div:first-of-type > a .fa + span, .listing-section.overview > div:first-of-type > a .fab + span {
     display: block;
     white-space: nowrap;
     overflow: hidden;
@@ -213,7 +213,7 @@ section.banner .delete {
     transition: all 0.2s;
 }
 
-.listing-section.overview > div:first-of-type > a:hover .fa + span {
+.listing-section.overview > div:first-of-type > a:hover .fa + span, .listing-section.overview > div:first-of-type > a:hover .fab + span {
     color: @col-main;
 }
 
@@ -221,7 +221,7 @@ section.banner .delete {
     margin-top: 140px;
 }
 
-.listing-section.overview > div:first-of-type .location .fa + span {
+.listing-section.overview > div:first-of-type .location .fa + span, .listing-section.overview > div:first-of-type .location .fab + span {
     white-space: normal;
     overflow: visible;
 }

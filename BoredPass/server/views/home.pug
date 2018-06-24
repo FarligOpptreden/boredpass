@@ -7,7 +7,19 @@ block js
   script(type='text/javascript', src='/js/home.js')
 
 block content
-  section.banner
+  section.banner.home
+    div
+      h2 Feeling bored?
+      h1 Explore now
+      a.fa.fa-angle-down(href='javascript:void(0);')
+    nav
+      a.find(href='javascript:void(0);') Find
+        span.fa.fa-search
+      a.add(href='javascript:void(0);') Add
+        span.fa.fa-plus
+      a.claim(href='javascript:void(0);') Claim
+        span.fa.fa-hand-pointer
+  include partials/listing_cards
   if authentication && authentication.user && authentication.user.permissions && authentication.user.permissions.viewStatistics
     section.statistics
       h1 Tag Statistics
@@ -16,4 +28,3 @@ block content
         div.statistic.hidden
           label= tag._id
           span= tag.count
-  section.listings

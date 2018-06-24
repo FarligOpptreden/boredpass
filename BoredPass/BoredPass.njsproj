@@ -53,6 +53,7 @@
     <Compile Include="public\js\auth.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="public\js\category_listings.js" />
     <Compile Include="public\js\home.js" />
     <Compile Include="public\js\editing.js" />
     <Compile Include="public\js\adding.js" />
@@ -64,6 +65,7 @@
     </Compile>
     <Compile Include="server\controllers\api\v1\location.js" />
     <Compile Include="server\controllers\api\v1\activities.js" />
+    <Compile Include="server\controllers\html\categories.js" />
     <Compile Include="server\controllers\html\security.js" />
     <Compile Include="server\controllers\html\libraries.js" />
     <Compile Include="server\controllers\html\content.js" />
@@ -93,6 +95,11 @@
     <Content Include="public\css\adding.css" />
     <Content Include="public\css\adding.min.css" />
     <Content Include="public\css\boredpass-icons.css" />
+    <Content Include="public\css\category_listings.css" />
+    <Content Include="public\css\category_listings.min.css">
+      <SubType>Content</SubType>
+      <DependentUpon>public\css\category_listings.css</DependentUpon>
+    </Content>
     <Content Include="public\css\content_management.css" />
     <Content Include="public\css\content_management.min.css" />
     <Content Include="public\css\editing.css" />
@@ -168,6 +175,8 @@
     <Content Include="public\images\icons\facilities\dog-friendly.svg" />
     <Content Include="public\images\icons\facilities\picnic.svg" />
     <Content Include="run.bat" />
+    <Content Include="server\less\category_listings.less" />
+    <Content Include="server\less\listing_card.less" />
     <Content Include="server\less\sign_in.less" />
     <Content Include="server\less\content_management.less" />
     <Content Include="server\less\editing.less" />
@@ -182,6 +191,7 @@
     <Content Include="public\css\listing.css" />
     <Content Include="server\less\adding.less" />
     <Content Include="server\less\listing_edit.less" />
+    <Content Include="server\less\_old\shared.less" />
     <Content Include="server\less\__for.less" />
     <Content Include="server\less\home.less" />
     <Content Include="server\less\listing.less">
@@ -191,7 +201,6 @@
       <SubType>Content</SubType>
       <DependentUpon>public\css\listing.css</DependentUpon>
     </Content>
-    <Content Include="server\less\shared.less" />
     <Content Include="server\less\__variables.less">
       <SubType>Code</SubType>
     </Content>
@@ -209,7 +218,9 @@
     <Content Include="server\views\add_activity.pug" />
     <Content Include="server\views\add_listing.pug" />
     <Content Include="server\views\add_listing_done.pug" />
+    <Content Include="server\views\category_listings.pug" />
     <Content Include="server\views\listing_edit.pug" />
+    <Content Include="server\views\mixins\listing_card_loading.pug" />
     <Content Include="server\views\mixins\listing_card.pug" />
     <Content Include="server\views\mixins\photo_upload.pug" />
     <Content Include="server\views\mixins\time_picker.pug" />
@@ -217,6 +228,7 @@
     <Content Include="server\views\mixins\activities.pug" />
     <Content Include="server\views\mixins\facilities.pug" />
     <Content Include="server\views\mixins\photos.pug" />
+    <Content Include="server\views\partials\category_listing_cards.pug" />
     <Content Include="server\views\partials\sign_in_modal.pug" />
     <Content Include="server\views\partials\banner_library.pug" />
     <Content Include="server\views\partials\listing_cards.pug" />
@@ -250,6 +262,7 @@
     <Folder Include="server\controllers\api\v1\" />
     <Folder Include="server\controllers\html\" />
     <Folder Include="server\less\" />
+    <Folder Include="server\less\_old\" />
     <Folder Include="server\middleware\" />
     <Folder Include="server\views\" />
     <Folder Include="server\services\" />

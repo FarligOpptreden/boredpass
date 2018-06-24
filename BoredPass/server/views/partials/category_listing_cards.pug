@@ -1,0 +1,13 @@
+﻿include ../mixins/listing_card
+
+if listings && listings.length
+  each listing in listings
+    +listing_card(listing)
+
+if !listings || !listings.length
+  div.no-more-data
+    h1 Oh no! Seems like you have explored all we have to offer in terms of #{category} experiences. Why not broaden your horizons and check out some of the following?
+    div.recommendations
+      each category in categories
+        a(href='/categories/' + category.url + '/', class=category.url)
+          span= category.name 

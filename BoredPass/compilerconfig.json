@@ -1,9 +1,5 @@
 ﻿[
   {
-    "inputFile": "server/less/shared.less",
-    "outputFile": "public/css/shared.css"
-  },
-  {
     "inputFile": "server/less/boredpass.less",
     "outputFile": "public/css/boredpass.css"
   },
@@ -34,5 +30,9 @@
   {
     "inputFile": "server/less/sign_in.less",
     "outputFile": "public/css/sign_in.css"
+  },
+  {
+    "inputFile": "server/less/category_listings.less",
+    "outputFile": "public/css/category_listings.css"
   }
 ]

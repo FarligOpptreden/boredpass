@@ -1,6 +1,17 @@
 ﻿include ../mixins/listing_card
+include ../mixins/listing_card_loading
 
 section.listings
-  h1 Listings
-  each listing in listings
-    +listing_card(listing)
+  each category in categories
+    h1= category.category
+
+    if category.loading
+      +listing_card_loading()
+      +listing_card_loading()
+      +listing_card_loading()
+
+    if !category.loading
+      each listing in category.listings
+        +listing_card(listing)
+      div.buttons
+        a.button.grey(href='/categories/' + category.urlCategory + '/') View More

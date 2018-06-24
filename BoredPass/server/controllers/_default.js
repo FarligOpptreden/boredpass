@@ -9,29 +9,70 @@ export default Controller.create('/')
         res.setHeader('Expires', '-1');
         res.setHeader('Cache-Control', 'no-cache');
 
-        if (req.query.lat && req.query.lng)
-            return ListingsService.listingsWithProximity({ lat: req.query.lat, lng: req.query.lng })
-                .then(r => res.render('partials/listing_cards', {
-                    authentication: req.authentication,
-                    listings: r.listings,
+        let promise = null, promiseArgs = null;
+
+        if (req.query.lat && req.query.lng) {
+            promise = ListingsService.listingsWithProximity;
+            promiseArgs = { lat: req.query.lat, lng: req.query.lng };
+        }
+
+        if (req.query.all) {
+            promise = ListingsService.defaultListings;
+            promiseArgs = {};
+        }
+
+        if (promise) {
+            let categories = [];
+            return TagsService
+                .uniqueCategories()
+                .then(cats => {
+                    categories = cats;
+                    return Promise.all(categories.map(c => {
+                        let args = promiseArgs;
+                        args.tags = c.tags;
+                        args.limit = 3;
+                        return promise(args);
+                    }));
+                })
+                .then(listings =>
+                    res.render('partials/listing_cards', {
+                        authentication: req.authentication,
+                        categories: categories.map((c, i) => {
+                            return {
+                                category: c.category,
+                                urlCategory: c.category.toLowerCase().replace(/\s/g, '-').replace(/\&/g,'and'),
+                                loading: false,
+                                listings: listings[i]
+                            };
+                        }),
+                        moment: moment,
+                        marked: marked
+                    })
+                );
+        }
+
+        TagsService
+            .uniqueCategories()
+            .then(categories => {
+                let renderArgs = {
+                    title: 'Activities Near You - Bored Today',
+                    categories: categories.map((c, i) => {
+                        return {
+                            category: c.category,
+                            urlCategory: encodeURIComponent(c.category).toLowerCase(),
+                            loading: true
+                        };
+                    }),
                     moment: moment,
                     marked: marked
-                }));
+                };
+                if (req.authentication && req.authentication.user && req.authentication.user.permissions && req.authentication.user.permissions.viewStatistics)
+                    return ListingsService.statistics(tags => {
+                        renderArgs.authentication = req.authentication;
+                        renderArgs.tags = tags;
+                        res.render('home', renderArgs);
+                    });
 
-        if (req.query.all)
-            return ListingsService.defaultListings()
-                .then(r => res.render('partials/listing_cards', {
-                    authentication: req.authentication,
-                    listings: r.listings,
-                    moment: moment,
-                    marked: marked
-                }));
-
-        ListingsService.statistics(tags => res.render('home', {
-            authentication: req.authentication,
-            title: 'Activities Near You - Bored Today',
-            tags: tags,
-            moment: moment,
-            marked: marked
-        }));
+                res.render('home', renderArgs);
+            });
     });

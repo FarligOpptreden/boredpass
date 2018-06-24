@@ -1,0 +1,22 @@
+﻿extends _layout
+
+include mixins/listing_card
+include mixins/listing_card_loading
+
+block css
+  link(rel='stylesheet', href='/css/category_listings.min.css')
+
+block js
+  script(type='text/javascript', src='/js/category_listings.js')
+
+block content
+  section.banner(class=urlCategory)
+    div
+      h2 Explore
+      h1=(category + ' experiences')
+  section.listings
+    +listing_card_loading().template
+    each listing in listings
+      +listing_card(listing)
+    div.buttons
+      a.button.grey#load-more(href='/categories/' + urlCategory + '/' + skip) View More

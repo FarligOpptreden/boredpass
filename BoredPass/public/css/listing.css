@@ -25,12 +25,12 @@
   border-color: #444444;
 }
 section.banner {
-  height: 460px;
+  height: 660px;
   background-color: #25B9C5;
-  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   border-bottom: solid 5px #25B9C5;
+  background-size: cover;
 }
 section.banner > div {
   max-width: 1024px;
@@ -168,7 +168,8 @@ section.banner .delete {
   color: #555555;
   position: relative;
 }
-.listing-section.overview > div:first-of-type > a .fa {
+.listing-section.overview > div:first-of-type > a .fa,
+.listing-section.overview > div:first-of-type > a .fab {
   position: absolute;
   left: 0;
   top: 12px;
@@ -177,7 +178,8 @@ section.banner .delete {
   text-align: center;
   width: 20px;
 }
-.listing-section.overview > div:first-of-type > a .fa + span {
+.listing-section.overview > div:first-of-type > a .fa + span,
+.listing-section.overview > div:first-of-type > a .fab + span {
   display: block;
   white-space: nowrap;
   overflow: hidden;
@@ -186,13 +188,15 @@ section.banner .delete {
   line-height: 1.5;
   transition: all 0.2s;
 }
-.listing-section.overview > div:first-of-type > a:hover .fa + span {
+.listing-section.overview > div:first-of-type > a:hover .fa + span,
+.listing-section.overview > div:first-of-type > a:hover .fab + span {
   color: #25B9C5;
 }
 .listing-section.overview:not(.activity) > div:first-of-type .location {
   margin-top: 140px;
 }
-.listing-section.overview > div:first-of-type .location .fa + span {
+.listing-section.overview > div:first-of-type .location .fa + span,
+.listing-section.overview > div:first-of-type .location .fab + span {
   white-space: normal;
   overflow: visible;
 }

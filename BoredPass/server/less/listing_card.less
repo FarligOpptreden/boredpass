@@ -1,0 +1,193 @@
+﻿@import '__variables.less';
+
+.listing.card {
+    display: flex;
+    flex-direction: column;
+
+    .distance {
+        display: block;
+        width: 100px;
+        align-content: center;
+        white-space: nowrap;
+
+        & > * {
+            background-color: @col-dark;
+            color: #FFF;
+            display: inline-block;
+            padding: 10px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        & > label {
+            font-weight: 600;
+            padding-right: 0;
+        }
+    }
+
+    .button {
+        text-transform: uppercase;
+        padding: 10px 30px;
+        color: @col-body-bg;
+        border: solid 1px @col-body-bg;
+        border-radius: 30px;
+        background-color: transparent;
+        font-size: 14px;
+        display: inline-block;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        outline: none;
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+    }
+
+    & > a {
+        flex: 1;
+        position: relative;
+        transition: all 0.25s;
+        text-decoration: none;
+
+        & > .banner {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            position: relative;
+            background-color: @col-grey;
+
+            .logo {
+                height: 100px;
+                width: 100px;
+                position: absolute;
+                left: 50%;
+                bottom: 0;
+                margin: 0 0 -50px -50px;
+                border: solid 5px #FFF;
+                background-color: #FFF;
+                display: block;
+                background-size: contain;
+                background-position: center center;
+                background-repeat: no-repeat;
+                box-shadow: @box-shadow;
+            }
+        }
+
+        .tags {
+            display: block;
+            width: 100%;
+            padding: 0 5px;
+            text-transform: uppercase;
+            color: @col-main;
+            font-weight: 600;
+            line-height: 1.5;
+            font-size: 12px;
+            text-align: left;
+        }
+
+        & > h3 {
+            background-color: @col-main;
+            color: #FFF;
+            font-size: 14px;
+            text-transform: uppercase;
+            line-height: 1.5;
+            padding: 5px;
+            padding-top: 60px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        p, ul, ol {
+            color: @col-dark;
+            font-size: 14px;
+            line-height: 1.5;
+            padding: 5px;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+        }
+
+        ul li {
+            list-style: disc;
+        }
+
+        ol li {
+            list-style: decimal;
+        }
+    }
+
+    &:not(.loading):hover > a {
+        cursor: pointer;
+        box-shadow: @box-shadow;
+        transform: translateY(-2px);
+    }
+
+    &.loading {
+        cursor: default;
+        animation: card-loading 1s infinite;
+
+        .distance {
+            & > * {
+                background-color: rgba(0, 0, 0, 0.3);
+                color: transparent;
+            }
+        }
+
+        & > a {
+            & > .banner {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+
+            & > h3 {
+                background-color: rgba(0, 0, 0, 0.3);
+                color: transparent;
+            }
+        }
+
+        p {
+            color: transparent;
+            margin: 5px;
+            height: 15px;
+            padding: 0;
+            background-color: rgba(0, 0, 0, 0.2);
+
+            &:first-of-type {
+                margin-top: 15px;
+            }
+
+            &:last-of-type {
+                margin-right: 25%;
+            }
+        }
+
+        .tags {
+            margin: 20px 5px 0 0;
+            color: transparent;
+
+            span {
+                display: inline-block;
+                height: 15px;
+                width: 50px;
+                margin-right: 10px;
+                background-color: rgba(0, 0, 0, 0.2);
+            }
+        }
+    }
+}
+
+@keyframes card-loading {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

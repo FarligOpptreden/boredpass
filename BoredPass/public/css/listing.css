@@ -1,4 +1,168 @@
-﻿.space-fixer {
+﻿.listing.card {
+  display: flex;
+  flex-direction: column;
+}
+.listing.card .distance {
+  display: block;
+  width: 100px;
+  align-content: center;
+  white-space: nowrap;
+}
+.listing.card .distance > * {
+  background-color: #444444;
+  color: #FFF;
+  display: inline-block;
+  padding: 10px;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+.listing.card .distance > label {
+  font-weight: 600;
+  padding-right: 0;
+}
+.listing.card .button {
+  text-transform: uppercase;
+  padding: 10px 30px;
+  color: #f5f5f5;
+  border: solid 1px #f5f5f5;
+  border-radius: 30px;
+  background-color: transparent;
+  font-size: 14px;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  outline: none;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+.listing.card > a {
+  flex: 1;
+  position: relative;
+  transition: all 0.25s;
+  text-decoration: none;
+}
+.listing.card > a > .banner {
+  width: 100%;
+  height: 200px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: relative;
+  background-color: #DDDDDD;
+}
+.listing.card > a > .banner .logo {
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  margin: 0 0 -50px -50px;
+  border: solid 5px #FFF;
+  background-color: #FFF;
+  display: block;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
+}
+.listing.card > a .tags {
+  display: block;
+  width: 100%;
+  padding: 0 5px;
+  text-transform: uppercase;
+  color: #25B9C5;
+  font-weight: 600;
+  line-height: 1.5;
+  font-size: 12px;
+  text-align: left;
+}
+.listing.card > a > h3 {
+  background-color: #25B9C5;
+  color: #FFF;
+  font-size: 14px;
+  text-transform: uppercase;
+  line-height: 1.5;
+  padding: 5px;
+  padding-top: 60px;
+  font-weight: 600;
+  text-align: center;
+}
+.listing.card > a p,
+.listing.card > a ul,
+.listing.card > a ol {
+  color: #444444;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 5px;
+}
+.listing.card > a ul,
+.listing.card > a ol {
+  margin-left: 20px;
+}
+.listing.card > a ul li {
+  list-style: disc;
+}
+.listing.card > a ol li {
+  list-style: decimal;
+}
+.listing.card:not(.loading):hover > a {
+  cursor: pointer;
+  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
+  transform: translateY(-2px);
+}
+.listing.card.loading {
+  cursor: default;
+  animation: card-loading 1s infinite;
+}
+.listing.card.loading .distance > * {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: transparent;
+}
+.listing.card.loading > a > .banner {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.listing.card.loading > a > h3 {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: transparent;
+}
+.listing.card.loading p {
+  color: transparent;
+  margin: 5px;
+  height: 15px;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.listing.card.loading p:first-of-type {
+  margin-top: 15px;
+}
+.listing.card.loading p:last-of-type {
+  margin-right: 25%;
+}
+.listing.card.loading .tags {
+  margin: 20px 5px 0 0;
+  color: transparent;
+}
+.listing.card.loading .tags span {
+  display: inline-block;
+  height: 15px;
+  width: 50px;
+  margin-right: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+@keyframes card-loading {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.space-fixer {
   height: 1px;
   width: 100%;
 }
@@ -734,6 +898,16 @@ section.banner .delete {
 .listing-section.overview > div > ol > li {
   list-style: decimal;
 }
+.listing-section.related > div > div {
+  display: flex;
+  flex-direction: row;
+  margin: 0 -10px;
+}
+.listing-section.related > div > div .listing.card {
+  flex: 1;
+  margin: 10px;
+  max-width: 33%;
+}
 @-moz-keyframes fade-in {
   0% {
     background-color: transparent;
@@ -870,6 +1044,13 @@ section.banner .delete {
     height: auto;
     width: auto;
   }
+  .listing-section.related > div > div {
+    flex-wrap: wrap;
+  }
+  .listing-section.related > div > div .listing.card {
+    min-width: 40%;
+    max-width: 50%;
+  }
 }
 @media only screen and (max-width: 768px) {
   section.banner > div {
@@ -954,6 +1135,15 @@ section.banner .delete {
   }
   .light-box {
     top: 30px;
+  }
+  .listing-section.related > div > div {
+    display: block;
+    margin: 0;
+  }
+  .listing-section.related > div > div .listing.card {
+    flex: none;
+    margin: 10px 0;
+    max-width: none;
   }
 }
 @media only screen and (max-width: 550px) {

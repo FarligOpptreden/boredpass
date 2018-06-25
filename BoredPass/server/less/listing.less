@@ -1,4 +1,5 @@
 ﻿@import '__variables.less';
+@import 'listing_card.less';
 
 .space-fixer {
     height: 1px;
@@ -839,6 +840,18 @@ section.banner .delete {
     list-style: decimal;
 }
 
+.listing-section.related > div > div {
+    display: flex;
+    flex-direction: row;
+    margin: 0 -10px;
+
+    .listing.card {
+        flex: 1;
+        margin: 10px;
+        max-width: 33%;
+    }
+}
+
 @-moz-keyframes fade-in {
     0% {
         background-color: transparent;
@@ -1004,6 +1017,15 @@ section.banner .delete {
         height: auto;
         width: auto;
     }
+
+    .listing-section.related > div > div {
+        flex-wrap: wrap;
+
+        .listing.card {
+            min-width: 40%;
+            max-width: 50%;
+        }
+    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -1108,6 +1130,17 @@ section.banner .delete {
 
     .light-box {
         top: 30px;
+    }
+
+    .listing-section.related > div > div {
+        display: block;
+        margin: 0;
+
+        .listing.card {
+            flex: none;
+            margin: 10px 0;
+            max-width: none;
+        }
     }
 }
 

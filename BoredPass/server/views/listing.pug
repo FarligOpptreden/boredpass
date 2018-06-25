@@ -3,6 +3,7 @@
 include mixins/activities
 include mixins/facilities
 include mixins/photos
+include mixins/listing_card
 
 block css
   link(rel='stylesheet', href='/css/listing.min.css')
@@ -106,6 +107,14 @@ block content
               - var desc = activity.description.length > 100 ? activity.description.substring(0, 100) : activity.description
               p= desc
               span.read-more.button.inverse(href='/activities/' + activity._id) Read More
+
+  if related && related.length
+    section.listing-section.related.alternating
+      div
+        h1 Check These Out As Well
+        div
+          each listing in related
+            +listing_card(listing)
   //-
     section.listing-section.events
       div.calendar

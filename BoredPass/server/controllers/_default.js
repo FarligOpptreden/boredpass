@@ -6,8 +6,6 @@ import marked from 'marked';
 export default Controller.create('/')
     // Show default index page
     .handle({ route: '/', method: 'get', produces: 'html' }, (req, res) => {
-        res.setHeader('Expires', '-1');
-        res.setHeader('Cache-Control', 'no-cache');
 
         let promise = null, promiseArgs = null;
 
@@ -40,7 +38,7 @@ export default Controller.create('/')
                         categories: categories.map((c, i) => {
                             return {
                                 category: c.category,
-                                urlCategory: c.category.toLowerCase().replace(/\s/g, '-').replace(/\&/g,'and'),
+                                urlCategory: c.category.toLowerCase().replace(/\s/g, '-').replace(/\&/g, 'and'),
                                 loading: false,
                                 listings: listings[i]
                             };
@@ -67,11 +65,12 @@ export default Controller.create('/')
                     marked: marked
                 };
                 if (req.authentication && req.authentication.user && req.authentication.user.permissions && req.authentication.user.permissions.viewStatistics)
-                    return ListingsService.statistics(tags => {
-                        renderArgs.authentication = req.authentication;
-                        renderArgs.tags = tags;
-                        res.render('home', renderArgs);
-                    });
+                    return ListingsService.statistics()
+                        .then(tags => {
+                            renderArgs.authentication = req.authentication;
+                            renderArgs.tags = tags;
+                            res.render('home', renderArgs);
+                        });
 
                 res.render('home', renderArgs);
             });

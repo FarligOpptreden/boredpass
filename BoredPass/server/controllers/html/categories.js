@@ -1,5 +1,5 @@
 ﻿import { Controller, konsole } from '../../../handlr/_all';
-import { ListingsService, ActivitiesService, FacilitiesService, TagsService } from '../../services/_all';
+import { ListingsService, ActivitiesService, TagsService } from '../../services/_all';
 import marked from 'marked';
 
 export default new Controller('/categories')

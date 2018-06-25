@@ -15,16 +15,24 @@ export default new Controller('/listings')
             return;
         }
 
-        FacilitiesService.findMany({
-            sort: { name: 1 }
-        }, (facilities) => {
-            res.render('add_listing', {
-                authentication: req.authentication,
-                title: 'Add Listing - BoredPass',
-                moment: require('moment'),
-                facilities: facilities
+        FacilitiesService.findMany({ sort: { name: 1 } })
+            .then(facilities =>
+                res.render('add_listing', {
+                    authentication: req.authentication,
+                    title: 'Add Listing - BoredPass',
+                    moment: require('moment'),
+                    facilities: facilities
+                })
+            )
+            .catch(err => {
+                res.status(500);
+                res.render('error', {
+                    error: {
+                        status: 500
+                    },
+                    message: `Something unexpected happened: ${err}`
+                });
             });
-        });
     })
     .handle({ route: '/add', method: 'post', produces: 'json' }, (req, res) => {
         if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addExperience) {
@@ -36,14 +44,20 @@ export default new Controller('/listings')
             return;
         }
 
-        ListingsService.create({
-            data: req.body
-        }, (result) => {
-            res.json({
-                success: result && result._id && true,
-                id: result._id && result._id
+        ListingsService.create({ data: req.body })
+            .then(result =>
+                res.json({
+                    success: result && result._id && true,
+                    id: result._id && result._id
+                })
+            )
+            .catch(err => {
+                res.status(500);
+                res.json({
+                    success: false,
+                    message: `Something unexpected happened: ${err}`
+                });
             });
-        });
     })
     .handle({ route: '/:id/added', method: 'get', produces: 'html' }, (req, res) => {
         if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addListing) {
@@ -57,39 +71,58 @@ export default new Controller('/listings')
             return;
         }
 
-        ListingsService.findOne({
-            filter: {
-                _id: req.params.id
-            }
-        }, (listing) => {
-            res.render('add_listing_done', {
-                authentication: req.authentication,
-                title: 'Add Listing - BoredPass',
-                moment: require('moment'),
-                listing: listing
-            });
-        });
+        ListingsService.findOne({ filter: { _id: req.params.id } })
+            .then(listing =>
+                res.render('add_listing_done', {
+                    authentication: req.authentication,
+                    title: 'Add Listing - BoredPass',
+                    moment: require('moment'),
+                    listing: listing
+                })
+            )
+            .catch(err => {
+                res.status(500);
+                res.render('error', {
+                    error: {
+                        status: 500
+                    },
+                    message: `Something unexpected happened: ${err}`
+                });
+            });;
     })
     .handle({ route: '/:id', method: 'get', produces: 'html' }, (req, res) => {
-        res.setHeader('Expires', '-1');
-        res.setHeader('Cache-Control', 'no-cache');
-        ListingsService.findOne({
-            filter: req.params.id
-        }, (listing) => {
-            ActivitiesService.findMany({
-                filter: { listing_id: listing._id },
-                sort: { name: 1 }
-            }, (activities) => {
+        let _listing = null, _activities = null;
+
+        Promise.resolve()
+            .then(_ => ListingsService.findOne({ filter: req.params.id }))
+            .then(listing => {
+                _listing = listing;
+                return ActivitiesService.findMany({ filter: { listing_id: listing._id }, sort: { name: 1 } });
+            })
+            .then(activities => {
+                _activities = activities;
+                return ListingsService.relatedListings(_listing);
+            })
+            .then(related =>
                 res.render('listing', {
                     authentication: req.authentication,
-                    title: listing.name + ' - BoredPass',
+                    title: _listing.name + ' - BoredPass',
                     moment: require('moment'),
                     marked: marked,
-                    listing: listing,
-                    activities: activities
+                    listing: _listing,
+                    activities: _activities,
+                    related: related
+                })
+            )
+            .catch(err => {
+                res.status(500);
+                res.render('error', {
+                    error: {
+                        status: 500
+                    },
+                    message: `Something unexpected happened: ${err}`
                 });
             });
-        });
     })
     .handle({ route: '/:id/edit', method: 'get', produces: 'html' }, (req, res) => {
         if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.editListing) {
@@ -103,58 +136,59 @@ export default new Controller('/listings')
             return;
         }
 
-        res.setHeader('Expires', '-1');
-        res.setHeader('Cache-Control', 'no-cache');
-
         let _listing, _facilities, _activities;
 
-        let getListing = _ => new Promise((resolve, reject) =>
-            ListingsService.findOne({
-                filter: req.params.id
-            }, listing => {
-                _listing = listing;
-                resolve(listing);
-            })
-        );
-
         let getFacilities = listing => new Promise((resolve, reject) =>
-            FacilitiesService.findMany({
-                sort: { name: 1 }
-            }, facilities => {
-                listing.facilities && listing.facilities.length && listing.facilities.map(facility =>
-                    facilities.map(f => {
-                        if (f && facility && f._id.toString() === facility._id.toString())
-                            f.selected = true;
-                    })
-                );
-                _facilities = facilities;
-                resolve(facilities);
-            })
+            FacilitiesService.findMany({ sort: { name: 1 } })
+                .then(facilities => {
+                    listing.facilities && listing.facilities.length && listing.facilities.map(facility =>
+                        facilities.map(f => {
+                            if (f && facility && f._id.toString() === facility._id.toString())
+                                f.selected = true;
+                        })
+                    );
+                    _facilities = facilities;
+                    resolve(facilities);
+                })
         );
 
         let getActivities = listing => new Promise((resolve, reject) =>
             ActivitiesService.findMany({
                 filter: { listing_id: listing._id },
                 sort: { name: 1 }
-            }, activities => {
-                _activities = activities;
-                resolve(activities);
             })
+                .then(activities => {
+                    _activities = activities;
+                    resolve(activities);
+                })
         );
 
         Promise.resolve()
-            .then(_ => getListing())
-            .then(listing => Promise.all([getFacilities(listing), getActivities(listing)]))
-            .then(results => res.render('listing_edit', {
-                authentication: req.authentication,
-                title: _listing.name + ' - BoredPass',
-                moment: require('moment'),
-                marked: marked,
-                listing: _listing,
-                activities: _activities,
-                facilities: _facilities
-            }))
-            .catch(err => konsole.error(err));
+            .then(_ => ListingsService.findOne({ filter: req.params.id }))
+            .then(listing => {
+                _listing = listing;
+                return Promise.all([getFacilities(listing), getActivities(listing)]);
+            })
+            .then(_ =>
+                res.render('listing_edit', {
+                    authentication: req.authentication,
+                    title: _listing.name + ' - BoredPass',
+                    moment: require('moment'),
+                    marked: marked,
+                    listing: _listing,
+                    activities: _activities,
+                    facilities: _facilities
+                })
+            )
+            .catch(err => {
+                res.status(500);
+                res.render('error', {
+                    error: {
+                        status: 500
+                    },
+                    message: `Something unexpected happened: ${err}`
+                });
+            });
     })
     .handle({ route: '/:id/edit', method: 'put', produces: 'json' }, (req, res) => {
         if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.editListing) {
@@ -166,18 +200,24 @@ export default new Controller('/listings')
             return;
         }
 
-        res.setHeader('Expires', '-1');
-        res.setHeader('Cache-Control', 'no-cache');
         let listing = req.body;
         ListingsService.update({
             filter: req.params.id,
             data: listing
-        }, (result) => {
-            res.json({
-                success: result && true,
-                id: result && req.params.id
+        })
+            .then(result =>
+                res.json({
+                    success: result && true,
+                    id: result && req.params.id
+                })
+            )
+            .catch(err => {
+                res.status(500);
+                res.json({
+                    success: false,
+                    message: `Something unexpected happened: ${err}`
+                });
             });
-        });
     })
     .handle({ route: '/:id/delete', method: 'delete', produces: 'json' }, (req, res) => {
         if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.deleteListing) {
@@ -189,15 +229,15 @@ export default new Controller('/listings')
             return;
         }
 
-        res.setHeader('Expires', '-1');
-        res.setHeader('Cache-Control', 'no-cache');
-        ActivitiesService.deleteMany({
-            filter: { listing_id: ActivitiesService.db.objectId(req.params.id) }
-        }, (r) => {
-            ListingsService.delete({
-                filter: req.params.id
-            }, (r) => {
-                res.json(r);
+        Promise.resolve()
+            .then(_ => ActivitiesService.deleteMany({ filter: { listing_id: ActivitiesService.db.objectId(req.params.id) } }))
+            .then(r => ListingsService.delete({ filter: req.params.id }))
+            .then(r => res.json(r))
+            .catch(err => {
+                res.status(500);
+                res.json({
+                    success: false,
+                    message: `Something unexpected happened: ${err}`
+                });
             });
-        });
     });

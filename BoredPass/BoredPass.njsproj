@@ -72,6 +72,7 @@
     <Compile Include="server\controllers\html\listing.js" />
     <Compile Include="server\controllers\html\activity.js" />
     <Compile Include="server\controllers\_default.js" />
+    <Compile Include="server\middleware\cache.js" />
     <Compile Include="server\middleware\authentication.js">
       <SubType>Code</SubType>
     </Compile>

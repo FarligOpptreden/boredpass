@@ -40,14 +40,20 @@ export default new Controller('/activities')
 
         let activity = req.body;
         activity.listing_id = ActivitiesService.db.objectId(req.params.id);
-        ActivitiesService.create({
-            data: activity
-        }, (result) => {
-            res.json({
-                success: result && result._id && true,
-                id: result._id && result._id
+        ActivitiesService.create({ data: activity })
+            .then(result =>
+                res.json({
+                    success: result && result._id && true,
+                    id: result._id && result._id
+                })
+            )
+            .catch(err => {
+                res.status(500);
+                res.send({
+                    success: false,
+                    message: `Could not create activity: ${err}`
+                });
             });
-        });
     })
     .handle({ route: '/add/done', method: 'get', produces: 'html' }, (req, res) => {
         if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addExperience) {
@@ -67,15 +73,11 @@ export default new Controller('/activities')
             moment: require('moment')
         });
     })
-    .handle({ route: '/:id', method: 'get', produces: 'html' }, (req, res) => {
-        res.setHeader('Expires', '-1');
-        res.setHeader('Cache-Control', 'no-cache');
-        ActivitiesService.findOne({
-            filter: req.params.id
-        }, (activity) => {
-            ListingsService.findOne({
-                filter: { _id: activity.listing_id }
-            }, (listing) => {
+    .handle({ route: '/:id', method: 'get', produces: 'html' }, (req, res) =>
+        Promise.resolve()
+            .then(_ => ActivitiesService.findOne({ filter: req.params.id }))
+            .then(activity => ListingsService.findOne({ filter: { _id: activity.listing_id } }))
+            .then(listing =>
                 res.render('activity', {
                     authentication: req.authentication,
                     title: `${activity.name} - BoredPass`,
@@ -83,10 +85,18 @@ export default new Controller('/activities')
                     activity: activity,
                     marked: marked,
                     moment: require('moment')
+                })
+            )
+            .catch(err => {
+                res.status(500);
+                res.render('error', {
+                    error: {
+                        status: 500
+                    },
+                    message: `Something unexpected happened: ${err}`
                 });
-            });
-        });
-    })
+            })
+    )
     .handle({ route: '/:id/edit', method: 'get', produces: 'html' }, (req, res) => {
         if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.editExperience) {
             res.status(403);
@@ -99,19 +109,25 @@ export default new Controller('/activities')
             return;
         }
 
-        res.setHeader('Expires', '-1');
-        res.setHeader('Cache-Control', 'no-cache');
-        ActivitiesService.findOne({
-            filter: req.params.id
-        }, (activity) => {
-            res.render('add_activity', {
-                authentication: req.authentication,
-                title: `Edit ${activity.name} - BoredPass`,
-                mode: 'edit',
-                activity: activity,
-                moment: require('moment')
+        ActivitiesService.findOne({ filter: req.params.id })
+            .then(activity =>
+                res.render('add_activity', {
+                    authentication: req.authentication,
+                    title: `Edit ${activity.name} - BoredPass`,
+                    mode: 'edit',
+                    activity: activity,
+                    moment: require('moment')
+                })
+            )
+            .catch(err => {
+                res.status(500);
+                res.render('error', {
+                    error: {
+                        status: 500
+                    },
+                    message: `Something unexpected happened: ${err}`
+                });
             });
-        });
     })
     .handle({ route: '/:id/edit', method: 'put', produces: 'json' }, (req, res) => {
         if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.editExperience) {
@@ -123,18 +139,23 @@ export default new Controller('/activities')
             return;
         }
 
-        res.setHeader('Expires', '-1');
-        res.setHeader('Cache-Control', 'no-cache');
         let activity = req.body;
-        ActivitiesService.update({
-            filter: req.params.id,
-            data: activity
-        }, (result) => {
-            res.json({
-                success: result && true,
-                id: result && req.params.id
+        ActivitiesService.update({ filter: req.params.id, data: activity })
+            .then(result =>
+                res.json({
+                    success: result && true,
+                    id: result && req.params.id
+                })
+            )
+            .catch(err => {
+                res.status(500);
+                res.render('error', {
+                    error: {
+                        status: 500
+                    },
+                    message: `Something unexpected happened: ${err}`
+                });
             });
-        });
     })
     .handle({ route: '/:id/delete', method: 'delete', produces: 'json' }, (req, res) => {
         if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.deleteExperience) {
@@ -146,11 +167,15 @@ export default new Controller('/activities')
             return;
         }
 
-        res.setHeader('Expires', '-1');
-        res.setHeader('Cache-Control', 'no-cache');
-        ActivitiesService.delete({
-            filter: req.params.id
-        }, (r) => {
-            res.json(r);
-        });
+        ActivitiesService.delete({ filter: req.params.id })
+            .then(r => res.json(r))
+            .catch(err => {
+                res.status(500);
+                res.render('error', {
+                    error: {
+                        status: 500
+                    },
+                    message: `Something unexpected happened: ${err}`
+                });
+            });
     });

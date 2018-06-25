@@ -1,7 +1,7 @@
 ﻿import config from '../../config';
-import { BasicCrud } from '../../handlr/_all';
+import { BasicCrudPromises } from '../../handlr/_all';
 
-class Facilities extends BasicCrud {
+class Facilities extends BasicCrudPromises {
     constructor() {
         super(config.connectionStrings.boredPass, 'facilities');
     }

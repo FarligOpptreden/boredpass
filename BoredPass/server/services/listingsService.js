@@ -1,5 +1,5 @@
 ﻿import config from '../../config';
-import { BasicCrud, konsole } from '../../handlr/_all';
+import { BasicCrudPromises, konsole } from '../../handlr/_all';
 import { LocationService, TagsService } from './_all';
 
 const _MappedCategories = {
@@ -10,7 +10,7 @@ const _MappedCategories = {
     'sightseeing': 'Sightseeing'
 };
 
-class Listings extends BasicCrud {
+class Listings extends BasicCrudPromises {
     constructor() {
         super(config.connectionStrings.boredPass, 'listings');
     }
@@ -29,67 +29,90 @@ class Listings extends BasicCrud {
         return newObj;
     }
 
-    create(args, callback) {
-        LocationService.geocodeAddress(args.data.address)
-            .then(coordinates => {
-                args.data.geocodedAddress = coordinates;
-                args.data.location = coordinates.results && coordinates.results.length ? {
-                    type: 'Point',
-                    coordinates: [coordinates.results[0].geometry.location.lng, coordinates.results[0].geometry.location.lat],
-                } : null;
-                args.data.formatted_address = (coordinates.results && coordinates.results.length && coordinates.results[0].formatted_address) || 'Could not geocode';
-                super.create(args, callback);
-            })
-            .catch(err => super.create(args, callback));
+    create(args) {
+        return new Promise((resolve, reject) =>
+            LocationService.geocodeAddress(args.data.address)
+                .then(coordinates => {
+                    args.data.geocodedAddress = coordinates;
+                    args.data.location = coordinates.results && coordinates.results.length ? {
+                        type: 'Point',
+                        coordinates: [coordinates.results[0].geometry.location.lng, coordinates.results[0].geometry.location.lat],
+                    } : null;
+                    args.data.formatted_address = (coordinates.results && coordinates.results.length && coordinates.results[0].formatted_address) || 'Could not geocode';
+                    return super.create(args);
+                })
+                .then(d => resolve(d))
+                .catch(err => super.create(args)
+                    .then(d => resolve(d))
+                    .catch(err => {
+                        konsole.error(err.toString());
+                        reject(err.toString());
+                    })
+                )
+        );
     }
 
-    update(args, callback) {
-        LocationService.geocodeAddress(args.data.address)
-            .then(coordinates => {
-                args.data.geocodedAddress = coordinates;
-                args.data.location = coordinates.results && coordinates.results.length ? {
-                    type: 'Point',
-                    coordinates: [coordinates.results[0].geometry.location.lng, coordinates.results[0].geometry.location.lat]
-                } : null;
-                args.data.formatted_address = (coordinates.results && coordinates.results.length && coordinates.results[0].formatted_address) || 'Could not geocode';
-                super.update(args, callback);
-            })
-            .catch(err => super.update(args, callback));
+    update(args) {
+        return new Promise((resolve, reject) =>
+            LocationService.geocodeAddress(args.data.address)
+                .then(coordinates => {
+                    args.data.geocodedAddress = coordinates;
+                    args.data.location = coordinates.results && coordinates.results.length ? {
+                        type: 'Point',
+                        coordinates: [coordinates.results[0].geometry.location.lng, coordinates.results[0].geometry.location.lat]
+                    } : null;
+                    args.data.formatted_address = (coordinates.results && coordinates.results.length && coordinates.results[0].formatted_address) || 'Could not geocode';
+                    return super.update(args);
+                })
+                .then(d => resolve(d))
+                .catch(err => super.update(args)
+                    .then(d => resolve(d))
+                    .catch(err => {
+                        konsole.error(err.toString());
+                        reject(err.toString());
+                    })
+                )
+        );
     }
 
-    statistics(callback) {
-        this.aggregate({
-            pipeline: [
-                {
-                    unwind: '$tags'
-                },
-                {
-                    group: {
-                        _id: '$tags.name',
-                        count: { $sum: 1 }
+    statistics() {
+        return new Promise((resolve, reject) =>
+            this.aggregate({
+                pipeline: [
+                    {
+                        unwind: '$tags'
+                    },
+                    {
+                        group: {
+                            _id: '$tags.name',
+                            count: { $sum: 1 }
+                        }
+                    },
+                    {
+                        sort: {
+                            _id: 1
+                        }
                     }
-                },
-                {
-                    sort: {
-                        _id: 1
-                    }
-                }
-            ]
-        }, callback);
+                ]
+            })
+                .then(d => resolve(d))
+                .catch(err => {
+                    konsole.error(err.toString());
+                    reject(err.toString());
+                })
+        );
     }
 
     listingsByCategory(args) {
-        konsole.log(args, ':::::::::::::::::::::::::::');
         return new Promise((resolve, reject) => {
             TagsService.tagsPerCategory(this.mappedCategory(args.category))
-                .then(tags => {
-                    ListingsService.findMany({
-                        filter: { 'tags.name': { $in: tags.map(t => t.name) } },
-                        sort: { _created: -1 },
-                        limit: parseInt(args.limit.toString(), 10),
-                        skip: parseInt(args.skip.toString(), 10)
-                    }, listings => resolve(listings));
-                })
+                .then(tags => ListingsService.findMany({
+                    filter: { 'tags.name': { $in: tags.map(t => t.name) } },
+                    sort: { _created: -1 },
+                    limit: parseInt(args.limit.toString(), 10),
+                    skip: parseInt(args.skip.toString(), 10)
+                }))
+                .then(listings => resolve(listings))
                 .catch(err => reject(err));
         });
     }
@@ -118,7 +141,12 @@ class Listings extends BasicCrud {
 
             ListingsService.aggregate({
                 pipeline: pipeline
-            }, listings => resolve(listings))
+            })
+                .then(listings => resolve(listings))
+                .catch(err => {
+                    konsole.error(err.toString());
+                    reject(err.toString());
+                });
         });
     }
 
@@ -153,7 +181,45 @@ class Listings extends BasicCrud {
 
             ListingsService.aggregate({
                 pipeline: pipeline
-            }, listings => resolve(listings))
+            })
+                .then(listings => resolve(listings))
+                .catch(err => {
+                    konsole.error(err.toString());
+                    reject(err.toString());
+                });
+        });
+    }
+
+    relatedListings(listing) {
+        return new Promise((resolve, reject) => {
+            if (!listing)
+                return resolve([]);
+
+            let pipeline = [{
+                geoNear: {
+                    query: {
+                        '_id': { $ne: ListingsService.db.objectId(listing._id) },
+                        'tags.name': { $in: listing.tags.map(t => t.name) }
+                    },
+                    near: { type: 'Point', coordinates: listing.location.coordinates },
+                    maxDistance: 1000 * 1000, // 1,000km
+                    spherical: true,
+                    limit: 3,
+                    distanceField: 'distance'
+                }
+            }];
+
+            ListingsService.aggregate({
+                pipeline: pipeline
+            })
+                .then(listings => {
+                    konsole.log(listings.length);
+                    resolve(listings)
+                })
+                .catch(err => {
+                    konsole.error(err.toString());
+                    reject(err.toString());
+                });
         });
     }
 }

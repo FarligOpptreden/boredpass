@@ -1,91 +1,99 @@
 ﻿@import '__variables.less';
 
-.listing-section .content-editable {
-    box-shadow: @box-shadow;
-    border: solid 2px rgba(0, 0, 0, 0.2);
-    outline: none;
-    font-family: 'Raleway', sans-serif;
-    border-radius: 3px;
-    transition: all 0.2s;
-}
+.listing-section {
+    .content-editable {
+        box-shadow: @box-shadow;
+        border: solid 2px rgba(0, 0, 0, 0.2);
+        outline: none;
+        font-family: 'Raleway', sans-serif;
+        border-radius: 3px;
+        transition: all 0.2s;
 
-.listing-section .content-editable:hover, .listing-section .content-editable:focus {
-    border-color: @col-main;
-    border-style: solid;
-}
+        &:hover, &:focus {
+            border-color: @col-main;
+            border-style: solid;
+        }
+    }
 
-.listing-section.overview > div:nth-child(2) {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 0;
-}
+    &.overview {
+        & > div:nth-child(2) {
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 0;
+        }
 
-.listing-section.overview #listing-name {
-    flex: 0 0 40px;
-    display: block;
-    font-size: 26px;
-    font-weight: 900;
-    text-transform: uppercase;
-    padding: 10px;
-    margin-bottom: 20px;
-}
+        #listing-name {
+            flex: 0 0 40px;
+            display: block;
+            font-size: 26px;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
 
-.listing-section.overview #listing-description {
-    position: relative;
-    margin-bottom: 10px;
-    flex: 1;
-    resize: none;
-    min-height: 100px;
-    font-size: 15px;
-    line-height: 1.5;
-    padding: 10px;
-}
+        #listing-description {
+            position: relative;
+            margin-bottom: 10px;
+            flex: 1;
+            resize: none;
+            min-height: 100px;
+            font-size: 15px;
+            line-height: 1.5;
+            padding: 10px;
+        }
 
-.listing-section .contact-info > a {
-    display: flex !important;
-    flex-direction: row;
-    padding: 5px 0 !important;
-}
+        .photo-upload.logo {
+            background-color: #333 !important;
+        }
+    }
 
-.listing-section .contact-info > a > span {
-    flex: 0 0 20px;
-    position: relative !important;
-    top: 8px !important;
-}
+    .contact-info {
+        & > a {
+            display: flex !important;
+            flex-direction: row;
+            padding: 5px 0 !important;
+        }
 
-.listing-section .contact-info > a > .content-editable {
-    flex: 1;
-    padding: 5px;
-    margin-left: 5px;
-}
+        & > span {
+            flex: 0 0 20px;
+            position: relative !important;
+            top: 8px !important;
+        }
 
-.listing-section .facility.editing:not(.selected) .icon, .listing-section .facility.editing:not(.selected) span {
-    opacity: 0.2;
-}
+        & > .content-editable {
+            flex: 1;
+            padding: 5px;
+            margin-left: 5px;
+        }
+    }
 
-.listing-section div.facility {
-    cursor: pointer;
-}
+    div.facility {
+        cursor: pointer;
 
-.listing-section div.facility > span {
-    cursor: pointer;
-    transition: all 0.2s;
-}
+        &.editing:not(.selected) {
+            .icon, span {
+                opacity: 0.2;
+            }
+        }
 
-.listing-section div.facility:hover > span:not(.icon) {
-    opacity: 1 !important;
-}
+        & > span {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
 
-.listing-section.photos.edit > div > div {
-    flex-wrap: wrap;
-}
+        &:hover > span:not(.icon) {
+            opacity: 1 !important;
+        }
+    }
 
-.listing-section.photos.edit > div > div > div {
-    flex: 0 0 33.3%;
-}
+    &.photos.edit > div > div {
+        flex-wrap: wrap;
 
-.listing-section.overview .photo-upload.logo {
-    background-color: #333 !important;
+        & > div {
+            flex: 0 0 33.3%;
+        }
+    }
 }
 
 .banner .edit-banner {
@@ -100,19 +108,19 @@
     cursor: pointer;
     transition: all 0.2s;
     box-shadow: @box-shadow;
-}
 
-.banner .edit-banner:hover {
-    background-color: rgba(255, 255, 255, 0.8);
-}
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
 
-.banner .edit-banner > i {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    height: 30px;
-    font-size: 30px;
-    margin: -15px 0 0 0;
-    text-align: center;
+    & > i {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 30px;
+        font-size: 30px;
+        margin: -15px 0 0 0;
+        text-align: center;
+    }
 }

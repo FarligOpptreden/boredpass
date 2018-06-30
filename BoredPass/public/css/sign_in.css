@@ -1,4 +1,4 @@
-﻿.overlay-content.sign-in-modal {
+﻿.sign-in-modal {
   width: 500px;
   height: 720px;
   top: 50%;
@@ -108,10 +108,10 @@
 .sign-in-modal form.active {
   display: block;
 }
-.sign-in-modal .hint {
+.sign-in-modal form .hint {
   color: #FFFFFF;
 }
-.sign-in-modal.no-no {
+.sign-in-modal form.no-no {
   animation: no-no 0.5s forwards;
 }
 @keyframes no-no {

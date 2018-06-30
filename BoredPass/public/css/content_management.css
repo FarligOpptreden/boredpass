@@ -30,6 +30,13 @@
   padding: 5px;
   white-space: normal;
 }
+.tag-search > a.selected {
+  background-color: #25B9C5;
+  color: #FFFFFF !important;
+}
+.tag-search:not(.hidden) + .tag-container {
+  display: none;
+}
 .tag-search > a,
 .tag-container > span {
   position: relative !important;
@@ -47,13 +54,6 @@
   width: auto !important;
   flex: none !important;
 }
-.tag-search > a.selected {
-  background-color: #25B9C5;
-  color: #FFFFFF !important;
-}
-.tag-search:not(.hidden) + .tag-container {
-  display: none;
-}
 .tag-field > .all-tags {
   display: block;
   text-align: right;
@@ -63,6 +63,9 @@
 }
 .listing-section.blue .tag-field > .all-tags {
   color: #FFF;
+}
+.tag-container {
+  white-space: pre-wrap;
 }
 .tag-container > a {
   display: inline-block;
@@ -95,9 +98,6 @@
 .tag-container > a:hover > span {
   transform: translateY(0) rotate(45deg);
 }
-.tag-container {
-  white-space: pre-wrap;
-}
 .tag-container > span:first-of-type {
   margin-top: 10px;
 }
@@ -111,21 +111,98 @@
   width: 500px;
   margin-left: -250px;
 }
-.banner-library {
-  width: 800px;
-  margin-left: -400px;
-}
 .tag-library > h1,
 .banner-library > h1,
-.tag-library > .added {
+.tag-library > h1,
+.banner-library > h1,
+.tag-library > .added,
+.banner-library > .added {
   flex: 0 0 20px;
 }
 .tag-library > .tags,
+.banner-library > .tags,
+.tag-library > div,
 .banner-library > div {
   flex: 1;
   overflow: auto;
   padding: 10px;
   position: relative;
+}
+.tag-library h1,
+.banner-library h1 {
+  font-size: 28px;
+  border-bottom: solid 1px #DDDDDD;
+  padding: 10px;
+  color: #25B9C5;
+}
+.tag-library .close,
+.banner-library .close {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 40px;
+  padding: 0;
+  text-align: center;
+  border-radius: 25px;
+  background-color: #25B9C5;
+  color: #FFFFFF;
+  transform: rotate(45deg);
+  text-decoration: none;
+}
+.banner-library {
+  width: 800px;
+  margin-left: -400px;
+}
+.banner-library > div > .banners {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.banner-library > div > .banners > a {
+  min-width: 40%;
+  flex: 1;
+  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
+  border: solid 2px #FFF;
+  border-radius: 5px;
+  height: 80px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  margin: 10px;
+  font-size: 0px;
+  opacity: 0.5;
+  transition: all 0.2s;
+}
+.banner-library > div > .banners > a.selected {
+  opacity: 1;
+  border-color: #25B9C5;
+}
+.banner-library > div > .banners > a:hover {
+  opacity: 1;
+}
+.banner-library p {
+  font-size: 16px;
+  padding: 10px;
+}
+.banner-library .custom-banner > a {
+  display: block;
+  height: 120px;
+  margin: 10px;
+  background-color: #EEE;
+}
+.banner-library .custom-banner > a span.plus {
+  background-color: #25B9C5;
+  color: #fff;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 50px;
+  padding: 0;
+  text-align: center;
 }
 .tag-library > .tags > h3 {
   padding: 10px 0;
@@ -156,82 +233,10 @@
 .tag-library > .tags > a:hover {
   color: #25B9C5;
 }
-.banner-library > div > .banners {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.banner-library > div > .banners > a {
-  min-width: 40%;
-  flex: 1;
-  box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
-  border: solid 2px #FFF;
-  border-radius: 5px;
-  height: 80px;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  margin: 10px;
-  font-size: 0px;
-  opacity: 0.5;
-  transition: all 0.2s;
-}
-.banner-library > div > .banners > a.selected {
-  opacity: 1;
-  border-color: #25B9C5;
-}
-.banner-library p {
-  font-size: 16px;
-  padding: 10px;
-}
-.banner-library .custom-banner > a {
-  display: block;
-  height: 120px;
-  margin: 10px;
-  background-color: #EEE;
-}
-.banner-library .custom-banner > a span.plus {
-  background-color: #25B9C5;
-  color: #fff;
-  height: 50px;
-  width: 50px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  font-size: 50px;
-  padding: 0;
-  text-align: center;
-}
-.banner-library > div > .banners > a:hover {
-  opacity: 1;
-}
 .tag-library > .added {
   overflow: visible;
   padding: 5px 10px 0 10px;
   background-color: #25B9C5;
-}
-.tag-library h1,
-.banner-library h1 {
-  font-size: 28px;
-  border-bottom: solid 1px #DDDDDD;
-  padding: 10px;
-  color: #25B9C5;
-}
-.tag-library .close,
-.banner-library .close {
-  height: 40px;
-  width: 40px;
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  font-size: 40px;
-  padding: 0;
-  text-align: center;
-  border-radius: 25px;
-  background-color: #25B9C5;
-  color: #FFFFFF;
-  transform: rotate(45deg);
-  text-decoration: none;
 }
 @keyframes active-pulse {
   0% {

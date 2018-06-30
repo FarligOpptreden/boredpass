@@ -1,46 +1,50 @@
 ﻿@import '__variables.less';
 
-.listing-section.photos.edit > div {
-    max-width: 1024px;
-}
+.listing-section {
+    &.photos.edit {
+        & > div {
+            max-width: 1024px;
 
-.listing-section.photos.edit > div > div {
-    width: 100%;
-    margin: 0;
-    overflow: visible;
-    white-space: normal;
-    display: flex;
-}
+            & > div {
+                width: 100%;
+                margin: 0;
+                overflow: visible;
+                white-space: normal;
+                display: flex;
 
-.listing-section.photos.edit > div > div > div {
-    padding: 10px;
-    flex: 0 0 50%;
-}
+                & > div {
+                    padding: 10px;
+                    flex: 0 0 50%;
 
-.listing-section.photos.edit > div > div > div > a {
-    display: block;
-    height: 280px;
-    background-color: #FFFFFF;
-    position: relative;
-}
+                    & > a {
+                        display: block;
+                        height: 280px;
+                        background-color: #FFFFFF;
+                        position: relative;
+                    }
+                }
+            }
+        }
+    }
 
-.listing-section span.plus {
-    background-color: @col-main;
-    color: #FFFFFF;
-    height: 50px;
-    width: 50px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    font-size: 50px;
-    padding: 0;
-    text-align: center;
-}
+    span.plus {
+        background-color: @col-main;
+        color: #FFFFFF;
+        height: 50px;
+        width: 50px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        font-size: 50px;
+        padding: 0;
+        text-align: center;
+    }
 
-.listing-section .photo-upload.logo > a {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    .photo-upload.logo > a {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
 }

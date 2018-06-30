@@ -1,6 +1,6 @@
 ﻿@import "__variables.less";
 
-.overlay-content.sign-in-modal {
+.sign-in-modal {
     width: 500px;
     height: 720px;
     top: 50%;
@@ -13,144 +13,149 @@
     background-position: center center;
     background-repeat: no-repeat;
     padding: 50px;
-}
 
-.sign-in-modal .logo {
-    display: block;
-    width: 300px;
-    height: 100px;
-    margin: 0 auto 30px auto;
-    background-image: url(/images/boredpass-white.svg);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-}
+    .logo {
+        display: block;
+        width: 300px;
+        height: 100px;
+        margin: 0 auto 30px auto;
+        background-image: url(/images/boredpass-white.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
 
-.sign-in-modal .options {
-    display: flex;
-    flex-direction: row;
-    width: 200px;
-    margin: 0 auto 30px auto;
-}
+    .options {
+        display: flex;
+        flex-direction: row;
+        width: 200px;
+        margin: 0 auto 30px auto;
 
-.sign-in-modal .options > div {
-    flex: 1;
-    text-align: center;
-}
+        & > div {
+            flex: 1;
+            text-align: center;
+        }
 
-.sign-in-modal .options a {
-    color: #FFF;
-    text-decoration: none;
-    display: inline-block;
-    border-bottom: solid 2px transparent;
-    text-shadow: @text-shadow;
-    text-transform: uppercase;
-    padding: 10px 0;
-    font-size: 18px;
-}
+        a {
+            color: #FFF;
+            text-decoration: none;
+            display: inline-block;
+            border-bottom: solid 2px transparent;
+            text-shadow: @text-shadow;
+            text-transform: uppercase;
+            padding: 10px 0;
+            font-size: 18px;
 
-.sign-in-modal .options a.active {
-    border-color: #FFF;
-}
+            &.active {
+                border-color: #FFF;
+            }
+        }
+    }
 
-.sign-in-modal p {
-    color: #FFF;
-    text-transform: uppercase;
-    text-align: center;
-    line-height: 1.3;
-    text-shadow: @text-shadow;
-}
+    p {
+        color: #FFF;
+        text-transform: uppercase;
+        text-align: center;
+        line-height: 1.3;
+        text-shadow: @text-shadow;
+    }
 
-.sign-in-modal .social {
-    width: 240px;
-    margin: 30px auto;
-    display: flex;
-    flex-direction: row;
-}
+    .social {
+        width: 240px;
+        margin: 30px auto;
+        display: flex;
+        flex-direction: row;
 
-.sign-in-modal .social > a {
-    display: block;
-    height: 70px;
-    margin: 5px;
-    color: #FFF;
-    font-size: 70px;
-    flex: 1;
-    text-align: center;
-    transition: all 0.2s;
-}
+        & > a {
+            display: block;
+            height: 70px;
+            margin: 5px;
+            color: #FFF;
+            font-size: 70px;
+            flex: 1;
+            text-align: center;
+            transition: all 0.2s;
 
-.sign-in-modal .social > a:hover {
-    opacity: 0.8;
-}
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
 
-.sign-in-modal button {
-    display: block;
-    background-color: @col-main;
-    border: none;
-    color: #FFF;
-    font-size: 18px;
-    border-radius: 0;
-    width: 100%;
-    padding: 21px;
-    line-height: 1;
-    text-shadow: @text-shadow;
-    font-weight: 200;
-}
+    button {
+        display: block;
+        background-color: @col-main;
+        border: none;
+        color: #FFF;
+        font-size: 18px;
+        border-radius: 0;
+        width: 100%;
+        padding: 21px;
+        line-height: 1;
+        text-shadow: @text-shadow;
+        font-weight: 200;
+    }
 
-.sign-in-modal .password-options {
-    display: flex;
-    flex-direction: row;
-}
+    .password-options {
+        display: flex;
+        flex-direction: row;
 
-.sign-in-modal .password-options a {
-    color: #FFF;
-    text-shadow: @text-shadow;
-    padding: 10px 0;
-    font-size: 14px;
-    flex: 1;
-    font-weight: 600;
-}
+        a {
+            color: #FFF;
+            text-shadow: @text-shadow;
+            padding: 10px 0;
+            font-size: 14px;
+            flex: 1;
+            font-weight: 600;
 
-.sign-in-modal .password-options a:first-of-type {
-    text-align: left;
-}
+            &:first-of-type {
+                text-align: left;
+            }
 
-.sign-in-modal .password-options a:last-of-type {
-    text-align: right;
-}
+            &:last-of-type {
+                text-align: right;
+            }
+        }
+    }
 
-.sign-in-modal form {
-    display: none;
-}
+    form {
+        display: none;
 
-.sign-in-modal form.active {
-    display: block;
-}
+        &.active {
+            display: block;
+        }
 
-.sign-in-modal .hint {
-    color: #FFFFFF;
-}
+        .hint {
+            color: #FFFFFF;
+        }
 
-.sign-in-modal.no-no {
-    animation: no-no 0.5s forwards;
+        &.no-no {
+            animation: no-no 0.5s forwards;
+        }
+    }
 }
 
 @keyframes no-no {
     0% {
         transform: translateX(0);
     }
+
     20% {
         transform: translateX(-20px);
     }
+
     40% {
         transform: translateX(15px);
     }
+
     60% {
         transform: translateX(-10px);
     }
+
     80% {
         transform: translateX(5px);
     }
+
     100% {
         transform: translateX(0);
     }

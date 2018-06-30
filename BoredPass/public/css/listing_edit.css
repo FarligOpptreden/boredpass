@@ -35,27 +35,30 @@
   line-height: 1.5;
   padding: 10px;
 }
+.listing-section.overview .photo-upload.logo {
+  background-color: #333 !important;
+}
 .listing-section .contact-info > a {
   display: flex !important;
   flex-direction: row;
   padding: 5px 0 !important;
 }
-.listing-section .contact-info > a > span {
+.listing-section .contact-info > span {
   flex: 0 0 20px;
   position: relative !important;
   top: 8px !important;
 }
-.listing-section .contact-info > a > .content-editable {
+.listing-section .contact-info > .content-editable {
   flex: 1;
   padding: 5px;
   margin-left: 5px;
 }
-.listing-section .facility.editing:not(.selected) .icon,
-.listing-section .facility.editing:not(.selected) span {
-  opacity: 0.2;
-}
 .listing-section div.facility {
   cursor: pointer;
+}
+.listing-section div.facility.editing:not(.selected) .icon,
+.listing-section div.facility.editing:not(.selected) span {
+  opacity: 0.2;
 }
 .listing-section div.facility > span {
   cursor: pointer;
@@ -69,9 +72,6 @@
 }
 .listing-section.photos.edit > div > div > div {
   flex: 0 0 33.3%;
-}
-.listing-section.overview .photo-upload.logo {
-  background-color: #333 !important;
 }
 .banner .edit-banner {
   position: absolute;

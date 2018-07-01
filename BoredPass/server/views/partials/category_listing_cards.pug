@@ -4,7 +4,7 @@ if listings && listings.length
   each listing in listings
     +listing_card(listing)
 
-if !listings || !listings.length
+if !listings || !listings.length || listings.length < limit
   div.no-more-data
     h1 Oh no! Seems like you have explored all we have to offer in terms of #{category} experiences. Why not broaden your horizons and check out some of the following?
     div.recommendations

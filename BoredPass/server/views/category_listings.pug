@@ -16,7 +16,17 @@ block content
       h1=(category + ' experiences')
   section.listings
     +listing_card_loading().template
-    each listing in listings
-      +listing_card(listing)
+    +listing_card_loading()
+    +listing_card_loading()
+    +listing_card_loading()
+    +listing_card_loading()
+    +listing_card_loading()
+    +listing_card_loading()
+    +listing_card_loading()
+    +listing_card_loading()
+    +listing_card_loading()
+    +listing_card_loading()
+    +listing_card_loading()
+    +listing_card_loading()
     div.buttons
       a.button.grey#load-more(href='/categories/' + urlCategory + '/' + skip) View More

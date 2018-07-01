@@ -106,12 +106,23 @@ class Listings extends BasicCrudPromises {
     listingsByCategory(args) {
         return new Promise((resolve, reject) => {
             TagsService.tagsPerCategory(this.mappedCategory(args.category))
-                .then(tags => ListingsService.findMany({
-                    filter: { 'tags.name': { $in: tags.map(t => t.name) } },
-                    sort: { _created: -1 },
-                    limit: parseInt(args.limit.toString(), 10),
-                    skip: parseInt(args.skip.toString(), 10)
-                }))
+                .then(tags => {
+                    let listingArgs = {
+                        tags: tags.map(t => t.name),
+                        sort: { _created: -1 },
+                        skip: parseInt(args.skip.toString(), 10),
+                        limit: parseInt(args.limit.toString(), 10)
+                    };
+
+                    if (args.coordinates) {
+                        listingArgs.lat = args.coordinates.lat;
+                        listingArgs.lng = args.coordinates.lng;
+                    }
+
+                    return args.coordinates ?
+                        this.listingsWithProximity(listingArgs) :
+                        this.defaultListings(listingArgs);
+                })
                 .then(listings => resolve(listings))
                 .catch(err => reject(err));
         });
@@ -128,11 +139,19 @@ class Listings extends BasicCrudPromises {
                     }
                 });
 
-            pipeline.push({
-                sort: {
-                    _created: -1
-                }
-            });
+            if (args.sort)
+                pipeline.push({ sort: args.sort });
+            else
+                pipeline.push({
+                    sort: {
+                        _created: -1
+                    }
+                });
+
+            if (args.skip)
+                pipeline.push({
+                    skip: args.skip
+                });
 
             if (args.limit)
                 pipeline.push({
@@ -168,11 +187,19 @@ class Listings extends BasicCrudPromises {
                     }
                 });
 
-            pipeline.push({
-                sort: {
-                    _created: -1
-                }
-            });
+            if (args.sort)
+                pipeline.push({ sort: args.sort });
+            else
+                pipeline.push({
+                    sort: {
+                        _created: -1
+                    }
+                });
+
+            if (args.skip)
+                pipeline.push({
+                    skip: args.skip
+                });
 
             if (args.limit)
                 pipeline.push({
@@ -212,10 +239,7 @@ class Listings extends BasicCrudPromises {
             ListingsService.aggregate({
                 pipeline: pipeline
             })
-                .then(listings => {
-                    konsole.log(listings.length);
-                    resolve(listings)
-                })
+                .then(listings => resolve(listings))
                 .catch(err => {
                     konsole.error(err.toString());
                     reject(err.toString());

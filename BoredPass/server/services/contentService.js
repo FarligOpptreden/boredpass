@@ -13,60 +13,76 @@ const TO_REPLACE = '#25B9C5';
 class Content {
     constructor() { }
 
-    upload(args, callback) {
-        let form = formidable.IncomingForm();
-        let savedName = '';
-        let fileId = '';
-        let fileType = '';
-        form.uploadDir = UPLOAD_DIR;
-        form.multiples = true;
-        form.on('file', (field, file) => {
-            fileId = path.basename(file.path).replace('upload_', '');
-            fileType = path.extname(file.name);
-            savedName = fileId + fileType;
-            fs.rename(file.path, path.join(UPLOAD_DIR, savedName));
-        });
-        form.on('error', (err) => {
-            konsole.error('Upload error: ' + err);
-        });
-        form.on('end', () => {
-            callback({
-                success: savedName && true,
-                fileId: fileId,
-                fileType: fileType.replace('.', ''),
-                location: '/content/' + fileType.replace('.', '') + '/' + fileId
+    upload(args) {
+        return new Promise((resolve, reject) => {
+            let form = formidable.IncomingForm();
+            let savedName = '';
+            let fileId = '';
+            let fileType = '';
+            form.uploadDir = UPLOAD_DIR;
+            form.multiples = true;
+            form.on('file', (field, file) => {
+                fileId = path.basename(file.path).replace('upload_', '');
+                fileType = path.extname(file.name);
+                savedName = fileId + fileType;
+                fs.rename(file.path, path.join(UPLOAD_DIR, savedName));
             });
-        });
-        form.parse(args.req);
-    }
-
-    readResource(args, callback) {
-        callback(path.join(UPLOAD_DIR, args.fileId + '.' + args.fileType));
-    }
-
-    readThumb(args, callback) {
-        sharp(path.join(UPLOAD_DIR, args.fileId + '.' + args.fileType))
-            .resize(350)
-            .toBuffer()
-            .then(data => callback(data))
-            .catch(err => konsole.log(`Image thumbnail error: ${err}`));
-    }
-
-    svg(args, callback) {
-        fs.readFile(SVG_DIR + '/' + args.type + '/' + args.name + '.svg', (err, data) => {
-            if (err) {
-                callback(null);
-                return;
-            }
-            callback(data);
+            form.on('error', (err) => {
+                konsole.error(`Upload error: ${err}`);
+                reject(`Upload error: ${err}`);
+            });
+            form.on('end', () => {
+                resolve({
+                    success: savedName && true,
+                    fileId: fileId,
+                    fileType: fileType.replace('.', ''),
+                    location: '/content/' + fileType.replace('.', '') + '/' + fileId
+                });
+            });
+            form.parse(args.req);
         });
     }
 
-    listBanners(args, callback) {
-        fs.readdir(BANNER_DIR, (err, files) => {
-            err && konsole.error(err.toString());
-            callback(files);
-        });
+    readResource(args) {
+        return new Promise((resolve, reject) =>
+            resolve(path.join(UPLOAD_DIR, args.fileId + '.' + args.fileType))
+        );
+    }
+
+    readThumb(args) {
+        return new Promise((resolve, reject) =>
+            sharp(path.join(UPLOAD_DIR, args.fileId + '.' + args.fileType))
+                .resize(350)
+                .toBuffer()
+                .then(data => resolve(data))
+                .catch(err => {
+                    konsole.log(`Image thumbnail error: ${err.toString()}`);
+                    reject(`Image thumbnail error: ${err.toString()}`);
+                })
+        );
+    }
+
+    svg(args) {
+        return new Promise((resolve, reject) =>
+            fs.readFile(SVG_DIR + '/' + args.type + '/' + args.name + '.svg', (err, data) => {
+                if (err)
+                    return reject(null);
+
+                resolve(data);
+            })
+        );
+    }
+
+    listBanners(args) {
+        return new Promise((resolve, reject) =>
+            fs.readdir(BANNER_DIR, (err, files) => {
+                if (err) {
+                    konsole.error(err.toString())
+                    return reject(null);
+                }
+                resolve(files);
+            })
+        );
     }
 }
 

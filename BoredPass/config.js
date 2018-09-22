@@ -14,6 +14,10 @@
         boredPass: 'mongodb://localhost:27017/boredpass_uat'
     },
     keys: {
-        google: 'PRIVATE'
+        google: 'AIzaSyAZUoe5UrYFsn4Yqr6FoMOhPY0sJSUkl84',
+        locationIq: '4ff3c23b09b2b0'
+    },
+    endpoints: {
+        locationSearch: 'https://eu1.locationiq.com/v1/search.php?key={token}&q={search}&format=json'
     }
 }

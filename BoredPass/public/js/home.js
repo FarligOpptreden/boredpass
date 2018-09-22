@@ -19,4 +19,14 @@
             });
         }
     });
+    BoredPass.Search.render($("section.banner.home nav a.find"));
+    $("section.banner.home nav a.add").click(function (e) {
+        var signIn = $("#header > nav a.sign-in");
+        if (signIn.length) {
+            e.preventDefault();
+            signIn.trigger("click");
+            return false;
+        }
+        return true;
+    });
 });

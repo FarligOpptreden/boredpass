@@ -4,6 +4,9 @@ import { SecurityService } from '../services/_all';
 export default class Authorization {
     static get(app) {
         app.all("*", (req, res, next) => {
+            if (/^\/content\/.*/.test(req.url))
+                return next();
+            
             SecurityService.isAuthenticated({
                 cookie: req.cookies.bp
             })

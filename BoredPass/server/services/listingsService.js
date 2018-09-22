@@ -29,6 +29,17 @@ class Listings extends BasicCrudPromises {
         return newObj;
     }
 
+    calculateBearing(start, end) {
+        let x1 = start[1];
+        let x2 = end[1];
+        let y1 = start[0];
+        let y2 = end[0];
+        let radians = Math.atan2(y1 - y2, x1 - x2);
+        let compassReading = radians * (180 / Math.PI);
+        konsole.log(compassReading);
+        return compassReading;
+    }
+
     create(args) {
         return new Promise((resolve, reject) =>
             LocationService.geocodeAddress(args.data.address)
@@ -105,7 +116,10 @@ class Listings extends BasicCrudPromises {
 
     listingsByCategory(args) {
         return new Promise((resolve, reject) => {
-            TagsService.tagsPerCategory(this.mappedCategory(args.category))
+            Promise.resolve()
+                .then(_ => TagsService.tagsPerCategory(
+                    this.mappedCategory(args.category)
+                ))
                 .then(tags => {
                     let listingArgs = {
                         tags: tags.map(t => t.name),
@@ -176,16 +190,12 @@ class Listings extends BasicCrudPromises {
                     near: { type: 'Point', coordinates: [parseFloat(args.lng), parseFloat(args.lat)] },
                     maxDistance: 10 * 1000 * 1000, // 10,000km
                     spherical: true,
-                    distanceField: 'distance'
+                    distanceField: 'distance',
+                    query: (args.tags && args.tags.length && {
+                        'tags.name': { $in: args.tags }
+                    }) || null
                 }
             }];
-
-            if (args.tags && args.tags.length)
-                pipeline.push({
-                    filter: {
-                        'tags.name': { $in: args.tags }
-                    }
-                });
 
             if (args.sort)
                 pipeline.push({ sort: args.sort });
@@ -224,15 +234,15 @@ class Listings extends BasicCrudPromises {
 
             let pipeline = [{
                 geoNear: {
-                    query: {
-                        '_id': { $ne: ListingsService.db.objectId(listing._id) },
-                        'tags.name': { $in: listing.tags.map(t => t.name) }
-                    },
                     near: { type: 'Point', coordinates: listing.location.coordinates },
                     maxDistance: 1000 * 1000, // 1,000km
                     spherical: true,
                     limit: 3,
-                    distanceField: 'distance'
+                    distanceField: 'distance',
+                    query: {
+                        '_id': { $ne: ListingsService.db.objectId(listing._id) },
+                        'tags.name': { $in: listing.tags.map(t => t.name) }
+                    }
                 }
             }];
 

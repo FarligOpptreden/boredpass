@@ -59,6 +59,9 @@
     <Compile Include="public\js\adding.js" />
     <Compile Include="public\js\listing.js" />
     <Compile Include="public\js\boredpass.js" />
+    <Compile Include="public\js\search.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="public\js\shared.js" />
     <Compile Include="public\js\add_activity.js">
       <SubType>Code</SubType>
@@ -66,6 +69,7 @@
     <Compile Include="server\controllers\api\v1\location.js" />
     <Compile Include="server\controllers\api\v1\activities.js" />
     <Compile Include="server\controllers\html\categories.js" />
+    <Compile Include="server\controllers\html\search.js" />
     <Compile Include="server\controllers\html\security.js" />
     <Compile Include="server\controllers\html\libraries.js" />
     <Compile Include="server\controllers\html\content.js" />
@@ -76,6 +80,7 @@
     <Compile Include="server\middleware\authentication.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="server\services\searchService.js" />
     <Compile Include="server\services\securityService.js" />
     <Compile Include="server\services\locationService.js" />
     <Compile Include="server\services\facilitiesService.js" />
@@ -85,6 +90,10 @@
     <Compile Include="server\services\activitiesService.js" />
     <Compile Include="server\services\_all.js" />
     <Compile Include="server\services\defaultService.js" />
+    <Compile Include="server\utils\stringUtils.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="server\utils\index.js" />
     <None Include="compilerconfig.json" />
     <Content Include="Bored2Day.pem" />
     <Content Include="compilerconfig.json.defaults">
@@ -117,6 +126,11 @@
     <Content Include="public\css\listing_edit.min.css">
       <SubType>Content</SubType>
       <DependentUpon>public\css\listing_edit.css</DependentUpon>
+    </Content>
+    <Content Include="public\css\search.css" />
+    <Content Include="public\css\search.min.css">
+      <SubType>Content</SubType>
+      <DependentUpon>public\css\search.css</DependentUpon>
     </Content>
     <Content Include="public\css\shared.css" />
     <Content Include="public\css\shared.min.css">
@@ -171,12 +185,14 @@
     <Content Include="public\images\icons\activities\surfing.svg" />
     <Content Include="public\images\icons\activities\swimming.svg" />
     <Content Include="public\images\icons\activities\tennis.svg" />
+    <Content Include="public\images\icons\arrow.svg" />
     <Content Include="public\images\icons\facilities\child-friendly.svg" />
     <Content Include="public\images\icons\facilities\disabled.svg" />
     <Content Include="public\images\icons\facilities\dog-friendly.svg" />
     <Content Include="public\images\icons\facilities\picnic.svg" />
     <Content Include="run.bat" />
     <Content Include="server\less\category_listings.less" />
+    <Content Include="server\less\search.less" />
     <Content Include="server\less\listing_card.less" />
     <Content Include="server\less\sign_in.less" />
     <Content Include="server\less\content_management.less" />
@@ -219,6 +235,7 @@
     <Content Include="server\views\add_activity.pug" />
     <Content Include="server\views\add_listing.pug" />
     <Content Include="server\views\add_listing_done.pug" />
+    <Content Include="server\views\search.pug" />
     <Content Include="server\views\category_listings.pug" />
     <Content Include="server\views\listing_edit.pug" />
     <Content Include="server\views\mixins\listing_card_loading.pug" />
@@ -230,6 +247,7 @@
     <Content Include="server\views\mixins\facilities.pug" />
     <Content Include="server\views\mixins\photos.pug" />
     <Content Include="server\views\partials\category_listing_cards.pug" />
+    <Content Include="server\views\partials\find.pug" />
     <Content Include="server\views\partials\sign_in_modal.pug" />
     <Content Include="server\views\partials\banner_library.pug" />
     <Content Include="server\views\partials\listing_cards.pug" />
@@ -265,6 +283,7 @@
     <Folder Include="server\less\" />
     <Folder Include="server\less\_old\" />
     <Folder Include="server\middleware\" />
+    <Folder Include="server\utils\" />
     <Folder Include="server\views\" />
     <Folder Include="server\services\" />
     <Folder Include="server\views\mixins\" />

@@ -8,12 +8,14 @@ html
     link(rel='stylesheet', href='/css/boredpass-icons.css')
     link(rel='stylesheet', href='/css/boredpass.min.css')
     link(rel='stylesheet', href='/css/sign_in.min.css')
+    link(rel='stylesheet', href='/css/search.min.css')
     link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.1.0/css/all.css', integrity='sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt', crossorigin='anonymous')
     block css
     script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
     script(type='text/javascript', src='/js/boredpass.js')
     script(type='text/javascript', src='/js/shared.js')
     script(type='text/javascript', src='/js/auth.js')
+    script(type='text/javascript', src='/js/search.js')
     block js
   body
     - var isAuthenticated = authentication && authentication.isAuthenticated
@@ -21,14 +23,15 @@ html
       nav
         div
           a.logo.small(href='/')
-          a.find Find
-            span.fa.fa-search
-          if isAuthenticated && authentication.user.permissions && authentication.user.permissions.addListing
-            a.add(href="/listings/add") Add
-              span.fa.fa-plus
-          if isAuthenticated && authentication.user.permissions && authentication.user.permissions.claimListing
-            a.claim Claim
-              span.fa.fa-hand-pointer
+          if !minimalBanner
+            a.find(href="/find") Find
+              span.fa.fa-search
+            if isAuthenticated && authentication.user.permissions && authentication.user.permissions.addListing
+              a.add(href="/listings/add") Add
+                span.fa.fa-plus
+            if isAuthenticated && authentication.user.permissions && authentication.user.permissions.claimListing
+              a.claim Claim
+                span.fa.fa-hand-pointer
           if isAuthenticated
             a.sign-out(href="/secure/sign-out") Sign Out
               span.fa.fa-user

@@ -19,6 +19,26 @@
 .listing.card .distance > label {
   font-weight: 600;
   padding-right: 0;
+  padding-left: 32px;
+  position: relative;
+}
+.listing.card .distance .compass {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  animation: compass 2s infinite;
+}
+.listing.card .distance .compass .rose {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background-image: url(/images/icons/arrow.svg);
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 .listing.card .button {
   text-transform: uppercase;
@@ -160,6 +180,17 @@
   }
   100% {
     opacity: 1;
+  }
+}
+@keyframes compass {
+  0% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(-5deg);
   }
 }
 section.banner {

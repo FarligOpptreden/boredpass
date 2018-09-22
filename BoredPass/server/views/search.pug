@@ -1,0 +1,26 @@
+﻿extends _layout
+
+include mixins/listing_card
+include mixins/listing_card_loading
+
+block css
+  link(rel='stylesheet', href='/css/category_listings.min.css')
+
+block content
+  section.banner
+    div
+      h2 Search Results
+      - var tags = (search.tags && search.tags.map(t => t.name).join(', ')) || 'Any activity';
+      - var distance = (search.distance && `within ${search.distance}km`) || 'any distance';
+      - var location = search.location || 'here';
+      h1= `${tags} ${distance} from ${location}`
+  section.listings
+    +listing_card_loading().template
+    if results && results.length
+      each result in results
+        +listing_card(result)
+    if recommended && recommended.length
+      div.no-more-data
+        h1.no-margin-bottom Oh no! Seems like you have explored all we have to offer. Why not broaden your horizons and check out some of the following?   
+      each r in recommended
+        +listing_card(r)

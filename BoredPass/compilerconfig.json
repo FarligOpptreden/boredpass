@@ -34,5 +34,9 @@
   {
     "inputFile": "server/less/category_listings.less",
     "outputFile": "public/css/category_listings.css"
+  },
+  {
+    "inputFile": "server/less/search.less",
+    "outputFile": "public/css/search.css"
   }
 ]

@@ -1,5 +1,6 @@
 ﻿import { Controller, konsole } from '../../../handlr/_all';
 import { ListingsService, ActivitiesService, FacilitiesService, TagsService } from '../../services/_all';
+import { StringUtils } from '../../utils';
 import marked from 'marked';
 
 export default new Controller('/listings')
@@ -111,7 +112,8 @@ export default new Controller('/listings')
                     marked: marked,
                     listing: _listing,
                     activities: _activities,
-                    related: related
+                    related: related,
+                    makeUrlFriendly: StringUtils.makeUrlFriendly
                 })
             )
             .catch(err => {
@@ -237,6 +239,41 @@ export default new Controller('/listings')
                 res.status(500);
                 res.json({
                     success: false,
+                    message: `Something unexpected happened: ${err}`
+                });
+            });
+    })
+    .handle({ route: '/:id/:name', method: 'get', produces: 'html' }, (req, res) => {
+        let _listing = null, _activities = null;
+
+        Promise.resolve()
+            .then(_ => ListingsService.findOne({ filter: req.params.id }))
+            .then(listing => {
+                _listing = listing;
+                return ActivitiesService.findMany({ filter: { listing_id: listing._id }, sort: { name: 1 } });
+            })
+            .then(activities => {
+                _activities = activities;
+                return ListingsService.relatedListings(_listing);
+            })
+            .then(related =>
+                res.render('listing', {
+                    authentication: req.authentication,
+                    title: _listing.name + ' - BoredPass',
+                    moment: require('moment'),
+                    marked: marked,
+                    listing: _listing,
+                    activities: _activities,
+                    related: related,
+                    makeUrlFriendly: StringUtils.makeUrlFriendly
+                })
+            )
+            .catch(err => {
+                res.status(500);
+                res.render('error', {
+                    error: {
+                        status: 500
+                    },
                     message: `Something unexpected happened: ${err}`
                 });
             });

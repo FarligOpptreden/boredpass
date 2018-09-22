@@ -63,14 +63,22 @@ body {
         transition: all 0.2s;
         overflow: hidden;
 
+        &.search-open {
+            background-color: @search-background;
+        }
+
         &.float {
             z-index: 100;
             box-shadow: 0 3px 3px rgba(50, 50, 50, 0.5);
             background-color: @col-dark;
+
+            & > div {
+                margin-bottom: 0;
+            }
         }
 
         & > div {
-            margin-top: 27px;
+            margin: 27px auto;
             transition: all 0.25s;
         }
 
@@ -157,7 +165,7 @@ body {
         z-index: 2;
         margin-top: 5px;
         height: 100px;
-        position: absolute;
+        position: fixed;
         left: 0;
         right: 50%;
 
@@ -173,6 +181,12 @@ body {
         &.has-toolbar {
             transition: all 0.5s;
             margin-top: 36px;
+        }
+
+        &.float {
+            z-index: 101;
+            opacity: 0;
+            transform: translateY(-100%);
         }
     }
 
@@ -712,7 +726,7 @@ em {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 100;
+    z-index: 105;
     height: 0;
     overflow: hidden;
     transition: all 0.5s;

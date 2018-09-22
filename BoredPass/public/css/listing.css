@@ -19,6 +19,26 @@
 .listing.card .distance > label {
   font-weight: 600;
   padding-right: 0;
+  padding-left: 32px;
+  position: relative;
+}
+.listing.card .distance .compass {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  animation: compass 2s infinite;
+}
+.listing.card .distance .compass .rose {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background-image: url(/images/icons/arrow.svg);
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 .listing.card .button {
   text-transform: uppercase;
@@ -162,6 +182,17 @@
     opacity: 1;
   }
 }
+@keyframes compass {
+  0% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(-5deg);
+  }
+}
 .space-fixer {
   height: 1px;
   width: 100%;
@@ -197,7 +228,7 @@ section.banner {
   background-size: cover;
 }
 section.banner > div {
-  max-width: 1024px;
+  max-width: 1280px;
   height: 100%;
   margin: 0 auto;
   position: relative;
@@ -276,7 +307,7 @@ section.banner .delete {
   flex-wrap: wrap;
 }
 .listing-section:not(.overview) > div {
-  width: 1024px;
+  width: 1280px;
   margin: 0 auto;
 }
 .listing-section h1 {
@@ -286,7 +317,7 @@ section.banner .delete {
   padding: 0 0 20px 0;
 }
 .listing-section.overview {
-  max-width: 1024px;
+  max-width: 1280px;
   padding-top: 0;
   padding-bottom: 50px;
 }
@@ -426,7 +457,7 @@ section.banner .delete {
 }
 .listing-section.overview > div:last-of-type {
   border-top: solid 1px #DDDDDD;
-  flex: 0 0 1024px;
+  flex: 0 0 1280px;
   overflow: visible;
   position: relative;
 }
@@ -595,7 +626,7 @@ section.banner .delete {
 }
 .listing-section.photos > div {
   min-height: 200px;
-  max-width: 1012px;
+  max-width: 1268px;
   overflow: visible;
   position: relative;
 }
@@ -934,12 +965,12 @@ section.banner .delete {
     background-color: rgba(0, 0, 0, 0.75);
   }
 }
-@media only screen and (max-width: 1160px) {
+@media only screen and (max-width: 1416px) {
   .listing-section.photos > div {
-    max-width: 912px;
+    max-width: 1168px;
   }
 }
-@media only screen and (max-width: 1064px) {
+@media only screen and (max-width: 1320px) {
   section.banner > div {
     margin: 0 20px;
   }

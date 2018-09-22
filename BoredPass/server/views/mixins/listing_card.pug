@@ -11,8 +11,11 @@
     span.distance
       if listing.distance
         label=Math.round(listing.distance / 1000)
+          if (calculateBearing)
+            span.compass
+              span.rose(style="transform: rotate(" + calculateBearing(listing.location.coordinates, location) + "deg)")
       span=listing.distance ? 'kms away' : locality
-    a(href='/listings/' + listing._id)
+    a(href='/listings/' + listing._id + '/' + makeUrlFriendly(listing.name))
       div.banner(style=banner)
         span.logo(style=logo)
       h3= listing.name

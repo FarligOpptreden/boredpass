@@ -4,6 +4,7 @@ import { DefaultService } from './defaultService';
 import { FacilitiesService } from './facilitiesService';
 import { ListingsService } from './listingsService';
 import { LocationService } from './locationService';
+import { SearchService } from './searchService';
 import { SecurityService } from './securityService';
 import { TagsService } from './tagsService';
 
@@ -14,6 +15,7 @@ export {
   FacilitiesService,
   ListingsService,
   LocationService,
+  SearchService,
   SecurityService,
   TagsService
 }

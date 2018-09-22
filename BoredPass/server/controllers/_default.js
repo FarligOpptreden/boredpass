@@ -1,5 +1,6 @@
 ﻿import { Controller, konsole } from '../../handlr/_all';
 import { ListingsService, TagsService } from '../services/_all';
+import { StringUtils } from '../utils';
 import moment from 'moment';
 import marked from 'marked';
 
@@ -43,8 +44,11 @@ export default Controller.create('/')
                                 listings: listings[i]
                             };
                         }),
+                        calculateBearing: ListingsService.calculateBearing,
+                        location: req.query.lat && req.query.lng ? [req.query.lng, req.query.lat] : null,
                         moment: moment,
-                        marked: marked
+                        marked: marked,
+                        makeUrlFriendly: StringUtils.makeUrlFriendly
                     })
                 );
         }
@@ -62,7 +66,8 @@ export default Controller.create('/')
                         };
                     }),
                     moment: moment,
-                    marked: marked
+                    marked: marked,
+                    minimalBanner: true
                 };
                 if (req.authentication && req.authentication.user && req.authentication.user.permissions && req.authentication.user.permissions.viewStatistics)
                     return ListingsService.statistics()

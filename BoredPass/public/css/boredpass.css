@@ -148,13 +148,19 @@ body {
   transition: all 0.2s;
   overflow: hidden;
 }
+#header > nav:first-of-type.search-open {
+  background-color: rgba(245, 245, 245, 0.95);
+}
 #header > nav:first-of-type.float {
   z-index: 100;
   box-shadow: 0 3px 3px rgba(50, 50, 50, 0.5);
   background-color: #444444;
 }
+#header > nav:first-of-type.float > div {
+  margin-bottom: 0;
+}
 #header > nav:first-of-type > div {
-  margin-top: 27px;
+  margin: 27px auto;
   transition: all 0.25s;
 }
 #header > nav:first-of-type a:not(.logo) {
@@ -227,7 +233,7 @@ body {
   z-index: 2;
   margin-top: 5px;
   height: 100px;
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 50%;
 }
@@ -242,6 +248,11 @@ body {
 #header > nav:last-of-type.has-toolbar {
   transition: all 0.5s;
   margin-top: 36px;
+}
+#header > nav:last-of-type.float {
+  z-index: 101;
+  opacity: 0;
+  transform: translateY(-100%);
 }
 #header > nav > div {
   width: 1280px;
@@ -818,7 +829,7 @@ em {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 105;
   height: 0;
   overflow: hidden;
   transition: all 0.5s;

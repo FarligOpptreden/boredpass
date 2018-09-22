@@ -1,5 +1,6 @@
 ﻿import { Controller, konsole } from '../../../handlr/_all';
 import { ListingsService, ActivitiesService, TagsService } from '../../services/_all';
+import { StringUtils } from '../../utils';
 import marked from 'marked';
 
 export default new Controller('/categories')
@@ -33,7 +34,10 @@ export default new Controller('/categories')
                         name: categories[k]
                     };
                 }),
-                limit: req.query.limit || 12
+                calculateBearing: ListingsService.calculateBearing,
+                location: req.query.lat && req.query.lng ? [req.query.lng, req.query.lat] : null,
+                limit: req.query.limit || 12,
+                makeUrlFriendly: StringUtils.makeUrlFriendly
             })
         })
         .catch(err => {

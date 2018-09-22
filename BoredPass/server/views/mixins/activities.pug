@@ -6,7 +6,7 @@
         if data && data.length && !editable
           each activity, index in data
             if activity && activity.icon
-              - var className = activity.icon.toLowerCase().replace(/ /g, '-')
+              - var className = 'icon-bored-pass_' + activity.icon.toLowerCase().replace(/ /g, '-')
               div.activity
                 span.activity.icon.boredpass(class=className)
                 span=activity.name

@@ -1,0 +1,50 @@
+﻿div.search-box
+  div.criteria
+    form(method="get").list
+      div
+        span.fa.fa-tags
+        input#search-tags(type="text", placeholder="Activity type", autocomplete="off")
+        button.fa.fa-angle-down(tabindex=-1)
+      ul.tags.hidden
+        li
+          span.option.instructions Surfing, Kayaking, Art Gallery, etc.
+    form(method="get").list
+      div
+        span.fa.fa-compass
+        input#search-distance(type="text", placeholder="Distance", readonly="true", autocomplete="off")
+        button.fa.fa-angle-down(tabindex=-1)
+      ul.distance.hidden
+        li
+          a.option(href="/search/distance/any", data-distance="any", tabindex=-1) Any distance
+        li
+          a.option(href="/search/distance/10km", data-distance="10", tabindex=-1) Within 10km
+        li
+          a.option(href="/search/distance/50km", data-distance="50", tabindex=-1) Within 50km
+        li
+          a.option(href="/search/distance/100km", data-distance="100", tabindex=-1) Within 100km
+        li
+          a.option(href="/search/distance/250km", data-distance="250", tabindex=-1) Within 250km
+        li
+          a.option(href="/search/distance/500km", data-distance="500", tabindex=-1) Within 500km
+        li
+          a.option(href="/search/distance/1000km", data-distance="1000", tabindex=-1) Within 1000km
+    form(method="get").list
+      div
+        span.fa.fa-map-marker-alt
+        input#search-location(type="text", placeholder="Location", autocomplete="off")
+        button.fa.fa-search(tabindex=-1)
+      ul.locations.hidden
+        li
+          span.option.instructions Type a location and submit to search
+    a.fa.fa-times(href="/search/close")
+  div.overview
+    div.tags
+      p Any activity type
+    span.splitter.fa.fa-angle-right
+    div.distance
+      p Any distance
+    span.splitter.fa.fa-angle-right
+    div.location
+      p From here
+    div.buttons
+      button#submit-search.button Find

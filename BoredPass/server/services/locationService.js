@@ -34,6 +34,19 @@ class Location {
                 .catch(err => reject(err))
         );
     }
+
+    search(args) {
+        let url = config.endpoints.locationSearch
+            .replace('{token}', config.keys.locationIq)
+            .replace('{search}', args.search);
+
+        return new Promise((resolve, reject) =>
+            fetch(url)
+                .then(res => res.json())
+                .then(json => resolve(json))
+                .catch(err => reject(err))
+        );
+    }
 }
 
 export const LocationService = new Location();

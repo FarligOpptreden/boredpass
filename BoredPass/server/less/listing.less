@@ -40,7 +40,7 @@ section.banner {
     background-size: cover;
 
     & > div {
-        max-width: 1024px;
+        max-width: @site-width;
         height: 100%;
         margin: 0 auto;
         position: relative;
@@ -128,7 +128,7 @@ section.banner {
     flex-wrap: wrap;
 
     &:not(.overview) > div {
-        width: 1024px;
+        width: @site-width;
         margin: 0 auto;
     }
 
@@ -140,7 +140,7 @@ section.banner {
     }
 
     &.overview {
-        max-width: 1024px;
+        max-width: @site-width;
         padding-top: 0;
         padding-bottom: 50px;
 
@@ -304,7 +304,7 @@ section.banner {
 
         & > div:last-of-type {
             border-top: solid 1px @col-grey;
-            flex: 0 0 1024px;
+            flex: 0 0 @site-width;
             overflow: visible;
             position: relative;
 
@@ -502,7 +502,7 @@ section.banner {
 
     &.photos > div {
         min-height: 200px;
-        max-width: 1012px;
+        max-width: @site-width - 12;
         overflow: visible;
         position: relative;
 
@@ -913,13 +913,13 @@ section.banner {
     }
 }
 
-@media only screen and (max-width: 1160px) {
+@media only screen and (max-width: 1416px) {
     .listing-section.photos > div {
-        max-width: 912px;
+        max-width: @site-width - 112;
     }
 }
 
-@media only screen and (max-width: 1064px) {
+@media only screen and (max-width: 1320px) {
     section.banner > div {
         margin: 0 20px;
     }

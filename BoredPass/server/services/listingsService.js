@@ -30,13 +30,13 @@ class Listings extends BasicCrudPromises {
     }
 
     calculateBearing(start, end) {
+        konsole.log('HERE', '>>>>>');
         let x1 = start[1];
         let x2 = end[1];
         let y1 = start[0];
         let y2 = end[0];
         let radians = Math.atan2(y1 - y2, x1 - x2);
         let compassReading = radians * (180 / Math.PI);
-        konsole.log(compassReading);
         return compassReading;
     }
 

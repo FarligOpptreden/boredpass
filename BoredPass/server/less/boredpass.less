@@ -39,6 +39,11 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
+* {
+    -webkit-overflow-scrolling: touch;
+}
+
 /* Shared Styling */
 body {
     font-family: 'Raleway', sans-serif;
@@ -62,6 +67,7 @@ body {
         z-index: 2;
         transition: all 0.2s;
         overflow: hidden;
+        transition: all 0.5s;
 
         &.search-open {
             background-color: @search-background;
@@ -156,7 +162,6 @@ body {
         }
 
         &.has-toolbar {
-            transition: all 0.5s;
             margin-top: 36px;
         }
     }
@@ -166,8 +171,10 @@ body {
         margin-top: 5px;
         height: 100px;
         position: fixed;
-        left: 0;
-        right: 50%;
+        left: 50%;
+        margin-left: -640px;
+        width: 200px;
+        transition: all 0.5s;
 
         a:not(.logo) {
             display: block;
@@ -179,7 +186,6 @@ body {
         }
 
         &.has-toolbar {
-            transition: all 0.5s;
             margin-top: 36px;
         }
 
@@ -200,6 +206,7 @@ body {
     .logo {
         position: absolute;
         right: 440px;
+        left: 10px;
         top: 10px;
         width: 200px;
         height: 80px;
@@ -770,16 +777,22 @@ em {
 
 @keyframes banner-scale {
     0% {
-        background-size: 120%;
+        transform: scale(1.2);
+        transform-origin: bottom left;
     }
 
     100% {
-        background-size: 100%;
+        transform: scale(1);
     }
 }
 
 @media only screen and (max-width: 1300px) {
     #header {
+        & > nav:last-of-type {
+            left: 0;
+            margin-left: 0;
+        }
+
         .logo {
             right: auto;
             left: 10px;
@@ -812,6 +825,18 @@ em {
     }
 }
 
+@media all and (max-width: 1000px) {
+    @keyframes banner-scale {
+        0% {
+            background-size: 200%;
+        }
+
+        100% {
+            background-size: 180%;
+        }
+    }
+}
+
 @media only screen and (max-width: 900px) {
 }
 
@@ -819,8 +844,8 @@ em {
     #header {
         .logo {
             width: 120px;
-            height: 40px;
-            margin-top: -6px;
+            height: 45px;
+            margin-top: -3px;
         }
 
         & > nav:first-child {
@@ -836,6 +861,11 @@ em {
         & > nav:last-of-type a:not(.logo) {
             margin: 15px 0;
             padding: 15px;
+        }
+
+        & > nav:last-of-type {
+            width: 140px;
+            height: 60px;
         }
     }
 
@@ -871,13 +901,14 @@ em {
 
 @media only screen and (max-width: 600px) {
     #header {
-        & > nav:first-of-type a {
-            font-size: 12px;
-            padding: 10px 15px;
-        }
+        & > nav:first-of-type a:not(.logo) {
+            font-size: 0px;
 
-        & > nav:last-of-type {
-            display: none;
+            .fa {
+                left: 10px;
+                right: 10px;
+                text-align: center;
+            }
         }
     }
 }

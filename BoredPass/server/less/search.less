@@ -253,6 +253,12 @@
                 cursor: pointer;
                 transition: all .2s;
                 outline: none;
+
+                &:hover {
+                    box-shadow: @box-shadow;
+                    transform: translateY(-2px);
+                    background-color: #fff;
+                }
             }
         }
     }
@@ -292,5 +298,44 @@
                 right: 10px;
             }
         }
+    }
+}
+
+@media all and (max-width: 900px) {
+    .search-box {
+        .criteria {
+            flex-direction: column;
+
+            form {
+                margin: 0 0 0 10px;
+                border-left: solid 1px #ccc !important;
+                border-right: solid 1px #ccc !important;
+                border-radius: 0 !important;
+                position: relative;
+
+                &:first-of-type {
+                    margin-top: 10px;
+                    border-radius: 3px 3px 0 0 !important;
+                    border-bottom: none !important;
+                }
+
+                &:last-of-type {
+                    border-radius: 0 0 3px 3px !important;
+                    border-top: none !important;
+                }
+
+                ul {
+                    margin-top: 0;
+                    right: -1px;
+                    left: -1px;
+                }
+            }
+        }
+    }
+}
+
+@media all and (max-width: 768px) {
+    .search-box {
+        top: 55px;
     }
 }

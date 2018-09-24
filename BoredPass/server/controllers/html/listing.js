@@ -265,7 +265,9 @@ export default new Controller('/listings')
                     listing: _listing,
                     activities: _activities,
                     related: related,
-                    makeUrlFriendly: StringUtils.makeUrlFriendly
+                    makeUrlFriendly: StringUtils.makeUrlFriendly,
+                    location: (_listing.location && _listing.location.coordinates) || null,
+                    calculateBearing: ListingsService.calculateBearing
                 })
             )
             .catch(err => {

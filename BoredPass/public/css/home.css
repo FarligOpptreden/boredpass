@@ -196,18 +196,35 @@
 section.banner {
   height: 460px;
   background-color: #25B9C5;
+  position: relative;
+  overflow: hidden;
+}
+section.banner .banner-image {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   background-image: url(/images/bg-mountains.jpg);
-  background-position: right bottom;
+  background-position: bottom center;
   background-repeat: no-repeat;
-  background-size: 120%;
+  background-size: cover;
   animation: banner-scale 30s forwards ease-out;
+}
+section.banner .banner-image + .cover {
+  background: linear-gradient(#ffffff, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 section.banner.home {
   display: flex;
   flex-direction: column;
   height: 660px;
 }
-section.banner.home div {
+section.banner.home div:not(.cover) {
   max-width: 1280px;
   margin: 0 auto;
   padding-top: 100px;
@@ -215,8 +232,8 @@ section.banner.home div {
   z-index: 1;
   flex: 10;
 }
-section.banner.home div h1,
-section.banner.home div h2 {
+section.banner.home div:not(.cover) h1,
+section.banner.home div:not(.cover) h2 {
   display: block;
   text-align: center;
   padding: 0;
@@ -227,17 +244,18 @@ section.banner.home div h2 {
   text-transform: uppercase;
   letter-spacing: 5px;
 }
-section.banner.home div h2 {
+section.banner.home div:not(.cover) h2 {
   font-weight: 400;
   font-size: 30px;
   padding-right: 165px;
   margin-top: 180px;
 }
-section.banner.home div h1 {
+section.banner.home div:not(.cover) h1 {
   font-weight: 600;
   font-size: 60px;
+  text-align: left;
 }
-section.banner.home div a {
+section.banner.home div:not(.cover) a {
   text-decoration: none;
   color: #FFF;
   font-size: 80px;
@@ -249,7 +267,7 @@ section.banner.home div a {
   transition: all 0.2s;
   border-radius: 40px;
 }
-section.banner.home div a:hover {
+section.banner.home div:not(.cover) a:hover {
   animation: none;
   color: #25B9C5;
   background-color: rgba(255, 255, 255, 0.5);
@@ -430,5 +448,36 @@ section.statistics .button:hover {
 @media all and (max-width: 600px) {
   section.listings > .listing {
     flex: 0 0 100%;
+  }
+  #header {
+    height: 380px;
+  }
+  section.banner.home {
+    height: 440px;
+  }
+  section.banner.home div:not(.cover) {
+    padding-top: 50px;
+  }
+  section.banner.home div:not(.cover) h2 {
+    margin-top: 100px;
+    font-size: 26px;
+    padding-right: 0;
+  }
+  section.banner.home div:not(.cover) h1 {
+    font-size: 32px;
+  }
+  section.banner.home div:not(.cover) a {
+    margin-top: 80px;
+    font-size: 40px;
+    width: 40px;
+  }
+  section.banner.home nav a {
+    font-size: 16px;
+    padding: 15px 10px 15px 35px;
+  }
+  section.banner.home nav a .fa {
+    font-size: 20px;
+    height: 16px;
+    margin-top: -10px;
   }
 }

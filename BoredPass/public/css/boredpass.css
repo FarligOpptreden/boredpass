@@ -125,6 +125,9 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+* {
+  -webkit-overflow-scrolling: touch;
+}
 /* Shared Styling */
 body {
   font-family: 'Raleway', sans-serif;
@@ -147,6 +150,7 @@ body {
   z-index: 2;
   transition: all 0.2s;
   overflow: hidden;
+  transition: all 0.5s;
 }
 #header > nav:first-of-type.search-open {
   background-color: rgba(245, 245, 245, 0.95);
@@ -226,7 +230,6 @@ body {
   background-color: rgba(255, 255, 255, 0.1);
 }
 #header > nav:first-of-type.has-toolbar {
-  transition: all 0.5s;
   margin-top: 36px;
 }
 #header > nav:last-of-type {
@@ -234,8 +237,10 @@ body {
   margin-top: 5px;
   height: 100px;
   position: fixed;
-  left: 0;
-  right: 50%;
+  left: 50%;
+  margin-left: -640px;
+  width: 200px;
+  transition: all 0.5s;
 }
 #header > nav:last-of-type a:not(.logo) {
   display: block;
@@ -246,7 +251,6 @@ body {
   text-transform: uppercase;
 }
 #header > nav:last-of-type.has-toolbar {
-  transition: all 0.5s;
   margin-top: 36px;
 }
 #header > nav:last-of-type.float {
@@ -263,6 +267,7 @@ body {
 #header .logo {
   position: absolute;
   right: 440px;
+  left: 10px;
   top: 10px;
   width: 200px;
   height: 80px;
@@ -868,13 +873,18 @@ em {
 }
 @keyframes banner-scale {
   0% {
-    background-size: 120%;
+    transform: scale(1.2);
+    transform-origin: bottom left;
   }
   100% {
-    background-size: 100%;
+    transform: scale(1);
   }
 }
 @media only screen and (max-width: 1300px) {
+  #header > nav:last-of-type {
+    left: 0;
+    margin-left: 0;
+  }
   #header .logo {
     right: auto;
     left: 10px;
@@ -898,11 +908,21 @@ em {
     padding-left: 20px;
   }
 }
+@media all and (max-width: 1000px) {
+  @keyframes banner-scale {
+    0% {
+      background-size: 200%;
+    }
+    100% {
+      background-size: 180%;
+    }
+  }
+}
 @media only screen and (max-width: 768px) {
   #header .logo {
     width: 120px;
-    height: 40px;
-    margin-top: -6px;
+    height: 45px;
+    margin-top: -3px;
   }
   #header > nav:first-child .logo {
     top: 8px;
@@ -913,6 +933,10 @@ em {
   #header > nav:last-of-type a:not(.logo) {
     margin: 15px 0;
     padding: 15px;
+  }
+  #header > nav:last-of-type {
+    width: 140px;
+    height: 60px;
   }
   #footer > div:first-of-type {
     padding: 0;
@@ -937,11 +961,12 @@ em {
   }
 }
 @media only screen and (max-width: 600px) {
-  #header > nav:first-of-type a {
-    font-size: 12px;
-    padding: 10px 15px;
+  #header > nav:first-of-type a:not(.logo) {
+    font-size: 0px;
   }
-  #header > nav:last-of-type {
-    display: none;
+  #header > nav:first-of-type a:not(.logo) .fa {
+    left: 10px;
+    right: 10px;
+    text-align: center;
   }
 }

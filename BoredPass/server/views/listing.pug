@@ -78,16 +78,16 @@ block content
       button.subscribe.button Subscribe
     div
       span.rating
-        label Rating Type 
+        label Unrated
         span.stars
-          span.fa.fa-star.color
-          span.fa.fa-star.color
-          span.fa.fa-star.color
-          span.fa.fa-star.color
-          span.fa.fa-star
-      span.claimed
-        span.fa.fa-thumbs-o-up
-        span Claimed
+          a.fa.fa-star(href='rate/1')
+          a.fa.fa-star(href='rate/2')
+          a.fa.fa-star(href='rate/3')
+          a.fa.fa-star(href='rate/4')
+          a.fa.fa-star(href='rate/5')
+      span.claimed.not-yet
+        span.fa.fa-hourglass-half
+        span Unclaimed
       a.add
       a.message
       a.share

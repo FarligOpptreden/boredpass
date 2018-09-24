@@ -149,4 +149,16 @@ $(document).ready(function () {
     $(".listing-section .photo a").click(function () {
         doLightbox($(this));
     });
+
+    $(".stars > a").hover(function () {
+        $(this).prevAll("a").addClass("color");
+        $(this).nextAll("a").removeClass("color");
+        $(this).addClass("color");
+    }).click(function (e) {
+        e.preventDefault();
+        return alert("Not implemented yet") && false;
+        });
+    $(".stars").hover(null, function () {
+        $(this).find("a").removeClass("color");
+    });
 });

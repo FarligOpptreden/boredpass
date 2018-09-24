@@ -330,6 +330,7 @@ section.banner {
                     overflow: auto;
 
                     .fa-star {
+                        text-decoration: none;
                         display: block;
                         float: left;
                         width: 30px;
@@ -339,6 +340,7 @@ section.banner {
                         padding: 5px 0;
                         border-radius: 15px;
                         color: @col-grey;
+                        transition: all 0.2s;
 
                         &.color {
                             color: @col-main;
@@ -349,13 +351,17 @@ section.banner {
 
             .claimed {
                 background-color: @col-main;
-                padding: 15px 15px 15px 35px;
+                padding: 15px 15px 15px 40px;
                 margin-left: 50px;
                 color: @col-button-fg;
                 text-transform: uppercase;
                 float: left;
                 overflow: auto;
                 position: relative;
+
+                &.not-yet {
+                    background-color: #ccc;
+                }
 
                 & > span {
                     display: inline-block;
@@ -370,7 +376,7 @@ section.banner {
                         font-size: 22px;
                         left: 10px;
                         top: 50%;
-                        margin-top: -14px;
+                        margin-top: -11px;
                     }
                 }
             }
@@ -1064,8 +1070,17 @@ section.banner {
 }
 
 @media only screen and (max-width: 768px) {
-    section.banner > div {
-        height: 130px;
+
+    #header {
+        height: 260px;
+    }
+
+    section.banner {
+        height: 260px;
+
+        > div {
+            height: 130px;
+        }
     }
 
     .listing-section {
@@ -1078,8 +1093,12 @@ section.banner {
                 padding-top: 1px;
 
                 .logo {
+                    height: 140px;
+                    width: 140px;
                     left: 50%;
-                    margin-left: -130px;
+                    margin-left: -70px;
+                    margin-top: -70px;
+                    border-width: 5px;
                 }
             }
 
@@ -1098,6 +1117,14 @@ section.banner {
                 padding: 20px 0 50px 0;
                 margin-top: 10px;
                 border-top: solid 1px @col-grey;
+            }
+
+            &:not(.activity) {
+                & > div:first-of-type {
+                    .location {
+                        margin-top: 80px;
+                    }
+                }
             }
         }
 

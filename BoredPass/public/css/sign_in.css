@@ -111,8 +111,16 @@
 .sign-in-modal form .hint {
   color: #FFFFFF;
 }
-.sign-in-modal form.no-no {
+.sign-in-modal.no-no {
   animation: no-no 0.5s forwards;
+}
+.sign-in-modal .close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 24px;
 }
 @keyframes no-no {
   0% {
@@ -132,5 +140,39 @@
   }
   100% {
     transform: translateX(0);
+  }
+}
+@media all and (max-width: 510px) {
+  .sign-in-modal {
+    width: auto;
+    left: 5px;
+    right: 5px;
+    margin-left: 0;
+    padding: 30px;
+  }
+}
+@media all and (max-width: 400px) {
+  .sign-in-modal {
+    padding: 10px;
+  }
+  .sign-in-modal .logo {
+    width: 260px;
+    height: 80px;
+  }
+  .sign-in-modal p {
+    font-size: 14px;
+  }
+  .sign-in-modal .close {
+    top: 10px;
+    right: 10px;
+  }
+}
+@media all and (max-height: 730px) {
+  .sign-in-modal {
+    height: auto;
+    overflow: auto;
+    top: 5px;
+    bottom: 5px;
+    margin-top: 0;
   }
 }

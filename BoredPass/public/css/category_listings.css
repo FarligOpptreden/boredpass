@@ -196,12 +196,32 @@
 section.banner {
   height: 260px;
   background-color: #25B9C5;
-  background-position: right bottom;
+  position: relative;
+  overflow: hidden;
+}
+section.banner .banner-image {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-position: bottom center;
   background-repeat: no-repeat;
-  background-size: 120%;
+  background-size: cover;
   animation: banner-scale 30s forwards ease-out;
 }
-section.banner div {
+section.banner .banner-image.home {
+  background-image: url(/images/bg-mountains.jpg);
+}
+section.banner .banner-image + .cover {
+  background: linear-gradient(#ffffff, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+section.banner div:not(.cover) {
   max-width: 1280px;
   margin: 0 auto;
   padding-top: 100px;
@@ -209,8 +229,8 @@ section.banner div {
   z-index: 1;
   flex: 10;
 }
-section.banner div h1,
-section.banner div h2 {
+section.banner div:not(.cover) h1,
+section.banner div:not(.cover) h2 {
   display: block;
   text-align: left;
   padding: 0;
@@ -222,11 +242,11 @@ section.banner div h2 {
   letter-spacing: 5px;
   font-size: 30px;
 }
-section.banner div h2 {
+section.banner div:not(.cover) h2 {
   font-weight: 400;
   margin-top: 70px;
 }
-section.banner div h1 {
+section.banner div:not(.cover) h1 {
   font-weight: 600;
 }
 #header {
@@ -285,6 +305,45 @@ section.statistics .button:hover {
   box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
   transform: translateY(-2px);
 }
+section.listings .paging,
+section.statistics .paging {
+  width: 100%;
+  flex: none;
+  text-align: right;
+  padding: 40px 10px;
+}
+section.listings .paging a,
+section.statistics .paging a {
+  display: inline-block;
+  font-weight: 600;
+  width: auto;
+  position: relative;
+}
+section.listings .paging a i,
+section.statistics .paging a i {
+  position: absolute;
+  top: 50%;
+  font-size: 20px;
+  margin-top: -10px;
+  line-height: 20px;
+}
+section.listings .paging a.prev,
+section.statistics .paging a.prev {
+  padding-left: 45px;
+}
+section.listings .paging a.prev i,
+section.statistics .paging a.prev i {
+  left: 20px;
+}
+section.listings .paging a.next,
+section.statistics .paging a.next {
+  padding-right: 45px;
+  margin-left: 20px;
+}
+section.listings .paging a.next i,
+section.statistics .paging a.next i {
+  right: 20px;
+}
 .adrenalin-and-extreme-sports {
   background-image: url(/images/banners/rocks_2x.jpg);
 }
@@ -304,7 +363,7 @@ section.statistics .button:hover {
   display: none;
 }
 .no-more-data {
-  padding: 20px 10px;
+  padding: 40px 10px;
 }
 .no-more-data h1 {
   font-size: 24px;
@@ -340,9 +399,43 @@ section.statistics .button:hover {
   line-height: 20px;
   font-size: 16px;
 }
+@media all and (max-width: 1300px) {
+  section.banner div:not(.cover) {
+    position: absolute;
+    bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 120px;
+  }
+}
 @media all and (max-width: 960px) {
   section.listings > .listing {
     flex: 0 0 50%;
+  }
+  section.banner div:not(.cover) {
+    padding-top: 132px;
+  }
+  section.banner div:not(.cover) h1,
+  section.banner div:not(.cover) h2 {
+    font-size: 24px;
+  }
+}
+@media all and (max-width: 768px) {
+  section.banner {
+    height: 180px;
+  }
+  section.banner div:not(.cover) {
+    padding-top: 59px;
+  }
+  section.banner div:not(.cover) h1,
+  section.banner div:not(.cover) h2 {
+    font-size: 20px;
+  }
+  section.listings .paging {
+    padding: 20px 10px;
+  }
+  #header {
+    height: 180px;
   }
 }
 @media all and (max-width: 600px) {

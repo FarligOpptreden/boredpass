@@ -483,6 +483,7 @@ section.banner .delete {
   overflow: auto;
 }
 .listing-section.overview > div:last-of-type .rating .stars .fa-star {
+  text-decoration: none;
   display: block;
   float: left;
   width: 30px;
@@ -492,19 +493,23 @@ section.banner .delete {
   padding: 5px 0;
   border-radius: 15px;
   color: #DDDDDD;
+  transition: all 0.2s;
 }
 .listing-section.overview > div:last-of-type .rating .stars .fa-star.color {
   color: #25B9C5;
 }
 .listing-section.overview > div:last-of-type .claimed {
   background-color: #25B9C5;
-  padding: 15px 15px 15px 35px;
+  padding: 15px 15px 15px 40px;
   margin-left: 50px;
   color: #FFFFFF;
   text-transform: uppercase;
   float: left;
   overflow: auto;
   position: relative;
+}
+.listing-section.overview > div:last-of-type .claimed.not-yet {
+  background-color: #ccc;
 }
 .listing-section.overview > div:last-of-type .claimed > span {
   display: inline-block;
@@ -518,7 +523,7 @@ section.banner .delete {
   font-size: 22px;
   left: 10px;
   top: 50%;
-  margin-top: -14px;
+  margin-top: -11px;
 }
 .listing-section.overview > div:last-of-type .add,
 .listing-section.overview > div:last-of-type .message,
@@ -1086,6 +1091,12 @@ section.banner .delete {
   }
 }
 @media only screen and (max-width: 768px) {
+  #header {
+    height: 260px;
+  }
+  section.banner {
+    height: 260px;
+  }
   section.banner > div {
     height: 130px;
   }
@@ -1098,8 +1109,12 @@ section.banner .delete {
     padding-top: 1px;
   }
   .listing-section.overview > div:first-of-type .logo {
+    height: 140px;
+    width: 140px;
     left: 50%;
-    margin-left: -130px;
+    margin-left: -70px;
+    margin-top: -70px;
+    border-width: 5px;
   }
   .listing-section.overview.activity > div:first-of-type .photo {
     width: auto;
@@ -1112,6 +1127,9 @@ section.banner .delete {
     padding: 20px 0 50px 0;
     margin-top: 10px;
     border-top: solid 1px #DDDDDD;
+  }
+  .listing-section.overview:not(.activity) > div:first-of-type .location {
+    margin-top: 80px;
   }
   .listing-section.activities-overview .activity,
   .listing-section.facilities .facility {

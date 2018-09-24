@@ -41,6 +41,15 @@ $(document).ready(function () {
     };
     Auth.signIn = function () {
         var signIn = content.find("form.sign-in");
+        content.find(".close").click(function (e) {
+            e.preventDefault();
+            $(".overlay").trigger("click");
+            return false;
+        });
+        content.find(".social a").click(function (e) {
+            e.preventDefault();
+            return alert("Not implemented yet") && false;
+        });
         signIn.find("button").click(function (e) {
             $(".sign-in-modal").removeClass("no-no");
             e.preventDefault();

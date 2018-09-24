@@ -103,8 +103,6 @@ class Search {
                         limit: 6
                     }];
 
-                    konsole.log(pipeline);
-
                     return ListingsService.aggregate({
                         pipeline: pipeline
                     });
@@ -115,7 +113,8 @@ class Search {
                     resolve({
                         tags: tags,
                         listings: listings,
-                        recommended: recommended
+                        recommended: recommended,
+                        category: (tags && tags.map(t => t.categories[0])) || null
                     });
                 })
                 .catch(err => {

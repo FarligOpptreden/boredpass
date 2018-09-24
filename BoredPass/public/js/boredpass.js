@@ -17,4 +17,5 @@ $(document).ready(function () {
         $(this).addClass("show");
         $("#header > nav").addClass("has-toolbar");
     });
+    $(document).trigger("scroll");
 });

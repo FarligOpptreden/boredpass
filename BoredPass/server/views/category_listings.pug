@@ -10,7 +10,9 @@ block js
   script(type='text/javascript', src='/js/category_listings.js')
 
 block content
-  section.banner(class=urlCategory)
+  section.banner
+    header.banner-image(class=urlCategory)
+    div.cover
     div
       h2 Explore
       h1=(category + ' experiences')

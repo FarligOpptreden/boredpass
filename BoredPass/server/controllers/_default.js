@@ -57,7 +57,7 @@ export default Controller.create('/')
             .uniqueCategories()
             .then(categories => {
                 let renderArgs = {
-                    title: 'Activities Near You - Bored Today',
+                    title: 'Experiences Near You - BoredPass',
                     categories: categories.map((c, i) => {
                         return {
                             category: c.category,

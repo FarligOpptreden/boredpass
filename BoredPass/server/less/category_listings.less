@@ -4,12 +4,35 @@
 section.banner {
     height: 260px;
     background-color: @col-main;
-    background-position: right bottom;
-    background-repeat: no-repeat;
-    background-size: 120%;
-    animation: banner-scale 30s forwards ease-out;
+    position: relative;
+    overflow: hidden;
 
-    div {
+    .banner-image {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-position: bottom center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        animation: banner-scale 30s forwards ease-out;
+
+        &.home {
+            background-image: url(/images/bg-mountains.jpg);
+        }
+
+        & + .cover {
+            background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    }
+
+    div:not(.cover) {
         max-width: 1280px;
         margin: 0 auto;
         padding-top: 100px;
@@ -97,6 +120,45 @@ section.listings, section.statistics {
             transform: translateY(-2px);
         }
     }
+
+    .paging {
+        width: 100%;
+        flex: none;
+        text-align: right;
+        padding: 40px 10px;
+
+        a {
+            display: inline-block;
+            font-weight: 600;
+            width: auto;
+            position: relative;
+
+            i {
+                position: absolute;
+                top: 50%;
+                font-size: 20px;
+                margin-top: -10px;
+                line-height: 20px;
+            }
+
+            &.prev {
+                padding-left: 45px;
+
+                i {
+                    left: 20px;
+                }
+            }
+
+            &.next {
+                padding-right: 45px;
+                margin-left: 20px;
+
+                i {
+                    right: 20px;
+                }
+            }
+        }
+    }
 }
 
 .adrenalin-and-extreme-sports {
@@ -124,7 +186,7 @@ section.listings, section.statistics {
 }
 
 .no-more-data {
-    padding: 20px 10px;
+    padding: 40px 10px;
 
     h1 {
         font-size: 24px;
@@ -165,9 +227,56 @@ section.listings, section.statistics {
     }
 }
 
+@media all and (max-width: 1300px) {
+    section.banner {
+        div:not(.cover) {
+            position: absolute;
+            bottom: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 120px;
+        }
+    }
+}
+
 @media all and (max-width: 960px) {
     section.listings > .listing {
         flex: 0 0 50%;
+    }
+
+    section.banner {
+
+        div:not(.cover) {
+            padding-top: 132px;
+
+            h1, h2 {
+                font-size: 24px;
+            }
+        }
+    }
+}
+
+@media all and (max-width: 768px) {
+    section.banner {
+        height: 180px;
+
+        div:not(.cover) {
+            padding-top: 59px;
+
+            h1, h2 {
+                font-size: 20px;
+            }
+        }
+    }
+
+    section.listings {
+        .paging {
+            padding: 20px 10px;
+        }
+    }
+
+    #header {
+        height: 180px;
     }
 }
 

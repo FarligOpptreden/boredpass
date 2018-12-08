@@ -4,7 +4,7 @@ import { TagsService, ContentService } from '../../services/_all';
 export default new Controller('/libraries')
     .handle({ route: '/tags/search', method: 'get', produces: 'json' }, (req, res) => TagsService
         .findMany({
-            filter: { name: { $regex: '.*' + req.query.search + '.*', $options: 'i' } },
+            filter: { name: { $regex: `^${req.query.search}.*`, $options: 'i' } },
             sort: { name: 1 },
             limit: 5
         })

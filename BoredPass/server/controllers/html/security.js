@@ -16,4 +16,6 @@ export default new Controller('/secure')
     .handle({ route: '/sign-up', method: 'post', consumes: 'json', produces: 'json' }, (req, res) => SecurityService.signUp(req.body)
         .then(r => res.send(r))
         .catch(err => res.send(err))
-    );
+    )
+    .handle({ route: '/oauth/:provider/start', method: 'get', consumes: 'json', produces: 'json' }, SecurityService.startOauth)
+    .handle({ route: '/oauth/:provider/result', method: 'get', consumes: 'json', produces: 'json' }, SecurityService.endOauth);

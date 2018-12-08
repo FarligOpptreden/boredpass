@@ -67,12 +67,12 @@ export default Controller.create('/')
                     }),
                     moment: moment,
                     marked: marked,
-                    minimalBanner: true
+                    minimalBanner: true,
+                    authentication: req.authentication
                 };
                 if (req.authentication && req.authentication.user && req.authentication.user.permissions && req.authentication.user.permissions.viewStatistics)
                     return ListingsService.statistics()
                         .then(tags => {
-                            renderArgs.authentication = req.authentication;
                             renderArgs.tags = tags;
                             res.render('home', renderArgs);
                         });

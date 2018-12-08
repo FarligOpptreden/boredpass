@@ -46,10 +46,6 @@ $(document).ready(function () {
             $(".overlay").trigger("click");
             return false;
         });
-        content.find(".social a").click(function (e) {
-            e.preventDefault();
-            return alert("Not implemented yet") && false;
-        });
         signIn.find("button").click(function (e) {
             $(".sign-in-modal").removeClass("no-no");
             e.preventDefault();
@@ -72,6 +68,11 @@ $(document).ready(function () {
                 }
             });
             return false;
+        });
+        signIn.find(".social a").click(function (e) {
+            e.preventDefault();
+            document.cookie = "oauth_redirect=" + window.location.href + "; expires=; path=/";
+            window.location.href = $(this).attr("href");
         });
     };
     Auth.signUp = function () {

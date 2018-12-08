@@ -35,6 +35,7 @@
     <Compile Include="app.iis.js" />
     <Compile Include="app.js" />
     <Compile Include="config.js" />
+    <Compile Include="config.template.js" />
     <Compile Include="handlr\BasicCrud.js" />
     <Compile Include="handlr\BasicCrudPromises.js" />
     <Compile Include="handlr\CliColors.js" />

@@ -193,65 +193,6 @@
     transform: rotate(-5deg);
   }
 }
-section.banner {
-  height: 260px;
-  background-color: #25B9C5;
-  position: relative;
-  overflow: hidden;
-}
-section.banner .banner-image {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-position: bottom center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  animation: banner-scale 30s forwards ease-out;
-}
-section.banner .banner-image.home {
-  background-image: url(/images/bg-mountains.jpg);
-}
-section.banner .banner-image + .cover {
-  background: linear-gradient(#ffffff, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-section.banner div:not(.cover) {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding-top: 100px;
-  position: relative;
-  z-index: 1;
-  flex: 10;
-}
-section.banner div:not(.cover) h1,
-section.banner div:not(.cover) h2 {
-  display: block;
-  text-align: left;
-  padding: 0;
-  margin: 0;
-  line-height: 1;
-  color: #FFF;
-  text-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
-  text-transform: uppercase;
-  letter-spacing: 5px;
-  font-size: 30px;
-}
-section.banner div:not(.cover) h2 {
-  font-weight: 400;
-  margin-top: 70px;
-}
-section.banner div:not(.cover) h1 {
-  font-weight: 600;
-}
-#header {
-  height: 260px;
-}
 section.listings,
 section.statistics {
   max-width: 1280px;

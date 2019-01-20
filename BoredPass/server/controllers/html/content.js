@@ -12,23 +12,17 @@ export default new Controller('/content')
             res.setHeader('content-type', 'image/svg+xml');
             res.send(svg);
         })
-        .catch(err => {
-            res.status(500);
-            res.send(null);
-        })
+        .catch(err => res.status(500).send(null))
     )
     .handle({ route: '/upload', method: 'post', produces: 'json' }, (req, res) => ContentService
         .upload({
             req: req
         })
         .then(d => res.json(d))
-        .catch(err => {
-            res.status(500);
-            res.send({
-                success: false,
-                message: err
-            });
-        })
+        .catch(err => res.status(500).send({
+            success: false,
+            message: err
+        }))
     )
     .handle({ route: '/:type/:id/', method: 'get' }, (req, res) => ContentService
         .readResource({
@@ -36,10 +30,7 @@ export default new Controller('/content')
             fileType: req.params.type
         })
         .then(path => res.sendFile(path))
-        .catch(err => {
-            res.status(500);
-            res.send(null);
-        })
+        .catch(err => res.status(500).send(null))
     )
     .handle({ route: '/thumb/:type/:id/', method: 'get' }, (req, res) => ContentService
         .readThumb({
@@ -47,8 +38,5 @@ export default new Controller('/content')
             fileType: req.params.type
         })
         .then(data => res.end(data, 'binary'))
-        .catch(err => {
-            res.status(500);
-            res.send(null);
-        })
+        .catch(err => res.status(500).send(null))
     );

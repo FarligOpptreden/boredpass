@@ -1,4 +1,5 @@
-﻿import Controller from '../../../handlr/Controller';
+﻿import config from '../../../config';
+import Controller from '../../../handlr/Controller';
 import { ActivitiesService, ListingsService } from '../../services/_all';
 import marked from 'marked';
 
@@ -13,7 +14,8 @@ export default new Controller('/activities')
             res.status(403);
             res.render('error', {
                 error: {
-                    status: 403
+                    status: 403,
+                    stack: config.app.debug && err.stack
                 },
                 message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
             });
@@ -60,7 +62,8 @@ export default new Controller('/activities')
             res.status(403);
             res.render('error', {
                 error: {
-                    status: 403
+                    status: 403,
+                    stack: config.app.debug && err.stack
                 },
                 message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
             });
@@ -91,7 +94,8 @@ export default new Controller('/activities')
                 res.status(500);
                 res.render('error', {
                     error: {
-                        status: 500
+                        status: 500,
+                        stack: config.app.debug && err.stack
                     },
                     message: `Something unexpected happened: ${err}`
                 });
@@ -102,7 +106,8 @@ export default new Controller('/activities')
             res.status(403);
             res.render('error', {
                 error: {
-                    status: 403
+                    status: 403,
+                    stack: config.app.debug && err.stack
                 },
                 message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
             });
@@ -123,7 +128,8 @@ export default new Controller('/activities')
                 res.status(500);
                 res.render('error', {
                     error: {
-                        status: 500
+                        status: 500,
+                        stack: config.app.debug && err.stack
                     },
                     message: `Something unexpected happened: ${err}`
                 });
@@ -151,7 +157,8 @@ export default new Controller('/activities')
                 res.status(500);
                 res.render('error', {
                     error: {
-                        status: 500
+                        status: 500,
+                        stack: config.app.debug && err.stack
                     },
                     message: `Something unexpected happened: ${err}`
                 });
@@ -173,7 +180,8 @@ export default new Controller('/activities')
                 res.status(500);
                 res.render('error', {
                     error: {
-                        status: 500
+                        status: 500,
+                        stack: config.app.debug && err.stack
                     },
                     message: `Something unexpected happened: ${err}`
                 });

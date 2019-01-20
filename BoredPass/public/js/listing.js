@@ -1,10 +1,9 @@
-﻿var Listing = {};
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     var numVisible = 5;
     var count = $(".photos > div > div > .photo").length;
+    var currentScroll = 0;
 
-    var setNumVisible = function () {
+    var setNumVisible = function (startup) {
         var getNum = function () {
             if ($("body").width() > 670)
                 return (function () { numVisible = 5; })();
@@ -20,10 +19,12 @@ $(document).ready(function () {
         getNum();
         $(".photos .next, .photos .prev").removeClass("hidden");
         numVisible >= count && $(".photos .next, .photos .prev").addClass("hidden");
+        currentScroll <= 0 && $(".photos .prev").addClass("hidden");
+        count - numVisible <= currentScroll && $(".photos .next").addClass("hidden");
     };
 
     var doScroll = function (factor) {
-        var currentScroll = parseInt($(".photos > div > div").data("current-scroll"), 10);
+        currentScroll = parseInt($(".photos > div > div").data("current-scroll"), 10);
         $(".photos > div > div").data("current-scroll", (factor > 0 ? ++currentScroll : --currentScroll));
         $(".photos .photo").css("transform", "translateX(" + (-currentScroll * 100) + "%)");
 
@@ -113,9 +114,7 @@ $(document).ready(function () {
         return false;
     });
 
-    $(window).resize(function () {
-        setNumVisible();
-    });
+    $(window).resize(setNumVisible);
 
     setNumVisible();
 

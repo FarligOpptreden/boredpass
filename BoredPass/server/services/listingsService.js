@@ -232,19 +232,42 @@ class Listings extends BasicCrudPromises {
             if (!listing)
                 return resolve([]);
 
-            let pipeline = [{
-                geoNear: {
-                    near: { type: 'Point', coordinates: listing.location.coordinates },
-                    maxDistance: 1000 * 1000, // 1,000km
-                    spherical: true,
-                    limit: 3,
-                    distanceField: 'distance',
-                    query: {
+            let pipeline = [];
+
+            if (listing.location && listing.location.coordinates)
+                pipeline.push({
+                    geoNear: {
+                        near: { type: 'Point', coordinates: listing.location.coordinates },
+                        maxDistance: 1000 * 1000, // 1,000km
+                        spherical: true,
+                        limit: 3,
+                        distanceField: 'distance',
+                        query: {
+                            '_id': { $ne: ListingsService.db.objectId(listing._id) },
+                            'tags.name': { $in: listing.tags.map(t => t.name) }
+                        }
+                    }
+                });
+            else
+                pipeline.push({
+                    filter: {
                         '_id': { $ne: ListingsService.db.objectId(listing._id) },
                         'tags.name': { $in: listing.tags.map(t => t.name) }
                     }
-                }
-            }];
+                });
+
+            pipeline.push(listing.location && listing.location.coordinates ?
+                {
+                    sort: { distance: 1 }
+                } :
+                {
+                    sort: { name: 1 }
+                });
+
+            if (!listing.location || !listing.location.coordinates)
+                pipeline.push({
+                    limit: 3
+                });
 
             ListingsService.aggregate({
                 pipeline: pipeline

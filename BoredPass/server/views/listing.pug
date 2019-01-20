@@ -31,7 +31,7 @@ block content
       - var logo = listing.logo ? 'background-image:url(/content/' + listing.logo.fileType + '/' + listing.logo.fileId + ');' : null
       - var logoClass = !listing.logo ? 'no-logo' : ''
       div.logo(style=logo, class=logoClass)
-      a.location(target='_blank', href='https://google.com/maps/place/' + encodeURIComponent(listing.address))
+      a.location(target='_blank', href='https://google.com/maps/search/' + encodeURIComponent(listing.address))
         span.fa.fa-map-marker
         span= listing.address
 
@@ -91,7 +91,7 @@ block content
       a.add
       a.message
       a.share
-  +activities(listing.tags).blue
+  +activities(listing.tags, false, listing._id).blue
   +facilities(listing.facilities).alternating
   +photos(listing.photos).alternating
 
@@ -114,7 +114,7 @@ block content
         h1 Check These Out As Well
         div
           each listing in related
-            +listing_card(listing)
+            +listing_card(listing, ' from listing')
   //-
     section.listing-section.events
       div.calendar

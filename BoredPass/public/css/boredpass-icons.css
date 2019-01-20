@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'boredpass';
-    src: url('../font/boredpass.eot?49607477');
-    src: url('../font/boredpass.eot?49607477#iefix') format('embedded-opentype'), url('../font/boredpass.woff2?49607477') format('woff2'), url('../font/boredpass.woff?49607477') format('woff'), url('../font/boredpass.ttf?49607477') format('truetype'), url('../font/boredpass.svg?49607477#boredpass') format('svg');
+    src: url('../font/boredpass.eot?91702547');
+    src: url('../font/boredpass.eot?91702547#iefix') format('embedded-opentype'), url('../font/boredpass.woff2?91702547') format('woff2'), url('../font/boredpass.woff?91702547') format('woff'), url('../font/boredpass.ttf?91702547') format('truetype'), url('../font/boredpass.svg?91702547#boredpass') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -11,7 +11,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'boredpass';
-    src: url('../font/boredpass.svg?49607477#boredpass') format('svg');
+    src: url('../font/boredpass.svg?91702547#boredpass') format('svg');
   }
 }
 */
@@ -496,7 +496,7 @@
     content: '\e870';
 }
 /* '' */
-.icon-bored-pass_safari:before {
+.icon-bored-pass_safariz:before {
     content: '\e871';
 }
 /* '' */
@@ -692,7 +692,7 @@
     content: '\e8a1';
 }
 /* '' */
-.icon-bored-pass_tubing:before {
+.icon-bored-pass_tubbing:before {
     content: '\e8a2';
 }
 /* '' */
@@ -756,3 +756,31 @@
     content: '\e8b1';
 }
 /* '' */
+.icon-bored-pass_american-express:before {
+    content: '\e8b2';
+}
+/* '' */
+.icon-bored-pass_beverages-and-food:before {
+    content: '\e8b3';
+}
+/* '' */
+.icon-bored-pass_cash:before {
+    content: '\e8b4';
+}
+/* '' */
+.icon-bored-pass_mastercard:before {
+    content: '\e8b7';
+}
+/* '' */
+.icon-bored-pass_restroom:before {
+    content: '\e8b9';
+}
+/* '' */
+.icon-bored-pass_visa:before {
+    content: '\e8ba';
+}
+/* '' */
+.icon-bored-pass_wheelchair-friendly:before {
+    content: '\e8bb';
+}
+/* '' */

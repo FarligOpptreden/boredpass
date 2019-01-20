@@ -1,8 +1,8 @@
 ﻿include ../mixins/photo_upload
 
 form#add_listing_3
-  div.instructions-template
-    p Images speak a thousand words, especially good ones. We recommend using quality over quantity to ensure your listing leaves people wanting more. Sounds good, doesn't it?
+  p Images speak a thousand words, especially good ones. We recommend using quality over quantity to ensure your listing leaves people wanting more. Sounds good, doesn't it?
+  hr
   div.add-overview
     div
       h2 Adding Imagery
@@ -10,6 +10,8 @@ form#add_listing_3
     +photoUpload()#logo-upload.add-logo(data-url='/content/upload', data-allow-change='true')
   div.add-photos
     +photoUpload()(data-url='/content/upload')
+  h2 Banner
+  a.edit-banner(data-banner='', href='/select-banner')
   hr
   h2 Do you offer?
   each facility in facilities

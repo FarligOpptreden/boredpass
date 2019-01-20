@@ -38,5 +38,9 @@
   {
     "inputFile": "server/less/search.less",
     "outputFile": "public/css/search.css"
+  },
+  {
+    "inputFile": "server/less/listing_wizard.less",
+    "outputFile": "public/css/listing_wizard.css"
   }
 ]

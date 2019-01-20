@@ -1,29 +1,27 @@
 ﻿form#add_listing_1.active
-  div.instructions-template
-    p Do you know of a business or venue that provides fun or interesting activities? Of course you do!
-    p Help cure boredom and list it on BoredPass today for free. All you need to do is complete our simple 3 part form.
-    p If you are unsure about anything, please check out our FAQ page. 
+  p Do you know of a business or venue that provides fun or interesting activities? Of course you do! Help cure boredom and list it on BoredPass today for free. All you need to do is complete our simple 3 part form. If you are unsure about anything, please check out our FAQ page. 
+  hr
   div.field-wrapper
     label(for='businessname') Name of business/venue*
-    input#businessname.mandatory(type='text')
+    input#businessname.mandatory(type='text', autocomplete='new-businessname')
   div.tag-field
     div.field-wrapper
       - var tagValues = activity && activity.tags && activity.tags.length ? activity.tags.join(';') : null
       label(for='activity_tags') Search for activity tags (e.g. Kayaking)*
-      input#activity_tags.activity-tags.mandatory(type='text', data-value=tagValues)
+      input#activity_tags.activity-tags.mandatory(type='text', data-value=tagValues, autocomplete='new-activity_tags')
     div.tag-container
       if activity && activity.tags && activity.tags.length
         each tag in activity.tags
           span.tag.icon.activity.colour(class=tag.icon, data-tag=tag)=tag.name
   div.field-wrapper
     label(for='address') Address*
-    input#address.mandatory(type='text')
+    input#address.mandatory(type='text', autocomplete='new-address')
   div.field-wrapper
     label(for='website') Website link
-    input#website(type='text')
+    input#website(type='text', autocomplete='new-website')
   div.toggle-wrapper
     label Is this your business?*
-    input#yourbusiness.mandatory(type='hidden')
+    input#yourbusiness.mandatory(type='hidden', autocomplete='new-yourbusiness')
     div.options
       button.active Yes
       button No

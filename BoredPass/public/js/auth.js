@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
     var content = null;
-    $("#header a.sign-in").click(function (e) {
+    $("#header a.sign-in, #footer a.sign-in, #footer a.register").click(function (e) {
         e.preventDefault();
         $.ajax({
             url: "/secure/sign-in",
@@ -18,13 +18,24 @@ $(document).ready(function () {
             }
         });
     });
-    $("#header a.sign-out").click(function (e) {
+    $("#header a.sign-out, #footer a.sign-out").click(function (e) {
         e.preventDefault();
-        $.ajax({
-            url: "/secure/sign-out",
-            method: "get",
-            success: function (d, s, x) {
-                window.location.href = '/';
+        Shared.confirm({
+            message: "Are you sure you want to sign out of your account?",
+            positive: {
+                text: "Yes",
+                click: function () {
+                    $.ajax({
+                        url: "/secure/sign-out",
+                        method: "get"
+                    }).done(function (data) {
+                        document.location.href = "/";
+                    });
+                    return true;
+                }
+            },
+            negative: {
+                text: "No"
             }
         });
     });

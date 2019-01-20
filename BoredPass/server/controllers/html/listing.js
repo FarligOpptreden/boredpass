@@ -1,20 +1,42 @@
-﻿import { Controller, konsole } from '../../../handlr/_all';
-import { ListingsService, ActivitiesService, FacilitiesService, TagsService } from '../../services/_all';
+﻿import config from '../../../config';
+import { Controller, konsole } from '../../../handlr/_all';
+import { ListingsService, ActivitiesService, FacilitiesService, TagsService, CountriesService } from '../../services/_all';
 import { StringUtils } from '../../utils';
 import marked from 'marked';
 
 export default new Controller('/listings')
+    .handle({ route: '/duplicates/:search', method: 'get', produces: 'json' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addListing)
+            return res.status(403).send({
+                success: false,
+                message: 'Unauthorized'
+            });
+
+        Promise.resolve()
+            .then(_ => ListingsService.findMany({
+                filter: { name: { $regex: `^${req.params.search}.*`, $options: 'i' } },
+                data: { name: 1, formatted_address: 1 }
+            }))
+            .then(duplicates =>
+                res.json({
+                    success: true,
+                    listings: duplicates
+                })
+            )
+            .catch(err => res.status(500).json({
+                success: false,
+                message: `Something unexpected happened: ${err}`
+            }));
+    })
     .handle({ route: '/add', method: 'get', produces: 'html' }, (req, res) => {
-        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addListing) {
-            res.status(403);
-            res.render('error', {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addListing)
+            return res.status(403).render('error', {
                 error: {
-                    status: 403
+                    status: 403,
+                    stack: config.app.debug && err.stack
                 },
                 message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
             });
-            return;
-        }
 
         FacilitiesService.findMany({ sort: { name: 1 } })
             .then(facilities =>
@@ -25,52 +47,85 @@ export default new Controller('/listings')
                     facilities: facilities
                 })
             )
-            .catch(err => {
-                res.status(500);
-                res.render('error', {
-                    error: {
-                        status: 500
-                    },
-                    message: `Something unexpected happened: ${err}`
-                });
-            });
-    })
-    .handle({ route: '/add', method: 'post', produces: 'json' }, (req, res) => {
-        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addExperience) {
-            res.status(403);
-            res.send({
-                success: false,
-                message: 'Unauthorized'
-            });
-            return;
-        }
-
-        ListingsService.create({ data: req.body })
-            .then(result =>
-                res.json({
-                    success: result && result._id && true,
-                    id: result._id && result._id
-                })
-            )
-            .catch(err => {
-                res.status(500);
-                res.json({
-                    success: false,
-                    message: `Something unexpected happened: ${err}`
-                });
-            });
-    })
-    .handle({ route: '/:id/added', method: 'get', produces: 'html' }, (req, res) => {
-        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addListing) {
-            res.status(403);
-            res.render('error', {
+            .catch(err => res.status(500).render('error', {
                 error: {
-                    status: 403
+                    status: 500,
+                    stack: config.app.debug && err.stack
+                },
+                message: `Something unexpected happened: ${err}`
+            }));
+    })
+    .handle({ route: '/add/wizard', method: 'get', produces: 'html' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addListing)
+            return res.status(403).render('error', {
+                error: {
+                    status: 403,
+                    stack: config.app.debug && err.stack
                 },
                 message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
             });
-            return;
-        }
+
+        let facilities, countries;
+
+        Promise.resolve()
+            .then(_ => FacilitiesService.findMany({ sort: { name: 1 } }))
+            .then(r => {
+                facilities = r;
+                return CountriesService.findMany({ sort: { name: 1 } });
+            })
+            .then(r => {
+                countries = r;
+                res.render('partials/add_listing_wizard', {
+                    moment: require('moment'),
+                    countries: countries,
+                    facilities: facilities
+                })
+            })
+            .catch(err => res.status(500).render('error', {
+                error: {
+                    status: 500,
+                    stack: config.app.debug && err.stack
+                },
+                message: `Something unexpected happened: ${err}`
+            }));
+    })
+    .handle({ route: '/add', method: 'post', produces: 'html' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addExperience)
+            return res.status(403).render('error', {
+                error: {
+                    status: 403,
+                    stack: config.app.debug && err.stack
+                },
+                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
+            });
+
+        ListingsService.create({ data: req.body })
+            .then(result => ListingsService.findOne({
+                filter: { _id: result._id }
+            }))
+            .then(result => res.render('partials/add_listing_result', {
+                success: result && result._id && true,
+                isModerator: (req.authentication && req.authentication.isAuthenticated && req.authentication.user.permissions && req.authentication.user.permissions.moderateListing && true) || false,
+                id: result._id && result._id,
+                listing: result,
+                makeUrlFriendly: StringUtils.makeUrlFriendly,
+                marked: marked,
+                moment: require('moment')
+            }))
+            .catch(err => res.status(500).json({
+                success: false,
+                message: `Something unexpected happened: ${err}`
+            }));
+    })
+    .handle({ route: '/:id/added', method: 'get', produces: 'html' }, (req, res) => {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.addListing)
+            return res.status(403).render('error', {
+                error: {
+                    status: 403,
+                    stack: config.app.debug && err.stack
+                },
+                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
+            });
 
         ListingsService.findOne({ filter: { _id: req.params.id } })
             .then(listing =>
@@ -81,15 +136,13 @@ export default new Controller('/listings')
                     listing: listing
                 })
             )
-            .catch(err => {
-                res.status(500);
-                res.render('error', {
-                    error: {
-                        status: 500
-                    },
-                    message: `Something unexpected happened: ${err}`
-                });
-            });;
+            .catch(err => res.status(500).render('error', {
+                error: {
+                    status: 500,
+                    stack: config.app.debug && err.stack
+                },
+                message: `Something unexpected happened: ${err}`
+            }));
     })
     .handle({ route: '/:id', method: 'get', produces: 'html' }, (req, res) => {
         let _listing = null, _activities = null;
@@ -116,27 +169,23 @@ export default new Controller('/listings')
                     makeUrlFriendly: StringUtils.makeUrlFriendly
                 })
             )
-            .catch(err => {
-                res.status(500);
-                res.render('error', {
-                    error: {
-                        status: 500
-                    },
-                    message: `Something unexpected happened: ${err}`
-                });
-            });
+            .catch(err => res.status(500).render('error', {
+                error: {
+                    status: 500,
+                    stack: config.app.debug && err.stack
+                },
+                message: `Something unexpected happened: ${err}`
+            }));
     })
     .handle({ route: '/:id/edit', method: 'get', produces: 'html' }, (req, res) => {
-        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.editListing) {
-            res.status(403);
-            res.render('error', {
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.editListing)
+            return res.status(403).render('error', {
                 error: {
-                    status: 403
+                    status: 403,
+                    stack: config.app.debug && err.stack
                 },
                 message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
             });
-            return;
-        }
 
         let _listing, _facilities, _activities;
 
@@ -182,25 +231,20 @@ export default new Controller('/listings')
                     facilities: _facilities
                 })
             )
-            .catch(err => {
-                res.status(500);
-                res.render('error', {
-                    error: {
-                        status: 500
-                    },
-                    message: `Something unexpected happened: ${err}`
-                });
-            });
+            .catch(err => res.status(500).render('error', {
+                error: {
+                    status: 500,
+                    stack: config.app.debug && err.stack
+                },
+                message: `Something unexpected happened: ${err}`
+            }));
     })
     .handle({ route: '/:id/edit', method: 'put', produces: 'json' }, (req, res) => {
-        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.editListing) {
-            res.status(403);
-            res.send({
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.editListing)
+            return res.status(403).send({
                 success: false,
                 message: 'Unauthorized'
             });
-            return;
-        }
 
         let listing = req.body;
         ListingsService.update({
@@ -213,35 +257,26 @@ export default new Controller('/listings')
                     id: result && req.params.id
                 })
             )
-            .catch(err => {
-                res.status(500);
-                res.json({
-                    success: false,
-                    message: `Something unexpected happened: ${err}`
-                });
-            });
+            .catch(err => res.status(500).json({
+                success: false,
+                message: `Something unexpected happened: ${err}`
+            }));
     })
     .handle({ route: '/:id/delete', method: 'delete', produces: 'json' }, (req, res) => {
-        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.deleteListing) {
-            res.status(403);
-            res.send({
+        if (!req.authentication || !req.authentication.isAuthenticated || !req.authentication.user.permissions || !req.authentication.user.permissions.deleteListing)
+            return res.status(403).send({
                 success: false,
                 message: 'Unauthorized'
             });
-            return;
-        }
 
         Promise.resolve()
             .then(_ => ActivitiesService.deleteMany({ filter: { listing_id: ActivitiesService.db.objectId(req.params.id) } }))
             .then(r => ListingsService.delete({ filter: req.params.id }))
             .then(r => res.json(r))
-            .catch(err => {
-                res.status(500);
-                res.json({
-                    success: false,
-                    message: `Something unexpected happened: ${err}`
-                });
-            });
+            .catch(err => res.status(500).json({
+                success: false,
+                message: `Something unexpected happened: ${err}`
+            }));
     })
     .handle({ route: '/:id/:name', method: 'get', produces: 'html' }, (req, res) => {
         let _listing = null, _activities = null;
@@ -270,13 +305,11 @@ export default new Controller('/listings')
                     calculateBearing: ListingsService.calculateBearing
                 })
             )
-            .catch(err => {
-                res.status(500);
-                res.render('error', {
-                    error: {
-                        status: 500
-                    },
-                    message: `Something unexpected happened: ${err}`
-                });
-            });
+            .catch(err => res.status(500).render('error', {
+                error: {
+                    status: 500,
+                    stack: config.app.debug && err.stack
+                },
+                message: `Something unexpected happened: ${err}`
+            }));
     });

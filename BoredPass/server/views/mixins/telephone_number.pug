@@ -1,0 +1,11 @@
+﻿mixin telephone_number(id, label, code, number, codes)
+  div.field-wrapper.telephone
+    label(for=id + '-list')=label
+    div
+      input(id=id + '-code', value=code, disabled, autocomplete='new-' + id + '-code')
+      select(id=id + '-list', value=code, autocomplete='new-' + id + '-list')
+        option(value='')
+        each cd, index in codes
+          option(value=cd.dialCode)=cd.name + ' (' + cd.dialCode + ')'
+    div
+      input(id=id, type='text', value=number, autocomplete='new-' + id).validate-number.validate-telephone

@@ -1,4 +1,5 @@
-﻿import { Controller, konsole } from '../../../handlr/_all';
+﻿import config from '../../../config';
+import { Controller, konsole } from '../../../handlr/_all';
 import { LocationService, SearchService, ListingsService } from '../../services/_all';
 import { StringUtils } from '../../utils';
 import marked from 'marked';
@@ -26,6 +27,7 @@ export default new Controller('/search')
         tags: (req.query.tags && req.query.tags.split(',')) || [],
         distance: (req.query.distance !== 'any' && parseFloat(req.query.distance)) || null,
         location: (req.query.lat && req.query.lon && { lat: parseFloat(req.query.lat), lon: parseFloat(req.query.lon) }) || null,
+        listing: req.query.listing || null,
         skip: (parseInt(req.params.page, 10) - 1) * 12,
         limit: 12
     })
@@ -47,23 +49,21 @@ export default new Controller('/search')
                 search: {
                     tags: r.tags,
                     distance: req.query.distance,
-                    location: req.query.place,
-                    category: (r.category && r.category[0] && r.category[0].replace(/\s/g, '-').replace('&', 'and').toLowerCase()) || 'home'
+                    location: (r.listing && r.listing.name) || req.query.place,
+                    category: (r.category && r.category[0] && r.category[0].replace(/\s/g, '-').replace('&', 'and').toLowerCase()) || 'home',
+                    listing: r.listing
                 },
-                location: req.query.lat && req.query.lon ? [req.query.lon, req.query.lat] : null,
+                location: r.location,
                 calculateBearing: ListingsService.calculateBearing,
                 prevLink: pageNo > 1 && `/search/${pageNo - 1}?tags=${req.query.tags}&distance=${req.query.distance}&lat=${req.query.lat}&lon=${req.query.lon}`,
                 nextLink: (!r.recommended || !r.recommended.length) && `/search/${pageNo + 1}?tags=${req.query.tags}&distance=${req.query.distance}&lat=${req.query.lat}&lon=${req.query.lon}`
             });
         })
-        .catch(err => {
-            res.status(500);
-            res.render('error', {
-                error: {
-                    status: 500
-                },
-                message: `Something unexpected happened: ${err}`
-            });
-        })
-
+        .catch(err => res.status(500).render('error', {
+            error: {
+                status: 500,
+                stack: config.app.debug && err.stack
+            },
+            message: `Something unexpected happened: ${err}`
+        }))
     );

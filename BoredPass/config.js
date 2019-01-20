@@ -2,22 +2,31 @@
     loggingLevel: {
         http: 1
     },
-    port: 13372,
+    port: 0,
     app: {
         id: '',
-        name: 'Boredpass'
+        name: 'Boredpass',
+        debug: true,
     },
     accounts: {
-        url: 'http://www.boredpass.dev:85/sign-in'
+        url: 'xxx'
     },
     connectionStrings: {
-        boredPass: 'mongodb://localhost:27017/boredpass_uat'
+        boredPass: 'xxx'
     },
     keys: {
-        google: 'AIzaSyAZUoe5UrYFsn4Yqr6FoMOhPY0sJSUkl84',
-        locationIq: '4ff3c23b09b2b0'
+        google: 'xxx',
+        locationIq: 'xxx'
+    },
+    oauth: {
+        settings: {
+            redirect: 'xxx'
+        },
+        facebook: {},
+        google: {},
+        twitter: {}
     },
     endpoints: {
-        locationSearch: 'https://eu1.locationiq.com/v1/search.php?key={token}&q={search}&format=json'
+        locationSearch: 'xxx'
     }
 }

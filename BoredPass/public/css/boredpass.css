@@ -314,6 +314,18 @@ body {
 #footer > div:first-of-type > nav a {
   display: block;
   padding: 10px;
+  color: #FFFFFF;
+  opacity: 0.1;
+  text-decoration: none;
+  transition: all 0.4s;
+}
+#footer > div:first-of-type > nav a:link,
+#footer > div:first-of-type > nav a:visited {
+  opacity: 1;
+}
+#footer > div:first-of-type > nav a:link:hover,
+#footer > div:first-of-type > nav a:visited:hover {
+  opacity: 0.8;
 }
 #footer > div:first-of-type > nav .social {
   padding-left: 10px;
@@ -382,7 +394,7 @@ body {
   left: 0;
   top: 0;
   box-sizing: border-box;
-  padding: 30px 10px 12px 10px;
+  padding: 30px 10px 6px 10px;
   border-radius: 3px;
   font-family: 'Raleway', sans-serif;
 }
@@ -457,6 +469,46 @@ body {
 }
 .field-wrapper.has-hint + .hint {
   font-size: 12px;
+}
+.field-wrapper.telephone {
+  display: flex;
+}
+.field-wrapper.telephone > div {
+  position: relative;
+}
+.field-wrapper.telephone > div:first-of-type {
+  flex: 0 0 100px;
+}
+.field-wrapper.telephone > div:first-of-type input {
+  padding-bottom: 0;
+  padding-top: 0;
+  margin-top: 30px;
+  text-align: center;
+}
+.field-wrapper.telephone > div:last-of-type {
+  flex: 1;
+}
+.field-wrapper.telephone > div input {
+  left: 0;
+  right: 0;
+}
+.field-wrapper.telephone select {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding: 30px 0 6px 0;
+  font-size: 16px;
+  box-sizing: border-box;
+  font-family: 'Raleway', sans-serif;
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+.field-wrapper.telephone.focus > div:first-of-type input,
+.field-wrapper.telephone.has-value > div:first-of-type input {
+  border-right: solid 2px #DDDDDD;
 }
 button {
   outline: none;
@@ -768,13 +820,13 @@ em {
   box-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
   border-radius: 0 0 5px 5px;
   background-color: #FFFFFF;
-  z-index: 102;
-  transition: all 0.2s;
+  z-index: 105;
+  transition: all 0.3s;
   transform: none;
   opacity: 1;
 }
 .confirm-box.out {
-  transform: translateY(-100%);
+  transform: translateY(-100%) scale(0.5);
   opacity: 0;
 }
 .confirm-box > p {
@@ -870,6 +922,75 @@ em {
 }
 .toolbar.show {
   height: 36px;
+}
+#header {
+  height: 260px;
+}
+section.banner {
+  height: 260px;
+  background-color: #25B9C5;
+  position: relative;
+  overflow: hidden;
+}
+section.banner .banner-image {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: banner-scale 30s forwards ease-out;
+}
+section.banner .banner-image.home {
+  background-image: url(/images/bg-mountains.jpg);
+}
+section.banner .banner-image + .cover {
+  background: linear-gradient(#ffffff, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+section.banner div:not(.cover) {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-top: 100px;
+  position: relative;
+  z-index: 1;
+  flex: 10;
+}
+section.banner div:not(.cover) h1,
+section.banner div:not(.cover) h2 {
+  display: block;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  color: #FFF;
+  text-shadow: 0 3px 5px rgba(80, 80, 80, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-size: 30px;
+}
+section.banner div:not(.cover) h2 {
+  font-weight: 400;
+  margin-top: 70px;
+}
+section.banner div:not(.cover) h1 {
+  font-weight: 600;
+}
+section.body {
+  max-width: 1280px;
+  min-height: 400px;
+  margin: 20px auto;
+}
+section.body.error h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
 }
 @keyframes banner-scale {
   0% {

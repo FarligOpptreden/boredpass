@@ -1,80 +1,96 @@
 ﻿var Shared = {};
 
 $(document).ready(function () {
+    var validateNumber = function (e) {
+        if ((e.keyCode !== 32 && e.keyCode <= 46) || (e.keyCode >= 112 && e.keyCode <= 145))
+            return true;
+
+        var keyCode = e.which;
+
+        if (keyCode >= 96)
+            keyCode -= 48;
+
+        var keyVal = String.fromCharCode(keyCode);
+        var $this = $(this);
+
+        var testForNumber = function (v) {
+            v = v || keyVal;
+
+            if (!/\d/.test(v)) {
+                e.preventDefault();
+                return false;
+            }
+
+            var val;
+
+            if ($this.attr("type") === "number") {
+                var min = $this.attr("min");
+                var max = $this.attr("max");
+                val = parseFloat($this.val() + parseFloat(v));
+
+                if (val < min || val > max) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                return true;
+            }
+
+            var maxLength = $this.attr("maxlength");
+            val = $this.val() + v;
+
+            if (val.length > maxLength) {
+                e.preventDefault();
+                return false;
+            }
+
+            return true;
+        };
+
+        if (e.ctrlKey && keyVal.toLowerCase() === "v")
+            return setTimeout(function () {
+                !testForNumber($this.val()) && $this.val("");
+            }, 10) && true;
+
+        return testForNumber();
+    };
+
     var validations = function () {
+        var fieldWrapper = $(this).closest(".field-wrapper");
         $(this).addClass("has-events");
         $(this).focus(function () {
-            $(this).closest(".field-wrapper").addClass("focus");
+            fieldWrapper.addClass("focus");
         });
         $(this).blur(function () {
-            if ($(this).val())
-                $(this).closest(".field-wrapper").addClass("has-value");
-            else
-                $(this).closest(".field-wrapper").removeClass("has-value");
-            $(this).closest(".field-wrapper").removeClass("focus");
+            fieldWrapper[$(this).val() ? "addClass" : "removeClass"]("has-value");
+            fieldWrapper.removeClass("focus");
         });
         if ($(this).hasClass("mandatory")) {
             if ($(this).closest(".tag-field").length) {
                 var field = $(this);
                 field.keyup(function () {
-                    if (field.data("value") && field.data("value").length)
-                        field.closest(".field-wrapper").removeClass("error");
-                    else
-                        field.closest(".field-wrapper").addClass("error");
+                    fieldWrapper[field.data("value") && field.data("value").length ? "removeClass" : "addClass"]("error");
                 });
             }
             else
                 $(this).keyup(function () {
-                    if ($(this).val())
-                        $(this).closest(".field-wrapper").removeClass("error");
-                    else
-                        $(this).closest(".field-wrapper").addClass("error");
+                    fieldWrapper[$(this).val() ? "removeClass" : "addClass"]("error");
                 });
         }
-        $(this).hasClass("validate-number") && $(this).keydown(function (e) {
-            if ((e.keyCode !== 32 && e.keyCode <= 46) || (e.keyCode >= 112 && e.keyCode <= 145))
-                return true;
-            var keyCode = e.which;
-            var val;
-            if (keyCode >= 96)
-                keyCode -= 48;
-            var keyVal = String.fromCharCode(keyCode);
-            if (!/\d/.test(keyVal)) {
-                e.preventDefault();
-                return false;
-            }
-            var fld = $(this);
-            if (fld.attr("type") === "number") {
-                var min = $(this).attr("min");
-                var max = $(this).attr("max");
-                val = parseFloat($(this).val() + parseFloat(keyVal));
-                if (val < min || val > max) {
-                    e.preventDefault();
-                    return false;
-                }
-                return true;
-            }
-            var maxLength = $(this).attr("maxlength");
-            val = $(this).val() + keyVal;
-            if (val.length > maxLength) {
-                e.preventDefault();
-                return false;
-            }
-            return true;
-        });
+        $(this).hasClass("validate-number") && $(this).keydown(validateNumber);
         $(this).hasClass("validate-email") && $(this).keyup(function () {
-            var valid = /^[a-zA-Z0-9\-\.\_]+@[a-zA-Z0-9\-\_]+(\.[a-zA-Z]+){1,2}$/.test($(this).val());
-
-            if (valid)
-                $(this).closest(".field-wrapper").removeClass("error");
-            else
-                $(this).closest(".field-wrapper").addClass("error");
+            var valid = /^[a-zA-Z0-9\-\.\_]+@[a-zA-Z0-9\-\_]+(\.[a-zA-Z0-9\-\_]+){1,3}$/.test($(this).val());
+            fieldWrapper[valid ? "removeClass" : "addClass"]("error");
+        }).focus(function (e) {
+            $(this).attr("placeholder", "name@domain.com");
+        }).blur(function (e) {
+            $(this).removeAttr("placeholder");
         });
         $(this).hasClass("validate-custom") && $(this).keyup(function () {
             var func = $(this).data("validate");
 
             if (!func)
-                return $(this).closest(".field-wrapper").addClass("error");
+                return fieldWrapper.addClass("error");
 
             var funcParts = func.split('.');
             var scope = null;
@@ -89,10 +105,10 @@ $(document).ready(function () {
             }
 
             if (!scope)
-                return $(this).closest(".field-wrapper").addClass("error");
+                return fieldWrapper.addClass("error");
 
             var valid = scope($(this).val());
-            $(this).closest(".field-wrapper")[valid ? 'removeClass' : 'addClass']("error");
+            fieldWrapper[valid ? 'removeClass' : 'addClass']("error");
         });
     };
 
@@ -118,10 +134,13 @@ $(document).ready(function () {
                     anchor.data("upload", d);
                     anchor.addClass("has-image");
                     anchor.css("background-image", "url(" + d.location + ")");
+
                     if (anchor.data("uploaded"))
                         anchor.data("uploaded")(d);
+
                     if (wrapper.data("allow-change"))
                         return;
+
                     form.remove();
                     anchor.find("span").remove();
                     anchor.unbind("click");
@@ -193,7 +212,7 @@ $(document).ready(function () {
                         var content = $(d);
                         content.find(".close").click(function (e) {
                             e.preventDefault();
-                            Shared.hideOverlay();
+                            Shared.hideOverlay(null, content.closest(".overlay"));
                             return false;
                         });
                         content.find(".tags > a").click(function (e) {
@@ -220,7 +239,6 @@ $(document).ready(function () {
                                 content.find("#" + tag._id).addClass("selected");
                             },
                             click: function (tag) {
-                                console.log(tag);
                                 content.find("#" + tag._id).removeClass("selected");
                             }
                         });
@@ -382,12 +400,73 @@ $(document).ready(function () {
         fauxInput.click(toggle);
     };
 
+    var telephoneField = function () {
+        var fieldWrapper = $(this).closest(".field-wrapper");
+        var hasValue = function () {
+            var hasValue = false;
+            fieldWrapper.find("input").each(function () {
+                hasValue = hasValue || ($(this).val() ? true : false);
+            });
+            return hasValue;
+        };
+        $(this).addClass("has-events");
+        fieldWrapper.find("input, select").focus(function () {
+            fieldWrapper.addClass("focus");
+        });
+        fieldWrapper.find("input, select").blur(function () {
+            fieldWrapper[hasValue() ? "addClass" : "removeClass"]("has-value");
+            fieldWrapper.removeClass("focus");
+        });
+        fieldWrapper.find("select").change(function () {
+            fieldWrapper.find("input:first").val($(this).val());
+        });
+        fieldWrapper.find("select")
+            .bind("focus", function (e) {
+                fieldWrapper.find("input:first").attr("placeholder", "+00");
+            })
+            .bind("blur", function (e) {
+                fieldWrapper.find("input:first").removeAttr("placeholder");
+            });
+        fieldWrapper.find("input:last").keydown(validateNumber);
+        fieldWrapper.find("input:last")
+            .bind("focus", function (e) {
+                $(this).val($(this).val().replace(/\-/g, ""));
+                $(this).attr("placeholder", "00-000-0000");
+            })
+            .bind("blur", function (e) {
+                $(this).removeAttr("placeholder");
+
+                if ($(this).val().length <= 7)
+                    return;
+
+                var cleanedVal = $(this).val().replace(/\s|\(|\)|\-/g, "");
+
+                if (cleanedVal[0] === "0")
+                    cleanedVal = cleanedVal.substring(1);
+
+                var val = cleanedVal.split("").reverse();
+                var newVal = []
+                    .concat(val.slice(0, 4))
+                    .concat(["-"])
+                    .concat(val.slice(4, 7))
+                    .concat(["-"])
+                    .concat(val.slice(7));
+                $(this).val(newVal.reverse().join(""));
+            })
+            .bind("paste", function (e) {
+                validateNumber({ ctrlKey: true, which: "V", preventDefault: e.preventDefault });
+            });
+    };
+
     Shared.showOverlay = function (args) {
         var overlay = $("<div class=\"overlay\" />");
         overlay.click(Shared.hideOverlay);
         args.content.addClass("overlay-content");
         $("body").append(overlay);
-        $("body").append(args.content);
+        overlay.append(args.content);
+        args.content.click(function (e) {
+            e.stopPropagation();
+        });
         args.callback && args.callback();
         Shared.inputFields();
         setTimeout(function () {
@@ -396,15 +475,19 @@ $(document).ready(function () {
             args.content.addClass("show");
         }, 100);
     };
-    Shared.hideOverlay = function (args) {
-        $(".overlay, .overlay-content").removeClass("show");
-        $(".wrapper").removeClass("mask");
+    Shared.hideOverlay = function (e, ctx) {
+        var overlay = ctx || $(this);
+        var content = overlay.find(".overlay-content");
+        content.removeClass("show");
+        overlay.removeClass("show");
         setTimeout(function () {
-            $(".overlay, .overlay-content").remove();
+            content.remove();
+            overlay.remove();
         }, 350);
     };
     Shared.inputFields = function () {
-        $(".field-wrapper input:not(.has-events), .field-wrapper textarea:not(.has-events)").each(validations);
+        $(".field-wrapper:not(.telephone) input:not(.has-events), .field-wrapper textarea:not(.has-events), .field-wrapper:not(.telephone) select:not(.has-events)").each(validations);
+        $(".field-wrapper.telephone select:not(.has-events)").each(telephoneField);
         $(".activity-tags:not(.has-search-events)").each(activityTags);
         $(".toggle-wrapper button:not(.has-events)").each(toggleField);
         $(".checkbox-option:not(.has-events)").each(checkboxField);
@@ -466,7 +549,7 @@ $(document).ready(function () {
         return navigator.geolocation.getCurrentPosition(function (position) {
             args && args.callback(position);
         }, function (err) {
-			args && args.callback();
+            args && args.callback();
         });
     };
 });

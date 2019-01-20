@@ -79,4 +79,16 @@ export default Controller.create('/')
 
                 res.render('home', renderArgs);
             });
-    });
+    })
+    .handle({ route: '/terms-and-conditions', method: 'get', produces: 'html' }, (req, res) =>
+        res.render('terms-and-conditions', {
+            authentication: req.authentication,
+            title: 'Terms & Conditions - BoredPass'
+        })
+    )
+    .handle({ route: '/frequently-asked-questions', method: 'get', produces: 'html' }, (req, res) =>
+        res.render('faq', {
+            authentication: req.authentication,
+            title: 'Frequently Asked Questions - BoredPass'
+        })
+    );

@@ -1,0 +1,15 @@
+﻿include ../mixins/listing_card
+
+form#add_listing_result.active
+  if success
+    p Your listing has been successfully created!
+  else
+    p There was a problem creating your listing. Please try again.
+  if success
+    hr
+    h2 What now?
+    if isModerator
+      p You can access the listing from either your profile or using the listing card below. It will now start appearing in searches.
+    else
+      p You can access the listing from either your profile or using the listing card below. Once it has been approved, it will start appearing in searches.
+    +listing_card(listing)

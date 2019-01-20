@@ -9,6 +9,8 @@ html
     link(rel='stylesheet', href='/css/boredpass.min.css')
     link(rel='stylesheet', href='/css/sign_in.min.css')
     link(rel='stylesheet', href='/css/search.min.css')
+    link(rel='stylesheet', href='/css/listing_wizard.min.css')
+    link(rel='stylesheet', href='/css/content_management.min.css')
     link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.1.0/css/all.css', integrity='sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt', crossorigin='anonymous')
     block css
     script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
@@ -16,6 +18,7 @@ html
     script(type='text/javascript', src='/js/shared.js')
     script(type='text/javascript', src='/js/auth.js')
     script(type='text/javascript', src='/js/search.js')
+    script(type='text/javascript', src='/js/add_listing.js')
     block js
   body
     - var isAuthenticated = authentication && authentication.isAuthenticated
@@ -47,18 +50,22 @@ html
         nav
           h1 Bored Pass
           div
-            a Register
-            a Sign In
+            if isAuthenticated
+              a My Profile
+              a(href="/secure/sign-out").sign-out Sign Out
+            if !isAuthenticated
+              a(href="/secure/register").register Register
+              a(href="/secure/sign-in").sign-in Sign In
         nav
           h1.no-content
           div
-            a Add a Listing
+            a(href="/listings/add").add-listing Add a Listing
             a Add an Activity
         nav
           h1.no-content
           div
-            a Terms & Conditions
-            a FAQ
+            a(href="/terms-and-conditions") Terms & Conditions
+            a(href="/frequently-asked-questions") FAQ
         nav
           h1 Get in touch
           div

@@ -1,4 +1,5 @@
-﻿import { Controller, konsole } from '../../../handlr/_all';
+﻿import config from '../../../config';
+import { Controller, konsole } from '../../../handlr/_all';
 import { ListingsService, ActivitiesService, TagsService } from '../../services/_all';
 import { StringUtils } from '../../utils';
 import marked from 'marked';
@@ -44,7 +45,8 @@ export default new Controller('/categories')
             res.status(500);
             res.render('error', {
                 error: {
-                    status: 500
+                    status: 500,
+                    stack: config.app.debug && err.stack
                 },
                 message: `Something unexpected happened: ${err}`
             });

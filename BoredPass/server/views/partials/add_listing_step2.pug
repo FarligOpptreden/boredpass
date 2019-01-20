@@ -1,30 +1,27 @@
-﻿form#add_listing_2
-  div.instructions-template
-    p BoredPass thrives on information, so the more you supply us, the better we can serve you and your clients.
-    p You deserve to be found, so do us a solid and fill in as much as you can, even if the fields in question aren't mandatory.
-  div.field-wrapper
-    label(for='telephone') Telephone number
-    input#telephone.validate-number(type='text')
-  div.field-wrapper
-    label(for='cellphone') Cell phone number
-    input#cellphone.validate-number(type='text')
+﻿include ../mixins/telephone_number
+
+form#add_listing_2
+  p BoredPass thrives on information, so the more you supply us, the better we can serve you and your clients. You deserve to be found, so do us a solid and fill in as much as you can, even if the fields in question aren't mandatory.
+  hr
+  +telephone_number('telephone', 'Telephone number', '', '', countries)
+  +telephone_number('cellphone', 'Cell phone number', '', '', countries)
   div.field-wrapper
     label(for='email') Email address*
-    input#email.mandatory.validate-email(type='email')
+    input#email.mandatory.validate-email(type='email', autocomplete='new-email')
   div.social
     div.links
-      a.facebook.fa.fa-facebook.active(title='Facebook')
-      a.twitter.fa.fa-twitter(title='Twitter')
-      a.google.fa.fa-google-plus(title='Google+')
-      a.instagram.fa.fa-instagram(title='Instagram')
-      a.pinterest.fa.fa-pinterest-p(title='Pinterest')
-      a.youtube.fa.fa-youtube-play(title='Youtube')
-    input#social-facebook(type='text', placeholder='Paste your Facebook link here')
-    input#social-twitter.hidden(type='text', placeholder='Paste your Twitter link here')
-    input#social-google.hidden(type='text', placeholder='Paste your Google+ link here')
-    input#social-instagram.hidden(type='text', placeholder='Paste your Instagram link here')
-    input#social-pinterest.hidden(type='text', placeholder='Paste your Pinterest link here')
-    input#social-youtube.hidden(type='text', placeholder='Paste your Youtube link here')
+      a.facebook.fab.fa-facebook-f.active(title='Facebook')
+      a.twitter.fab.fa-twitter(title='Twitter')
+      a.google.fab.fa-google(title='Google+')
+      a.instagram.fab.fa-instagram(title='Instagram')
+      a.pinterest.fab.fa-pinterest-p(title='Pinterest')
+      a.youtube.fab.fa-youtube(title='Youtube')
+    input#social-facebook(type='text', placeholder='Paste your Facebook link here', autocomplete='new-social-facebook')
+    input#social-twitter.hidden(type='text', placeholder='Paste your Twitter link here', autocomplete='new-social-twitter')
+    input#social-google.hidden(type='text', placeholder='Paste your Google+ link here', autocomplete='new-social-google')
+    input#social-instagram.hidden(type='text', placeholder='Paste your Instagram link here', autocomplete='new-social-instagram')
+    input#social-pinterest.hidden(type='text', placeholder='Paste your Pinterest link here', autocomplete='new-social-pinterest')
+    input#social-youtube.hidden(type='text', placeholder='Paste your Youtube link here', autocomplete='new-social-youtube')
   div.field-wrapper.textarea
     label(for='description') Give a brief description about your business*
     textarea#description.mandatory

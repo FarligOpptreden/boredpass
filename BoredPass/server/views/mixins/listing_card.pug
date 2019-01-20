@@ -1,4 +1,4 @@
-﻿mixin listing_card(listing)
+﻿mixin listing_card(listing, bearingLabel)
   - var description = listing.description && listing.description.length > 150 ? listing.description.substring(0, 150) + '...' : listing.description;
   - var tags = listing.tags && listing.tags.length ? listing.tags.map(t => t.name) : [];
   - tags = tags.length > 5 ? tags.slice(0, 5).join(', ') + ' + ' + tags.slice(5).length + ' more' : tags.join(', ');
@@ -14,7 +14,7 @@
           if (calculateBearing)
             span.compass
               span.rose(style="transform: rotate(" + calculateBearing(listing.location.coordinates, location) + "deg)")
-      span=listing.distance ? 'kms away' : locality
+      span=listing.distance ? 'kms away' + (bearingLabel || '') : locality
     a(href='/listings/' + listing._id + '/' + makeUrlFriendly(listing.name))
       div.banner(style=banner)
         span.logo(style=logo)

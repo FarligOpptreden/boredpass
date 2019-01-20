@@ -1,4 +1,4 @@
-﻿mixin activities(data, editable)
+﻿mixin activities(data, editable, fromListing)
   if (data && data.length) || editable
     section.listing-section.activities-overview&attributes(attributes)
       div
@@ -7,7 +7,7 @@
           each activity, index in data
             if activity && activity.icon
               - var className = 'icon-bored-pass_' + activity.icon.toLowerCase().replace(/ /g, '-')
-              div.activity
+              a(href=`/search/1?tags=${activity._id}&listing=${fromListing || ''}`).activity
                 span.activity.icon.boredpass(class=className)
                 span=activity.name
         if editable

@@ -1,4 +1,5 @@
-﻿import Controller from '../../../handlr/Controller';
+﻿import config from '../../../config';
+import Controller from '../../../handlr/Controller';
 import { TagsService, ContentService } from '../../services/_all';
 
 export default new Controller('/libraries')
@@ -20,15 +21,13 @@ export default new Controller('/libraries')
             authentication: req.authentication,
             tags: tags
         }))
-        .catch(err => {
-            res.status(500);
-            res.render('error', {
-                error: {
-                    status: 500
-                },
-                message: `Something unexpected happened: ${err}`
-            });
-        })
+        .catch(err => res.status(500).render('error', {
+            error: {
+                status: 500,
+                stack: config.app.debug && err.stack
+            },
+            message: `Something unexpected happened: ${err}`
+        }))
     )
     .handle({ route: '/banners/list', method: 'get', produces: 'html' }, (req, res) => ContentService
         .listBanners(null)
@@ -38,13 +37,11 @@ export default new Controller('/libraries')
                 banners: files
             })
         )
-        .catch(err => {
-            res.status(500);
-            res.render('error', {
-                error: {
-                    status: 500
-                },
-                message: `Something unexpected happened: ${err}`
-            });
-        })
+        .catch(err => res.status(500).render('error', {
+            error: {
+                status: 500,
+                stack: config.app.debug && err.stack
+            },
+            message: `Something unexpected happened: ${err}`
+        }))
     );

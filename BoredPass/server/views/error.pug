@@ -1,14 +1,13 @@
 ﻿extends _layout
 
-block css
-  link(rel='stylesheet', href='/css/listing.min.css')
-  link(rel='stylesheet', href='/css/adding.min.css')
-
 block content
   section.banner
+    header.banner-image.home
+    div.cover
     div
-      h1 Uh-oh, <strong>something went wrong<strong>
-  section.listing-section.white
+      h2 Uh-oh
+      h1 Something went wrong
+  section.body.error
     div
       h1 #{error.status}: #{message}
       if error.stack

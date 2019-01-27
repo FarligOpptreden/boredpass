@@ -65,11 +65,12 @@
   right: 0;
   bottom: 0;
   top: 80px;
-  padding: 40px;
+  padding: 40px 40px 0 40px;
   overflow: auto;
 }
 .add-listing-modal .wizard-content form {
   display: none;
+  margin-bottom: 40px;
 }
 .add-listing-modal .wizard-content form.active {
   display: block;
@@ -296,34 +297,6 @@
   font-size: 24px;
   z-index: 101;
 }
-@keyframes no-no {
-  0% {
-    transform: translateX(0);
-  }
-  20% {
-    transform: translateX(-20px);
-  }
-  40% {
-    transform: translateX(15px);
-  }
-  60% {
-    transform: translateX(-10px);
-  }
-  80% {
-    transform: translateX(5px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-@keyframes duplicates {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
 @media all and (max-width: 970px) {
   .add-listing-modal {
     width: auto;
@@ -331,6 +304,14 @@
     right: 5px;
     margin-left: 0;
     padding: 30px;
+  }
+}
+@media all and (max-width: 700px) {
+  .add-listing-modal .wizard-content {
+    padding: 20px 10px 0 10px;
+  }
+  .add-listing-modal .wizard-content form {
+    margin-bottom: 10px;
   }
 }
 @media all and (max-width: 400px) {

@@ -13,7 +13,8 @@ export default new Controller('/categories')
         category: ListingsService.mappedCategory(req.params.name),
         urlCategory: req.params.name,
         listings: [],
-        skip: (req.query.skip || 0) + (req.query.limit || 12)
+        skip: (req.query.skip || 0) + (req.query.limit || 12),
+        categories: req.listing_categories
     }))
     .handle({ route: '/:name/:skip', method: 'get', produces: 'html' }, (req, res) => ListingsService
         .listingsByCategory({

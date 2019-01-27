@@ -1,6 +1,8 @@
 ﻿import config from '../../config';
 import { BasicCrudPromises, konsole } from '../../handlr/_all';
 
+let CATEGORY_CACHE = null;
+
 class Tags extends BasicCrudPromises {
     constructor() {
         super(config.connectionStrings.boredPass, 'tags');
@@ -8,6 +10,9 @@ class Tags extends BasicCrudPromises {
 
     uniqueCategories() {
         return new Promise((resolve, reject) => {
+            if (CATEGORY_CACHE)
+                return resolve(CATEGORY_CACHE);
+
             this.aggregate({
                 pipeline: [
                     {
@@ -32,7 +37,10 @@ class Tags extends BasicCrudPromises {
                     }
                 ]
             })
-                .then(d => resolve(d))
+                .then(d => {
+                    CATEGORY_CACHE = d;
+                    resolve(d)
+                })
                 .catch(err => {
                     konsole.error(err.toString());
                     reject(err.toString());

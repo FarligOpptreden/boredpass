@@ -95,7 +95,7 @@ block content
   +facilities(listing.facilities).alternating
   +photos(listing.photos).alternating
 
-  if activities && activities.length
+  //-if activities && activities.length
     section.listing-section.activities.alternating
       div
         h1 Our Experiences
@@ -115,8 +115,8 @@ block content
         div
           each listing in related
             +listing_card(listing, ' from listing')
-  //-
-    section.listing-section.events
+
+  //-section.listing-section.events
       div.calendar
       div.agenda
         div

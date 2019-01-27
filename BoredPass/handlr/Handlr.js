@@ -86,7 +86,8 @@ export default class Handlr {
         res.status(err.status || 500);
         res.render('error', {
           message: err.message,
-          error: err
+          error: err,
+          req: req
         });
       });
     }
@@ -95,7 +96,8 @@ export default class Handlr {
       konsole.error(`Uncaught controller exception: ${JSON.stringify(err)}`);
       res.render('error', {
         message: err.message,
-        error: {}
+        error: {},
+        req: req
       });
     });
     if (MIDDLEWARE && MIDDLEWARE.length)

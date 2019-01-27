@@ -18,8 +18,30 @@ $(document).ready(function () {
             }
         });
     });
+    $("#header a.user-profile").click(function (e) {
+        e.preventDefault();
+        var profile = $(this);
+        $(this).next(".menu-box").each(function () {
+            if ($(this).hasClass("open")) {
+                $(this).removeClass("open");
+                $("body .menu-box-cover").remove();
+                return;
+            }
+
+            $(this).addClass("open");
+            $(this).find(".arrow-top").css("left", profile.outerWidth() > 160 ? 16 : 160 - profile.outerWidth() + 16);
+            $(this).css("margin-right", profile.outerWidth() > 160 ? profile.outerWidth() - 160 : 0);
+            $("body").append($("<div />", {
+                class: "menu-box-cover",
+                click: function (e) {
+                    $("#header a.user-profile").trigger("click");
+                }
+            }));
+        });
+    });
     $("#header a.sign-out, #footer a.sign-out").click(function (e) {
         e.preventDefault();
+        $(this).closest("#header").length && $("#header a.user-profile").trigger("click");
         Shared.confirm({
             message: "Are you sure you want to sign out of your account?",
             positive: {

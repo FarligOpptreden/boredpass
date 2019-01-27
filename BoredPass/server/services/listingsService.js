@@ -30,7 +30,6 @@ class Listings extends BasicCrudPromises {
     }
 
     calculateBearing(start, end) {
-        konsole.log('HERE', '>>>>>');
         let x1 = start[1];
         let x2 = end[1];
         let y1 = start[0];

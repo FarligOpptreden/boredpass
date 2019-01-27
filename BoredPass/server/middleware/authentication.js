@@ -1,5 +1,5 @@
-﻿import { konsole, CliColors } from '../../handlr/_all';
-import { SecurityService } from '../services/_all';
+﻿import { SecurityService } from '../services/_all';
+import { StringUtils } from '../utils';
 
 export default class Authorization {
     static get(app) {
@@ -13,7 +13,8 @@ export default class Authorization {
                 .then(r => {
                     req.authentication = {
                         isAuthenticated: r ? true : false,
-                        user: r
+                        user: r,
+                        utils: StringUtils
                     };
                     next();
                 })

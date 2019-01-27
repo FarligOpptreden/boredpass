@@ -8,7 +8,8 @@ import moment from 'moment';
 export default new Controller('/search')
     .handle({ route: '/load', method: 'get', produces: 'html' }, (req, res) => {
         res.render('partials/find', {
-            moment: require('moment')
+            moment: require('moment'),
+            categories: req.listing_categories
         });
     })
     .handle({ route: '/location', method: 'get', produces: 'html' }, (req, res) => LocationService.search({
@@ -36,6 +37,7 @@ export default new Controller('/search')
             let tags = (r.tags && r.tags.map(t => t.name).join(', ')) || 'Experiences';
             let distance = req.query.distance && `within ${req.query.distance}km from` || 'around';
             let place = req.query.place || 'you';
+            let query = '?' + Object.keys(req.query).map(q => `${q}=${req.query[q]}`).join('&');
             res.render('search', {
                 title: `${tags} ${distance} ${place} - BoredPass`,
                 authentication: req.authentication,
@@ -55,8 +57,9 @@ export default new Controller('/search')
                 },
                 location: r.location,
                 calculateBearing: ListingsService.calculateBearing,
-                prevLink: pageNo > 1 && `/search/${pageNo - 1}?tags=${req.query.tags}&distance=${req.query.distance}&lat=${req.query.lat}&lon=${req.query.lon}`,
-                nextLink: (!r.recommended || !r.recommended.length) && `/search/${pageNo + 1}?tags=${req.query.tags}&distance=${req.query.distance}&lat=${req.query.lat}&lon=${req.query.lon}`
+                prevLink: pageNo > 1 && `/search/${pageNo - 1}${query}`,
+                nextLink: (!r.recommended || !r.recommended.length) && `/search/${pageNo + 1}${query}`,
+                categories: req.listing_categories
             });
         })
         .catch(err => res.status(500).render('error', {
@@ -64,6 +67,7 @@ export default new Controller('/search')
                 status: 500,
                 stack: config.app.debug && err.stack
             },
-            message: `Something unexpected happened: ${err}`
+            message: `Something unexpected happened: ${err}`,
+            categories: req.listing_categories
         }))
     );

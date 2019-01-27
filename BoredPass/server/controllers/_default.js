@@ -22,10 +22,9 @@ export default Controller.create('/')
 
         if (promise) {
             let categories = [];
-            return TagsService
-                .uniqueCategories()
-                .then(cats => {
-                    categories = cats;
+            return Promise.resolve()
+                .then(_ => {
+                    categories = req.listing_categories;
                     return Promise.all(categories.map(c => {
                         let args = promiseArgs;
                         args.tags = c.tags;
@@ -39,7 +38,7 @@ export default Controller.create('/')
                         categories: categories.map((c, i) => {
                             return {
                                 category: c.category,
-                                urlCategory: c.category.toLowerCase().replace(/\s/g, '-').replace(/\&/g, 'and'),
+                                urlCategory: c.urlCategory,
                                 loading: false,
                                 listings: listings[i]
                             };
@@ -53,42 +52,41 @@ export default Controller.create('/')
                 );
         }
 
-        TagsService
-            .uniqueCategories()
-            .then(categories => {
-                let renderArgs = {
-                    title: 'Experiences Near You - BoredPass',
-                    categories: categories.map((c, i) => {
-                        return {
-                            category: c.category,
-                            urlCategory: encodeURIComponent(c.category).toLowerCase(),
-                            loading: true
-                        };
-                    }),
-                    moment: moment,
-                    marked: marked,
-                    minimalBanner: true,
-                    authentication: req.authentication
+        let renderArgs = {
+            title: 'Experiences Near You - BoredPass',
+            categories: req.listing_categories.map((c, i) => {
+                return {
+                    category: c.category,
+                    urlCategory: c.urlCategory,
+                    loading: true
                 };
-                if (req.authentication && req.authentication.user && req.authentication.user.permissions && req.authentication.user.permissions.viewStatistics)
-                    return ListingsService.statistics()
-                        .then(tags => {
-                            renderArgs.tags = tags;
-                            res.render('home', renderArgs);
-                        });
+            }),
+            moment: moment,
+            marked: marked,
+            minimalBanner: true,
+            authentication: req.authentication
+        };
 
-                res.render('home', renderArgs);
-            });
+        if (req.authentication && req.authentication.user && req.authentication.user.permissions && req.authentication.user.permissions.viewStatistics)
+            return ListingsService.statistics()
+                .then(tags => {
+                    renderArgs.tags = tags;
+                    res.render('home', renderArgs);
+                });
+
+        res.render('home', renderArgs);
     })
     .handle({ route: '/terms-and-conditions', method: 'get', produces: 'html' }, (req, res) =>
         res.render('terms-and-conditions', {
             authentication: req.authentication,
-            title: 'Terms & Conditions - BoredPass'
+            title: 'Terms & Conditions - BoredPass',
+            categories: req.listing_categories
         })
     )
     .handle({ route: '/frequently-asked-questions', method: 'get', produces: 'html' }, (req, res) =>
         res.render('faq', {
             authentication: req.authentication,
-            title: 'Frequently Asked Questions - BoredPass'
+            title: 'Frequently Asked Questions - BoredPass',
+            categories: req.listing_categories
         })
     );

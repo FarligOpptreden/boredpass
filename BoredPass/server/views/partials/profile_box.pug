@@ -1,0 +1,19 @@
+﻿- var isAuthenticated = authentication && authentication.isAuthenticated
+
+if isAuthenticated
+  - var initials = authentication.user.name.split(' ').splice(0, 2).map(p => p.substring(0, 1).toUpperCase()).join('');
+  - var surname = authentication.user.name.split(' ').slice(1).map(p => p.substring(0, 1).toLowerCase()).join(' ');
+  - var avatarColour = `background-color: ${authentication.utils.generateColour(surname)}`;
+
+  a.user-profile(href="/profile-options")= authentication.user.name.split(' ')[0]
+    span.avatar(style=avatarColour)= initials
+  div.menu-box
+    i.arrow-top
+    a.my-profile(href="/user/" + authentication.user._id) My Profile
+      span.fa.fa-user
+    a.sign-out(href="/secure/sign-out") Sign Out
+      span.fa.fa-power-off
+
+if !isAuthenticated
+  a.sign-in(href="/secure/sign-in") Sign In
+    span.fa.fa-user

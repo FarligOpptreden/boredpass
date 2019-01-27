@@ -171,28 +171,6 @@
   margin-right: 10px;
   background-color: rgba(0, 0, 0, 0.2);
 }
-@keyframes card-loading {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes compass {
-  0% {
-    transform: rotate(-5deg);
-  }
-  50% {
-    transform: rotate(5deg);
-  }
-  100% {
-    transform: rotate(-5deg);
-  }
-}
 .space-fixer {
   height: 1px;
   width: 100%;
@@ -947,30 +925,6 @@ section.banner .delete {
   opacity: 0;
   z-index: 0;
   display: block;
-}
-@-moz-keyframes fade-in {
-  0% {
-    background-color: transparent;
-  }
-  100% {
-    background-color: rgba(0, 0, 0, 0.75);
-  }
-}
-@-webkit-keyframes fade-in {
-  0% {
-    background-color: transparent;
-  }
-  100% {
-    background-color: rgba(0, 0, 0, 0.75);
-  }
-}
-@keyframes fade-in {
-  0% {
-    background-color: transparent;
-  }
-  100% {
-    background-color: rgba(0, 0, 0, 0.75);
-  }
 }
 @media only screen and (max-width: 1416px) {
   .listing-section.photos > div {

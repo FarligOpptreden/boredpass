@@ -35,7 +35,8 @@ export default new Controller('/listings')
                     status: 403,
                     stack: config.app.debug && err.stack
                 },
-                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
+                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?',
+                categories: req.listing_categories
             });
 
         FacilitiesService.findMany({ sort: { name: 1 } })
@@ -44,7 +45,8 @@ export default new Controller('/listings')
                     authentication: req.authentication,
                     title: 'Add Listing - BoredPass',
                     moment: require('moment'),
-                    facilities: facilities
+                    facilities: facilities,
+                    categories: req.listing_categories
                 })
             )
             .catch(err => res.status(500).render('error', {
@@ -52,7 +54,8 @@ export default new Controller('/listings')
                     status: 500,
                     stack: config.app.debug && err.stack
                 },
-                message: `Something unexpected happened: ${err}`
+                message: `Something unexpected happened: ${err}`,
+                categories: req.listing_categories
             }));
     })
     .handle({ route: '/add/wizard', method: 'get', produces: 'html' }, (req, res) => {
@@ -96,7 +99,8 @@ export default new Controller('/listings')
                     status: 403,
                     stack: config.app.debug && err.stack
                 },
-                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
+                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?',
+                categories: req.listing_categories
             });
 
         ListingsService.create({ data: req.body })
@@ -110,11 +114,16 @@ export default new Controller('/listings')
                 listing: result,
                 makeUrlFriendly: StringUtils.makeUrlFriendly,
                 marked: marked,
-                moment: require('moment')
+                moment: require('moment'),
+                categories: req.listing_categories
             }))
-            .catch(err => res.status(500).json({
-                success: false,
-                message: `Something unexpected happened: ${err}`
+            .catch(err => res.status(500).render('error', {
+                error: {
+                    status: 500,
+                    stack: config.app.debug && err.stack
+                },
+                message: `Something unexpected happened: ${err}`,
+                categories: req.listing_categories
             }));
     })
     .handle({ route: '/:id/added', method: 'get', produces: 'html' }, (req, res) => {
@@ -124,7 +133,8 @@ export default new Controller('/listings')
                     status: 403,
                     stack: config.app.debug && err.stack
                 },
-                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
+                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?',
+                categories: req.listing_categories
             });
 
         ListingsService.findOne({ filter: { _id: req.params.id } })
@@ -133,7 +143,8 @@ export default new Controller('/listings')
                     authentication: req.authentication,
                     title: 'Add Listing - BoredPass',
                     moment: require('moment'),
-                    listing: listing
+                    listing: listing,
+                    categories: req.listing_categories
                 })
             )
             .catch(err => res.status(500).render('error', {
@@ -141,7 +152,8 @@ export default new Controller('/listings')
                     status: 500,
                     stack: config.app.debug && err.stack
                 },
-                message: `Something unexpected happened: ${err}`
+                message: `Something unexpected happened: ${err}`,
+                categories: req.listing_categories
             }));
     })
     .handle({ route: '/:id', method: 'get', produces: 'html' }, (req, res) => {
@@ -166,7 +178,8 @@ export default new Controller('/listings')
                     listing: _listing,
                     activities: _activities,
                     related: related,
-                    makeUrlFriendly: StringUtils.makeUrlFriendly
+                    makeUrlFriendly: StringUtils.makeUrlFriendly,
+                    categories: req.listing_categories
                 })
             )
             .catch(err => res.status(500).render('error', {
@@ -174,7 +187,8 @@ export default new Controller('/listings')
                     status: 500,
                     stack: config.app.debug && err.stack
                 },
-                message: `Something unexpected happened: ${err}`
+                message: `Something unexpected happened: ${err}`,
+                categories: req.listing_categories
             }));
     })
     .handle({ route: '/:id/edit', method: 'get', produces: 'html' }, (req, res) => {
@@ -184,7 +198,8 @@ export default new Controller('/listings')
                     status: 403,
                     stack: config.app.debug && err.stack
                 },
-                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
+                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?',
+                categories: req.listing_categories
             });
 
         let _listing, _facilities, _activities;
@@ -228,7 +243,8 @@ export default new Controller('/listings')
                     marked: marked,
                     listing: _listing,
                     activities: _activities,
-                    facilities: _facilities
+                    facilities: _facilities,
+                    categories: req.listing_categories
                 })
             )
             .catch(err => res.status(500).render('error', {
@@ -236,7 +252,8 @@ export default new Controller('/listings')
                     status: 500,
                     stack: config.app.debug && err.stack
                 },
-                message: `Something unexpected happened: ${err}`
+                message: `Something unexpected happened: ${err}`,
+                categories: req.listing_categories
             }));
     })
     .handle({ route: '/:id/edit', method: 'put', produces: 'json' }, (req, res) => {
@@ -302,7 +319,8 @@ export default new Controller('/listings')
                     related: related,
                     makeUrlFriendly: StringUtils.makeUrlFriendly,
                     location: (_listing.location && _listing.location.coordinates) || null,
-                    calculateBearing: ListingsService.calculateBearing
+                    calculateBearing: ListingsService.calculateBearing,
+                    categories: req.listing_categories
                 })
             )
             .catch(err => res.status(500).render('error', {
@@ -310,6 +328,7 @@ export default new Controller('/listings')
                     status: 500,
                     stack: config.app.debug && err.stack
                 },
-                message: `Something unexpected happened: ${err}`
+                message: `Something unexpected happened: ${err}`,
+                categories: req.listing_categories
             }));
     });

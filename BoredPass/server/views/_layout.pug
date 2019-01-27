@@ -25,7 +25,7 @@ html
     header#header
       nav
         div
-          a.logo.small(href='/')
+          a.logo.small(href="/")
           if !minimalBanner
             a.find(href="/find") Find
               span.fa.fa-search
@@ -35,14 +35,9 @@ html
             if isAuthenticated && authentication.user.permissions && authentication.user.permissions.claimListing
               a.claim Claim
                 span.fa.fa-hand-pointer
-          if isAuthenticated
-            a.sign-out(href="/secure/sign-out") Sign Out
-              span.fa.fa-user
-          if !isAuthenticated
-            a.sign-in(href="/secure/sign-in") Sign In
-              span.fa.fa-user
+          include partials/profile_box
       nav
-        a.logo(href='/')
+        a.logo(href="/")
     article#body
       block content
     footer#footer
@@ -51,18 +46,18 @@ html
           h1 Bored Pass
           div
             if isAuthenticated
-              a My Profile
+              a(href="/user/" + authentication.user._id) My Profile
               a(href="/secure/sign-out").sign-out Sign Out
             if !isAuthenticated
               a(href="/secure/register").register Register
               a(href="/secure/sign-in").sign-in Sign In
         nav
-          h1.no-content
+          h1 Explore
           div
-            a(href="/listings/add").add-listing Add a Listing
-            a Add an Activity
+            each cat in (categories || (req && req.listing_categories) || [])
+              a(href='/categories/' + cat.urlCategory + '/')= cat.category
         nav
-          h1.no-content
+          h1 Read
           div
             a(href="/terms-and-conditions") Terms & Conditions
             a(href="/frequently-asked-questions") FAQ

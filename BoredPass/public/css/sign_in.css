@@ -122,26 +122,6 @@
   text-decoration: none;
   font-size: 24px;
 }
-@keyframes no-no {
-  0% {
-    transform: translateX(0);
-  }
-  20% {
-    transform: translateX(-20px);
-  }
-  40% {
-    transform: translateX(15px);
-  }
-  60% {
-    transform: translateX(-10px);
-  }
-  80% {
-    transform: translateX(5px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
 @media all and (max-width: 510px) {
   .sign-in-modal {
     width: auto;

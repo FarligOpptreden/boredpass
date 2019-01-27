@@ -26,6 +26,17 @@ class _Utils {
             return null;
         }
     }
+
+    generateColour(str) {
+        let hash = 0;
+        let saturation = 50;
+        let lightness = 70;
+
+        for (var i = 0; i < str.length; i++)
+            hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        
+        return `hsl(${hash % 360}, ${saturation}%, ${lightness}%)`;
+    }
 }
 
 export const StringUtils = new _Utils();

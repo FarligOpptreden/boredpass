@@ -17,7 +17,8 @@ export default new Controller('/activities')
                     status: 403,
                     stack: config.app.debug && err.stack
                 },
-                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
+                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?',
+                categories: req.listing_categories
             });
             return;
         }
@@ -27,7 +28,8 @@ export default new Controller('/activities')
             title: 'Add Activity - BoredPass',
             mode: 'new',
             moment: require('moment'),
-            listing_id: req.query.listing
+            listing_id: req.query.listing,
+            categories: req.listing_categories
         });
     })
     .handle({ route: '/:id/add', method: 'post', produces: 'json' }, (req, res) => {
@@ -65,7 +67,8 @@ export default new Controller('/activities')
                     status: 403,
                     stack: config.app.debug && err.stack
                 },
-                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
+                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?',
+                categories: req.listing_categories
             });
             return;
         }
@@ -73,7 +76,8 @@ export default new Controller('/activities')
         res.render('add_listing_done', {
             authentication: req.authentication,
             title: 'Activity Added - BoredPass',
-            moment: require('moment')
+            moment: require('moment'),
+            categories: req.listing_categories
         });
     })
     .handle({ route: '/:id', method: 'get', produces: 'html' }, (req, res) =>
@@ -87,7 +91,8 @@ export default new Controller('/activities')
                     listing: listing,
                     activity: activity,
                     marked: marked,
-                    moment: require('moment')
+                    moment: require('moment'),
+                    categories: req.listing_categories
                 })
             )
             .catch(err => {
@@ -97,7 +102,8 @@ export default new Controller('/activities')
                         status: 500,
                         stack: config.app.debug && err.stack
                     },
-                    message: `Something unexpected happened: ${err}`
+                    message: `Something unexpected happened: ${err}`,
+                    categories: req.listing_categories
                 });
             })
     )
@@ -109,7 +115,8 @@ export default new Controller('/activities')
                     status: 403,
                     stack: config.app.debug && err.stack
                 },
-                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?'
+                message: 'You seem to have stumbled where you don\'t belong. Are you perhaps looking for something else?',
+                categories: req.listing_categories
             });
             return;
         }
@@ -121,7 +128,8 @@ export default new Controller('/activities')
                     title: `Edit ${activity.name} - BoredPass`,
                     mode: 'edit',
                     activity: activity,
-                    moment: require('moment')
+                    moment: require('moment'),
+                    categories: req.listing_categories
                 })
             )
             .catch(err => {
@@ -131,7 +139,8 @@ export default new Controller('/activities')
                         status: 500,
                         stack: config.app.debug && err.stack
                     },
-                    message: `Something unexpected happened: ${err}`
+                    message: `Something unexpected happened: ${err}`,
+                    categories: req.listing_categories
                 });
             });
     })

@@ -1,0 +1,421 @@
+﻿@import "__variables.less";
+
+@media only screen and (max-width: 1416px) {
+    .listing-section.photos > div {
+        max-width: @site-width - 112;
+    }
+}
+
+@media only screen and (max-width: 1320px) {
+    section.banner > div {
+        margin: 0 20px;
+    }
+
+    .listing-section {
+        max-width: 100%;
+        width: 100%;
+        padding: 0 20px;
+        margin: 0;
+
+        &.overview {
+            padding: 0 20px;
+            padding-bottom: 20px;
+
+            &:not(.photos) {
+                padding-bottom: 20px;
+            }
+
+            & > div:nth-child(2) {
+                width: auto;
+            }
+
+            & > div:last-of-type {
+                flex: 0 0 100%;
+                min-height: 48px;
+            }
+        }
+
+        &:not(.overview) > div {
+            width: 100%;
+            margin: 0;
+            padding: 30px 0;
+        }
+
+        &.photos {
+            width: auto;
+            min-height: 0;
+            padding: 0;
+
+            & > div {
+                margin: 0 50px;
+                min-height: 0;
+
+                & > a.next {
+                    right: -45px;
+
+                    &.hidden {
+                        right: -50px;
+                    }
+                }
+
+                & > a.prev {
+                    left: -45px;
+
+                    &.hidden {
+                        left: -50px;
+                    }
+                }
+            }
+        }
+
+        &.events {
+            margin: 0;
+            padding: 0;
+        }
+
+        &.activities > div {
+            padding-bottom: 10px;
+        }
+
+        &.lower {
+            padding: 30px 10px;
+        }
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .listing-section {
+        &.activities-overview .activity, &.facilities .facility {
+            width: 33.3%;
+        }
+
+        &.activities .activity {
+            width: 49%;
+            margin: 0 1% 2% 1% !important;
+
+            &:nth-child(odd) {
+                margin-left: 0 !important;
+            }
+
+            &:nth-child(even) {
+                margin-right: 0 !important;
+            }
+        }
+    }
+
+    .light-box {
+        .close {
+            top: 0;
+            left: auto;
+            right: 0;
+            margin: 0;
+        }
+
+        .next {
+            top: 50px;
+            bottom: 0;
+            right: 0;
+            left: auto;
+            margin: 0;
+            height: auto;
+        }
+
+        .prev {
+            top: 50px;
+            bottom: 0;
+            right: auto;
+            left: 0;
+            margin: 0;
+            height: auto;
+        }
+
+        .photo {
+            left: 50px;
+            right: 50px;
+            bottom: 0;
+            top: 50px;
+            margin: auto;
+            height: auto;
+            width: auto;
+        }
+    }
+
+    .listing-section.related > div > div {
+        flex-wrap: wrap;
+
+        .listing.card {
+            min-width: 40%;
+            max-width: 50%;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+
+    #header {
+        height: 260px;
+    }
+
+    section.banner {
+        height: 260px;
+
+        > div {
+            height: 130px;
+        }
+    }
+
+    .listing-section {
+        &.overview {
+            display: block;
+
+            & > div:first-of-type {
+                flex: none !important;
+                max-width: 100% !important;
+                padding-top: 1px;
+
+                .logo {
+                    height: 140px;
+                    width: 140px;
+                    left: 50%;
+                    margin-left: -70px;
+                    margin-top: -70px;
+                    border-width: 5px;
+                }
+            }
+
+            &.activity {
+                & > div:first-of-type .photo {
+                    width: auto;
+                    margin-top: -130px;
+                }
+
+                & > div:nth-child(2) {
+                    padding: 20px 0 0 0;
+                }
+            }
+
+            & > div:nth-child(2) {
+                padding: 20px 0 50px 0;
+                margin-top: 10px;
+                border-top: solid 1px @col-grey;
+            }
+
+            &:not(.activity) {
+                & > div:first-of-type {
+                    .location {
+                        margin-top: 80px;
+                    }
+                }
+            }
+        }
+
+        &.activities-overview .activity, &.facilities .facility {
+            width: 50%;
+        }
+
+        &.events {
+            display: block;
+
+            & > div {
+                flex: none;
+                min-height: 200px;
+            }
+
+            & .agenda > div {
+                padding: 20px;
+            }
+        }
+
+        &.find-more {
+            & > div {
+                & > h1 {
+                    display: block;
+                    text-align: center;
+                    line-height: 1.3;
+                }
+
+                & > a {
+                    float: none;
+                    display: block;
+                    width: 100px;
+                    margin: 10px auto 0 auto;
+                }
+            }
+        }
+
+        &.prices > div .price {
+            width: 50%;
+        }
+    }
+}
+
+@media only screen and (max-width: 670px) {
+    .listing-section {
+        &.overview {
+            & > div:nth-child(2) > .button {
+                right: 175px;
+            }
+
+            &.activity > div:nth-child(2) {
+                padding: 20px 0 30px 0;
+            }
+
+            & > div:last-of-type {
+                & > a {
+                    top: -57px;
+                }
+
+                .claimed {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                }
+            }
+        }
+
+        &.photos > div > div > .photo {
+            width: 25%;
+            padding-bottom: 25%;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    section.banner > div {
+        margin-top: 30px;
+    }
+
+    .light-box {
+        top: 30px;
+    }
+
+    .listing-section.related > div > div {
+        display: block;
+        margin: 0;
+
+        .listing.card {
+            flex: none;
+            margin: 10px 0;
+            max-width: none;
+        }
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .listing-section {
+        &.activities-overview .activity, &.facilities .facility {
+            width: 100%;
+        }
+
+        &.overview {
+            & > div:last-of-type {
+                .claimed {
+                    height: 46px;
+                    width: 46px;
+
+                    & > span:not(.fa) {
+                        font-size: 0;
+                    }
+
+                    & > span.fa {
+                        left: 50%;
+                        margin-left: -10px;
+                        margin-top: -11px;
+                    }
+                }
+
+                & > .message {
+                    right: 50px;
+                }
+
+                & > .add {
+                    right: 100px;
+                }
+            }
+
+            & > div:nth-child(2) > .button {
+                right: 145px;
+            }
+        }
+
+        &.photos > div > div > .photo {
+            width: 50%;
+            padding-bottom: 50%;
+        }
+
+        &.activities {
+            & > div {
+                padding-bottom: 20px;
+            }
+
+            .activity {
+                width: 100%;
+                margin: 0 0 10px 0 !important;
+
+                &:last-child {
+                    margin-bottom: 0 !important;
+                }
+            }
+        }
+
+        &.lower {
+            text-align: center;
+        }
+
+        &.prices > div .price {
+            width: 100%;
+        }
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .listing-section {
+        &.photos > div > div > .photo {
+            width: 100%;
+            padding-bottom: 100%;
+        }
+
+        &.overview {
+            & > div:last-of-type {
+                & .rating {
+                    padding: 0;
+
+                    & > label {
+                        display: none;
+                    }
+
+                    & .stars {
+                        position: relative;
+                    }
+                }
+
+                & > a {
+                    left: 50%;
+                }
+
+                & > .add {
+                    margin-left: -76px;
+                }
+
+                & > .message {
+                    margin-left: -17px;
+                }
+
+                & > .share {
+                    margin-left: 42px;
+                }
+            }
+
+            &:not(.activity) > div:nth-child(2) {
+                padding-bottom: 90px;
+
+                & > .button {
+                    right: auto;
+                    left: 50%;
+                    margin-left: -77px;
+                    bottom: 44px;
+                }
+            }
+        }
+    }
+}

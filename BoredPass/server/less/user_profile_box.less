@@ -1,0 +1,103 @@
+﻿@import "__variables.less";
+
+#header .user-profile {
+    padding-left: 45px !important;
+    text-align: left;
+
+    .avatar {
+        font-size: 12px;
+        text-shadow: none;
+        box-shadow: @box-shadow;
+        line-height: 36px;
+        width: 36px;
+        display: block;
+        border-radius: 18px;
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        margin-top: -18px;
+        color: #fff;
+        background-color: @col-main;
+        text-align: center;
+        transition: all 0.2s;
+    }
+}
+
+#header>nav:first-of-type.float .user-profile {
+    .avatar {
+        line-height: 30px;
+        width: 30px;
+        margin-top: -15px;
+        left: 8px;
+        font-size: 10px;
+    }
+}
+
+#header .user-profile + .menu-box {
+    position: absolute;
+    right: 0;
+    margin-top: 10px;
+    width: 160px;
+    background-color: rgba(255, 255, 255, 0.95);
+    text-align: left;
+    border-radius: 5px;
+    box-shadow: @box-shadow;
+    border: solid 2px @col-main;
+    display: none;
+
+    &.open {
+        display: block;
+        opacity: 0;
+        animation: slide-in-bottom 0.2s forwards;
+    }
+
+    .arrow-top {
+        border: solid 10px @col-main;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-top-color: transparent;
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        margin-left: -5px;
+    }
+
+    a {
+        width: 100%;
+        border-radius: 0 !important;
+        color: @col-main !important;
+        padding: 15px 10px 15px 36px !important;
+        text-shadow: @box-shadow !important;
+        font-weight: 600 !important;
+        font-size: 16px !important;
+
+        .fa {
+            font-size: 22px !important;
+            left: 10px !important;
+            right: auto !important;
+        }
+
+        &:first-of-type {
+            border-radius: 5px 5px 0 0 !important;
+        }
+
+        &:last-of-type {
+            border-radius: 0 0 5px 5px !important;
+        }
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.1) !important;
+        }
+    }
+}
+
+.menu-box-cover {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.5);
+    z-index: 1;
+    animation: fade-in-opacity 0.2s forwards;
+}

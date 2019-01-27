@@ -1,5 +1,8 @@
 ﻿extends _layout
 
+block css
+  link(rel='stylesheet', href='/css/category_listings.min.css')
+
 block content
   section.banner
     header.banner-image.home
@@ -12,3 +15,9 @@ block content
       h1 #{error.status}: #{message}
       if error.stack
         pre #{error.stack}
+      div.no-more-data
+        h1 Would you like to explore any of the following categories?
+        div.recommendations.wide
+          each category in req.listing_categories
+            a(href='/categories/' + category.urlCategory + '/', class=category.urlCategory)
+              span= category.category 

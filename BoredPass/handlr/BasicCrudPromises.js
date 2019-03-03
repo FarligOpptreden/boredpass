@@ -23,9 +23,8 @@ export default class BasicCrudPromises {
 
   /**
    * Construct a new object against the targeted schema.
-   * @param {object} args - The arguments detailing the schema operation.
    */
-  schema(args) {
+  schema() {
     return null;
   }
 

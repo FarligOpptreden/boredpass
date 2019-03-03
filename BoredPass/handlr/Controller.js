@@ -10,6 +10,7 @@ const filterRoutes = (handlr, method) => {
 
 const register = (root, routes) => {
   let retVal = null;
+
   if (routes && routes.length) {
     routes.forEach(route => {
       if (route.secure) {
@@ -43,6 +44,7 @@ const executeRoute = (root, route, delegate, req, res, next) => {
     toLog += `${CliColors.FgMagenta}START > ${
       CliColors.Reset
     }Routing to "${root}${route.route}"`;
+
     if (config && config.loggingLevel.http > 1) {
       toLog += "\n    > Method         : " + route.method;
       toLog += "\n    > Consumes       : " + route.consumes;
@@ -53,6 +55,7 @@ const executeRoute = (root, route, delegate, req, res, next) => {
         (req.bodyBuffer ? "<Buffer>" : JSON.stringify(req.body));
       toLog += "\n    > Request params : " + JSON.stringify(req.params);
     }
+
     konsole.log(toLog, `h${CliColors.BgMagenta}${CliColors.FgWhite}.ctrl`);
     delegate(req, res, next);
     return;
@@ -64,14 +67,18 @@ const executeRoute = (root, route, delegate, req, res, next) => {
 const doRegistration = (root, routes) => {
   if (!routes)
     return (req, res, next) => next(new Error("Route not implemented."));
+
   if (routes.status) return (req, res, next) => res.status(routes.status).end();
+
   if (routes.error) return (req, res, next) => next(routes.error);
+
   if (routes.route && routes.delegate && Array.isArray(routes.delegate)) {
     return routes.delegate.map((d, i) => {
       return (req, res, next) =>
         executeRoute(root, routes.route, d, req, res, next);
     });
   }
+
   if (routes.route && routes.delegate)
     return (req, res, next) =>
       executeRoute(root, routes.route, routes.delegate, req, res, next);

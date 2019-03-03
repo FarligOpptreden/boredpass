@@ -1,10 +1,9 @@
-import db from './Mongo';
-import Memcached from 'memcached';
+import db from "./Mongo";
+import Memcached from "memcached";
 
 let memcached = null;
 
 export default class BasicCrud {
-
   /**
    * Constructs a BasicCrud object.
    * @param {string} url - The connection string to the MongoDB data source.
@@ -41,16 +40,14 @@ export default class BasicCrud {
    * @param {function(Object, Object):void} callback - A function to execute once the document has been retrieved.
    */
   findOne(args, callback) {
-    if (!callback)
-      return;
+    if (!callback) return;
 
-    if (!args || !args.filter)
-      return callback(null);
+    if (!args || !args.filter) return callback(null);
 
     let mcache = this.cache;
     let filter = args.filter;
-    filter = typeof filter === 'object' ? filter : { _id: db.objectId(filter) };
-    let key = (filter.id && this.collection + '-' + filter._id) || null;
+    filter = typeof filter === "object" ? filter : { _id: db.objectId(filter) };
+    let key = (filter.id && this.collection + "-" + filter._id) || null;
 
     let m = () => {
       db.mongo({
@@ -62,31 +59,34 @@ export default class BasicCrud {
         sort: args.sort,
         limit: 1,
         callback: (res, err) => {
-          if (err)
-            return callback(null, err);
+          if (err) return callback(null, err);
 
           let d = res && res.data && res.data.length ? res.data[0] : null;
+
           if (mcache && key) {
-            memcached.set(key, d, this.mcache.lifetime, (err) => {
-              if (err) { console.log('>>> MEMCACHED ERROR <<<'); console.log(err); }
+            memcached.set(key, d, this.mcache.lifetime, err => {
+              if (err) {
+                console.log(">>> MEMCACHED ERROR <<<");
+                console.log(err);
+              }
+
               callback(d);
             });
-          }
-          else
-            callback(d);
+          } else callback(d);
         }
       });
     };
+
     if (mcache && key)
-      memcached.get(key, (err, cache) => {
+      memcached.get(key, (_, cache) => {
         if (!cache) {
           m();
           return;
         }
+
         callback(cache);
       });
-    else
-      m();
+    else m();
   }
 
   /**
@@ -100,11 +100,9 @@ export default class BasicCrud {
    * @param {function(Object, Object):void} callback - A function to execute once the documents have been retrieved.
    */
   findMany(args, callback) {
-    if (!callback)
-      return;
+    if (!callback) return;
 
-    if (!args)
-      return callback(null);
+    if (!args) return callback(null);
 
     db.mongo({
       url: this.url,
@@ -116,8 +114,7 @@ export default class BasicCrud {
       limit: args.limit,
       skip: args.skip,
       callback: (res, err) => {
-        if (err)
-          return callback(null, err);
+        if (err) return callback(null, err);
 
         callback((res && res.data) || null);
       }
@@ -131,11 +128,9 @@ export default class BasicCrud {
    * @param {function(Object, Object):void} callback - A function to execute once the documents have been retrieved.
    */
   aggregate(args, callback) {
-    if (!callback)
-      return;
+    if (!callback) return;
 
-    if (!args)
-      return callback(null);
+    if (!args) return callback(null);
 
     db.mongo({
       url: this.url,
@@ -143,8 +138,7 @@ export default class BasicCrud {
       operation: db.operations.aggregate,
       pipeline: args.pipeline,
       callback: (res, err) => {
-        if (err)
-          return callback(null, err);
+        if (err) return callback(null, err);
 
         callback(res || null);
       }
@@ -162,11 +156,9 @@ export default class BasicCrud {
    * @param {function(Object, Object):void} callback - A function to execute once the paged documents have been retrieved.
    */
   page(args, callback) {
-    if (!callback)
-      return;
+    if (!callback) return;
 
-    if (!args || !args.pageNo || !args.pageSize)
-      return callback(null);
+    if (!args || !args.pageNo || !args.pageSize) return callback(null);
 
     db.mongo({
       url: this.url,
@@ -180,8 +172,7 @@ export default class BasicCrud {
         pageSize: args.pageSize
       },
       callback: (res, err) => {
-        if (err)
-          return callback(null, err);
+        if (err) return callback(null, err);
 
         callback(res, err);
       }
@@ -195,8 +186,7 @@ export default class BasicCrud {
    * @param {function(Object, Object):void} [callback] - A function to execute once the document has been inserted.
    */
   create(args, callback) {
-    if (!args || !args.data)
-      return callback && callback(null);
+    if (!args || !args.data) return callback && callback(null);
 
     let mcache = this.cache;
 
@@ -211,9 +201,12 @@ export default class BasicCrud {
           return;
         }
         if (mcache) {
-          let key = this.collection + '-' + res.data._id;
-          return memcached.set(key, res.data, this.mcache.lifetime, (err) => {
-            if (err) { console.log('>>> MEMCACHED ERROR <<<'); console.log(err); }
+          let key = this.collection + "-" + res.data._id;
+          return memcached.set(key, res.data, this.mcache.lifetime, err => {
+            if (err) {
+              console.log(">>> MEMCACHED ERROR <<<");
+              console.log(err);
+            }
             callback && callback(res.data);
           });
         }
@@ -239,8 +232,7 @@ export default class BasicCrud {
       operation: db.operations.insertMany,
       data: args.data,
       callback: (res, err) => {
-        if (err)
-          return callback(null, err);
+        if (err) return callback(null, err);
 
         callback && callback(res && res.data);
       }
@@ -255,8 +247,7 @@ export default class BasicCrud {
    * @param {function(Object, Object):void} [callback] - A function to execute once the documents have been updated.
    */
   update(args, callback) {
-    if (!args || !args.filter || !args.data)
-      return callback && callback(null);
+    if (!args || !args.filter || !args.data) return callback && callback(null);
 
     let filter = args.filter;
     let mcache = this.cache;
@@ -266,28 +257,33 @@ export default class BasicCrud {
       url: this.url,
       collection: this.collection,
       operation: db.operations.updateOne,
-      filter: typeof filter === 'object' ? filter : { _id: db.objectId(filter) },
+      filter:
+        typeof filter === "object" ? filter : { _id: db.objectId(filter) },
       data: obj,
       callback: (res, err) => {
-        if (err)
-          return callback(null, err);
+        if (err) return callback(null, err);
 
-        if (!res)
-          return callback(null);
+        if (!res) return callback(null);
 
         obj = res.data;
 
         if (mcache) {
-          let key = this.collection + '-' + obj._id;
+          let key = this.collection + "-" + obj._id;
           return memcached.get(key, (err, cache) => {
             if (!cache)
-              return memcached.set(key, obj, this.mcache.lifetime, (err) => {
-                if (err) { console.log('>>> MEMCACHED ERROR <<<'); console.log(err); }
+              return memcached.set(key, obj, this.mcache.lifetime, err => {
+                if (err) {
+                  console.log(">>> MEMCACHED ERROR <<<");
+                  console.log(err);
+                }
                 callback && callback(res.data);
               });
 
-            memcached.replace(key, obj, this.mcache.lifetime, (err) => {
-              if (err) { console.log('>>> MEMCACHED ERROR <<<'); console.log(err); }
+            memcached.replace(key, obj, this.mcache.lifetime, err => {
+              if (err) {
+                console.log(">>> MEMCACHED ERROR <<<");
+                console.log(err);
+              }
               callback && callback(res.data);
             });
           });
@@ -306,8 +302,7 @@ export default class BasicCrud {
    * @param {function(Object, Object):void} [callback] - A function to execute once the documents have been updated.
    */
   updateMany(args, callback) {
-    if (!args || !args.filter || !args.data)
-      return callback && callback(null);
+    if (!args || !args.filter || !args.data) return callback && callback(null);
 
     let filter = args.filter;
     let mcache = this.cache;
@@ -317,14 +312,13 @@ export default class BasicCrud {
       url: this.url,
       collection: this.collection,
       operation: db.operations.updateMany,
-      filter: typeof filter === 'object' ? filter : { _id: db.objectId(filter) },
+      filter:
+        typeof filter === "object" ? filter : { _id: db.objectId(filter) },
       data: obj,
       callback: (res, err) => {
-        if (err)
-          return callback(null, err);
+        if (err) return callback(null, err);
 
-        if (!res)
-          return callback(null);
+        if (!res) return callback(null);
 
         obj = res.data;
         callback && callback(obj);
@@ -339,12 +333,11 @@ export default class BasicCrud {
    * @param {function(Object, Object):void} [callback] - A function to execute once the document has been deleted.
    */
   delete(args, callback) {
-    if (!args || !args.filter)
-      return callback && callback(null);
+    if (!args || !args.filter) return callback && callback(null);
 
     let filter = args.filter;
     let mcache = this.cache;
-    filter = typeof filter === 'object' ? filter : { _id: db.objectId(filter) };
+    filter = typeof filter === "object" ? filter : { _id: db.objectId(filter) };
 
     db.mongo({
       url: this.url,
@@ -352,13 +345,15 @@ export default class BasicCrud {
       operation: db.operations.deleteOne,
       filter: filter,
       callback: (res, err) => {
-        if (err)
-          return callback && callback(null, err);
+        if (err) return callback && callback(null, err);
 
         if (mcache) {
-          let key = this.collection + '-' + filter._id;
-          return memcached.del(key, (err) => {
-            if (err) { console.log('>>> MEMCACHED ERROR <<<'); console.log(err); }
+          let key = this.collection + "-" + filter._id;
+          return memcached.del(key, err => {
+            if (err) {
+              console.log(">>> MEMCACHED ERROR <<<");
+              console.log(err);
+            }
             callback && callback(res.data);
           });
         }
@@ -375,11 +370,10 @@ export default class BasicCrud {
    * @param {function(Object, Object):void} [callback] - A function to execute once the documents have been deleted.
    */
   deleteMany(args, callback) {
-    if (!args || !args.filter)
-      return callback && callback(null);
+    if (!args || !args.filter) return callback && callback(null);
 
     let filter = args.filter;
-    filter = typeof filter === 'object' ? filter : { _id: db.objectId(filter) };
+    filter = typeof filter === "object" ? filter : { _id: db.objectId(filter) };
 
     db.mongo({
       url: this.url,
@@ -387,8 +381,7 @@ export default class BasicCrud {
       operation: db.operations.deleteMany,
       filter: filter,
       callback: (res, err) => {
-        if (err)
-          return callback && callback(null, err);
+        if (err) return callback && callback(null, err);
 
         callback && callback(res);
       }

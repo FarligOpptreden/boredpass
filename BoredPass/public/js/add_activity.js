@@ -25,10 +25,9 @@
       var direction = $(this).hasClass("next") ? "next" : "prev";
       var activeBreadcrumb = $(".add-activity .breadcrumb a.active");
       activeBreadcrumb.removeClass("active");
-
-      if (direction === "next") activeBreadcrumb.next("a").addClass("active");
-      else activeBreadcrumb.prev("a").addClass("active");
-
+      activeBreadcrumb[direction === "next" ? "next" : "prev"]("a").addClass(
+        "active"
+      );
       current.addClass("shift " + (direction === "next" ? "left1" : "right1"));
       prev.each(function() {
         var amount = $(this)[0].className.replace(/step|shift|left/g, "");

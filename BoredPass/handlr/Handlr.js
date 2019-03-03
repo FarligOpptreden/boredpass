@@ -87,6 +87,7 @@ export default class Handlr {
       err.status = 404;
       next(err);
     });
+
     if (app.get("env") === "development") {
       app.use((err, req, res, next) => {
         konsole.error(`Uncaught controller exception: ${JSON.stringify(err)}`);
@@ -98,6 +99,7 @@ export default class Handlr {
         });
       });
     }
+
     app.use((err, req, res, next) => {
       res.status(err.status || 500);
       konsole.error(`Uncaught controller exception: ${JSON.stringify(err)}`);

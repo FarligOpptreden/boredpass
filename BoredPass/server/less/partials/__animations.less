@@ -1,0 +1,163 @@
+@import "__variables.less";
+
+@keyframes banner-scale {
+  0% {
+    transform: scale(1.2);
+    transform-origin: bottom left;
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes active-pulse {
+  0% {
+    border-color: #fff;
+  }
+
+  50% {
+    border-color: @col-main;
+  }
+
+  100% {
+    border-color: #fff;
+  }
+}
+
+@keyframes active-pulse-grey {
+  0% {
+    border-color: @col-body-bg;
+  }
+
+  50% {
+    border-color: @col-main;
+  }
+
+  100% {
+    border-color: @col-body-bg;
+  }
+}
+
+@keyframes arrow-pulse {
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+
+  50% {
+    opacity: 1;
+    transform: none;
+  }
+
+  70% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  80% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    background-color: transparent;
+  }
+
+  100% {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+}
+
+@keyframes fade-in-opacity {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes card-loading {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes compass {
+  0% {
+    transform: rotate(-5deg);
+  }
+
+  50% {
+    transform: rotate(5deg);
+  }
+
+  100% {
+    transform: rotate(-5deg);
+  }
+}
+
+@keyframes no-no {
+  0% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-20px);
+  }
+
+  40% {
+    transform: translateX(15px);
+  }
+
+  60% {
+    transform: translateX(-10px);
+  }
+
+  80% {
+    transform: translateX(5px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes duplicates {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-bottom {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}

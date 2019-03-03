@@ -1,7 +1,6 @@
-import { BasicCrud } from './_all';
+import { BasicCrud } from ".";
 
 export default class BasicCrudPromises {
-
   /**
    * Constructs a BasicCrud object.
    * @param {string} url - The connection string to the MongoDB data source.
@@ -41,12 +40,11 @@ export default class BasicCrudPromises {
   findOne(args) {
     return new Promise((resolve, reject) => {
       if (!args || !args.filter)
-        return reject('No arguments or filter specified.');
-        
+        return reject("No arguments or filter specified.");
+
       this._BasicCrud.findOne(args, (res, err) => {
-        if (err)
-          return reject(err);
-          
+        if (err) return reject(err);
+
         resolve(res);
       });
     });
@@ -63,13 +61,11 @@ export default class BasicCrudPromises {
    */
   findMany(args) {
     return new Promise((resolve, reject) => {
-      if (!args)
-        return reject('No arguments specified.');
-        
+      if (!args) return reject("No arguments specified.");
+
       this._BasicCrud.findMany(args, (res, err) => {
-        if (err)
-          return reject(err);
-          
+        if (err) return reject(err);
+
         resolve(res);
       });
     });
@@ -83,13 +79,11 @@ export default class BasicCrudPromises {
    */
   aggregate(args) {
     return new Promise((resolve, reject) => {
-      if (!args)
-        return reject('No arguments specified.');
-        
+      if (!args) return reject("No arguments specified.");
+
       this._BasicCrud.aggregate(args, (res, err) => {
-        if (err)
-          return reject(err);
-          
+        if (err) return reject(err);
+
         resolve(res);
       });
     });
@@ -107,19 +101,15 @@ export default class BasicCrudPromises {
    */
   page(args) {
     return new Promise((resolve, reject) => {
-      if (!args)
-        return reject('No arguments specified.');
-        
-      if (!args.pageNo)
-        return reject('"args.pageNo" was not specified.');
-        
-      if (!args.pageSize)
-        return reject('"args.pageSize" was not specified.');
-        
+      if (!args) return reject("No arguments specified.");
+
+      if (!args.pageNo) return reject('"args.pageNo" was not specified.');
+
+      if (!args.pageSize) return reject('"args.pageSize" was not specified.');
+
       this._BasicCrud.page(args, (res, err) => {
-        if (err)
-          return reject(err);
-          
+        if (err) return reject(err);
+
         resolve(res);
       });
     });
@@ -133,16 +123,13 @@ export default class BasicCrudPromises {
    */
   create(args) {
     return new Promise((resolve, reject) => {
-      if (!args)
-        return reject('No arguments specified.');
-        
-      if (!args.data)
-        return reject('"args.data" was not specified.');
-        
+      if (!args) return reject("No arguments specified.");
+
+      if (!args.data) return reject('"args.data" was not specified.');
+
       this._BasicCrud.create(args, (res, err) => {
-        if (err)
-          return reject(err);
-          
+        if (err) return reject(err);
+
         resolve(res);
       });
     });
@@ -156,19 +143,15 @@ export default class BasicCrudPromises {
    */
   createMany(args) {
     return new Promise((resolve, reject) => {
-      if (!args)
-        return reject('No arguments specified.');
-        
-      if (!args.data)
-        return reject('"args.data" was not specified.');
-        
-      if (!args.data.length)
-        return reject('"args.data" is an empty array.');
-        
+      if (!args) return reject("No arguments specified.");
+
+      if (!args.data) return reject('"args.data" was not specified.');
+
+      if (!args.data.length) return reject('"args.data" is an empty array.');
+
       this._BasicCrud.createMany(args, (res, err) => {
-        if (err)
-          return reject(err);
-          
+        if (err) return reject(err);
+
         resolve(res);
       });
     });
@@ -183,19 +166,15 @@ export default class BasicCrudPromises {
    */
   update(args) {
     return new Promise((resolve, reject) => {
-      if (!args)
-        return reject('No arguments specified.');
-        
-      if (!args.data)
-        return reject('"args.data" was not specified.');
-        
-      if (!args.filter)
-        return reject('"args.filter" was not specified.');
-        
+      if (!args) return reject("No arguments specified.");
+
+      if (!args.data) return reject('"args.data" was not specified.');
+
+      if (!args.filter) return reject('"args.filter" was not specified.');
+
       this._BasicCrud.update(args, (res, err) => {
-        if (err)
-          return reject(err);
-          
+        if (err) return reject(err);
+
         resolve(res);
       });
     });
@@ -210,19 +189,15 @@ export default class BasicCrudPromises {
    */
   updateMany(args) {
     return new Promise((resolve, reject) => {
-      if (!args)
-        return reject('No arguments specified.');
-        
-      if (!args.data)
-        return reject('"args.data" was not specified.');
-        
-      if (!args.filter)
-        return reject('"args.filter" was not specified.');
-        
+      if (!args) return reject("No arguments specified.");
+
+      if (!args.data) return reject('"args.data" was not specified.');
+
+      if (!args.filter) return reject('"args.filter" was not specified.');
+
       this._BasicCrud.updateMany(args, (res, err) => {
-        if (err)
-          return reject(err);
-          
+        if (err) return reject(err);
+
         resolve(res);
       });
     });
@@ -236,16 +211,13 @@ export default class BasicCrudPromises {
    */
   delete(args) {
     return new Promise((resolve, reject) => {
-      if (!args)
-        return reject('No arguments specified.');
-        
-      if (!args.filter)
-        return reject('"args.filter" was not specified.');
-        
+      if (!args) return reject("No arguments specified.");
+
+      if (!args.filter) return reject('"args.filter" was not specified.');
+
       this._BasicCrud.delete(args, (res, err) => {
-        if (err)
-          return reject(err);
-          
+        if (err) return reject(err);
+
         resolve(res);
       });
     });
@@ -259,16 +231,13 @@ export default class BasicCrudPromises {
    */
   deleteMany(args) {
     return new Promise((resolve, reject) => {
-      if (!args)
-        return reject('No arguments specified.');
-        
-      if (!args.filter)
-        return reject('"args.filter" was not specified.');
-        
+      if (!args) return reject("No arguments specified.");
+
+      if (!args.filter) return reject('"args.filter" was not specified.');
+
       this._BasicCrud.deleteMany(args, (res, err) => {
-        if (err)
-          return reject(err);
-          
+        if (err) return reject(err);
+
         resolve(res);
       });
     });

@@ -1,273 +1,278 @@
-﻿@import "__variables.less";
+@import "./partials/__variables.less";
 
 .photo-upload {
-    cursor: pointer;
+  cursor: pointer;
 
-    & > a {
-        transition: all 0.25s;
-        border: solid 2px #FFFFFF;
-        box-shadow: @box-shadow;
-        position: relative;
+  & > a {
+    transition: all 0.25s;
+    border: solid 2px #ffffff;
+    box-shadow: @box-shadow;
+    position: relative;
 
-        &:hover {
-            border-color: @col-main;
-        }
-
-        &.has-image {
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
-        }
+    &:hover {
+      border-color: @col-main;
     }
 
-    form {
-        display: none !important;
+    &.has-image {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
     }
+  }
+
+  form {
+    display: none !important;
+  }
 }
 
 .tag-search {
-    position: relative;
-    margin: 56px -2px 0 -2px;
-    z-index: 2;
-    background-color: #FFFFFF;
-    border: solid 2px @col-main;
-    border-top: none;
-    border-radius: 0 0 3px 3px;
-    text-align: left;
-    padding: 5px;
-    white-space: normal;
+  position: relative;
+  margin: 56px -2px 0 -2px;
+  z-index: 2;
+  background-color: #ffffff;
+  border: solid 2px @col-main;
+  border-top: none;
+  border-radius: 0 0 3px 3px;
+  text-align: left;
+  padding: 5px;
+  white-space: normal;
 
-    & > a.selected {
-        background-color: @col-main;
-        color: @col-button-fg !important;
-    }
+  & > a.selected {
+    background-color: @col-main;
+    color: @col-button-fg !important;
+  }
 
-    &:not(.hidden) + .tag-container {
-        display: none;
-    }
+  &:not(.hidden) + .tag-container {
+    display: none;
+  }
 }
 
-.tag-search > a, .tag-container > span {
-    position: relative !important;
-    display: inline-block !important;
-    padding: 15px 30px 15px 55px !important;
-    border-radius: 30px !important;
-    color: @col-main !important;
-    border: solid 1px @col-main !important;
-    margin: 5px !important;
-    text-decoration: none !important;
-    background-position: left center !important;
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    float: none !important;
-    width: auto !important;
-    flex: none !important;
+.tag-search > a,
+.tag-container > span {
+  position: relative !important;
+  display: inline-block !important;
+  padding: 15px 30px 15px 55px !important;
+  border-radius: 30px !important;
+  color: @col-main !important;
+  border: solid 1px @col-main !important;
+  margin: 5px !important;
+  text-decoration: none !important;
+  background-position: left center !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  float: none !important;
+  width: auto !important;
+  flex: none !important;
 }
 
 .tag-field > .all-tags {
-    display: block;
-    text-align: right;
-    color: @col-main;
-    font-size: 14px;
-    padding: 10px 0 0 0;
+  display: block;
+  text-align: right;
+  color: @col-main;
+  font-size: 14px;
+  padding: 10px 0 0 0;
 }
 
 .listing-section.blue .tag-field > .all-tags {
-    color: #FFF;
+  color: #fff;
 }
 
 .tag-container {
-    white-space: pre-wrap;
+  white-space: pre-wrap;
 
-    & > a {
-        display: inline-block;
-        margin: 5px 10px 5px 0;
-        padding: 10px 20px;
-        background: @col-main;
-        color: #FFF;
-        text-decoration: none;
-        border-radius: 80px;
-        position: relative;
-        overflow: hidden;
-        border: solid 2px #FFF;
+  & > a {
+    display: inline-block;
+    margin: 5px 10px 5px 0;
+    padding: 10px 20px;
+    background: @col-main;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 80px;
+    position: relative;
+    overflow: hidden;
+    border: solid 2px #fff;
 
-        & > span {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin: -25px 0 0 -10px;
-            font-size: 50px;
-            transform: translateY(100%) rotate(45deg);
-            transition: all 0.2s;
-        }
-
-        & > label {
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        &:hover {
-            & > label {
-                opacity: 0;
-            }
-
-            & > span {
-                transform: translateY(0) rotate(45deg);
-            }
-        }
+    & > span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -25px 0 0 -10px;
+      font-size: 50px;
+      transform: translateY(100%) rotate(45deg);
+      transition: all 0.2s;
     }
 
-    & > span:first-of-type {
-        margin-top: 10px;
+    & > label {
+      transition: all 0.2s;
+      cursor: pointer;
     }
 
-    & > span:last-of-type {
-        margin-bottom: 10px !important;
+    &:hover {
+      & > label {
+        opacity: 0;
+      }
+
+      & > span {
+        transform: translateY(0) rotate(45deg);
+      }
     }
+  }
+
+  & > span:first-of-type {
+    margin-top: 10px;
+  }
+
+  & > span:last-of-type {
+    margin-bottom: 10px !important;
+  }
 }
 
-.tag-library, .banner-library {
-    display: flex;
-    flex-direction: column;
-    width: 500px;
-    margin-left: -250px;
+.tag-library,
+.banner-library {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin-left: -250px;
 
-    & > h1, & > h1, & > .added {
-        flex: 0 0 20px;
-    }
+  & > h1,
+  & > h1,
+  & > .added {
+    flex: 0 0 20px;
+  }
 
-    & > .tags, & > div {
-        flex: 1;
-        overflow: auto;
-        padding: 10px;
-        position: relative;
-    }
+  & > .tags,
+  & > div {
+    flex: 1;
+    overflow: auto;
+    padding: 10px;
+    position: relative;
+  }
 
-    h1 {
-        font-size: 28px;
-        border-bottom: solid 1px @col-grey;
-        padding: 10px;
-        color: @col-main;
-    }
+  h1 {
+    font-size: 28px;
+    border-bottom: solid 1px @col-grey;
+    padding: 10px;
+    color: @col-main;
+  }
 
-    .close {
-        height: 40px;
-        width: 40px;
-        position: absolute;
-        top: 4px;
-        right: 4px;
-        font-size: 40px;
-        padding: 0;
-        text-align: center;
-        border-radius: 25px;
-        background-color: @col-main;
-        color: @col-button-fg;
-        transform: rotate(45deg);
-        text-decoration: none;
-    }
+  .close {
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 40px;
+    padding: 0;
+    text-align: center;
+    border-radius: 25px;
+    background-color: @col-main;
+    color: @col-button-fg;
+    transform: rotate(45deg);
+    text-decoration: none;
+  }
 }
 
 .banner-library {
-    width: 800px;
-    margin-left: -400px;
+  width: 800px;
+  margin-left: -400px;
 
-    & > div > .banners {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+  & > div > .banners {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 
-        & > a {
-            min-width: 40%;
-            flex: 1;
-            box-shadow: @box-shadow;
-            border: solid 2px #FFF;
-            border-radius: 5px;
-            height: 80px;
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            margin: 10px;
-            font-size: 0px;
-            opacity: 0.5;
-            transition: all 0.2s;
+    & > a {
+      min-width: 40%;
+      flex: 1;
+      box-shadow: @box-shadow;
+      border: solid 2px #fff;
+      border-radius: 5px;
+      height: 80px;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      margin: 10px;
+      font-size: 0px;
+      opacity: 0.5;
+      transition: all 0.2s;
 
-            &.selected {
-                opacity: 1;
-                border-color: @col-main;
-            }
+      &.selected {
+        opacity: 1;
+        border-color: @col-main;
+      }
 
-            &:hover {
-                opacity: 1;
-            }
-        }
+      &:hover {
+        opacity: 1;
+      }
     }
+  }
 
-    p {
-        font-size: 16px;
-        padding: 10px;
+  p {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .custom-banner > a {
+    display: block;
+    height: 120px;
+    margin: 10px;
+    background-color: #eee;
+
+    span.plus {
+      background-color: @col-main;
+      color: #fff;
+      height: 50px;
+      width: 50px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      font-size: 50px;
+      padding: 0;
+      text-align: center;
     }
-
-    .custom-banner > a {
-        display: block;
-        height: 120px;
-        margin: 10px;
-        background-color: #EEE;
-
-        span.plus {
-            background-color: @col-main;
-            color: #fff;
-            height: 50px;
-            width: 50px;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            font-size: 50px;
-            padding: 0;
-            text-align: center;
-        }
-    }
+  }
 }
 
 .tag-library {
-    & > .tags {
-        & > h3 {
-            padding: 10px 0;
-            margin-bottom: 10px;
-            font-size: 18px;
-            color: @col-main;
-            font-weight: 600;
-        }
-
-        & > hr {
-            position: absolute;
-            left: 20px;
-            right: 10px;
-            margin-top: -30px;
-            background: @col-grey;
-            height: 1px;
-        }
-
-        & > a {
-            padding: 5px 5px 5px 20px;
-            display: block;
-            text-decoration: none;
-            color: @col-body-fg;
-            transition: all 0.2s;
-
-            &.selected {
-                color: @col-main;
-                font-weight: 600;
-            }
-
-            &:hover {
-                color: @col-main;
-            }
-        }
+  & > .tags {
+    & > h3 {
+      padding: 10px 0;
+      margin-bottom: 10px;
+      font-size: 18px;
+      color: @col-main;
+      font-weight: 600;
     }
 
-    & > .added {
-        overflow: visible;
-        padding: 5px 10px 0 10px;
-        background-color: @col-main;
+    & > hr {
+      position: absolute;
+      left: 20px;
+      right: 10px;
+      margin-top: -30px;
+      background: @col-grey;
+      height: 1px;
     }
+
+    & > a {
+      padding: 5px 5px 5px 20px;
+      display: block;
+      text-decoration: none;
+      color: @col-body-fg;
+      transition: all 0.2s;
+
+      &.selected {
+        color: @col-main;
+        font-weight: 600;
+      }
+
+      &:hover {
+        color: @col-main;
+      }
+    }
+  }
+
+  & > .added {
+    overflow: visible;
+    padding: 5px 10px 0 10px;
+    background-color: @col-main;
+  }
 }

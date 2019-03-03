@@ -1,7 +1,8 @@
-﻿import mongo from 'mongodb';
-import moment from 'moment';
-import { konsole, CliColors } from './_all';
-import { setTimeout } from 'timers';
+﻿import mongo from "mongodb";
+import { konsole, CliColors } from ".";
+import { setTimeout } from "timers";
+
+const connections = [];
 
 class Mongo {
   /**
@@ -9,17 +10,17 @@ class Mongo {
    */
   get operations() {
     return {
-      insertOne: 'insertOne',
-      insertMany: 'insertMany',
-      updateOne: 'updateOne',
-      updateMany: 'updateMany',
-      deleteOne: 'deleteOne',
-      deleteMany: 'deleteMany',
-      replaceOne: 'replaceOne',
-      pagedData: 'pagedData',
-      aggregate: 'aggregate',
-      distinct: 'distinct',
-      find: 'find'
+      insertOne: "insertOne",
+      insertMany: "insertMany",
+      updateOne: "updateOne",
+      updateMany: "updateMany",
+      deleteOne: "deleteOne",
+      deleteMany: "deleteMany",
+      replaceOne: "replaceOne",
+      pagedData: "pagedData",
+      aggregate: "aggregate",
+      distinct: "distinct",
+      find: "find"
     };
   }
 
@@ -28,8 +29,7 @@ class Mongo {
    * @param {string|Object|undefined} [value] - The value to convert to an ObjectID.
    */
   objectId(value) {
-    if (typeof value === 'string')
-      return new mongo.ObjectID(value);
+    if (typeof value === "string") return new mongo.ObjectID(value);
     return value;
   }
 
@@ -54,72 +54,94 @@ class Mongo {
   mongo(args, config) {
     if (!args || !args.collection) {
       konsole.error(`Error calling mongo. Args or collection not set.`);
-      if (args && args.callback)
-        args.callback(null);
+
+      if (args && args.callback) args.callback(null);
+
       return;
     }
+
     let startTime = new Date().getTime();
     let client = mongo.MongoClient;
+
     if (args.data)
       for (let k in args.data) {
-        if (k === '_id' && mongo.ObjectID.isValid(args.data[k]))
+        if (k === "_id" && mongo.ObjectID.isValid(args.data[k]))
           args.data[k] = this.objectId(args.data[k]);
       }
+
     if (args.filter)
       for (let k in args.filter) {
-        if (k === '_id' && mongo.ObjectID.isValid(args.filter[k]))
+        if (k === "_id" && mongo.ObjectID.isValid(args.filter[k]))
           args.filter[k] = this.objectId(args.filter[k]);
       }
-    let toLog = '';
-    toLog += `${CliColors.FgGreen}START > ${CliColors.Reset}${args.collection}.${args.operation} on ${args.url}`;
+
+    let toLog = "";
+    toLog += `${CliColors.FgGreen}START > ${CliColors.Reset}${
+      args.collection
+    }.${args.operation} on ${args.url}`;
+
     if (config && config.loggingLevel && config.loggingLevel.mongo > 1) {
-      toLog += '\n    > Filter     : ' + JSON.stringify(args.filter);
-      toLog += '\n    > Data       : ' + JSON.stringify(args.data);
-      toLog += '\n    > Sort       : ' + JSON.stringify(args.sort);
-      toLog += '\n    > Project    : ' + JSON.stringify(args.project);
-      toLog += '\n    > Group      : ' + JSON.stringify(args.group);
-      toLog += '\n    > Skip       : ' + JSON.stringify(args.skip);
-      toLog += '\n    > Limit      : ' + JSON.stringify(args.limit);
-      toLog += '\n    > Pipeline   : ' + JSON.stringify(args.pipeline);
+      toLog += "\n    > Filter     : " + JSON.stringify(args.filter);
+      toLog += "\n    > Data       : " + JSON.stringify(args.data);
+      toLog += "\n    > Sort       : " + JSON.stringify(args.sort);
+      toLog += "\n    > Project    : " + JSON.stringify(args.project);
+      toLog += "\n    > Group      : " + JSON.stringify(args.group);
+      toLog += "\n    > Skip       : " + JSON.stringify(args.skip);
+      toLog += "\n    > Limit      : " + JSON.stringify(args.limit);
+      toLog += "\n    > Pipeline   : " + JSON.stringify(args.pipeline);
     }
+
     konsole.log(toLog, `h${CliColors.BgGreen}${CliColors.FgWhite}.mngo`);
     let execute = (db, callback) => {
       let operation = args.operation;
+
       if (operation === this.operations.pagedData)
         operation = this.operations.find;
+
       let col = db.collection(args.collection);
       let evalResultSet = (cursor, callback) => {
         let objs = [];
         cursor.each((err, res) => {
-          if (res != null)
-            objs.push(res);
-          else
-            callback({ data: objs }, true);
+          if (res != null) objs.push(res);
+          else callback({ data: objs }, true);
         });
-      }
+      };
       let doFind = () => {
         let results = col.find(args.filter, args.data);
-        if (args.sort)
-          results = results.sort(args.sort);
-        if (args.skip)
-          results = results.skip(args.skip);
-        if (args.limit)
-          results = results.limit(args.limit);
+
+        if (args.sort) results = results.sort(args.sort);
+
+        if (args.skip) results = results.skip(args.skip);
+
+        if (args.limit) results = results.limit(args.limit);
+
         evalResultSet(results, callback);
-      }
+      };
       let doPagedData = () => {
         if (!args.paging) {
-          callback('Paging parameters not specified for "pagedData" Mongo Handlr', false);
+          callback(
+            'Paging parameters not specified for "pagedData" Mongo Handlr',
+            false
+          );
           return;
         }
+
         if (!args.paging.pageNo) {
-          callback('"pageNo" parameter not specified for "pagedData" Mongo Handlr', false);
+          callback(
+            '"pageNo" parameter not specified for "pagedData" Mongo Handlr',
+            false
+          );
           return;
         }
+
         if (!args.paging.pageSize) {
-          callback('"pageSize" parameter not specified for "pagedData" Mongo Handlr', false);
+          callback(
+            '"pageSize" parameter not specified for "pagedData" Mongo Handlr',
+            false
+          );
           return;
         }
+
         args.paging.pageNo = parseInt(args.paging.pageNo, 10);
         args.paging.pageSize = parseInt(args.paging.pageSize, 10);
         let doPageStatistics = (res, success) => {
@@ -129,53 +151,67 @@ class Mongo {
               callback(err, false);
               return;
             }
+
             let itemCount = res;
             let mod = itemCount % args.paging.pageSize > 0 ? 1 : 0;
-            callback({
-              pageNo: args.paging.pageNo,
-              pageSize: args.paging.pageSize,
-              pageCount: Math.ceil(itemCount / args.paging.pageSize),
-              itemCount: itemCount,
-              data: data
-            }, true);
+            callback(
+              {
+                pageNo: args.paging.pageNo,
+                pageSize: args.paging.pageSize,
+                pageCount: Math.ceil(itemCount / args.paging.pageSize),
+                itemCount: itemCount,
+                data: data
+              },
+              true
+            );
           });
-        }
-        evalResultSet(col
-          .find(args.filter, args.data)
-          .sort(args.sort ? args.sort : {})
-          .skip((args.paging.pageNo - 1) * args.paging.pageSize)
-          .limit(args.paging.pageSize),
+        };
+        evalResultSet(
+          col
+            .find(args.filter, args.data)
+            .sort(args.sort ? args.sort : {})
+            .skip((args.paging.pageNo - 1) * args.paging.pageSize)
+            .limit(args.paging.pageSize),
           doPageStatistics
         );
-      }
+      };
       let doInsertOne = () => {
         delete args.data._id;
         delete args.data._created;
         let data = { _id: this.objectId(), _created: new Date() };
+
         for (let key in args.data) {
           data[key] = args.data[key];
         }
+
         col.insertOne(data, (err, res) => {
           if (err) {
             callback(err, false);
             return;
           }
+
           callback({ mongo: res, data: data }, true);
         });
-      }
+      };
       let doInsertMany = () => {
         if (args.data && !args.data.length) {
-          callback('"data" parameter must be an array for "insertMany" Mongo Handlr', false);
+          callback(
+            '"data" parameter must be an array for "insertMany" Mongo Handlr',
+            false
+          );
           return;
         }
+
         args.data.forEach((d, i, data) => {
           let newD = {
             _id: this.objectId(),
             _created: new Date()
           };
+
           for (let key in d) {
             newD[key] = d[key];
           }
+
           d = newD;
         });
         col.insertMany(args.data, (err, res) => {
@@ -183,102 +219,121 @@ class Mongo {
             callback(err, false);
             return;
           }
+
           callback({ mongo: res, data: args.data }, true);
         });
-      }
+      };
       let doUpdateOne = () => {
-        let originalData = args.data ? {
-          _id: args.data._id,
-          _created: args.data._created
-        } : null;
+        let originalData = args.data
+          ? {
+              _id: args.data._id,
+              _created: args.data._created
+            }
+          : null;
         delete args.data._id;
         delete args.data._created;
         delete args.data._modified;
-        args.data = { $set: args.data, $currentDate: { '_modified': true } };
+        args.data = { $set: args.data, $currentDate: { _modified: true } };
+
         if (args.data.$set.$addToSet) {
           args.data.$addToSet = args.data.$set.$addToSet;
           delete args.data.$set.$addToSet;
         }
+
         if (args.data.$set.$push) {
           args.data.$push = args.data.$set.$push;
           delete args.data.$set.$push;
         }
+
         if (args.data.$set.$pull) {
           args.data.$pull = args.data.$set.$pull;
           delete args.data.$set.$pull;
         }
+
         if (args.data.$set.$pullAll) {
           args.data.$pullAll = args.data.$set.$pullAll;
           delete args.data.$set.$pullAll;
         }
+
         if (!args.data.$set || Object.keys(args.data.$set).length === 0)
           delete args.data.$set;
+
         col.updateOne(args.filter, args.data, (err, res) => {
           if (err) {
             callback(err, false);
             return;
           }
+
           if (args.data.$set && originalData && originalData._id)
             args.data.$set._id = originalData._id;
+
           if (args.data.$set && originalData && originalData._created)
             args.data.$set._created = originalData._created;
+
           let response;
-          if (args.data.$set)
-            response = args.data.$set;
-          if (args.data.$addToSet)
-            response = args.data.$addToSet;
-          if (args.data.$push)
-            response = args.data.$push;
+
+          if (args.data.$set) response = args.data.$set;
+
+          if (args.data.$addToSet) response = args.data.$addToSet;
+
+          if (args.data.$push) response = args.data.$push;
+
           callback({ mongo: res, data: response }, true);
         });
-      }
+      };
       let doUpdateMany = () => {
-        args.data = { $set: args.data, $currentDate: { '_modified': true } };
+        args.data = { $set: args.data, $currentDate: { _modified: true } };
         col.updateMany(args.filter, args.data, (err, res) => {
           if (err) {
             callback(err, false);
             return;
           }
+
           callback({ mongo: res, data: args.data }, true);
         });
-      }
+      };
       let doDeleteOne = () => {
         col.deleteOne(args.filter, (err, res) => {
           if (err) {
             callback(err, false);
             return;
           }
+
           callback({ mongo: res }, true);
         });
-      }
+      };
       let doDeleteMany = () => {
         col.deleteMany(args.filter, (err, res) => {
           if (err) {
             callback(err, false);
             return;
           }
+
           callback({ mongo: res }, true);
         });
-      }
+      };
       let doReplaceOne = () => {
         col.replaceOne(args.filter, args.data, (err, res) => {
           if (err) {
             callback(err, false);
             return;
           }
+
           callback({ mongo: res, data: args.data }, true);
         });
-      }
+      };
       let doAggregate = () => {
         let agg = [];
         if (args.pipeline) {
-          args.pipeline.forEach((p) => {
-            let operator = '$';
+          args.pipeline.forEach(p => {
+            let operator = "$";
             let value = null;
+
             for (let o in p) {
-              operator += (o === 'filter' ? 'match' : o);
+              operator += o === "filter" ? "match" : o;
               value = p[o];
             }
+
             if (operator && value) {
               let obj = {};
               obj[operator] = value;
@@ -286,99 +341,163 @@ class Mongo {
             }
           });
         } else {
-          if (args.filter)
-            agg.push({ $match: args.filter });
-          if (args.project)
-            agg.push({ $project: args.project });
-          if (args.group)
-            agg.push({ $group: args.group });
-          if (args.sort)
-            agg.push({ $sort: args.sort });
+          if (args.filter) agg.push({ $match: args.filter });
+
+          if (args.project) agg.push({ $project: args.project });
+
+          if (args.group) agg.push({ $group: args.group });
+
+          if (args.sort) agg.push({ $sort: args.sort });
         }
         let results = col.aggregate(agg, {
           allowDiskUsage: true,
           cursor: { batchSize: 1000 }
         });
         let objs = [];
-        results.on('data', (data) => {
+        results.on("data", data => {
           objs.push(data);
         });
-        results.on('end', () => {
+        results.on("end", () => {
           callback(objs, true);
         });
-      }
+      };
       let doDistinct = () => {
         col.distinct(args.data, args.filter, (err, res) => {
           if (err) {
             callback(err, false);
             return;
           }
+
           callback({ data: res }, true);
         });
-      }
+      };
+
       switch (args.operation) {
-        case 'find': doFind(); break;
-        case 'insertOne': doInsertOne(); break;
-        case 'insertMany': doInsertMany(); break;
-        case 'updateOne': doUpdateOne(); break;
-        case 'updateMany': doUpdateMany(); break;
-        case 'deleteOne': doDeleteOne(); break;
-        case 'deleteMany': doDeleteMany(); break;
-        case 'replaceOne': doReplaceOne(); break;
-        case 'pagedData': doPagedData(); break;
-        case 'aggregate': doAggregate(); break;
-        case 'distinct': doDistinct(); break;
-        default: callback('Invalid operation specified for Mongo Handlr', false);
+        case "find":
+          doFind();
+          break;
+        case "insertOne":
+          doInsertOne();
+          break;
+        case "insertMany":
+          doInsertMany();
+          break;
+        case "updateOne":
+          doUpdateOne();
+          break;
+        case "updateMany":
+          doUpdateMany();
+          break;
+        case "deleteOne":
+          doDeleteOne();
+          break;
+        case "deleteMany":
+          doDeleteMany();
+          break;
+        case "replaceOne":
+          doReplaceOne();
+          break;
+        case "pagedData":
+          doPagedData();
+          break;
+        case "aggregate":
+          doAggregate();
+          break;
+        case "distinct":
+          doDistinct();
+          break;
+        default:
+          callback("Invalid operation specified for Mongo Handlr", false);
       }
-    }
+    };
     const ATTEMPTS = 20;
     const WAIT = 5000;
     let attempts = 0;
     let connect = () => {
-      client.connect(args.url, {
-        autoReconnect: true,
-        reconnectTries: 10,
-        reconnectInterval: 1000
-      }, (err, db) => {
-        if (err) {
-          if (++attempts <= ATTEMPTS) {
-            konsole.log(`Connection error, attempt ${attempts}/${ATTEMPTS}`, `h${CliColors.BgGreen}${CliColors.FgWhite}.mngo`);
-            setTimeout(connect, WAIT);
-            return;
-          }
-          konsole.error(err);
-          if (args.callback)
-            args.callback(null, err);
-          return;
-        }
+      let runQuery = db => {
         try {
           execute(db, (res, success) => {
             try {
-              db.close();
               if (!success) {
+                let index = -1;
+                connections.map((c, i) => {
+                  if (c.connection && c.connect === args.url) index = i;
+                });
+
+                index > 0 && connections.splice(index, 1);
+                db.close();
                 konsole.error(res);
-                if (args && args.callback)
-                  args.callback(null, res);
+
+                if (args && args.callback) args.callback(null, res);
+
                 return;
               }
+
               let endTime = new Date().getTime();
-              konsole.log(`${CliColors.FgGreen}END   < ${CliColors.Reset}${args.collection}.${args.operation} in ${CliColors.FgGreen}[${endTime - startTime}]${CliColors.Reset}ms`, `h${CliColors.BgGreen}${CliColors.FgWhite}.mngo`);
-              if (args && args.callback)
-                args.callback(res);
+              konsole.log(
+                `${CliColors.FgGreen}END   < ${CliColors.Reset}${
+                  args.collection
+                }.${args.operation} in ${CliColors.FgGreen}[${endTime -
+                  startTime}]${CliColors.Reset}ms`,
+                `h${CliColors.BgGreen}${CliColors.FgWhite}.mngo`
+              );
+
+              if (args && args.callback) args.callback(res);
             } catch (e) {
               konsole.error(e);
-              if (args && args.callback)
-                args.callback(null, e);
+
+              if (args && args.callback) args.callback(null, e);
+
               return;
             }
           });
         } catch (e) {
           konsole.error(e);
-          if (args && args.callback)
-            args.callback(null, e);
+
+          if (args && args.callback) args.callback(null, e);
+
           return;
         }
-      });
+      };
+
+      let cachedDB = connections.filter(
+        c => c.connection && c.connection === args.url
+      )[0];
+
+      if (cachedDB && cachedDB.db) {
+        runQuery(cachedDB.db);
+        return;
+      }
+
+      client.connect(
+        args.url,
+        {
+          autoReconnect: true,
+          reconnectTries: 10,
+          reconnectInterval: 1000
+        },
+        (err, db) => {
+          if (err) {
+            if (++attempts <= ATTEMPTS) {
+              konsole.log(
+                `Connection error, attempt ${attempts}/${ATTEMPTS}`,
+                `h${CliColors.BgGreen}${CliColors.FgWhite}.mngo`
+              );
+              setTimeout(connect, WAIT);
+              return;
+            }
+
+            konsole.error(err);
+
+            if (args.callback) args.callback(null, err);
+
+            return;
+          }
+
+          connections.push({ connection: args.url, db: db });
+          runQuery(db);
+        }
+      );
     };
     connect();
   }

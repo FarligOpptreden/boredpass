@@ -1,0 +1,14 @@
+﻿div.add-review-modal
+  a.close.fa.fa-times(href='/close')
+  div.header
+    h1 Rate &amp; Review
+  div.content
+    span.stars
+      a.fa.fa-star(href='rate/1', data-id=id, class=rating >= 1 ? "color" : "")
+      a.fa.fa-star(href='rate/2', data-id=id, class=rating >= 2 ? "color" : "")
+      a.fa.fa-star(href='rate/3', data-id=id, class=rating >= 3 ? "color" : "")
+      a.fa.fa-star(href='rate/4', data-id=id, class=rating >= 4 ? "color" : "")
+      a.fa.fa-star(href='rate/5', data-id=id, class=rating == 5 ? "color" : "")
+    div.field-wrapper.textarea
+      label(for='review') Want to leave a short review?
+      textarea#review

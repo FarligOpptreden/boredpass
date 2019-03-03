@@ -2,16 +2,16 @@
 
 mixin photos(data, edit)
   if (data && data.length) || edit
-    section.listing-section.photos(class=edit && 'edit')&attributes(attributes)
+    section.listing-section.photos(class=edit ? 'edit' : 'scrollable-container', data-breakpoints='670:5,550:4,400:2')&attributes(attributes)
       div
         if !edit
           a.prev.hidden.fa.fa-angle-left(href='prev-photo')
-        div(data-current-scroll='0')
+        div
           each photo, index in data
             if edit
               +photoUpload(photo)(data-url='/content/upload')
             else
-              div.photo
+              div.photo.scrollable
                 a(class='photo' + index, style='background-image: url(/content/' + photo.fileType + '/' + photo.fileId + ');')
           if edit
             +photoUpload()(data-url='/content/upload')

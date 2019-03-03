@@ -1,371 +1,373 @@
-﻿@import "__variables.less";
+@import "./partials/__variables.less";
 
 .listing-section {
-    .wizard-instructions p {
-        line-height: 1.25;
-    }
+  .wizard-instructions p {
+    line-height: 1.25;
+  }
 
-    .wizard-steps {
-        max-width: 800px;
-        margin: 40px auto 0 auto;
-        display: flex;
-        flex-direction: row;
-
-        .wizard-line {
-            position: absolute;
-        }
-
-        & > div {
-            flex: 1;
-            text-align: center;
-
-            & > a {
-                display: inline-block;
-                height: 60px;
-                width: 60px;
-                background-color: @col-grey;
-                color: @col-button-fg;
-                border-radius: 30px;
-                font-size: 26px;
-                padding: 12px 5px;
-                text-align: center;
-                text-decoration: none;
-                border: solid 3px #FFF;
-
-                &.active {
-                    border-color: @col-main;
-                    animation: active-pulse 2s infinite;
-                }
-
-                &.completed {
-                    background-color: @col-main;
-                }
-            }
-        }
-    }
-
-    &.wizard {
-        overflow: hidden;
-        position: relative;
-    }
-
-    form {
-        width: 800px;
-        margin: 0 auto;
-    }
-
-    .button-wrapper {
-        display: flex;
-        flex-direction: row;
-
-        button.button {
-            border-radius: 0;
-            flex: 1;
-            text-shadow: @text-shadow;
-
-            &.dark {
-                background-color: @col-main;
-                color: #FFFFFF;
-            }
-        }
-    }
-
-    .wizard-content {
-        max-width: 800px;
-        margin: 0 auto;
-        overflow: visible;
-        white-space: nowrap;
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        transition: height 0.5s;
-
-        &.no-flex {
-            display: block;
-        }
-
-        .instructions-template {
-            display: none;
-        }
-
-        form {
-            display: inline-block;
-            flex: 0 0 100%;
-            padding: 0 10px 10px 10px;
-            transition: all 0.3s;
-            opacity: 0;
-
-            &.active {
-                opacity: 1;
-                z-index: 2;
-            }
-
-            &.hidden {
-                display: none;
-            }
-        }
-
-        button.prev {
-            border: solid 3px @col-main;
-            background-color: transparent;
-            color: @col-main;
-        }
-
-        .social {
-            .links {
-                text-align: center;
-
-                & > a {
-                    display: inline-block;
-                    width: 42px;
-                    height: 42px;
-                    background-color: @col-grey;
-                    border-radius: 24px;
-                    margin-right: 12px;
-                    color: @col-body-bg;
-                    font-size: 17px;
-                    padding: 10px 0;
-                    text-align: center;
-                    text-decoration: none;
-                    cursor: pointer;
-                    border: solid 3px @col-body-bg;
-                    transition: all 0.2s;
-
-                    &.has-value {
-                        background-color: @col-main;
-                    }
-
-                    &.active {
-                        animation: active-pulse-grey 2s infinite;
-                    }
-
-                    &:last-of-type {
-                        margin-right: 0;
-                    }
-                }
-            }
-
-            input {
-                display: block;
-                width: 100%;
-                max-width: 400px;
-                margin: 10px auto 0 auto;
-                padding: 10px 20px;
-                border: none;
-                background-color: #FFFFFF;
-                font-size: 16px;
-                border-radius: 40px;
-                box-shadow: @box-shadow;
-                outline: none;
-
-                &.hidden {
-                    display: none;
-                }
-            }
-        }
-
-        p {
-            padding: 20px 10px 20px 0;
-            white-space: normal;
-            line-height: 1.25;
-        }
-
-        .add-overview {
-            display: flex;
-            flex-direction: row;
-
-            .add-logo {
-                background-color: @col-main;
-                height: 200px;
-                width: 200px;
-                margin: 0 0 0 20px;
-                display: block;
-                flex: 0 0 200px;
-                position: relative;
-
-                & > a {
-                    display: block;
-                    height: 100%;
-                    width: 100%;
-                    border: none;
-                    background-size: contain;
-                }
-
-                & > span {
-                    background-color: rgba(255, 255, 255, 0.2);
-                }
-            }
-        }
-
-        &.success {
-            display: flex;
-            align-items: center;
-
-            span {
-                flex: 0 0 150px;
-                height: 150px;
-                width: 150px;
-                border-radius: 75px;
-                background-color: @col-main;
-            }
-
-            h1 {
-                padding: 0 0 0 40px;
-                color: @col-main;
-                white-space: normal;
-                font-size: 30px;
-            }
-        }
-    }
-
-    .adding-content {
-        max-width: 800px;
-    }
-
-    span {
-        &.plus, &.close {
-            background-color: @col-main;
-            color: #FFFFFF;
-            height: 50px;
-            width: 50px;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            font-size: 50px;
-            padding: 0;
-            text-align: center;
-        }
-
-        &.close {
-            top: 5px;
-            right: 5px;
-            left: auto;
-            bottom: auto;
-            border-radius: 25px;
-            opacity: 0.5;
-            transform: rotate(45deg);
-            transition: all 0.25s;
-        }
-    }
-
-    .has-image:hover {
-        span.close {
-            opacity: 1;
-        }
-    }
-
-    .add-photos {
-        padding: 0;
-        margin: 10px -10px 0 -10px;
-        display: flex;
-        flex-wrap: wrap;
-
-        & > div {
-            padding: 10px;
-            flex: 0 0 50%;
-
-            & > a {
-                display: block;
-                height: 280px;
-                background-color: #FFFFFF;
-                position: relative;
-
-                & > span {
-                    background-color: @col-main;
-                }
-            }
-        }
-    }
-
-    .wizard-cover {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        width: auto !important;
-        background-color: transparent;
-        z-index: 1;
-    }
-
-    h2 {
-        padding-left: 0;
-    }
-
-    hr {
-        margin-left: 0;
-    }
-}
-
-.trading-hours {
-    padding: 10px 0;
-}
-
-.day-time-wrapper {
+  .wizard-steps {
+    max-width: 800px;
+    margin: 40px auto 0 auto;
     display: flex;
     flex-direction: row;
 
-    select {
-        flex: 0 0 100px;
-        padding: 3px 0 3px 20px;
-        margin: 5px 2px;
-        border: none;
-        outline: none;
-        font-family: 'Raleway', sans-serif;
-        color: @col-body-fg;
-        border: solid 2px #FFFFFF;
-        transition: all 0.25s;
-        background-color: #FFFFFF;
-        box-shadow: @box-shadow;
-
-        &:hover {
-            border-color: @col-main;
-        }
-
-        &:focus, &:active {
-            color: @col-main;
-            border-color: @col-main;
-        }
-
-        &:disabled {
-            color: #DDDDDD;
-            border-color: #FFFFFF;
-            box-shadow: none;
-        }
+    .wizard-line {
+      position: absolute;
     }
 
-    .checkbox-option {
-        display: flex;
-        flex: 1;
+    & > div {
+      flex: 1;
+      text-align: center;
+
+      & > a {
+        display: inline-block;
+        height: 60px;
+        width: 60px;
+        background-color: @col-grey;
+        color: @col-button-fg;
+        border-radius: 30px;
+        font-size: 26px;
+        padding: 12px 5px;
+        text-align: center;
+        text-decoration: none;
+        border: solid 3px #fff;
+
+        &.active {
+          border-color: @col-main;
+          animation: active-pulse 2s infinite;
+        }
+
+        &.completed {
+          background-color: @col-main;
+        }
+      }
+    }
+  }
+
+  &.wizard {
+    overflow: hidden;
+    position: relative;
+  }
+
+  form {
+    width: 800px;
+    margin: 0 auto;
+  }
+
+  .button-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    button.button {
+      border-radius: 0;
+      flex: 1;
+      text-shadow: @text-shadow;
+
+      &.dark {
+        background-color: @col-main;
+        color: #ffffff;
+      }
+    }
+  }
+
+  .wizard-content {
+    max-width: 800px;
+    margin: 0 auto;
+    overflow: visible;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    transition: height 0.5s;
+
+    &.no-flex {
+      display: block;
+    }
+
+    .instructions-template {
+      display: none;
+    }
+
+    form {
+      display: inline-block;
+      flex: 0 0 100%;
+      padding: 0 10px 10px 10px;
+      transition: all 0.3s;
+      opacity: 0;
+
+      &.active {
+        opacity: 1;
+        z-index: 2;
+      }
+
+      &.hidden {
+        display: none;
+      }
+    }
+
+    button.prev {
+      border: solid 3px @col-main;
+      background-color: transparent;
+      color: @col-main;
+    }
+
+    .social {
+      .links {
+        text-align: center;
 
         & > a {
-            flex: 0 0 30px;
+          display: inline-block;
+          width: 42px;
+          height: 42px;
+          background-color: @col-grey;
+          border-radius: 24px;
+          margin-right: 12px;
+          color: @col-body-bg;
+          font-size: 17px;
+          padding: 10px 0;
+          text-align: center;
+          text-decoration: none;
+          cursor: pointer;
+          border: solid 3px @col-body-bg;
+          transition: all 0.2s;
+
+          &.has-value {
+            background-color: @col-main;
+          }
+
+          &.active {
+            animation: active-pulse-grey 2s infinite;
+          }
+
+          &:last-of-type {
+            margin-right: 0;
+          }
+        }
+      }
+
+      input {
+        display: block;
+        width: 100%;
+        max-width: 400px;
+        margin: 10px auto 0 auto;
+        padding: 10px 20px;
+        border: none;
+        background-color: #ffffff;
+        font-size: 16px;
+        border-radius: 40px;
+        box-shadow: @box-shadow;
+        outline: none;
+
+        &.hidden {
+          display: none;
+        }
+      }
+    }
+
+    p {
+      padding: 20px 10px 20px 0;
+      white-space: normal;
+      line-height: 1.25;
+    }
+
+    .add-overview {
+      display: flex;
+      flex-direction: row;
+
+      .add-logo {
+        background-color: @col-main;
+        height: 200px;
+        width: 200px;
+        margin: 0 0 0 20px;
+        display: block;
+        flex: 0 0 200px;
+        position: relative;
+
+        & > a {
+          display: block;
+          height: 100%;
+          width: 100%;
+          border: none;
+          background-size: contain;
         }
 
-        label {
-            background-color: #FFFFFF;
-            margin: 5px 2px 5px 33px;
-            padding: 8px 13px;
-            flex: 1;
+        & > span {
+          background-color: rgba(255, 255, 255, 0.2);
         }
+      }
     }
+
+    &.success {
+      display: flex;
+      align-items: center;
+
+      span {
+        flex: 0 0 150px;
+        height: 150px;
+        width: 150px;
+        border-radius: 75px;
+        background-color: @col-main;
+      }
+
+      h1 {
+        padding: 0 0 0 40px;
+        color: @col-main;
+        white-space: normal;
+        font-size: 30px;
+      }
+    }
+  }
+
+  .adding-content {
+    max-width: 800px;
+  }
+
+  span {
+    &.plus,
+    &.close {
+      background-color: @col-main;
+      color: #ffffff;
+      height: 50px;
+      width: 50px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      font-size: 50px;
+      padding: 0;
+      text-align: center;
+    }
+
+    &.close {
+      top: 5px;
+      right: 5px;
+      left: auto;
+      bottom: auto;
+      border-radius: 25px;
+      opacity: 0.5;
+      transform: rotate(45deg);
+      transition: all 0.25s;
+    }
+  }
+
+  .has-image:hover {
+    span.close {
+      opacity: 1;
+    }
+  }
+
+  .add-photos {
+    padding: 0;
+    margin: 10px -10px 0 -10px;
+    display: flex;
+    flex-wrap: wrap;
+
+    & > div {
+      padding: 10px;
+      flex: 0 0 50%;
+
+      & > a {
+        display: block;
+        height: 280px;
+        background-color: #ffffff;
+        position: relative;
+
+        & > span {
+          background-color: @col-main;
+        }
+      }
+    }
+  }
+
+  .wizard-cover {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: auto !important;
+    background-color: transparent;
+    z-index: 1;
+  }
+
+  h2 {
+    padding-left: 0;
+  }
+
+  hr {
+    margin-left: 0;
+  }
+}
+
+.trading-hours {
+  padding: 10px 0;
+}
+
+.day-time-wrapper {
+  display: flex;
+  flex-direction: row;
+
+  select {
+    flex: 0 0 100px;
+    padding: 3px 0 3px 20px;
+    margin: 5px 2px;
+    border: none;
+    outline: none;
+    font-family: "Raleway", sans-serif;
+    color: @col-body-fg;
+    border: solid 2px #ffffff;
+    transition: all 0.25s;
+    background-color: #ffffff;
+    box-shadow: @box-shadow;
+
+    &:hover {
+      border-color: @col-main;
+    }
+
+    &:focus,
+    &:active {
+      color: @col-main;
+      border-color: @col-main;
+    }
+
+    &:disabled {
+      color: #dddddd;
+      border-color: #ffffff;
+      box-shadow: none;
+    }
+  }
+
+  .checkbox-option {
+    display: flex;
+    flex: 1;
+
+    & > a {
+      flex: 0 0 30px;
+    }
+
+    label {
+      background-color: #ffffff;
+      margin: 5px 2px 5px 33px;
+      padding: 8px 13px;
+      flex: 1;
+    }
+  }
 }
 
 .edit-banner {
-    margin-top: 20px;
-    display: block;
-    width: 100%;
-    height: 150px;
-    box-shadow: @box-shadow;
-    border: solid 2px #FFF;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    background-color: #FFF;
-    transition: all 0.2s;
+  margin-top: 20px;
+  display: block;
+  width: 100%;
+  height: 150px;
+  box-shadow: @box-shadow;
+  border: solid 2px #fff;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-color: #fff;
+  transition: all 0.2s;
 
-    &:hover {
-        border-color: @col-main;
-    }
+  &:hover {
+    border-color: @col-main;
+  }
 }

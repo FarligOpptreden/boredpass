@@ -1,170 +1,171 @@
-﻿@import "__variables.less";
-@import "listing_card.less";
+@import "./partials/__variables.less";
+@import "./partials/listing_card.less";
 
-section.listings, section.statistics {
-    max-width: 1280px;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: flex-start;
+section.listings,
+section.statistics {
+  max-width: 1280px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
 
-    & > .listing {
-        flex: 0 0 33.3%;
-        padding: 10px;
+  & > .listing {
+    flex: 0 0 33.3%;
+    padding: 10px;
+  }
+
+  & > h1 > a {
+    display: inline-block;
+    margin-left: 10px;
+    color: @col-dark;
+  }
+
+  .buttons {
+    text-align: right;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .button {
+    text-transform: uppercase;
+    padding: 10px 30px;
+    color: @col-main;
+    border: solid 1px @col-main;
+    border-radius: 30px;
+    background-color: transparent;
+    font-size: 16px;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    outline: none;
+    transition: all 0.2s;
+    width: 100%;
+    text-align: center;
+
+    &.grey {
+      color: @col-dark;
+      border-color: @col-dark;
     }
 
-    & > h1 > a {
-        display: inline-block;
-        margin-left: 10px;
-        color: @col-dark;
+    &:hover {
+      box-shadow: @box-shadow;
+      transform: translateY(-2px);
     }
+  }
 
-    .buttons {
-        text-align: right;
-        width: 100%;
-        margin-top: 20px;
-    }
+  .paging {
+    width: 100%;
+    flex: none;
+    text-align: right;
+    padding: 40px 10px;
 
-    .button {
-        text-transform: uppercase;
-        padding: 10px 30px;
-        color: @col-main;
-        border: solid 1px @col-main;
-        border-radius: 30px;
-        background-color: transparent;
-        font-size: 16px;
-        display: inline-block;
-        text-decoration: none;
-        cursor: pointer;
-        transition: all 0.2s;
-        outline: none;
-        transition: all 0.2s;
-        width: 100%;
-        text-align: center;
+    a {
+      display: inline-block;
+      font-weight: 600;
+      width: auto;
+      position: relative;
 
-        &.grey {
-            color: @col-dark;
-            border-color: @col-dark;
+      i {
+        position: absolute;
+        top: 50%;
+        font-size: 20px;
+        margin-top: -10px;
+        line-height: 20px;
+      }
+
+      &.prev {
+        padding-left: 45px;
+
+        i {
+          left: 20px;
         }
+      }
 
-        &:hover {
-            box-shadow: @box-shadow;
-            transform: translateY(-2px);
+      &.next {
+        padding-right: 45px;
+        margin-left: 20px;
+
+        i {
+          right: 20px;
         }
+      }
     }
-
-    .paging {
-        width: 100%;
-        flex: none;
-        text-align: right;
-        padding: 40px 10px;
-
-        a {
-            display: inline-block;
-            font-weight: 600;
-            width: auto;
-            position: relative;
-
-            i {
-                position: absolute;
-                top: 50%;
-                font-size: 20px;
-                margin-top: -10px;
-                line-height: 20px;
-            }
-
-            &.prev {
-                padding-left: 45px;
-
-                i {
-                    left: 20px;
-                }
-            }
-
-            &.next {
-                padding-right: 45px;
-                margin-left: 20px;
-
-                i {
-                    right: 20px;
-                }
-            }
-        }
-    }
+  }
 }
 
 .adrenalin-and-extreme-sports {
-    background-image: url(/images/banners/rocks_2x.jpg);
+  background-image: url(/images/banners/rocks_2x.jpg);
 }
 
 .nature-and-adventure {
-    background-image: url(/images/banners/forest_2x.jpg);
+  background-image: url(/images/banners/forest_2x.jpg);
 }
 
 .cultural {
-    background-image: url(/images/banners/vineyard_2x.jpg);
+  background-image: url(/images/banners/vineyard_2x.jpg);
 }
 
 .fun-and-games {
-    background-image: url(/images/banners/picnic_2x.jpg);
+  background-image: url(/images/banners/picnic_2x.jpg);
 }
 
 .sightseeing {
-    background-image: url(/images/banners/city_2x.jpg);
+  background-image: url(/images/banners/city_2x.jpg);
 }
 
 .listing.template {
-    display: none;
+  display: none;
 }
 
 .no-more-data {
-    padding: 40px 10px;
+  padding: 40px 10px;
 
-    h1 {
-        font-size: 24px;
-        line-height: 30px;
-        font-weight: 600;
-        margin-bottom: 20px;
+  h1 {
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .recommendations {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    a {
+      flex: 1;
+      align-content: flex-end;
+      padding: 10px;
+      background-color: @col-grey;
+      color: #fff;
+      text-transform: uppercase;
+      position: relative;
+      height: 100px;
+      margin: 5px;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+
+      span {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        line-height: 20px;
+        font-size: 16px;
+      }
     }
 
-    .recommendations {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-
-        a {
-            flex: 1;
-            align-content: flex-end;
-            padding: 10px;
-            background-color: @col-grey;
-            color: #FFF;
-            text-transform: uppercase;
-            position: relative;
-            height: 100px;
-            margin: 5px;
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-
-            span {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                padding: 10px;
-                background-color: rgba(0, 0, 0, 0.5);
-                line-height: 20px;
-                font-size: 16px;
-            }
-        }
-
-        &.wide {
-            a {
-                min-width: 45%;
-            }
-        }
+    &.wide {
+      a {
+        min-width: 45%;
+      }
     }
+  }
 }
 
 @import "category_listings.mq.less";

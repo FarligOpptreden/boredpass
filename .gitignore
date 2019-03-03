@@ -36,6 +36,7 @@
 ehthumbs.db
 Thumbs.db
 .vs
+/node_modules
 /BoredPass/bin
 /BoredPass/iisnode
 /BoredPass/node_modules

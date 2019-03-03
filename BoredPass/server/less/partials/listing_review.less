@@ -1,0 +1,73 @@
+@import "__variables.less";
+
+.add-review-modal {
+  width: 400px;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  bottom: auto;
+  right: auto;
+  margin: -200px 0 0 -200px;
+  padding: 50px;
+  background-color: @col-body-bg;
+
+  .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: @col-main;
+    overflow: visible;
+    height: 60px;
+    z-index: 100;
+
+    h1 {
+      color: @col-button-fg;
+      font-weight: 200;
+      font-size: 20px;
+      padding: 20px;
+      text-transform: uppercase;
+    }
+  }
+
+  .content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 60px;
+    padding: 40px 40px 0 40px;
+    overflow: auto;
+
+    .stars {
+      position: relative;
+      display: block;
+      text-align: center;
+      margin: 0 auto 16px auto;
+      left: auto;
+      right: auto;
+    }
+
+    .textarea {
+      height: 200px;
+
+      textarea {
+        height: 200px;
+      }
+    }
+  }
+
+  &.no-no {
+    animation: no-no 0.5s forwards;
+  }
+
+  .close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 24px;
+    z-index: 101;
+  }
+}

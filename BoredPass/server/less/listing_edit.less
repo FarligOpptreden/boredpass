@@ -1,126 +1,128 @@
-﻿@import "__variables.less";
+@import "./partials/__variables.less";
 
 .listing-section {
-    .content-editable {
-        box-shadow: @box-shadow;
-        border: solid 2px rgba(0, 0, 0, 0.2);
-        outline: none;
-        font-family: 'Raleway', sans-serif;
-        border-radius: 3px;
-        transition: all 0.2s;
+  .content-editable {
+    box-shadow: @box-shadow;
+    border: solid 2px rgba(0, 0, 0, 0.2);
+    outline: none;
+    font-family: "Raleway", sans-serif;
+    border-radius: 3px;
+    transition: all 0.2s;
 
-        &:hover, &:focus {
-            border-color: @col-main;
-            border-style: solid;
-        }
+    &:hover,
+    &:focus {
+      border-color: @col-main;
+      border-style: solid;
+    }
+  }
+
+  &.overview {
+    & > div:nth-child(2) {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 0;
     }
 
-    &.overview {
-        & > div:nth-child(2) {
-            display: flex;
-            flex-direction: column;
-            padding-bottom: 0;
-        }
-
-        #listing-name {
-            flex: 0 0 40px;
-            display: block;
-            font-size: 26px;
-            font-weight: 900;
-            text-transform: uppercase;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-
-        #listing-description {
-            position: relative;
-            margin-bottom: 10px;
-            flex: 1;
-            resize: none;
-            min-height: 100px;
-            font-size: 15px;
-            line-height: 1.5;
-            padding: 10px;
-        }
-
-        .photo-upload.logo {
-            background-color: #333 !important;
-        }
+    #listing-name {
+      flex: 0 0 40px;
+      display: block;
+      font-size: 26px;
+      font-weight: 900;
+      text-transform: uppercase;
+      padding: 10px;
+      margin-bottom: 20px;
     }
 
-    .contact-info {
-        & > a {
-            display: flex !important;
-            flex-direction: row;
-            padding: 5px 0 !important;
-        }
-
-        & > span {
-            flex: 0 0 20px;
-            position: relative !important;
-            top: 8px !important;
-        }
-
-        & > .content-editable {
-            flex: 1;
-            padding: 5px;
-            margin-left: 5px;
-        }
+    #listing-description {
+      position: relative;
+      margin-bottom: 10px;
+      flex: 1;
+      resize: none;
+      min-height: 100px;
+      font-size: 15px;
+      line-height: 1.5;
+      padding: 10px;
     }
 
-    div.facility {
-        cursor: pointer;
+    .photo-upload.logo {
+      background-color: #333 !important;
+    }
+  }
 
-        &.editing:not(.selected) {
-            .icon, span {
-                opacity: 0.2;
-            }
-        }
-
-        & > span {
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        &:hover > span:not(.icon) {
-            opacity: 1 !important;
-        }
+  .contact-info {
+    & > a {
+      display: flex !important;
+      flex-direction: row;
+      padding: 5px 0 !important;
     }
 
-    &.photos.edit > div > div {
-        flex-wrap: wrap;
-
-        & > div {
-            flex: 0 0 33.3%;
-        }
+    & > span {
+      flex: 0 0 20px;
+      position: relative !important;
+      top: 8px !important;
     }
+
+    & > .content-editable {
+      flex: 1;
+      padding: 5px;
+      margin-left: 5px;
+    }
+  }
+
+  div.facility {
+    cursor: pointer;
+
+    &.editing:not(.selected) {
+      .icon,
+      span {
+        opacity: 0.2;
+      }
+    }
+
+    & > span {
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    &:hover > span:not(.icon) {
+      opacity: 1 !important;
+    }
+  }
+
+  &.photos.edit > div > div {
+    flex-wrap: wrap;
+
+    & > div {
+      flex: 0 0 33.3%;
+    }
+  }
 }
 
 .banner .edit-banner {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  right: 20px;
+  top: 390px;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: @col-dark;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: @box-shadow;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  & > i {
     position: absolute;
-    height: 50px;
-    width: 50px;
-    right: 20px;
-    top: 390px;
-    background-color: rgba(255, 255, 255, 0.5);
-    color: @col-dark;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: @box-shadow;
-
-    &:hover {
-        background-color: rgba(255, 255, 255, 0.8);
-    }
-
-    & > i {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 50%;
-        height: 30px;
-        font-size: 30px;
-        margin: -15px 0 0 0;
-        text-align: center;
-    }
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 30px;
+    font-size: 30px;
+    margin: -15px 0 0 0;
+    text-align: center;
+  }
 }

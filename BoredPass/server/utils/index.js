@@ -1,5 +1,3 @@
-﻿import { StringUtils } from './stringUtils';
+﻿import { StringUtils } from "./stringUtils";
 
-export {
-    StringUtils
-}
+export { StringUtils };

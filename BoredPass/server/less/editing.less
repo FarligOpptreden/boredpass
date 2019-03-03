@@ -1,50 +1,50 @@
-﻿@import "__variables.less";
+@import "./partials/__variables.less";
 
 .listing-section {
-    &.photos.edit {
+  &.photos.edit {
+    & > div {
+      max-width: 1024px;
+
+      & > div {
+        width: 100%;
+        margin: 0;
+        overflow: visible;
+        white-space: normal;
+        display: flex;
+
         & > div {
-            max-width: 1024px;
+          padding: 10px;
+          flex: 0 0 50%;
 
-            & > div {
-                width: 100%;
-                margin: 0;
-                overflow: visible;
-                white-space: normal;
-                display: flex;
-
-                & > div {
-                    padding: 10px;
-                    flex: 0 0 50%;
-
-                    & > a {
-                        display: block;
-                        height: 280px;
-                        background-color: #FFFFFF;
-                        position: relative;
-                    }
-                }
-            }
+          & > a {
+            display: block;
+            height: 280px;
+            background-color: #ffffff;
+            position: relative;
+          }
         }
+      }
     }
+  }
 
-    span.plus {
-        background-color: @col-main;
-        color: #FFFFFF;
-        height: 50px;
-        width: 50px;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        font-size: 50px;
-        padding: 0;
-        text-align: center;
-    }
+  span.plus {
+    background-color: @col-main;
+    color: #ffffff;
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 50px;
+    padding: 0;
+    text-align: center;
+  }
 
-    .photo-upload.logo > a {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-    }
+  .photo-upload.logo > a {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
 }

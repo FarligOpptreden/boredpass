@@ -1,0 +1,66 @@
+@import "./partials/__variables.less";
+
+@media all and (max-width: 1400px) {
+  .profile-section {
+    .scrollable-container {
+      position: relative;
+
+      & > div {
+        margin: 0 40px;
+      }
+
+      .prev {
+        left: 0;
+        right: auto;
+      }
+
+      .next {
+        left: auto;
+        right: 0;
+      }
+    }
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .profile-section {
+    & > div {
+      width: auto;
+    }
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .profile-section {
+    .scrollable-container {
+      .scrollable {
+        flex: 0 0 33.3%;
+        width: 33.3%;
+        max-width: 33.3%;
+      }
+    }
+  }
+}
+
+@media all and (max-width: 960px) {
+  .profile-section {
+    .scrollable-container {
+      .scrollable {
+        flex: 0 0 50%;
+        width: 50%;
+        max-width: 50%;
+      }
+    }
+  }
+}
+
+@media all and (max-width: 660px) {
+  .profile-section {
+    .scrollable-container {
+      .scrollable {
+        flex: 0 0 100%;
+        width: 100%;
+      }
+    }
+  }
+}

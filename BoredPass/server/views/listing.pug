@@ -51,12 +51,13 @@ block content
       - var website = listing.website && listing.website.indexOf('http') >= 0 ? listing.website : 'http://' + listing.website
       a.website(target='_blank', href=website, title=listing.website)= listing.website
 
-      - var socialFacebook = listing.social.facebook ? (listing.social.facebook.indexOf('http') >= 0 ? listing.social.facebook : 'https://' + listing.social.facebook) : null
-      - var socialTwitter = listing.social.twitter ? (listing.social.twitter.indexOf('http') >= 0 ? listing.social.twitter : 'https://' + listing.social.twitter) : null
-      - var socialGoogle = listing.social.google ? (listing.social.google.indexOf('http') >= 0 ? listing.social.google : 'https://' + listing.social.google) : null
-      - var socialInstagram = listing.social.instagram ? (listing.social.instagram.indexOf('http') >= 0 ? listing.social.instagram : 'https://' + listing.social.instagram) : null
-      - var socialPinterest = listing.social.pinterest ? (listing.social.pinterest.indexOf('http') >= 0 ? listing.social.pinterest : 'https://' + listing.social.pinterest) : null
-      - var socialYoutube = listing.social.youtube ? (listing.social.youtube.indexOf('http') >= 0 ? listing.social.youtube : 'https://' + listing.social.youtube) : null
+      - var getLink = l => l ? (l.indexOf('http') >= 0 ? l : 'https://' + l) : null;
+      - var socialFacebook = getLink(listing.social.facebook);
+      - var socialTwitter = getLink(listing.social.twitter);
+      - var socialGoogle = getLink(listing.social.google);
+      - var socialInstagram = getLink(listing.social.instagram);
+      - var socialPinterest = getLink(listing.social.pinterest);
+      - var socialYoutube = getLink(listing.social.youtube);
 
       if (socialFacebook || socialTwitter || socialGoogle || socialInstagram || socialPinterest || socialYoutube)
         div.social
@@ -75,24 +76,27 @@ block content
     div
       h1= listing.name
       != marked(listing.description)
-      button.subscribe.button Subscribe
+      button.round.subscribe.button Subscribe
     div
       span.rating
-        label Unrated
+        label No reviews
         span.stars
-          a.fa.fa-star(href='rate/1')
-          a.fa.fa-star(href='rate/2')
-          a.fa.fa-star(href='rate/3')
-          a.fa.fa-star(href='rate/4')
-          a.fa.fa-star(href='rate/5')
+          a.fa.fa-star(href='rate/1', data-id=listing._id, data-rating=1)
+          a.fa.fa-star(href='rate/2', data-id=listing._id, data-rating=2)
+          a.fa.fa-star(href='rate/3', data-id=listing._id, data-rating=3)
+          a.fa.fa-star(href='rate/4', data-id=listing._id, data-rating=4)
+          a.fa.fa-star(href='rate/5', data-id=listing._id, data-rating=5)
       span.claimed.not-yet
         span.fa.fa-hourglass-half
         span Unclaimed
       a.add
       a.message
       a.share
+
   +activities(listing.tags, false, listing._id).blue
+
   +facilities(listing.facilities).alternating
+
   +photos(listing.photos).alternating
 
   //-if activities && activities.length
@@ -143,4 +147,4 @@ block content
                 li 2-2.5hr Group Trips (non-private)
   section.listing-section.lower.alternating
     div
-      a.report.button.grey(href='/report-listing') Report Listing
+      a.report.button.round.grey(href='/report-listing') Report Listing

@@ -1,10 +1,10 @@
-﻿import config from '../../config';
-import { BasicCrudPromises } from '../../handlr/_all';
+﻿import config from "../../config";
+import { BasicCrudPromises } from "../../handlr";
 
 class Activities extends BasicCrudPromises {
-    constructor() {
-        super(config.connectionStrings.boredPass, 'activities');
-    }
+  constructor() {
+    super(config.connectionStrings.boredPass, "activities");
+  }
 }
 
 export const ActivitiesService = new Activities();

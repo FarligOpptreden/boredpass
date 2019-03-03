@@ -1,12 +1,95 @@
 ﻿extends _layout
 
+block css
+  link(rel='stylesheet', href='/css/user.min.css')
+
 block content
+  - var initials = user.name.split(' ').splice(0, 2).map(p => p.substring(0, 1).toUpperCase()).join('');
+  - var surname = user.name.split(' ').slice(1).map(p => p.substring(0, 1).toLowerCase()).join(' ');
+  - var avatarColour = `background-color: ${authentication.utils.generateColour(surname)}`;
+
   section.banner
     header.banner-image.home
     div.cover
+
+  section.profile-section.user-profile
     div
-      h2 BoredPass
-      h1 User Profile
-  section.body
+      i.avatar(style=avatarColour)= initials
+      h1= user.name
+      p.bio.no-data This person hasn't written a biography yet.
+    div.actions
+      button.follow.button.round Follow
+
+  section.profile-section.icon-cards.latest-activity.alternating
     div
-      p TODO
+      h1 Latest Activity
+
+      if !latestActivity || !latestActivity.length
+        p.no-data This person hasn't done anything recently.
+      
+      if latestActivity && latestActivity.length
+        div.scrollable-container(data-breakpoints='1200:4,960:3,959:2')
+          a.prev.hidden.fa.fa-angle-left(href='prev-activities')
+          div
+            each activity in latestActivity
+              div.scrollable
+                a.card.user-activity(href=activity.link, class=activity.type)
+                  -
+                    var icon = '';
+                    switch (activity.type) {
+                      case 'create-listing': icon = 'fa-plus'; break;
+                      case 'rating': icon = 'fa-star'; break;
+                      case 'registration': icon = 'fa-user'; break;
+                      case 'rating-and-review': icon = 'fa-bullhorn'; break;
+                      case 'badge': icon = 'fa-trophy'; break;
+                    }
+                  i.icon(class=`fa ${icon}`)
+                  span=activity.title
+                    if activity.subTitle
+                      label.sub-title=activity.subTitle
+                    label=activity.date
+          a.next.hidden.fa.fa-angle-right(href='next-activities')
+
+  section.profile-section.icon-cards.blue
+    div
+      h1 Badges
+      each badge in badges
+        div.card.badge
+          i.icon
+          span=badge.name
+            label Not earned yet
+
+  section.profile-section.feedback.icon-cards.alternating
+    div
+      h1 Ratings & Reviews
+
+      if !reviews || !reviews.length
+        p.no-data This person hasn't left any ratings or reviews yet.
+      
+      if reviews && reviews.length
+        each review in reviews
+          a.card.review(href=review.link)
+            i.icon(style=`background-image:url(${review.icon});`)
+            span=review.title
+              label.stars
+                i.fa.fa-star(class=review.rating >= 1 ? 'color' : '')
+                i.fa.fa-star(class=review.rating >= 2 ? 'color' : '')
+                i.fa.fa-star(class=review.rating >= 3 ? 'color' : '')
+                i.fa.fa-star(class=review.rating >= 4 ? 'color' : '')
+                i.fa.fa-star(class=review.rating == 5 ? 'color' : '')
+              label.review-date=review.date
+            p.detail(class=(review.review ? '' : 'no-data'))=(review.review || 'No review.')
+
+  section.profile-section.social.alternating
+    div.flex
+      div
+        h1 Followers
+        p.no-data This person doesn't have any followers.
+      div
+        h1 Following
+        p.no-data This person isn't following anyone.
+
+  section.profile-section.photos.alternating
+      div
+        h1 Photos
+        p.no-data This person hasn't uploaded any photos yet.

@@ -669,15 +669,11 @@ $(document).ready(function() {
       var currentScroll = 0;
       scrollableContainer.data("current-scroll", currentScroll);
 
-      var setNumVisible = function(startup) {
+      var setNumVisible = function() {
         var getNum = function() {
           for (var i = 0; i < breakpoints.length; i++) {
             if ($("body").width() > breakpoints[i].size) {
               numVisible = breakpoints[i].numVisible;
-              console.log({
-                numVisible: numVisible,
-                breakpoints: breakpoints
-              });
               return;
             }
           }

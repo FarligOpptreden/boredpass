@@ -1,9 +1,9 @@
 @import "./partials/__variables.less";
- 
+
 .profile-section {
   max-width: none;
   margin: 0 auto;
-  padding: 50px 0;
+  padding: 30px 0;
   position: relative;
   display: flex;
   flex-wrap: wrap;
@@ -11,6 +11,7 @@
   & > div {
     width: @site-width;
     margin: 0 auto;
+    position: relative;
 
     h1 {
       font-size: 26px;
@@ -143,6 +144,9 @@
         flex: 1;
         font-weight: 600;
         text-transform: uppercase;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
         label {
           display: block;
@@ -157,7 +161,9 @@
             color: @col-main;
             font-weight: 700;
             text-transform: uppercase;
-            white-space: normal;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
       }
@@ -188,7 +194,6 @@
 
       &.review {
         padding: 0 10px;
-        width: 33.3%;
         box-sizing: border-box;
         border-right: solid 1px @col-grey;
 
@@ -209,27 +214,45 @@
   }
 
   .scrollable-container {
-    position: relative;
+    position: absolute;
+    left: 0;
+    right: 0;
 
     & > div {
       overflow: hidden;
       white-space: nowrap;
-      display: flex;
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
     }
 
     .scrollable {
-      flex: 0 0 25%;
       float: none;
-      position: relative;
       flex: none;
+      position: relative;
       display: inline-block;
-      width: 25%;
-      max-width: 25%;
       transition: all 0.2s;
       align-self: center;
 
       .card {
         width: 100%;
+      }
+    }
+
+    &.four {
+      .scrollable {
+        flex: 0 0 25%;
+        width: 25%;
+        max-width: 25%;
+      }
+    }
+
+    &.three {
+      .scrollable {
+        flex: 0 0 33.3%;
+        width: 33.3%;
+        max-width: 33.3%;
       }
     }
 
@@ -263,6 +286,26 @@
     .hidden {
       opacity: 0;
       cursor: default;
+    }
+  }
+
+  &.latest-activity > div {
+    @card-height: 95px;
+
+    height: @card-height + 46px;
+
+    .scrollable-container {
+      height: @card-height;
+    }
+  }
+
+  &.feedback > div {
+    @card-height: 96px;
+
+    height: @card-height + 46px;
+
+    .scrollable-container {
+      height: @card-height;
     }
   }
 }

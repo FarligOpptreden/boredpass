@@ -2,15 +2,14 @@ var gulp = require("gulp");
 var less = require("gulp-less");
 var cssmin = require("gulp-cssmin");
 var rename = require("gulp-rename");
-var path = require("path");
-
-var source = ".\\server\\less\\";
-var destination = ".\\public\\css\\";
-var files = [source + "*.less", "!" + source + "__*.less", "!" + source + "*.mq.less"];
 
 gulp.task("less", function(cb) {
   gulp
-    .src(files)
+    .src([
+      "server/less/*.less",
+      "!server/less/**/__*.less",
+      "!server/less/**/*.mq.less"
+    ])
     .pipe(
       less().on("error", function(err) {
         console.error(err);
@@ -22,21 +21,23 @@ gulp.task("less", function(cb) {
       })
     )
     .pipe(rename({ suffix: ".min" }))
-    .pipe(rename(function (f) {
-      f.dirname = "";
-    }))
+    .pipe(
+      rename(function(f) {
+        f.dirname = "";
+      })
+    )
     .pipe(
       gulp.dest(function(f) {
-        return destination;
+        return ".\\public\\css\\";
       })
     );
   cb();
 });
 
 gulp.task(
-  "default",
+  "watch",
   gulp.series("less", function(cb) {
-    gulp.watch(files, gulp.series("less"));
+    gulp.watch("server/less/**/*.less", gulp.series("less"));
     cb();
   })
 );

@@ -2,7 +2,7 @@
 
 $(document).ready(function() {
   /* Shared Events */
-  (function() {
+  (function sharedEvents() {
     Shared.inputFields();
     var onUpload = function() {
       var field = Shared.photoUpload({
@@ -31,7 +31,7 @@ $(document).ready(function() {
     $(".add-photos .photo-upload").on("boredpass.delete", onDelete);
   })();
   /* Listing Events */
-  (function() {
+  (function listingEvents() {
     $(".wizard-content").height($(".wizard-content form:first").outerHeight());
     $("form").on("submit", function onFormSubmit() {
       return false;
@@ -198,7 +198,7 @@ $(document).ready(function() {
     });
   })();
   /* Activity Events */
-  (function() {
+  (function activityEvents() {
     $(".prices input").change(function() {
       var isChecked = $(this)
         .closest(".checkbox-option")

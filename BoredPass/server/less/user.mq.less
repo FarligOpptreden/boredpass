@@ -3,8 +3,6 @@
 @media all and (max-width: 1400px) {
   .profile-section {
     .scrollable-container {
-      position: relative;
-
       & > div {
         margin: 0 40px;
       }
@@ -22,10 +20,22 @@
   }
 }
 
-@media all and (max-width: 1200px) {
+@media only screen and (max-width: 1320px) {
   .profile-section {
     & > div {
-      width: auto;
+      width: 100%;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    &.user-profile {
+      & > div {
+        padding-left: 200px;
+
+        &.actions {
+          padding-right: 10px;
+        }
+      }
     }
   }
 }
@@ -33,10 +43,11 @@
 @media all and (max-width: 1200px) {
   .profile-section {
     .scrollable-container {
-      .scrollable {
-        flex: 0 0 33.3%;
-        width: 33.3%;
-        max-width: 33.3%;
+      &.four {
+        .scrollable {
+          width: 33.3%;
+          max-width: 33.3%;
+        }
       }
     }
   }
@@ -45,10 +56,30 @@
 @media all and (max-width: 960px) {
   .profile-section {
     .scrollable-container {
-      .scrollable {
-        flex: 0 0 50%;
+      &.four,
+      &.three {
+        .scrollable {
+          width: 50%;
+          max-width: 50%;
+        }
+      }
+    }
+
+    &.icon-cards {
+      .card {
+        width: 33.3%;
+        min-width: 33.3%;
+      }
+    }
+  }
+}
+
+@media all and (max-width: 760px) {
+  .profile-section {
+    &.icon-cards {
+      .card {
         width: 50%;
-        max-width: 50%;
+        min-width: 50%;
       }
     }
   }
@@ -57,9 +88,47 @@
 @media all and (max-width: 660px) {
   .profile-section {
     .scrollable-container {
-      .scrollable {
-        flex: 0 0 100%;
+      &.four,
+      &.three {
+        .scrollable {
+          width: 100%;
+          max-width: 100%;
+        }
+      }
+    }
+
+    &.user-profile {
+      & > div {
+        padding-left: 10px;
+        padding-right: 10px;
+        text-align: center;
+
+        .avatar {
+          display: inline-block;
+          position: relative;
+          margin-left: 0;
+          margin-right: 0;
+          margin-bottom: 20px;
+        }
+
+        .bio:not(.no-data) {
+          text-align: left;
+        }
+
+        &.actions {
+          padding-top: 20px;
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 560px) {
+  .profile-section {
+    &.icon-cards {
+      .card {
         width: 100%;
+        min-width: 100%;
       }
     }
   }

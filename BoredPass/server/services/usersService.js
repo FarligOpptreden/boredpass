@@ -121,6 +121,20 @@ class Users extends BasicCrudPromises {
             "/listings/5b20de046d35ad10741cbc1d/the-harvard-club-of-south-africa/#/ratings/RATING_ID",
           icon: "/content/jpg/21200aa02c94830ee75b65df8b093154",
           rating: 2
+        },
+        {
+          date: (_ => {
+            let d = moment("2018-12-03", "YYYY-MM-DD");
+            return moment().diff(d, "month") > FRIENDLY_LIMIT
+              ? d.format(DATE_FORMAT)
+              : d.fromNow();
+          })(),
+          title: "Aquila Private Game Reserve",
+          link:
+            "/listings/5b21623b6d35ad10741cbc2e/aquila-private-game-reserve/#/ratings/RATING_ID",
+          icon: "/content/jpg/21200aa02c94830ee75b65df8b093154",
+          rating: 4,
+          review: "Professional establishment and loads of animals. Had a blast!"
         }
       ]);
     });

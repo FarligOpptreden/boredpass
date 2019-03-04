@@ -2,7 +2,7 @@
 
 $(document).ready(function() {
   /* Shared Events */
-  (function() {
+  (function sharedEvents() {
     Shared.inputFields();
     var onUpload = function() {
       var field = Shared.photoUpload({
@@ -26,9 +26,9 @@ $(document).ready(function() {
     });
   })();
   /* Listing Events */
-  (function() {})();
+  (function listingEvents() {})();
   /* Activity Events */
-  (function() {
+  (function activityEvents() {
     $(".edit-banner").click(function(e) {
       e.preventDefault();
       $.ajax({

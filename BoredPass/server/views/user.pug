@@ -28,7 +28,7 @@ block content
         p.no-data This person hasn't done anything recently.
       
       if latestActivity && latestActivity.length
-        div.scrollable-container(data-breakpoints='1200:4,960:3,959:2')
+        div.scrollable-container.four(data-breakpoints='1200:4,960:3,959:2')
           a.prev.hidden.fa.fa-angle-left(href='prev-activities')
           div
             each activity in latestActivity
@@ -67,18 +67,23 @@ block content
         p.no-data This person hasn't left any ratings or reviews yet.
       
       if reviews && reviews.length
-        each review in reviews
-          a.card.review(href=review.link)
-            i.icon(style=`background-image:url(${review.icon});`)
-            span=review.title
-              label.stars
-                i.fa.fa-star(class=review.rating >= 1 ? 'color' : '')
-                i.fa.fa-star(class=review.rating >= 2 ? 'color' : '')
-                i.fa.fa-star(class=review.rating >= 3 ? 'color' : '')
-                i.fa.fa-star(class=review.rating >= 4 ? 'color' : '')
-                i.fa.fa-star(class=review.rating == 5 ? 'color' : '')
-              label.review-date=review.date
-            p.detail(class=(review.review ? '' : 'no-data'))=(review.review || 'No review.')
+        div.scrollable-container.three(data-breakpoints='960:3,959:2')
+          a.prev.hidden.fa.fa-angle-left(href='prev-reviews')
+          div.reviews
+            each review in reviews
+              div.scrollable
+                a.card.review(href=review.link)
+                  i.icon(style=`background-image:url(${review.icon});`)
+                  span=review.title
+                    label.stars
+                      i.fa.fa-star(class=review.rating >= 1 ? 'color' : '')
+                      i.fa.fa-star(class=review.rating >= 2 ? 'color' : '')
+                      i.fa.fa-star(class=review.rating >= 3 ? 'color' : '')
+                      i.fa.fa-star(class=review.rating >= 4 ? 'color' : '')
+                      i.fa.fa-star(class=review.rating == 5 ? 'color' : '')
+                    label.review-date=review.date
+                  p.detail(class=(review.review ? '' : 'no-data'))=(review.review || 'No review.')
+          a.next.hidden.fa.fa-angle-right(href='next-reviews')
 
   section.profile-section.social.alternating
     div.flex

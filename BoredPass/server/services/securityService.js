@@ -279,38 +279,6 @@ class Security extends BasicCrudPromises {
     });
   }
 
-  startOauth(req, res) {
-    let provider = config.oauth[req.params.provider];
-
-    SecurityService[`start_${req.params.provider}`]({
-      req: req,
-      res: res,
-      provider: provider
-    });
-  }
-
-  endOauth(req, res) {
-    let provider = config.oauth[req.params.provider];
-
-    SecurityService[`end_${req.params.provider}`]({
-      req: req,
-      res: res,
-      provider: provider
-    })
-      .then(result => {
-        res.cookie(
-          "bp",
-          Buffer.from(`${result.userId}:${result.token}`).toString("base64"),
-          {
-            maxAge: 3600000 * 24 * 365, // 1 year
-            httpOnly: true
-          }
-        );
-        res.redirect(req.cookies.oauth_redirect);
-      })
-      .catch(err => res.status(500).send(err));
-  }
-
   start_facebook(args) {
     let url = args.provider.authUrl
       .replace("{key}", args.provider.key)

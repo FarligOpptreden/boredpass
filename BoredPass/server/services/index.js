@@ -9,6 +9,7 @@ import { LocationService } from "./locationService";
 import { SearchService } from "./searchService";
 import { SecurityService } from "./securityService";
 import { TagsService } from "./tagsService";
+import { UserActivityService } from "./userActivityService";
 import { UsersService } from "./usersService";
 
 export {
@@ -23,5 +24,6 @@ export {
   SearchService,
   SecurityService,
   TagsService,
+  UserActivityService,
   UsersService
 };

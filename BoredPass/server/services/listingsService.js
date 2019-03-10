@@ -1,6 +1,7 @@
 ﻿import config from "../../config";
 import { BasicCrudPromises, konsole } from "../../handlr";
-import { LocationService, TagsService } from ".";
+import { LocationService, TagsService, UserActivityService } from ".";
+import { StringUtils } from "../utils";
 
 const _MappedCategories = {
   "adrenalin-and-extreme-sports": "Adrenalin & Extreme Sports",
@@ -61,7 +62,16 @@ class Listings extends BasicCrudPromises {
             "Could not geocode";
           return super.create(args);
         })
-        .then(d => resolve(d))
+        .then(d => {
+          UserActivityService.create({
+            type: UserActivityService.types.create_listing.key,
+            date: args.data._created,
+            title: UserActivityService.types.create_listing.display,
+            subTitle: args.data.name,
+            link: `/listings/${args.data._id}/${StringUtils.makeUrlFriendly(args.data.name)}`
+          });
+          resolve(d);
+        })
         .catch(err =>
           super
             .create(args)

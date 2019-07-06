@@ -23,7 +23,7 @@ class Content {
         fileId = path.basename(file.path).replace("upload_", "");
         fileType = path.extname(file.name);
         savedName = fileId + fileType;
-        fs.rename(file.path, path.join(UPLOAD_DIR, savedName));
+        fs.rename(file.path, path.join(UPLOAD_DIR, savedName), () => {});
       });
       form.on("error", err => {
         konsole.error(`Upload error: ${err}`);

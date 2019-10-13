@@ -76,7 +76,6 @@ block content
     div
       h1= listing.name
       != marked(listing.description)
-      button.round.subscribe.button Subscribe
     div
       span.rating
         label No reviews
@@ -89,9 +88,6 @@ block content
       span.claimed.not-yet
         span.fa.fa-hourglass-half
         span Unclaimed
-      a.add
-      a.message
-      a.share
 
   +activities(listing.tags, false, listing._id).blue
 

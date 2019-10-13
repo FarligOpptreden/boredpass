@@ -6,17 +6,16 @@ export const get_html_id = (req, res) => {
   let _listing = null,
     _activities = null;
 
-  Promise.resolve()
-    .then(_ => ListingsService.findOne({ filter: req.params.id }))
-    .then(listing => {
-      _listing = listing;
-      return ActivitiesService.findMany({
-        filter: { listing_id: listing._id },
-        sort: { name: 1 }
-      });
+  Promise.all([
+    ListingsService.findOne({ filter: req.params.id }),
+    ActivitiesService.findMany({
+      filter: { listing_id: req.params.id },
+      sort: { name: 1 }
     })
-    .then(activities => {
-      _activities = activities;
+  ])
+    .then(results => {
+      _listing = results[0];
+      _activities = results[1];
       return ListingsService.relatedListings(_listing);
     })
     .then(related =>

@@ -9,7 +9,7 @@ block css
 block content
   section.banner
     header.banner-image(class=search.category)
-    div.cover
+    .cover
     div
       - var tags = (search.tags && search.tags.map(t => t.name).join(', ')) || 'Any activity';
       - var distance = (search.distance && `within ${search.distance}km`) || 'any distance';
@@ -33,7 +33,7 @@ block content
         +listing_card(result, search.listing ? ' from listing' : null)
 
     if recommended && recommended.length
-      div.no-more-data
+      .no-more-data
         h1 Oh no! Seems like you have explored all we have to offer. Why not broaden your horizons and check out some of the following?   
       each r in recommended
         +listing_card(r)

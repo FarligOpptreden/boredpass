@@ -1,5 +1,5 @@
 ﻿mixin telephone_number(id, label, code, number, codes)
-  div.field-wrapper.telephone
+  .field-wrapper.telephone
     label(for=id + '-list')=label
     div
       input(id=id + '-code', value=code, disabled, autocomplete='new-' + id + '-code')

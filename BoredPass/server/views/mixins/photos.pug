@@ -11,7 +11,7 @@ mixin photos(data, edit)
             if edit
               +photoUpload(photo)(data-url='/content/upload')
             else
-              div.photo.scrollable
+              .photo.scrollable
                 a(class='photo' + index, style='background-image: url(/content/' + photo.fileType + '/' + photo.fileId + ');')
           if edit
             +photoUpload()(data-url='/content/upload')

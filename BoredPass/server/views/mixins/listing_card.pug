@@ -7,7 +7,7 @@
   - var addressParts = listing.formatted_address && listing.formatted_address.split(',');
   - var locality = addressParts ? addressParts[addressParts.length - 3] : null
   - locality = locality || 'Unknown'
-  div.listing.card&attributes(attributes)
+  .listing.card&attributes(attributes)
     span.distance
       if listing.distance
         label=Math.round(listing.distance / 1000)
@@ -16,7 +16,7 @@
               span.rose(style="transform: rotate(" + calculateBearing(listing.location.coordinates, location) + "deg)")
       span=listing.distance ? 'kms away' + (bearingLabel || '') : locality
     a(href='/listings/' + listing._id + '/' + makeUrlFriendly(listing.name))
-      div.banner(style=banner)
+      .banner(style=banner)
         span.logo(style=logo)
       h3= listing.name
       p

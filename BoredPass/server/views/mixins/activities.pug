@@ -11,9 +11,9 @@
                 span.activity.icon.boredpass(class=className)
                 span=activity.name
         if editable
-          div.tag-field
-            div.field-wrapper
+          .tag-field
+            .field-wrapper
               - var tagValues = data && data.length ? data : []
               label(for='activity_tags', 'data-value'=tagValues) Search for activity tags (e.g. Kayaking)*
               input#activity_tags.activity-tags.mandatory(type='text', data-value=tagValues)
-            div.tag-container
+            .tag-container

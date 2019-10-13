@@ -12,6 +12,6 @@ section.listings
 
     if !category.loading
       each listing in category.listings
-        +listing_card(listing)
+        +listing_card(listing, ' from you')
       div.buttons
         a.button.grey(href='/categories/' + category.urlCategory + '/') View More

@@ -9,6 +9,15 @@
     $(this).text("Show");
     $(".statistics .statistic").addClass("hidden");
   });
+  $("#home-down").click(function() {
+    $("html, body").animate(
+      {
+        scrollTop:
+          $(".banner.home").height() - $(".banner.home > nav").height() - 36
+      },
+      500
+    );
+  });
   Shared.location({
     callback: function(position) {
       $.ajax({
@@ -33,7 +42,7 @@
       signIn.trigger("click");
       return false;
     }
-    
+
     return true;
   });
 });

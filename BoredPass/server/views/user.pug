@@ -10,14 +10,14 @@ block content
 
   section.banner
     header.banner-image.home
-    div.cover
+    .cover
 
   section.profile-section.user-profile
     div
       i.avatar(style=avatarColour)= initials
       h1= user.name
       p.bio.no-data This person hasn't written a biography yet.
-    div.actions
+    .actions
       button.follow.button.round Follow
 
   section.profile-section.icon-cards.latest-activity.alternating
@@ -28,11 +28,11 @@ block content
         p.no-data This person hasn't done anything recently.
       
       if latestActivity && latestActivity.length
-        div.scrollable-container.four(data-breakpoints='1200:4,960:3,959:2')
+        .scrollable-container.four(data-breakpoints='1200:4,960:3,959:2')
           a.prev.hidden.fa.fa-angle-left(href='prev-activities')
           div
             each activity in latestActivity
-              div.scrollable
+              .scrollable
                 a.card.user-activity(href=activity.link, class=activity.type)
                   -
                     var icon = '';
@@ -54,7 +54,7 @@ block content
     div
       h1 Badges
       each badge in badges
-        div.card.badge
+        .card.badge
           i.icon
           span=badge.name
             label Not earned yet
@@ -67,11 +67,11 @@ block content
         p.no-data This person hasn't left any ratings or reviews yet.
       
       if reviews && reviews.length
-        div.scrollable-container.three(data-breakpoints='960:3,959:2')
+        .scrollable-container.three(data-breakpoints='960:3,959:2')
           a.prev.hidden.fa.fa-angle-left(href='prev-reviews')
-          div.reviews
+          .reviews
             each review in reviews
-              div.scrollable
+              .scrollable
                 a.card.review(href=review.link)
                   i.icon(style=`background-image:url(${review.icon});`)
                   span=review.title
@@ -86,7 +86,7 @@ block content
           a.next.hidden.fa.fa-angle-right(href='next-reviews')
 
   section.profile-section.social.alternating
-    div.flex
+    .flex
       div
         h1 Followers
         p.no-data This person doesn't have any followers.

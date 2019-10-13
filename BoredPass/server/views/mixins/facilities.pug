@@ -6,6 +6,6 @@
         each facility, index in data
           if facility && facility.icon
             - var className = 'icon-bored-pass_' + facility.icon.toLowerCase().replace(/ /g, '-')
-            div.facility(class=(edit ? 'editing ' + (facility.selected ? 'selected' : '') : ''), data-facility=(edit ? facility : false))
+            .facility(class=(edit ? 'editing ' + (facility.selected ? 'selected' : '') : ''), data-facility=(edit ? facility : false))
               span.facility.icon.boredpass(class=className)
               span=facility.name

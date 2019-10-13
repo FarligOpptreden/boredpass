@@ -13,7 +13,7 @@ block js
 block content
   - var canEdit = authentication && authentication.isAuthenticated && authentication.user.permissions && authentication.user.permissions.editExperience
   if canEdit
-    div.toolbar
+    .toolbar
       div
         a.edit(href='/activities/' + activity._id + '/edit') Edit
           i.fa.fa-edit
@@ -32,7 +32,7 @@ block content
         span= listing.name
   section.listing-section.overview.activity.white
     div
-      div.photo
+      .photo
       - var locationAddress = 'https://google.com/maps/place/' + encodeURIComponent(activity.address)
       a.location(target='_blank', href=locationAddress)
         span.fa.fa-map-marker
@@ -71,19 +71,19 @@ block content
       div
         h1 Prices
         if activity.prices.child
-          div.price
+          .price
             label Kids Price
             span= 'from ' + activity.prices.child
         if activity.prices.adult
-          div.price
+          .price
             label Adult Price
             span= 'from ' + activity.prices.adult
         if activity.prices.pensioner
-          div.price
+          .price
             label Pensioner Price
             span= 'from ' + activity.prices.pensioner
         if activity.prices.free
-          div.price
+          .price
             label Price
             span free
   section.listing-section.find-more.alternating

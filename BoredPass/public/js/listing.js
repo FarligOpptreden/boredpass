@@ -42,7 +42,7 @@
     });
     next.click(function(e) {
       e.preventDefault();
-      
+
       if (photoIndex === allPhotos.length - 1) return false;
 
       var currentPhoto = lightBox.find(".photo:not(.hidden)");

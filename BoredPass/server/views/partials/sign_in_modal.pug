@@ -1,6 +1,6 @@
-﻿div.sign-in-modal
+﻿.sign-in-modal
   a.close.fa.fa-times(href='/close')
-  div.logo
+  .logo
   nav.options
     div
       a.sign-in.active(href='/log-in') Log In
@@ -12,28 +12,28 @@
       a.fab.fa-twitter-square(href='/secure/oauth/twitter/start')
       a.fab.fa-facebook-square(href='/secure/oauth/facebook/start')
       a.fab.fa-google-plus-square(href='/secure/oauth/google/start')
-    div.field-wrapper
+    .field-wrapper
       label(for='sign-in-email') Email Address
       input#sign-in-email(type='text')
-    div.field-wrapper
+    .field-wrapper
       label(for='sign-in-password') Password
       input#sign-in-password(type='password')
     button.button.sign-in Sign In
-    div.password-options
+    .password-options
       a Remember Me
       a Forgot Password?
   form.sign-up
-    div.field-wrapper
+    .field-wrapper
       label(for='sign-up-name-and-surname') Name & Surname*
       input#sign-up-name-and-surname.mandatory(type='text')
-    div.field-wrapper
+    .field-wrapper
       label(for='sign-up-email') Email Address*
       input#sign-up-email.mandatory.validate-email(type='text')
-    div.field-wrapper.has-hint
+    .field-wrapper.has-hint
       label(for='sign-up-password') Password*
       input#sign-up-password.mandatory.validate-custom(type='password', data-validate='Auth.validatePassword')
     label.hint Should be 6 characters or more with one or more uppercase letter and number
-    div.field-wrapper
+    .field-wrapper
       label(for='sign-up-confirm-password') Confirm Password*
       input#sign-up-confirm-password.mandatory.validate-custom(type='password', data-validate='Auth.validateConfirmPassword')
     button.button.sign-up Sign Up

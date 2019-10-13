@@ -16,7 +16,7 @@ block js
   script(type='text/javascript', src='/js/editing.js')
 
 block content
-  div.toolbar
+  .toolbar
     div
       a.cancel(href='/listings/' + listing._id) Cancel
         i.fa.fa-times
@@ -28,7 +28,7 @@ block content
     a.edit-banner
       i.fa.fa-image
   section.listing-section.overview
-    div.contact-info
+    .contact-info
       +photoUpload(listing.logo)(data-url='/content/upload', data-allow-change='true').logo
       a.location
         span.fa.fa-map-marker

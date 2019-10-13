@@ -5,11 +5,11 @@ form#add_listing_2
   hr
   +telephone_number('telephone', 'Telephone number', '', '', countries)
   +telephone_number('cellphone', 'Cell phone number', '', '', countries)
-  div.field-wrapper
+  .field-wrapper
     label(for='email') Email address*
     input#email.mandatory.validate-email(type='email', autocomplete='new-email')
-  div.social
-    div.links
+  .social
+    .links
       a.facebook.fab.fa-facebook-f.active(title='Facebook')
       a.twitter.fab.fa-twitter(title='Twitter')
       a.google.fab.fa-google(title='Google+')
@@ -22,9 +22,9 @@ form#add_listing_2
     input#social-instagram.hidden(type='text', placeholder='Paste your Instagram link here', autocomplete='new-social-instagram')
     input#social-pinterest.hidden(type='text', placeholder='Paste your Pinterest link here', autocomplete='new-social-pinterest')
     input#social-youtube.hidden(type='text', placeholder='Paste your Youtube link here', autocomplete='new-social-youtube')
-  div.field-wrapper.textarea
+  .field-wrapper.textarea
     label(for='description') Give a brief description about your business*
     textarea#description.mandatory
-  div.button-wrapper
+  .button-wrapper
     button.button.prev Prev
     button.button.dark.next Next

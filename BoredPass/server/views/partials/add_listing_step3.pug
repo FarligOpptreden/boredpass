@@ -3,23 +3,23 @@
 form#add_listing_3
   p Images speak a thousand words, especially good ones. We recommend using quality over quantity to ensure your listing leaves people wanting more. Sounds good, doesn't it?
   hr
-  div.add-overview
+  .add-overview
     div
       h2 Adding Imagery
       p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     +photoUpload()#logo-upload.add-logo(data-url='/content/upload', data-allow-change='true')
-  div.add-photos
+  .add-photos
     +photoUpload()(data-url='/content/upload')
   h2 Banner
   a.edit-banner(data-banner='', href='/select-banner')
   hr
   h2 Do you offer?
   each facility in facilities
-    div.toggle-wrapper.facility(data-facility=facility)
+    .toggle-wrapper.facility(data-facility=facility)
       label= facility.name
-      div.options
+      .options
         button Yes
         button.active No
-  div.button-wrapper
+  .button-wrapper
     button.button.prev Prev
     button.button.dark.finish Finish

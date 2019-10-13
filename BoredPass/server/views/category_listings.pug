@@ -12,7 +12,7 @@ block js
 block content
   section.banner
     header.banner-image(class=urlCategory)
-    div.cover
+    .cover
     div
       h2 Explore
       h1=(category + ' experiences')
@@ -30,5 +30,5 @@ block content
     +listing_card_loading()
     +listing_card_loading()
     +listing_card_loading()
-    div.buttons
+    .buttons
       a.button.grey#load-more(href='/categories/' + urlCategory + '/' + skip) View More

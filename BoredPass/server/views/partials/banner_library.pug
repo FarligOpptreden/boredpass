@@ -1,12 +1,12 @@
 ﻿include ../mixins/photo_upload
 
-div.banner-library
+.banner-library
   h1 Banners
     a.close(href='close') +
   div
     p Upload your own banner:
     +photoUpload()(data-url='/content/upload', data-allow-change='true').custom-banner
     p Choose one from our library:
-    div.banners
+    .banners
       each banner in banners
         a('data-value'=banner, href='select-banner')=banner

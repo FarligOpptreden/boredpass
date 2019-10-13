@@ -44,3 +44,4 @@ Thumbs.db
 /BoredPass/typings
 .ntvs_analysis.dat
 /BoredPass/data/uploads
+/BoredPass/.env

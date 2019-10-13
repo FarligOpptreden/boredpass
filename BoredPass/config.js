@@ -2,7 +2,6 @@
   loggingLevel: {
     http: 1
   },
-  port: 13372,
   app: {
     id: "",
     name: "Boredpass",
@@ -12,19 +11,19 @@
     url: "http://www.boredpass.dev:85/sign-in"
   },
   connectionStrings: {
-    boredPass: "mongodb://localhost:27017/boredpass_uat"
+    boredPass: process.env.CONNECTION_STRINGS_BOREDPASS
   },
   keys: {
-    google: "AIzaSyAZUoe5UrYFsn4Yqr6FoMOhPY0sJSUkl84",
-    locationIq: "4ff3c23b09b2b0"
+    google: process.env.API_KEY_GOOGLE,
+    locationIq: process.env.API_KEY_LOCATION_IQ
   },
   oauth: {
     settings: {
       redirect: "http://localhost:13372/secure/oauth/{provider}/result"
     },
     facebook: {
-      key: "488377754995784",
-      secret: "f3129f8b0d64b4238a00dfa845a0281a",
+      key: process.env.OAUTH_FACEBOOK_KEY,
+      secret: process.env.OAUTH_FACEBOOK_SECRET,
       authUrl:
         "https://www.facebook.com/dialog/oauth?client_id={key}&scope={scope}&redirect_uri={redirect}",
       tokenUrl:
@@ -35,9 +34,8 @@
       fields: "email,picture,name"
     },
     google: {
-      key:
-        "706431443750-l0uutsc09ipgd1bm50ihjcrtrrhr1vc6.apps.googleusercontent.com",
-      secret: "qKaKGVZknbkMhgGYJmoOUN3T",
+      key: process.env.OAUTH_GOOGLE_KEY,
+      secret: process.env.OAUTH_GOOGLE_SECRET,
       authUrl:
         "https://accounts.google.com/o/oauth2/v2/auth?client_id={key}&response_type=code&scope={scope}&redirect_uri={redirect}",
       tokenUrl:
@@ -47,8 +45,8 @@
       scope: "openid email profile"
     },
     twitter: {
-      key: "Zp5vYGorkEN3OaLOhK2JizPFY",
-      secret: "zGX3YdH3LnLTUM6bl5AtkCDSSZCWampw2lV2lYjUUUaXNkuUEt",
+      key: process.env.OAUTH_TWITTER_KEY,
+      secret: process.env.OAUTH_TWITTER_SECRET,
       authUrl: "https://api.twitter.com/oauth/authenticate?oauth_token={token}",
       authorizeUrl: "https://api.twitter.com/oauth/authorize",
       tokenUrl: "https://api.twitter.com/oauth/access_token",

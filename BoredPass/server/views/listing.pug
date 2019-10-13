@@ -78,13 +78,13 @@ block content
       != marked(listing.description)
     div
       span.rating
-        label No reviews
+        label=`${ratings.count} rating${ratings.count === 1 ? "" : "s"}`
         span.stars
-          a.fa.fa-star(href='rate/1', data-id=listing._id, data-rating=1)
-          a.fa.fa-star(href='rate/2', data-id=listing._id, data-rating=2)
-          a.fa.fa-star(href='rate/3', data-id=listing._id, data-rating=3)
-          a.fa.fa-star(href='rate/4', data-id=listing._id, data-rating=4)
-          a.fa.fa-star(href='rate/5', data-id=listing._id, data-rating=5)
+          a.fa.fa-star(href='rate/1', data-id=listing._id, data-rating=1, class=ratings.rating >= 1 ? "color" : "")
+          a.fa.fa-star(href='rate/2', data-id=listing._id, data-rating=2, class=ratings.rating >= 2 ? "color" : "")
+          a.fa.fa-star(href='rate/3', data-id=listing._id, data-rating=3, class=ratings.rating >= 3 ? "color" : "")
+          a.fa.fa-star(href='rate/4', data-id=listing._id, data-rating=4, class=ratings.rating >= 4 ? "color" : "")
+          a.fa.fa-star(href='rate/5', data-id=listing._id, data-rating=5, class=ratings.rating >= 5 ? "color" : "")
       span.claimed.not-yet
         span.fa.fa-hourglass-half
         span Unclaimed

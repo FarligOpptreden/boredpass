@@ -32,6 +32,33 @@ export default class BasicCrud {
   }
 
   /**
+   * Counts the documents in the bound collection.
+   * @param {Object} args - The arguments detailing the count operation.
+   * @param {Object} args.filter - The filter to apply to the count operation.
+   * @param {function(Object, Object):void} callback - A function to execute once the count has been retrieved.
+   */
+  count(args, callback) {
+    if (!callback) return;
+
+    if (!args || !args.filter) return callback(null);
+
+    let filter = args.filter;
+
+    db.mongo({
+      url: this.url,
+      collection: this.collection,
+      operation: db.operations.count,
+      filter:
+        typeof filter === "object" ? filter : { _id: db.objectId(filter) },
+      callback: (res, err) => {
+        if (err) return callback(null, err);
+
+        callback(res || 0);
+      }
+    });
+  }
+
+  /**
    * Find a single document in the bound collection.
    * @param {Object} args - The arguments detailing the find operation.
    * @param {Object} args.filter - The filter to apply to the find operation.

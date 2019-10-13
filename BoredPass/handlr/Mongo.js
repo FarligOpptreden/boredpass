@@ -20,7 +20,8 @@ class Mongo {
       pagedData: "pagedData",
       aggregate: "aggregate",
       distinct: "distinct",
-      find: "find"
+      find: "find",
+      count: "count"
     };
   }
 
@@ -65,20 +66,26 @@ class Mongo {
 
     if (args.data)
       for (let k in args.data) {
-        if (k === "_id" && mongo.ObjectID.isValid(args.data[k]))
+        if (
+          k === "_id" &&
+          mongo.ObjectID.isValid(args.data[k]) &&
+          this.objectId(args.data[k]).toString() === args.data[k]
+        )
           args.data[k] = this.objectId(args.data[k]);
       }
 
     if (args.filter)
       for (let k in args.filter) {
-        if (k === "_id" && mongo.ObjectID.isValid(args.filter[k]))
+        if (
+          k === "_id" &&
+          mongo.ObjectID.isValid(args.filter[k]) &&
+          this.objectId(args.filter[k]).toString() === args.filter[k]
+        )
           args.filter[k] = this.objectId(args.filter[k]);
       }
 
     let toLog = "";
-    toLog += `${CliColors.FgGreen}START > ${CliColors.Reset}${
-      args.collection
-    }.${args.operation} on ${args.url}`;
+    toLog += `${CliColors.FgGreen}START > ${CliColors.Reset}${args.collection}.${args.operation} on ${args.url}`;
 
     if (config && config.loggingLevel && config.loggingLevel.mongo > 1) {
       toLog += "\n    > Filter     : " + JSON.stringify(args.filter);
@@ -104,6 +111,17 @@ class Mongo {
         cursor.each((err, res) => {
           if (res != null) objs.push(res);
           else callback({ data: objs }, true);
+        });
+      };
+      let doCount = () => {
+        col.find(args.filter).count((err, res) => {
+          if (err) {
+            callback(err, false);
+            return;
+          }
+
+          let itemCount = res;
+          callback(itemCount, true);
         });
       };
       let doFind = () => {
@@ -373,6 +391,9 @@ class Mongo {
       };
 
       switch (args.operation) {
+        case "count":
+          doCount();
+          break;
         case "find":
           doFind();
           break;

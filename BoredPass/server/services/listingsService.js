@@ -68,7 +68,9 @@ class Listings extends BasicCrudPromises {
             date: args.data._created,
             title: UserActivityService.types.create_listing.display,
             subTitle: args.data.name,
-            link: `/listings/${args.data._id}/${StringUtils.makeUrlFriendly(args.data.name)}`
+            link: `/listings/${args.data._id}/${StringUtils.makeUrlFriendly(
+              args.data.name
+            )}`
           });
           resolve(d);
         })

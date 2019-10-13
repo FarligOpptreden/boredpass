@@ -72,9 +72,9 @@ block content
           .reviews
             each review in reviews
               .scrollable
-                a.card.review(href=review.link)
-                  i.icon(style=`background-image:url(${review.icon});`)
-                  span=review.title
+                a.card.review(href=review.meta.link.replace("{_id}", review._id))
+                  i.icon(style=`background-image:url(${review.meta.icon});`)
+                  span=review.meta.title
                     label.stars
                       i.fa.fa-star(class=review.rating >= 1 ? 'color' : '')
                       i.fa.fa-star(class=review.rating >= 2 ? 'color' : '')

@@ -4,12 +4,14 @@
     h1 Rate &amp; Review
   .content
     span.stars
-      a.fa.fa-star(href='rate/1', data-id=id, class=rating >= 1 ? "color" : "")
-      a.fa.fa-star(href='rate/2', data-id=id, class=rating >= 2 ? "color" : "")
-      a.fa.fa-star(href='rate/3', data-id=id, class=rating >= 3 ? "color" : "")
-      a.fa.fa-star(href='rate/4', data-id=id, class=rating >= 4 ? "color" : "")
-      a.fa.fa-star(href='rate/5', data-id=id, class=rating == 5 ? "color" : "")
+      a.fa.fa-star(href='rate/1', data-id=id, data-rating=1, class=rating >= 1 ? "color" : "")
+      a.fa.fa-star(href='rate/2', data-id=id, data-rating=2, class=rating >= 2 ? "color" : "")
+      a.fa.fa-star(href='rate/3', data-id=id, data-rating=3, class=rating >= 3 ? "color" : "")
+      a.fa.fa-star(href='rate/4', data-id=id, data-rating=4, class=rating >= 4 ? "color" : "")
+      a.fa.fa-star(href='rate/5', data-id=id, data-rating=5, class=rating == 5 ? "color" : "")
     .field-wrapper.textarea
-      label(for='review') Want to leave a short review?
-      textarea#review
+      label(for='review') Leave a short review*
+      textarea#review.mandatory
   .buttons
+    button No Thanks
+    button.primary Submit

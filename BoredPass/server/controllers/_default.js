@@ -7,5 +7,11 @@ import {
 
 export default Controller.create("/")
   .handle({ route: "/", method: "get", produces: "html" }, get_html_root)
-  .handle({ route: "/terms-and-conditions", method: "get", produces: "html" }, get_html_terms_and_conditions)
-  .handle({ route: "/frequently-asked-questions", method: "get", produces: "html" }, get_html_frequently_asked_questions);
+  .handle(
+    { route: "/terms-and-conditions", method: "get", produces: "html" },
+    get_html_terms_and_conditions
+  )
+  .handle(
+    { route: "/frequently-asked-questions", method: "get", produces: "html" },
+    get_html_frequently_asked_questions
+  );

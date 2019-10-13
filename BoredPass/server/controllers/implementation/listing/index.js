@@ -7,6 +7,7 @@ import { get_html_id_edit } from "./get.html.id_edit";
 import { get_html_id_review } from "./get.html.id_review";
 import { get_json_duplicates_search } from "./get.json.duplicates_search";
 import { post_html_add } from "./post.html.add";
+import { post_json_id_review } from "./post.json.id_review";
 import { put_json_id_edit } from "./put.json.id_edit";
 
 export {
@@ -19,5 +20,6 @@ export {
   get_html_id_review,
   get_json_duplicates_search,
   post_html_add,
+  post_json_id_review,
   put_json_id_edit
 };

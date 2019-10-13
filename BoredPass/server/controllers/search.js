@@ -7,5 +7,8 @@ import {
 
 export default new Controller("/search")
   .handle({ route: "/load", method: "get", produces: "html" }, get_html_load)
-  .handle({ route: "/location", method: "get", produces: "html" }, get_html_location)
+  .handle(
+    { route: "/location", method: "get", produces: "html" },
+    get_html_location
+  )
   .handle({ route: "/:page", method: "get", produces: "html" }, get_html_page);

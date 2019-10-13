@@ -29,6 +29,25 @@ export default class BasicCrudPromises {
   }
 
   /**
+   * Counts the documents in the bound collection.
+   * @param {Object} args - The arguments detailing the count operation.
+   * @param {Object} args.filter - The filter to apply to the count operation.
+   * @returns {Promise} - A promise object handling the response.
+   */
+  count(args) {
+    return new Promise((resolve, reject) => {
+      if (!args || !args.filter)
+        return reject("No arguments or filter specified.");
+
+      this._BasicCrud.count(args, (res, err) => {
+        if (err) return reject(err);
+
+        resolve(res);
+      });
+    });
+  }
+
+  /**
    * Find a single document in the bound collection.
    * @param {Object} args - The arguments detailing the find operation.
    * @param {Object} args.filter - The filter to apply to the find operation.

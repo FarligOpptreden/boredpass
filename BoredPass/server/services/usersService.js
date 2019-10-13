@@ -1,6 +1,7 @@
 ﻿import config from "../../config";
 import { BasicCrudPromises, konsole } from "../../handlr";
 import moment from "moment";
+import { RatingsService } from ".";
 
 const DATE_FORMAT = "DD MMM YYYY";
 const FRIENDLY_LIMIT = 3;
@@ -79,64 +80,24 @@ class Users extends BasicCrudPromises {
     });
   }
 
-  ratingsAndReviews() {
-    return new Promise((resolve, _) => {
-      resolve([
-        {
-          date: (_ => {
-            let d = moment("2019-02-05", "YYYY-MM-DD");
-            return moment().diff(d, "month") > FRIENDLY_LIMIT
-              ? d.format(DATE_FORMAT)
-              : d.fromNow();
-          })(),
-          title: "Airboat Afrika",
-          link:
-            "/listings/5b20ed2d6d35ad10741cbc21/airboat-afrika/#/ratings/RATING_ID",
-          icon: "/content/jpg/8d50e1e49f4b30d2b040ff5139cdbaaa",
-          rating: 5,
-          review: "Awesome experience, would do it again soon!"
-        },
-        {
-          date: (_ => {
-            let d = moment("2019-02-01", "YYYY-MM-DD");
-            return moment().diff(d, "month") > FRIENDLY_LIMIT
-              ? d.format(DATE_FORMAT)
-              : d.fromNow();
-          })(),
-          title: "Classique Aviation",
-          link:
-            "/listings/5b20e80a6d35ad10741cbc20/classique-aviation/#/ratings/RATING_ID",
-          icon: "/content/png/2c9f2ecf389cdda206fb78394048c96c",
-          rating: 4
-        },
-        {
-          date: (_ => {
-            let d = moment("2018-12-16", "YYYY-MM-DD");
-            return moment().diff(d, "month") > FRIENDLY_LIMIT
-              ? d.format(DATE_FORMAT)
-              : d.fromNow();
-          })(),
-          title: "The Harvard Club of South Africa",
-          link:
-            "/listings/5b20de046d35ad10741cbc1d/the-harvard-club-of-south-africa/#/ratings/RATING_ID",
-          icon: "/content/jpg/21200aa02c94830ee75b65df8b093154",
-          rating: 2
-        },
-        {
-          date: (_ => {
-            let d = moment("2018-12-03", "YYYY-MM-DD");
-            return moment().diff(d, "month") > FRIENDLY_LIMIT
-              ? d.format(DATE_FORMAT)
-              : d.fromNow();
-          })(),
-          title: "Aquila Private Game Reserve",
-          link:
-            "/listings/5b21623b6d35ad10741cbc2e/aquila-private-game-reserve/#/ratings/RATING_ID",
-          icon: "/content/jpg/21200aa02c94830ee75b65df8b093154",
-          rating: 4,
-          review: "Professional establishment and loads of animals. Had a blast!"
-        }
-      ]);
+  ratingsAndReviews(args) {
+    return new Promise(resolve => {
+      RatingsService.findMany(args).then(ratings =>
+        resolve(
+          ratings.map(r => ({
+            _id: r._id,
+            date:
+              moment().diff(r._created, "month") > FRIENDLY_LIMIT
+                ? moment(r._created).format(DATE_FORMAT)
+                : moment(r._created).fromNow(),
+            rating: r.rating,
+            review: r.review,
+            meta: r.meta,
+            user: r.user,
+            listing: r.listing
+          }))
+        )
+      );
     });
   }
 }

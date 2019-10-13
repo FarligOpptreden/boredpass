@@ -148,6 +148,52 @@
               return false;
             });
 
+          content.find(".close").click(function(e) {
+            e.preventDefault();
+            Shared.hideOverlay(null, content.closest(".overlay"));
+          });
+
+          content.find("button").click(function() {
+            var isPrimary = $(this).hasClass("primary");
+            var rating = content.find("a.fa-star.color:last").data("rating");
+            var listingId = content.find("a.fa-star.color:last").data("id");
+            var review = "";
+
+            if (isPrimary) {
+              content.removeClass("no-no");
+              content.find(".mandatory").trigger("keyup");
+
+              if (content.find(".error").length) {
+                content.addClass("no-no");
+                content.find(".mandatory:first").focus();
+                return;
+              }
+
+              review = content.find("textarea").val();
+            }
+
+            $.ajax({
+              url: "/listings/" + listingId + "/review",
+              method: "post",
+              contentType: "application/json",
+              accept: "application/json",
+              data: JSON.stringify({
+                rating: rating,
+                review: review
+              }),
+              success: function(d, s, x) {
+                if (!d.success) {
+                  Shared.confirm({ message: d.message });
+                  return;
+                }
+
+                Shared.hideOverlay(null, content.closest(".overlay"));
+              }
+            });
+          });
+
+          Shared.inputFields(content);
+
           Shared.showOverlay({
             content: content
           });

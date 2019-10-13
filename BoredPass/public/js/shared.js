@@ -565,20 +565,27 @@ $(document).ready(function() {
     var content = overlay.find(".overlay-content");
     content.removeClass("show");
     overlay.removeClass("show");
+
+    console.log({ content, overlay });
     setTimeout(function() {
       content.remove();
       overlay.remove();
     }, 350);
   };
-  Shared.inputFields = function() {
-    $(
-      ".field-wrapper:not(.telephone) input:not(.has-events), .field-wrapper textarea:not(.has-events), .field-wrapper:not(.telephone) select:not(.has-events)"
-    ).each(validations);
-    $(".field-wrapper.telephone select:not(.has-events)").each(telephoneField);
-    $(".activity-tags:not(.has-search-events)").each(activityTags);
-    $(".toggle-wrapper button:not(.has-events)").each(toggleField);
-    $(".checkbox-option:not(.has-events)").each(checkboxField);
-    $(".photo-upload:not(.has-events)").each(uploadField);
+  Shared.inputFields = function(ctx) {
+    var elem = ctx || $("body");
+    elem
+      .find(
+        ".field-wrapper:not(.telephone) input:not(.has-events), .field-wrapper textarea:not(.has-events), .field-wrapper:not(.telephone) select:not(.has-events)"
+      )
+      .each(validations);
+    elem
+      .find(".field-wrapper.telephone select:not(.has-events)")
+      .each(telephoneField);
+    elem.find(".activity-tags:not(.has-search-events)").each(activityTags);
+    elem.find(".toggle-wrapper button:not(.has-events)").each(toggleField);
+    elem.find(".checkbox-option:not(.has-events)").each(checkboxField);
+    elem.find(".photo-upload:not(.has-events)").each(uploadField);
   };
   Shared.photoUpload = function(args) {
     var field = $(

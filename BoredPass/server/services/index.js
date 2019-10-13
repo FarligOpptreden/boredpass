@@ -6,6 +6,7 @@ import { DefaultService } from "./defaultService";
 import { FacilitiesService } from "./facilitiesService";
 import { ListingsService } from "./listingsService";
 import { LocationService } from "./locationService";
+import { RatingsService } from "./ratingsService";
 import { SearchService } from "./searchService";
 import { SecurityService } from "./securityService";
 import { TagsService } from "./tagsService";
@@ -21,6 +22,7 @@ export {
   FacilitiesService,
   ListingsService,
   LocationService,
+  RatingsService,
   SearchService,
   SecurityService,
   TagsService,

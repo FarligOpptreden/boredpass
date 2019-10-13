@@ -36,7 +36,7 @@
     right: 0;
     bottom: 0;
     top: 60px;
-    padding: 20px 40px 0 40px;
+    padding: 20px 15px 0 15px;
     overflow: auto;
 
     .stars {
@@ -53,6 +53,28 @@
 
       textarea {
         height: 200px;
+      }
+    }
+  }
+
+  .buttons {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 15px;
+    text-align: right;
+
+    button {
+      padding: 10px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      color: @col-main;
+      margin-left: 10px;
+
+      &.primary {
+        color: #fff;
+        background-color: @col-main;
       }
     }
   }

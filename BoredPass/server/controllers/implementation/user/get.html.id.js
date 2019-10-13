@@ -4,8 +4,13 @@ export const get_html_id = (req, res) =>
   Promise.all([
     UsersService.findOne({ filter: req.params.id }),
     BadgesService.findAll(),
-    UsersService.latestActivity(),
-    UsersService.ratingsAndReviews()
+    UsersService.latestActivity({ filter: req.params.id }),
+    UsersService.ratingsAndReviews({
+      filter: {
+        "user._id": UsersService.db.objectId(req.params.id)
+      },
+      sort: { _id: -1 }
+    })
   ])
     .then(results => {
       let user = results[0];

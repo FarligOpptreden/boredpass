@@ -102,7 +102,7 @@
     doLightbox($(this));
   });
 
-  $(".stars > a")
+  $(".review-stars > a")
     .hover(function() {
       $(this)
         .prevAll("a")
@@ -133,7 +133,7 @@
           var content = $(d);
 
           content
-            .find(".stars > a")
+            .find(".review-stars > a")
             .hover(function() {
               $(this)
                 .prevAll("a")
@@ -202,9 +202,21 @@
 
       return false;
     });
-  $(".stars").hover(null, function() {
+
+  $(".review-stars").hover(null, function() {
+    var rating = parseInt($(this).data("rating") || 0, 10);
     $(this)
       .find("a")
-      .removeClass("color");
+      .each(function() {
+        var val = parseInt($(this).data("rating"), 10);
+
+        $(this)[val > rating ? "removeClass" : "addClass"]("color");
+      });
+  });
+
+  $(".latest-reviews a.review").click(function(e) {
+    e.preventDefault();
+    alert("TODO!");
+    return false;
   });
 });

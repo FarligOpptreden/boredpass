@@ -8,10 +8,7 @@ import config from "../../../../config";
 
 export const get_html_id = (req, res) => {
   const listingId = ListingsService.db.objectId(req.params.id);
-  let _listing = null,
-    _activities = null,
-    _ratingCount = null,
-    _ratings;
+  let _listing, _activities, _ratingCount, _ratingData, _ratings;
 
   Promise.all([
     ListingsService.findOne({ filter: listingId }),
@@ -30,19 +27,26 @@ export const get_html_id = (req, res) => {
           }
         }
       ]
+    }),
+    RatingsService.findMany({
+      filter: { "listing._id": listingId },
+      sort: { _id: -1 },
+      limit: 5
     })
   ])
     .then(results => {
       _listing = results[0];
       _activities = results[1];
       _ratingCount = results[2];
-      _ratings =
+      _ratings = results[3];
+      _ratingData =
         _ratingCount && _ratingCount.length
           ? {
               rating: Math.round(_ratingCount[0].rating),
               count: _ratingCount[0].count
             }
           : { rating: 0, count: 0 };
+
       return ListingsService.relatedListings(_listing);
     })
     .then(related =>
@@ -54,7 +58,8 @@ export const get_html_id = (req, res) => {
         listing: _listing,
         activities: _activities,
         related: related,
-        ratings: _ratings,
+        ratings: _ratingData,
+        latestReviews: _ratings,
         makeUrlFriendly: StringUtils.makeUrlFriendly,
         location: (_listing.location && _listing.location.coordinates) || null,
         calculateBearing: ListingsService.calculateBearing,

@@ -1,20 +1,18 @@
 ﻿extends _layout
 
+include mixins/avatar
+
 block css
   link(rel='stylesheet', href='/css/user.min.css')
 
 block content
-  - var initials = user.name.split(' ').splice(0, 2).map(p => p.substring(0, 1).toUpperCase()).join('');
-  - var surname = user.name.split(' ').slice(1).map(p => p.substring(0, 1).toLowerCase()).join(' ');
-  - var avatarColour = `background-color: ${authentication.utils.generateColour(surname)}`;
-
   section.banner
     header.banner-image.home
     .cover
 
   section.profile-section.user-profile
     div
-      i.avatar(style=avatarColour)= initials
+      +avatar(user)
       h1= user.name
       p.bio.no-data This person hasn't written a biography yet.
     .actions
@@ -59,7 +57,7 @@ block content
           span=badge.name
             label Not earned yet
 
-  section.profile-section.feedback.icon-cards.alternating
+  section.profile-section.feedback.fixed-height.icon-cards.alternating
     div
       h1 Ratings & Reviews
 

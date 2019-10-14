@@ -1,0 +1,24 @@
+include avatar
+
+mixin listing_reviews(data)
+  if data && data.length
+    section.listing-section.icon-cards.fixed-height.latest-reviews&attributes(attributes)
+      div
+        .scrollable-container.three(data-breakpoints='960:3,959:2')
+          a.prev.hidden.fa.fa-angle-left(href='prev-reviews')
+          .reviews
+            each review in data
+              .scrollable
+                a.card.review(href=review.meta.link.replace("{_id}", review._id))
+                  +avatar(review.user).icon
+                  span=review.user.name
+                    label.stars
+                      i.fa.fa-star(class=review.rating >= 1 ? 'color' : '')
+                      i.fa.fa-star(class=review.rating >= 2 ? 'color' : '')
+                      i.fa.fa-star(class=review.rating >= 3 ? 'color' : '')
+                      i.fa.fa-star(class=review.rating >= 4 ? 'color' : '')
+                      i.fa.fa-star(class=review.rating == 5 ? 'color' : '')
+                  p.detail(class=(review.review ? '' : 'no-data'))=(review.review || 'No review.')
+            .scrollable.view-more
+              a.card.review(href='all') View More
+          a.next.hidden.fa.fa-angle-right(href='next-reviews')

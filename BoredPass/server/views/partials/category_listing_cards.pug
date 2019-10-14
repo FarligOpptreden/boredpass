@@ -2,7 +2,7 @@
 
 if listings && listings.length
   each listing in listings
-    +listing_card(listing)
+    +listing_card(listing, ' from you')
 
 if !listings || !listings.length || listings.length < limit
   .no-more-data

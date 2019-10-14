@@ -566,7 +566,6 @@ $(document).ready(function() {
     content.removeClass("show");
     overlay.removeClass("show");
 
-    console.log({ content, overlay });
     setTimeout(function() {
       content.remove();
       overlay.remove();

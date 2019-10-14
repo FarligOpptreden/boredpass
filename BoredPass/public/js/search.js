@@ -125,7 +125,66 @@ $(document).ready(function() {
     });
     var list = target.closest("form").find("ul");
     var instructions = list.find("span").text();
-    var blockSelect = false;
+
+    var performSearch = function() {
+      $.ajax({
+        url: "/search/location?search=" + encodeURIComponent(target.val()),
+        method: "get",
+        success: function(d, s, x) {
+          list.empty();
+
+          if (!d || !d.success || !d.data || !d.data.length)
+            return list.append(
+              "<li><span>No locations matching your search</span></li>"
+            );
+
+          d.data.map(function(location) {
+            var parts = location.display_name.split(",");
+            var shortName = parts[0];
+            var country = parts.length > 1 ? parts[parts.length - 1] : null;
+            var option = $(
+              '<a href="/search/location/' +
+                location.place_id +
+                '" class="option" tabindex="-1">' +
+                location.display_name +
+                "</a>"
+            );
+            option.mousedown(function(e) {
+              e.preventDefault();
+              searchBox.find(".overview .location a").remove();
+              var locationAnchor = $(
+                '<a href="/search/location/' +
+                  location.place_id +
+                  '/remove">' +
+                  shortName +
+                  '<i class="fa fa-times" /></a>'
+              );
+              locationAnchor.data("place", location);
+              locationAnchor.data("country", country);
+              locationAnchor.click(function(e) {
+                e.preventDefault();
+                searchBox.find(".overview .location a").remove();
+                searchBox
+                  .find(".overview .location")
+                  .append("<p>From here</p>");
+                return false;
+              });
+              searchBox.find(".overview .location p").remove();
+              searchBox.find(".overview .location").append(locationAnchor);
+              target.trigger("blur");
+              return false;
+            });
+            option.click(function(e) {
+              e.preventDefault();
+              return false;
+            });
+            var li = $("<li />");
+            li.append(option);
+            list.append(li);
+          });
+        }
+      });
+    };
 
     target.keyup(function(e) {
       switch (e.which) {
@@ -143,80 +202,146 @@ $(document).ready(function() {
 
       list.find(".active").removeClass("active");
 
-      if (e.which === 13)
-        $.ajax({
-          url: "/search/location?search=" + encodeURIComponent(target.val()),
-          method: "get",
-          success: function(d, s, x) {
-            list.empty();
-
-            if (!d || !d.success || !d.data || !d.data.length)
-              return list.append(
-                "<li><span>No locations matching your search</span></li>"
-              );
-
-            d.data.map(function(location) {
-              var parts = location.display_name.split(",");
-              var shortName = parts[0];
-              var country = parts.length > 1 ? parts[parts.length - 1] : null;
-              var option = $(
-                '<a href="/search/location/' +
-                  location.place_id +
-                  '" class="option" tabindex="-1">' +
-                  location.display_name +
-                  "</a>"
-              );
-              option.mousedown(function(e) {
-                e.preventDefault();
-                searchBox.find(".overview .location a").remove();
-                var locationAnchor = $(
-                  '<a href="/search/location/' +
-                    location.place_id +
-                    '/remove">' +
-                    shortName +
-                    '<i class="fa fa-times" /></a>'
-                );
-                locationAnchor.data("place", location);
-                locationAnchor.data("country", country);
-                locationAnchor.click(function(e) {
-                  e.preventDefault();
-                  searchBox.find(".overview .location a").remove();
-                  searchBox
-                    .find(".overview .location")
-                    .append("<p>From here</p>");
-                  return false;
-                });
-                searchBox.find(".overview .location p").remove();
-                searchBox.find(".overview .location").append(locationAnchor);
-                target.trigger("blur");
-                return false;
-              });
-              option.click(function(e) {
-                e.preventDefault();
-                return false;
-              });
-              var li = $("<li />");
-              li.append(option);
-              list.append(li);
-            });
-          }
-        });
+      if (e.which === 13) performSearch();
     });
+    target
+      .closest("form")
+      .find("button:first")
+      .click(function(e) {
+        e.preventDefault();
+        target.focus();
+        performSearch();
+        return false;
+      });
   };
   BoredPass.Search.tags = function(target) {
+    var showTabLibrary = function() {
+      $.ajax({
+        url: "/libraries/tags/list",
+        method: "get",
+        success: function(d, s, x) {
+          var content = $(d);
+          var tagContainer = content.find(".tag-container");
+          content.find(".close").click(function(e) {
+            e.preventDefault();
+            Shared.hideOverlay(null, content.closest(".overlay"));
+            return false;
+          });
+          content.find(".tags > a").each(function() {
+            var tagOption = $(this);
+            var tag = tagOption.data("value");
+
+            var tagElement = function() {
+              var a = $(
+                '<a id="' +
+                  tag._id +
+                  '" href="/remove-tag"><label>' +
+                  tag.name +
+                  "</label><span>+</span></a>"
+              );
+              a.click(function(e) {
+                e.preventDefault();
+                removeTag(tag);
+                tagOption.removeClass("selected");
+                $(this).remove();
+                return false;
+              });
+              tagContainer.append(a);
+            };
+
+            if (
+              selectedTags.find(function(t) {
+                return t._id === tag._id;
+              })
+            ) {
+              tagOption.addClass("selected");
+              tagElement();
+            }
+
+            tagOption.click(function(e) {
+              e.preventDefault();
+              var tag = tagOption.data("value");
+              if (tagOption.hasClass("selected")) {
+                removeTag(tag);
+                tagContainer.find("#" + tag._id).remove();
+                tagOption.removeClass("selected");
+              } else {
+                selectTag(tag);
+                selectedTags.push(tag);
+                tagElement();
+                tagOption.addClass("selected");
+              }
+              return false;
+            });
+          });
+          Shared.showOverlay({
+            content: content
+          });
+        }
+      });
+    };
+
+    var removeTag = function(tag) {
+      searchBox.find(".overview .tags a." + tag.icon).remove();
+
+      if (!searchBox.find(".overview .tags a").length)
+        searchBox.find(".overview .tags").html("<p>Any activity type</p>");
+
+      resetSelectedTags();
+    };
+
+    var selectTag = function(tag, option) {
+      var tagAnchor = $(
+        '<a href="/search/tag/' +
+          tag.icon +
+          '/remove" class="' +
+          tag.icon +
+          '" id="' +
+          tag._id +
+          '">' +
+          tag.name +
+          '<i class="fa fa-times" /></a>'
+      );
+      tagAnchor.data("tag", tag);
+      tagAnchor.click(function(e) {
+        e.preventDefault();
+        tagAnchor.remove();
+        option && option.find(".fa.fa-check").remove();
+        removeTag(tag);
+        return false;
+      });
+      searchBox.find(".overview .tags p").remove();
+      searchBox.find(".overview .tags").append(tagAnchor);
+      resetSelectedTags();
+    };
+
+    var resetSelectedTags = function() {
+      selectedTags = [];
+      searchBox.find(".overview .tags a").each(function() {
+        selectedTags.push($(this).data("tag"));
+      });
+    };
+
     target.closest("form").submit(function(e) {
       e.preventDefault();
       return false;
     });
 
+    target
+      .closest("form")
+      .find("button:first")
+      .click(function(e) {
+        e.preventDefault();
+        target.val("");
+        list.empty();
+        resetSelectedTags();
+        showTabLibrary();
+        return false;
+      });
+
     var list = target.closest("form").find("ul");
     var instructions = list.find("span").text();
     var selectedTags = [];
-
-    var removeTag = function(tag) {
-      if (selectedTags.indexOf(tag._id) >= 0)
-        selectedTags.splice(selectedTags.indexOf(tag._id), 1);
-    };
 
     target
       .keyup(function(e) {
@@ -255,7 +380,8 @@ $(document).ready(function() {
                   "</a>"
               );
               selectedTags.map(function(t) {
-                if (tag._id === t) option.append('<i class="fa fa-check" />');
+                if (tag._id === t._id)
+                  option.append('<i class="fa fa-check" />');
               });
               option.mousedown(function(e) {
                 e.preventDefault();
@@ -264,47 +390,12 @@ $(document).ready(function() {
 
                 if (option.find(".fa.fa-check").length) {
                   option.find(".fa.fa-check").remove();
-                  searchBox.find(".overview .tags a." + tag.icon).remove();
-
-                  if (!searchBox.find(".overview .tags a").length)
-                    searchBox
-                      .find(".overview .tags")
-                      .append("<p>Any activity type</p>");
-
                   removeTag(tag);
                   return;
                 }
 
                 option.append('<i class="fa fa-check" />');
-                selectedTags.push(tag._id);
-
-                var tagAnchor = $(
-                  '<a href="/search/tag/' +
-                    tag.icon +
-                    '/remove" class="' +
-                    tag.icon +
-                    '" id="' +
-                    tag._id +
-                    '">' +
-                    tag.name +
-                    '<i class="fa fa-times" /></a>'
-                );
-                tagAnchor.data("tag", tag);
-                tagAnchor.click(function(e) {
-                  e.preventDefault();
-                  tagAnchor.remove();
-                  option.find(".fa.fa-check").remove();
-                  removeTag(tag);
-
-                  if (!searchBox.find(".overview .tags a").length)
-                    searchBox
-                      .find(".overview .tags")
-                      .append("<p>Any activity type</p>");
-
-                  return false;
-                });
-                searchBox.find(".overview .tags p").remove();
-                searchBox.find(".overview .tags").append(tagAnchor);
+                selectTag(tag, option);
                 return false;
               });
               option.click(function(e) {

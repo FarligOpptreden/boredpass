@@ -30,7 +30,7 @@ block content
 
     if results && results.length
       each result in results
-        +listing_card(result, search.listing ? ' from listing' : null)
+        +listing_card(result, search.listing ? ' from listing' : ' from search')
 
     if recommended && recommended.length
       .no-more-data

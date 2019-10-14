@@ -1,6 +1,6 @@
 include avatar
 
-mixin listing_reviews(data)
+mixin listing_reviews(data, meta)
   if data && data.length
     section.listing-section.icon-cards.fixed-height.latest-reviews&attributes(attributes)
       div
@@ -19,6 +19,7 @@ mixin listing_reviews(data)
                       i.fa.fa-star(class=review.rating >= 4 ? 'color' : '')
                       i.fa.fa-star(class=review.rating == 5 ? 'color' : '')
                   p.detail(class=(review.review ? '' : 'no-data'))=(review.review || 'No review.')
-            .scrollable.view-more
-              a.card.review(href='all') View More
+            if meta && (meta.count > data.length)
+              .scrollable.view-more
+                a.card.review(href='all') View More
           a.next.hidden.fa.fa-angle-right(href='next-reviews')

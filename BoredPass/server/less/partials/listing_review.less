@@ -1,13 +1,22 @@
 @import "__variables.less";
 
-.add-review-modal {
-  width: 400px;
-  height: 400px;
-  top: 50%;
+.add-review-modal,
+.listing-reviews-modal {
+  &.add-review-modal {
+    width: 400px;
+    height: 400px;
+    margin: -200px 0 0 -200px;
+    top: 50%;
+    bottom: auto;
+  }
+  &.listing-reviews-modal {
+    width: 500px;
+    margin: 0 0 0 -250px;
+    top: 50px;
+    bottom: 50px;
+  }
   left: 50%;
-  bottom: auto;
   right: auto;
-  margin: -200px 0 0 -200px;
   padding: 50px;
   background-color: @col-body-bg;
 
@@ -53,6 +62,23 @@
 
       textarea {
         height: 200px;
+      }
+    }
+
+    &.all-ratings {
+      .card {
+        width: 100%;
+        min-width: auto;
+        border-right: none;
+        border-bottom: solid 1px @col-grey;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+
+        .detail {
+          overflow: visible;
+          white-space: pre-wrap;
+          height: auto;
+        }
       }
     }
   }

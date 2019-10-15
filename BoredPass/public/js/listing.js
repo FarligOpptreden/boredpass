@@ -214,9 +214,26 @@
       });
   });
 
-  $(".latest-reviews a.review").click(function(e) {
+  $(".latest-reviews a.review-card").click(function(e) {
     e.preventDefault();
-    alert("TODO!");
+
+    $.ajax({
+      url: "/listings/" + $(this).data("listing_id") + "/reviews",
+      method: "get",
+      accept: "text/html",
+      success: function(d, s, x) {
+        var content = $(d);
+        content.find(".close").click(function(e) {
+          e.preventDefault();
+          Shared.hideOverlay(null, content.closest(".overlay"));
+        });
+
+        Shared.showOverlay({
+          content: content
+        });
+      }
+    });
+
     return false;
   });
 });

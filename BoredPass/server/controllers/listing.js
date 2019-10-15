@@ -10,7 +10,8 @@ import {
   get_json_duplicates_search,
   post_html_add,
   post_json_id_review,
-  put_json_id_edit
+  put_json_id_edit,
+  get_html_id_reviews
 } from "./implementation/listing";
 
 export default new Controller("/listings")
@@ -48,6 +49,10 @@ export default new Controller("/listings")
   .handle(
     { route: "/:id/review", method: "post", produces: "json" },
     post_json_id_review
+  )
+  .handle(
+    { route: "/:id/reviews", method: "get", produces: "html" },
+    get_html_id_reviews
   )
   .handle(
     { route: "/:id/:name", method: "get", produces: "html" },

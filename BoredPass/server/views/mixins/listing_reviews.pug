@@ -9,7 +9,7 @@ mixin listing_reviews(data, meta)
           .reviews
             each review in data
               .scrollable
-                a.card.review(href=review.meta.link.replace("{_id}", review._id))
+                a.card.review-card(href=review.meta.link.replace("{_id}", review._id), data-listing_id=review.listing._id)
                   +avatar(review.user).icon
                   span=review.user.name
                     label.stars
@@ -21,5 +21,5 @@ mixin listing_reviews(data, meta)
                   p.detail(class=(review.review ? '' : 'no-data'))=(review.review || 'No review.')
             if meta && (meta.count > data.length)
               .scrollable.view-more
-                a.card.review(href='all') View More
+                a#all-reviews.card.review-card(href='all', data-listing_id=data[0].listing._id) View More
           a.next.hidden.fa.fa-angle-right(href='next-reviews')

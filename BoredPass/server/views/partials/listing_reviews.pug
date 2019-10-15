@@ -1,0 +1,20 @@
+include ../mixins/avatar
+
+.listing-reviews-modal
+  a.close.fa.fa-times(href='/close')
+  .header
+    h1 Ratings &amp; Reviews
+  .content.all-ratings.icon-cards
+    each review in ratings
+      a.card.review-card
+        +avatar(review.user).icon
+        span=review.user.name
+          label.stars
+            i.fa.fa-star(class=review.rating >= 1 ? 'color' : '')
+            i.fa.fa-star(class=review.rating >= 2 ? 'color' : '')
+            i.fa.fa-star(class=review.rating >= 3 ? 'color' : '')
+            i.fa.fa-star(class=review.rating >= 4 ? 'color' : '')
+            i.fa.fa-star(class=review.rating == 5 ? 'color' : '')
+          label.review-date=review.date
+        if review.review
+          p.detail=review.review

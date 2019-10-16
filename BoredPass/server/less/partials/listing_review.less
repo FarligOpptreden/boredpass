@@ -48,6 +48,10 @@
     padding: 20px 15px 0 15px;
     overflow: auto;
 
+    .message {
+      line-height: 40px;
+    }
+
     .review-stars {
       position: relative;
       display: block;
@@ -62,6 +66,14 @@
 
       textarea {
         height: 200px;
+      }
+
+      &.existing {
+        height: 160px;
+
+        textarea {
+          height: 160px;
+        }
       }
     }
 

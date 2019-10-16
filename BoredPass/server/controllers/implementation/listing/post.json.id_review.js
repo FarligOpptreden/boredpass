@@ -17,7 +17,11 @@ export const post_json_id_review = (req, res) => {
   Promise.resolve()
     .then(_ => ListingsService.findOne({ filter: req.params.id }))
     .then(listing =>
-      RatingsService.create({
+      RatingsService.updateOrCreate({
+        filter: {
+          "user._id": RatingsService.db.objectId(req.authentication.user._id),
+          "listing._id": RatingsService.db.objectId(listing._id)
+        },
         data: {
           user: {
             _id: req.authentication.user._id,
@@ -43,7 +47,7 @@ export const post_json_id_review = (req, res) => {
         success: false,
         error: {
           status: 500,
-          stach: config.app.debug && err.stack
+          stack: config.app.debug && err.stack
         },
         message: err.toString()
       })

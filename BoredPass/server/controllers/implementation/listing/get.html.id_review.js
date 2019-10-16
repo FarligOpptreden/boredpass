@@ -1,4 +1,5 @@
 import config from "../../../../config";
+import { RatingsService } from "../../../services";
 
 export const get_html_id_review = (req, res) => {
   if (!req.authentication || !req.authentication.isAuthenticated)
@@ -12,8 +13,16 @@ export const get_html_id_review = (req, res) => {
       categories: req.listing_categories
     });
 
-  res.render("partials/add_listing_review", {
-    rating: req.query.rating,
-    id: req.params.id
-  });
+  RatingsService.findOne({
+    filter: {
+      "listing._id": RatingsService.db.objectId(req.params.id),
+      "user._id": RatingsService.db.objectId(req.authentication.user._id)
+    }
+  }).then(r =>
+    res.render("partials/add_listing_review", {
+      existingRating: r,
+      rating: req.query.rating,
+      id: req.params.id
+    })
+  );
 };

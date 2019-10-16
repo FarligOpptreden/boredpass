@@ -3,15 +3,17 @@
   .header
     h1 Rate &amp; Review
   .content
+    if existingRating
+      p.message Update your existing rating:
     span.review-stars
       a.fa.fa-star(href='rate/1', data-id=id, data-rating=1, class=rating >= 1 ? "color" : "")
       a.fa.fa-star(href='rate/2', data-id=id, data-rating=2, class=rating >= 2 ? "color" : "")
       a.fa.fa-star(href='rate/3', data-id=id, data-rating=3, class=rating >= 3 ? "color" : "")
       a.fa.fa-star(href='rate/4', data-id=id, data-rating=4, class=rating >= 4 ? "color" : "")
       a.fa.fa-star(href='rate/5', data-id=id, data-rating=5, class=rating == 5 ? "color" : "")
-    .field-wrapper.textarea
+    .field-wrapper.textarea(class=`${existingRating ? "existing " : ""}${existingRating && existingRating.review ? "has-value" : ""}`)
       label(for='review') Leave a short review*
-      textarea#review.mandatory
+      textarea#review.mandatory=(existingRating && existingRating.review) || ""
   .buttons
-    button No Thanks
+    button Rate Only
     button.primary Submit

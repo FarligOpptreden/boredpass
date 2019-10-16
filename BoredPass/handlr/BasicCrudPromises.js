@@ -199,6 +199,29 @@ export default class BasicCrudPromises {
   }
 
   /**
+   * Updates or creates a document in the bound collection.
+   * @param {Object} args - The arguments detailing the update or create operation.
+   * @param {Object} args.data - The properties to update the matched document in the collection, or representing the document to create.
+   * @param {Object} args.filter - The filter to apply to the update operation.
+   * @returns {Promise} - A promise object handling the response.
+   */
+  updateOrCreate(args) {
+    var ctx = this;
+    return new Promise((resolve, reject) => {
+      if (!args) return reject("No arguments specified.");
+
+      if (!args.data) return reject('"args.data" was not specified.');
+
+      if (!args.filter) return reject('"args.filter" was not specified.');
+
+      ctx.findOne({ filter: args.filter }).then(d => {
+        var promise = d ? ctx.update(args) : ctx.create(args);
+        promise.then(res => resolve(res)).catch(err => reject(err));
+      });
+    });
+  }
+
+  /**
    * Updates multiple documents in the bound collection.
    * @param {Object} args - The arguments detailing the update operation.
    * @param {Object} args.data - The properties to update each matched document in the collection.

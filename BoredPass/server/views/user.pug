@@ -70,7 +70,7 @@ block content
           .reviews
             each review in reviews
               .scrollable
-                a.card.review(href=review.meta.link.replace("{_id}", review._id))
+                a.card.review-card(href=review.meta.link.replace("{_id}", review._id))
                   i.icon(style=`background-image:url(${review.meta.icon});`)
                   span=review.meta.title
                     label.stars

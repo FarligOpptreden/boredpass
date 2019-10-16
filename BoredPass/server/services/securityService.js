@@ -4,12 +4,38 @@ import { v4 } from "uuid";
 import fetch from "node-fetch";
 import { Utils } from "../../handlr";
 import Twitter from "node-twitter-api";
+import { UserActivityService } from ".";
 const crypto = require("crypto");
 
 class Security extends BasicCrudPromises {
   constructor() {
     super(config.connectionStrings.boredPass, "users");
     this.twitter_tokens = {};
+  }
+
+  create(args) {
+    return new Promise((resolve, reject) => {
+      let _user;
+      super
+        .create(args)
+        .then(user => {
+          _user = user;
+          let activityType = UserActivityService.types.registration;
+          return UserActivityService.create({
+            data: {
+              type: activityType.key,
+              title: activityType.display,
+              user: {
+                _id: user._id,
+                name: user.name,
+                profile_pictures: user.profile_pictures
+              }
+            }
+          });
+        })
+        .then(_ => resolve(_user))
+        .catch(err => reject(err));
+    });
   }
 
   isAuthenticated(args) {

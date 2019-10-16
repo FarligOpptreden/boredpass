@@ -4,7 +4,12 @@ export const get_html_id = (req, res) =>
   Promise.all([
     UsersService.findOne({ filter: req.params.id }),
     BadgesService.findAll(),
-    UsersService.latestActivity({ filter: req.params.id }),
+    UsersService.latestActivity({
+      filter: {
+        "user._id": UsersService.db.objectId(req.params.id)
+      },
+      sort: { _id: -1 }
+    }),
     UsersService.ratingsAndReviews({
       filter: {
         "user._id": UsersService.db.objectId(req.params.id)
@@ -21,11 +26,11 @@ export const get_html_id = (req, res) =>
       res.render("user", {
         authentication: req.authentication,
         title: "User Profile - BoredPass",
-        categories: req.listing_categories,
         user: user,
         badges: badges,
         latestActivity: latestActivity,
-        reviews: ratingsAndReviews
+        reviews: ratingsAndReviews,
+        req: req
       });
     })
     .catch(err =>
@@ -35,6 +40,6 @@ export const get_html_id = (req, res) =>
           stack: config.app.debug && err.stack
         },
         message: `Something unexpected happened: ${err}`,
-        categories: req.listing_categories
+        req: req
       })
     );

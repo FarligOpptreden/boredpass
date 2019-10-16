@@ -1,8 +1,11 @@
 import config from "../../config";
-import { BasicCrudPromises, konsole } from "../../handlr";
+import { BasicCrudPromises } from "../../handlr";
 
 const TYPES = {
-  create_listing: { key: "create-listing", display: "Loading a listing" }
+  create_listing: { key: "create-listing", display: "Loading a listing" },
+  rating: { key: "rating", display: "Rated a listing" },
+  ratingAndReview: { key: "rating-and-review", display: "Reviewed a listing" },
+  registration: { key: "registration", display: "Joined BoredPass" }
 };
 
 class UserActivity extends BasicCrudPromises {

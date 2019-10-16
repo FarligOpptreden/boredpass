@@ -71,6 +71,7 @@ export const get_html_page = (req, res) =>
           stack: config.app.debug && err.stack
         },
         message: `Something unexpected happened: ${err}`,
-        categories: req.listing_categories
+        categories: req.listing_categories,
+        moment: require("moment")
       })
     );

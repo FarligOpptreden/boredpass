@@ -1,5 +1,6 @@
 import { ListingsService } from "../../../services";
 import config from "../../../../config";
+import { StringUtils } from "../../../utils";
 
 export const post_html_add = (req, res) => {
   if (
@@ -49,7 +50,8 @@ export const post_html_add = (req, res) => {
           stack: config.app.debug && err.stack
         },
         message: `Something unexpected happened: ${err}`,
-        categories: req.listing_categories
+        categories: req.listing_categories,
+        moment: require("moment")
       })
     );
 };

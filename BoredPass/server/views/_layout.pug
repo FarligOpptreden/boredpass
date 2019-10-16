@@ -54,7 +54,8 @@ html
         nav
           h1 Explore
           div
-            each cat in (categories || (req && req.listing_categories) || [])
+            - var cats = categories || req.listing_categories || [];
+            each cat in cats
               a(href='/categories/' + cat.urlCategory + '/')= cat.category
         nav
           h1 Read
@@ -69,5 +70,5 @@ html
               a.twitter.fab.fa-twitter
               a.facebook.fab.fa-facebook-f
               a.google.fab.fa-google
-      - var mm = moment || req.moment;
+      - var mm = moment || (req && req.moment);
       .copyright Copyright &copy; #{mm && mm().format("YYYY")} BoredPass. All rights reserved.

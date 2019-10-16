@@ -18,6 +18,6 @@ block content
       .no-more-data
         h1 Would you like to explore any of the following categories?
         .recommendations.wide
-          each category in req.listing_categories
+          each category in (categories || (req && req.listing_categories) || [])
             a(href='/categories/' + category.urlCategory + '/', class=category.urlCategory)
               span= category.category 

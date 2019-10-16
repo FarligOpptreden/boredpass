@@ -1,4 +1,4 @@
-﻿import { Utils } from "../../handlr";
+﻿import { Utils, konsole } from "../../handlr";
 import { ListingsService, TagsService } from ".";
 
 class Search {
@@ -89,6 +89,8 @@ class Search {
         .then(r => {
           listings = r;
 
+          if (!tags || !tags.length) return Utils.resolve();
+
           if (listings.length && listings.length === args.limit)
             return Utils.resolve();
 
@@ -139,6 +141,8 @@ class Search {
               }
             });
 
+          konsole.error("3----------------------------");
+
           pipeline.push({
             sort: args.location ? { distance: 1 } : { _id: -1 }
           });
@@ -164,9 +168,7 @@ class Search {
             category: (tags && tags.map(t => t.categories[0])) || null
           });
         })
-        .catch(err => {
-          reject(err.toString());
-        });
+        .catch(err => reject(err.toString()));
     });
   }
 }

@@ -41,7 +41,13 @@ class Listings extends BasicCrudPromises {
   }
 
   create(args) {
-    return new Promise((resolve, reject) =>
+    return new Promise((resolve, reject) => {
+      let _listing;
+      args.data.author = {
+        _id: args.user._id,
+        name: args.user.name,
+        profile_pictures: args.user.profile_pictures
+      };
       LocationService.geocodeAddress(args.data.address)
         .then(coordinates => {
           args.data.geocodedAddress = coordinates;
@@ -62,28 +68,48 @@ class Listings extends BasicCrudPromises {
             "Could not geocode";
           return super.create(args);
         })
-        .then(d => {
-          UserActivityService.create({
-            type: UserActivityService.types.create_listing.key,
-            date: args.data._created,
-            title: UserActivityService.types.create_listing.display,
-            subTitle: args.data.name,
-            link: `/listings/${args.data._id}/${StringUtils.makeUrlFriendly(
-              args.data.name
-            )}`
+        .then(listing => {
+          _listing = listing;
+          let activityType = UserActivityService.types.create_listing;
+          return UserActivityService.create({
+            data: {
+              type: activityType.key,
+              title: activityType.display,
+              subTitle: listing.name,
+              link: `/listings/${listing._id}/${StringUtils.makeUrlFriendly(
+                listing.name
+              )}`,
+              user: listing.author
+            }
           });
-          resolve(d);
         })
-        .catch(err =>
+        .then(_ => resolve(_listing))
+        .catch(err => {
+          konsole.error(err.toString());
           super
             .create(args)
-            .then(d => resolve(d))
+            .then(listing => {
+              _listing = listing;
+              let activityType = UserActivityService.types.create_listing;
+              return UserActivityService.create({
+                data: {
+                  type: activityType.key,
+                  title: activityType.display,
+                  subTitle: listing.name,
+                  link: `/listings/${listing._id}/${StringUtils.makeUrlFriendly(
+                    listing.name
+                  )}`,
+                  user: listing.author
+                }
+              });
+            })
+            .then(_ => resolve(_listing))
             .catch(err => {
               konsole.error(err.toString());
               reject(err.toString());
-            })
-        )
-    );
+            });
+        });
+    });
   }
 
   update(args) {

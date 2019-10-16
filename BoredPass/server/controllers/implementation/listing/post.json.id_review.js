@@ -36,7 +36,11 @@ export const post_json_id_review = (req, res) => {
             link: `/listings/${listing._id}/${StringUtils.makeUrlFriendly(
               listing.name
             )}/#/ratings/{_id}`,
-            icon: listing.logo.location
+            icon:
+              listing.logo.location ||
+              `/content/${listing.logo.fileType.replace(".", "")}/${
+                listing.logo.fileId
+              }`
           }
         }
       })

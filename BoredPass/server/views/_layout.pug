@@ -69,4 +69,5 @@ html
               a.twitter.fab.fa-twitter
               a.facebook.fab.fa-facebook-f
               a.google.fab.fa-google
-      .copyright Copyright &copy; #{moment && moment().format("YYYY")} BoredPass. All rights reserved.
+      - var mm = moment || req.moment;
+      .copyright Copyright &copy; #{mm && mm().format("YYYY")} BoredPass. All rights reserved.

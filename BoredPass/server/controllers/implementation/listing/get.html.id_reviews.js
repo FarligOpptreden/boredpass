@@ -5,7 +5,7 @@ import moment from "moment";
 const DATE_FORMAT = "DD MMM YYYY";
 const FRIENDLY_LIMIT = 3;
 
-export const get_html_id_reviews = (req, res) => {
+export const get_html_id_reviews = (req, res) =>
   RatingsService.findMany({
     filter: { "listing._id": RatingsService.db.objectId(req.params.id) },
     sort: { _id: -1 }
@@ -32,4 +32,3 @@ export const get_html_id_reviews = (req, res) => {
         message: `Something unexpected happened: ${err}`
       })
     );
-};

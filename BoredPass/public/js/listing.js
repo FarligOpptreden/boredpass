@@ -257,7 +257,7 @@
             message:
               "Your claim to the listing has been initiated! An email has been sent to <em>" +
               d.email +
-              "</em> to start the process.",
+              "</em> to start the process. You have 24 hours to act on the instructions after which your claim expires.",
             positive: {
               text: "Ok"
             }

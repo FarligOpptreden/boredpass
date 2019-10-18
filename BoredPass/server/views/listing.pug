@@ -86,11 +86,12 @@ block content
           a.fa.fa-star(href='rate/3', data-id=listing._id, data-rating=3, class=ratings.rating >= 3 ? "color" : "")
           a.fa.fa-star(href='rate/4', data-id=listing._id, data-rating=4, class=ratings.rating >= 4 ? "color" : "")
           a.fa.fa-star(href='rate/5', data-id=listing._id, data-rating=5, class=ratings.rating >= 5 ? "color" : "")
-      span.claimed(class=!listing.claimant && "not-yet")
-        span.fa(class=!listing.claimant ? "fa-hourglass-half" : "fa-thumbs-up")
-        span=!listing.claimant ? "Unclaimed" : "Claimed"
+      -var isClaimed = listing.claim && listing.claim.status === "verified" ? true : false;
+      span.claimed(class=!isClaimed && "not-yet")
+        span.fa(class=!isClaimed ? "fa-hourglass-half" : "fa-thumbs-up")
+        span=!isClaimed ? "Unclaimed" : "Claimed"
 
-      if !listing.claimant
+      if !isClaimed
         a.claim-listing.button.round(href=`/listings/${listing._id}/claim`, data-listing_id=listing._id) Claim Now!
 
   +listing_reviews(latestReviews, ratings)

@@ -379,6 +379,9 @@ class Listings extends BasicCrudPromises {
               claim: {
                 token: claimToken,
                 initiatedOn: moment().toDate(),
+                expiresOn: moment()
+                  .add(24, "hours")
+                  .toDate(),
                 status: "initiated",
                 user: {
                   _id: args.user._id.toString(),
@@ -414,7 +417,54 @@ class Listings extends BasicCrudPromises {
   }
 
   verifyClaim(args) {
-    // TODO: verify code sent in mail here and claim to user
+    return new Promise((resolve, reject) => {
+      let _listing;
+
+      ListingsService.findOne({
+        filter: {
+          _id: ListingsService.db.objectId(args.listing_id),
+          "claim.token": args.token,
+          "claim.status": "initiated"
+        }
+      })
+        .then(listing => {
+          if (!listing)
+            return Utils.reject({
+              success: true,
+              message:
+                "Could not find the listing to claim. Please try claiming it again to receive a new verification email."
+            });
+
+          if (moment(listing.expiresOn) < moment())
+            return Utils.reject({
+              success: true,
+              message:
+                "The claim to this listing has already expired. Please try claiming it again and actioning the verification email withing 24 hours."
+            });
+
+          return Utils.resolve(listing);
+        })
+        .then(listing => {
+          _listing = listing;
+          super.update({
+            filter: { _id: ListingsService.db.objectId(args.listing_id) },
+            data: {
+              "claim.expiresOn": null,
+              "claim.claimedOn": moment().toDate(),
+              "claim.status": "verified",
+              "claim.token": null
+            }
+          });
+        })
+        .then(listing => resolve({ success: true, listing: _listing }))
+        .catch(err => {
+          if (err.success)
+            return resolve({ success: false, message: err.message });
+
+          konsole.error(err.toString());
+          reject(err);
+        });
+    });
   }
 }
 

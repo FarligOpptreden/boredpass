@@ -13,8 +13,6 @@ export const post_json_id_claim = (req, res) => {
       categories: req.listing_categories
     });
 
-  // >>>>>>>>>>>>> TODO: Implement claim mail sending here
-
   ListingsService.initiateClaim({
     listing_id: req.params.id,
     user: req.authentication.user

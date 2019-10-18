@@ -1,0 +1,12 @@
+﻿extends _layout
+
+block content
+  section.banner
+    header.banner-image.home
+    .cover
+    div
+      h2 BoredPass
+      h1 Listing Claim Verification
+  section.body
+    div
+      p=claimResult.success ? "Yay!" : claimResult.message

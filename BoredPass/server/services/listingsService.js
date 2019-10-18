@@ -1,7 +1,14 @@
 ﻿import config from "../../config";
-import { BasicCrudPromises, konsole } from "../../handlr";
-import { LocationService, TagsService, UserActivityService } from ".";
+import { BasicCrudPromises, konsole, Utils } from "../../handlr";
+import {
+  LocationService,
+  TagsService,
+  UserActivityService,
+  EmailsService
+} from ".";
 import { StringUtils } from "../utils";
+import { v4 as uuid } from "uuid";
+import moment from "moment";
 
 const _MappedCategories = {
   "adrenalin-and-extreme-sports": "Adrenalin & Extreme Sports",
@@ -346,6 +353,68 @@ class Listings extends BasicCrudPromises {
           reject(err.toString());
         });
     });
+  }
+
+  initiateClaim(args) {
+    return new Promise((resolve, reject) => {
+      let claimToken = uuid();
+      let _listing;
+
+      this.findOne({
+        filter: { _id: args.listing_id }
+      })
+        .then(listing => {
+          if (!listing)
+            return Utils.reject(
+              "Could not find the listing to initiate the claim"
+            );
+
+          _listing = listing;
+          return Utils.resolve(listing);
+        })
+        .then(listing =>
+          super.update({
+            filter: { _id: listing._id },
+            data: {
+              claim: {
+                token: claimToken,
+                initiatedOn: moment().toDate(),
+                status: "initiated",
+                user: {
+                  _id: args.user._id.toString(),
+                  name: args.user.name,
+                  profile_pictures: args.user.profile_pictures
+                }
+              }
+            }
+          })
+        )
+        .then(_ =>
+          EmailsService.send({
+            subject: "BoredPass Listing Claim Verification",
+            recipients: [{ name: _listing.name, email: _listing.email }],
+            template: {
+              view: "email_templates/claim_initiation",
+              props: {
+                title: `Claim Listing "${_listing.name}"`,
+                claimLink: config.endpoints.claimVerification
+                  .replace("{id}", _listing._id)
+                  .replace("{token}", claimToken),
+                listing: _listing
+              }
+            }
+          })
+        )
+        .then(_ => resolve({ success: true, email: _listing.email }))
+        .catch(err => {
+          konsole.error(err.toString());
+          reject(err);
+        });
+    });
+  }
+
+  verifyClaim(args) {
+    // TODO: verify code sent in mail here and claim to user
   }
 }
 

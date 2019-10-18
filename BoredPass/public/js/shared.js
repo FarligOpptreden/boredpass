@@ -624,14 +624,15 @@ $(document).ready(function() {
     positive.click(function() {
       if (!args.positive.click || args.positive.click()) close();
     });
-    var negative = $(
-      '<button class="negative">' + args.negative.text + "</button>"
-    );
-    negative.click(function() {
-      if (!args.negative.click || args.negative.click()) close();
-    });
+    var negative = args.negative
+      ? $('<button class="negative">' + args.negative.text + "</button>")
+      : null;
+    negative &&
+      negative.click(function() {
+        if (!args.negative.click || args.negative.click()) close();
+      });
     var buttons = $('<div class="buttons" />');
-    buttons.append(negative);
+    negative && buttons.append(negative);
     buttons.append(positive);
     box.append(buttons);
     $("body").append(box);

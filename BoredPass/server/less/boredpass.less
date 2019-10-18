@@ -599,6 +599,19 @@ button {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    right: 3px;
+    background-color: @col-main;
+    opacity: 0;
+    transition: all 0.2s;
+  }
 
   &.round {
     text-transform: uppercase;
@@ -617,11 +630,38 @@ button {
     &.inverse {
       color: @col-body-bg;
       border-color: @col-body-bg;
+
+      &::before {
+        background-color: @col-body-bg;
+      }
     }
 
     &.grey {
       color: @col-dark;
       border-color: @col-dark;
+
+      &::before {
+        background-color: @col-dark;
+      }
+    }
+
+    &::before {
+      border-radius: 30px;
+    }
+  }
+
+  &:hover::before {
+    opacity: 0.2;
+  }
+
+  &.disabled {
+    background-color: #ccc !important;
+    color: #999 !important;
+    border-color: #999 !important;
+    cursor: no-drop;
+
+    &::before {
+      opacity: 0 !important;
     }
   }
 }
@@ -727,6 +767,11 @@ em {
   & > p {
     padding: 20px;
     color: @col-main;
+    line-height: 20px;
+
+    em {
+      font-weight: 700;
+    }
   }
 
   & > .buttons {

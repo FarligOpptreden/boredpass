@@ -1,3 +1,3 @@
-﻿import Handlr from "./handlr/Handlr";
+﻿import { Handlr } from "./handlr";
 
 export default new Handlr().start();

@@ -236,4 +236,43 @@
 
     return false;
   });
+
+  $(".claim-listing").click(function(e) {
+    e.preventDefault();
+
+    var ctx = $(this);
+
+    if (ctx.hasClass("disabled")) return;
+
+    ctx.addClass("disabled");
+    $.ajax({
+      url: "/listings/" + ctx.data("listing_id") + "/claim",
+      method: "post",
+      accept: "application/json",
+      success: function(d, s, x) {
+        ctx.removeClass("disabled");
+
+        if (d.success)
+          return Shared.confirm({
+            message:
+              "Your claim to the listing has been initiated! An email has been sent to <em>" +
+              d.email +
+              "</em> to start the process.",
+            positive: {
+              text: "Ok"
+            }
+          });
+
+        Shared.confirm({
+          message:
+            "Uh-oh! Seems like there was a problem initiating the claim. Please try again, or get in contact with our support line.",
+          positive: {
+            text: "Ok"
+          }
+        });
+      }
+    });
+
+    return false;
+  });
 });

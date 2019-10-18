@@ -3,6 +3,7 @@ import { BadgesService } from "./badgesService";
 import { ContentService } from "./contentService";
 import { CountriesService } from "./countriesService";
 import { DefaultService } from "./defaultService";
+import { EmailsService } from "./emailService";
 import { FacilitiesService } from "./facilitiesService";
 import { ListingsService } from "./listingsService";
 import { LocationService } from "./locationService";
@@ -19,6 +20,7 @@ export {
   ContentService,
   CountriesService,
   DefaultService,
+  EmailsService,
   FacilitiesService,
   ListingsService,
   LocationService,

@@ -15,13 +15,14 @@ const rawBodySaver = (req, _, buff) => {
 const SIZE_LIMIT = "5mb";
 const PARAMETER_LIMIT = 10000;
 const MIDDLEWARE = [];
+let app;
 
-export default class Handlr {
+export class Handlr {
   start() {
     konsole.empty();
     konsole.log("Starting Handlr application...");
     // Initialize Express
-    let app = express();
+    app = express();
     // Initialize server variables
     app.set("views", path.join(__dirname, "../server/views"));
     app.set("view engine", "pug");
@@ -116,3 +117,12 @@ export default class Handlr {
     return app;
   }
 }
+
+export const RenderView = (view, args) =>
+  new Promise((resolve, reject) => {
+    app.render(view, args, (err, html) => {
+      if (err) return reject(err.toString());
+
+      resolve(html);
+    });
+  });

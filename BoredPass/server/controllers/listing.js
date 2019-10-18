@@ -11,7 +11,8 @@ import {
   post_html_add,
   post_json_id_review,
   put_json_id_edit,
-  get_html_id_reviews
+  get_html_id_reviews,
+  post_json_id_claim
 } from "./implementation/listing";
 
 export default new Controller("/listings")
@@ -53,6 +54,10 @@ export default new Controller("/listings")
   .handle(
     { route: "/:id/reviews", method: "get", produces: "html" },
     get_html_id_reviews
+  )
+  .handle(
+    { route: "/:id/claim", method: "post", produces: "html" },
+    post_json_id_claim
   )
   .handle(
     { route: "/:id/:name", method: "get", produces: "html" },

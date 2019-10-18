@@ -3,7 +3,7 @@ import BasicCrudPromises from "./BasicCrudPromises";
 import { CliColors } from "./CliColors";
 import Controller from "./Controller";
 import CrudController from "./CrudController";
-import Handlr from "./Handlr";
+import { Handlr, RenderView } from "./Handlr";
 import { konsole } from "./Konsole";
 import ListMap from "./ListMap";
 import Mongo from "./Mongo";
@@ -19,5 +19,6 @@ export {
   konsole,
   ListMap,
   Mongo,
+  RenderView,
   Utils
 };

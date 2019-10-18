@@ -1,6 +1,6 @@
 mixin avatar(user)
   - var initials = user.name.split(' ').splice(0, 2).map(p => p.substring(0, 1).toUpperCase()).join('');
   - var surname = user.name.split(' ').slice(1).map(p => p.substring(0, 1).toLowerCase()).join(' ');
-  - var avatarColour = `background-color: ${authentication.utils.generateColour(surname)}`;
+  - var avatarColour = `background-color: ${authentication.utils.generateColour(`${surname}-${user._id}`)}`;
 
   i.avatar(style=avatarColour)&attributes(attributes)= initials

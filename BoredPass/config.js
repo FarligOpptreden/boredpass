@@ -8,7 +8,7 @@
     debug: true
   },
   accounts: {
-    url: "http://www.boredpass.dev:85/sign-in"
+    url: `${process.env.APP_URL || "http://localhost:13372"}/sign-in`
   },
   connectionStrings: {
     boredPass: process.env.CONNECTION_STRINGS_BOREDPASS
@@ -19,7 +19,8 @@
   },
   oauth: {
     settings: {
-      redirect: "http://localhost:13372/secure/oauth/{provider}/result"
+      redirect: `${process.env.APP_URL ||
+        "http://localhost:13372"}/secure/oauth/{provider}/result`
     },
     facebook: {
       key: process.env.OAUTH_FACEBOOK_KEY,
@@ -55,6 +56,16 @@
   },
   endpoints: {
     locationSearch:
-      "https://eu1.locationiq.com/v1/search.php?key={token}&q={search}&format=json"
+      "https://eu1.locationiq.com/v1/search.php?key={token}&q={search}&format=json",
+    claimVerification: `${process.env.APP_URL ||
+      "http://localhost:13372"}/listings/{id}/claim?token={token}`
+  },
+  email: {
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD
+    }
   }
 };

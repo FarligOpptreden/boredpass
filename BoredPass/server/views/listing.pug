@@ -60,19 +60,19 @@ block content
       - var socialPinterest = getLink(listing.social.pinterest);
       - var socialYoutube = getLink(listing.social.youtube);
 
-      if (socialFacebook || socialTwitter || socialGoogle || socialInstagram || socialPinterest || socialYoutube)
+      if socialFacebook || socialTwitter || socialGoogle || socialInstagram || socialPinterest || socialYoutube
         div.social
           if socialFacebook
             a.facebook.fab.fa-facebook-f(title='Facebook', target=(socialFacebook ? '_blank' : false), href=(socialFacebook ? socialFacebook : false))
-          if (socialTwitter)
+          if socialTwitter
             a.twitter.fab.fa-twitter(title='Twitter', target=(socialTwitter ? '_blank' : false), href=(socialTwitter ? socialTwitter : false))
-          if (socialGoogle)
+          if socialGoogle
             a.google.fab.fa-google(title='Google+', target=(socialGoogle ? '_blank' : false), href=(socialGoogle ? socialGoogle : false))
-          if (socialInstagram)
+          if socialInstagram
             a.instagram.fab.fa-instagram(title='Instagram', target=(socialInstagram ? '_blank' : false), href=(socialInstagram ? socialInstagram : false))
-          if (socialPinterest)
+          if socialPinterest
             a.pinterest.fab.fa-pinterest-p(title='Pinterest', target=(socialPinterest ? '_blank' : false), href=(socialPinterest ? socialPinterest : false))
-          if (socialYoutube)
+          if socialYoutube
             a.youtube.fab.fa-youtube(title='Youtube', target=(socialYoutube ? '_blank' : false), href=(socialYoutube ? socialYoutube : false))
     div
       h1= listing.name
@@ -86,9 +86,12 @@ block content
           a.fa.fa-star(href='rate/3', data-id=listing._id, data-rating=3, class=ratings.rating >= 3 ? "color" : "")
           a.fa.fa-star(href='rate/4', data-id=listing._id, data-rating=4, class=ratings.rating >= 4 ? "color" : "")
           a.fa.fa-star(href='rate/5', data-id=listing._id, data-rating=5, class=ratings.rating >= 5 ? "color" : "")
-      span.claimed.not-yet
-        span.fa.fa-hourglass-half
-        span Unclaimed
+      span.claimed(class=!listing.claimant && "not-yet")
+        span.fa(class=!listing.claimant ? "fa-hourglass-half" : "fa-thumbs-up")
+        span=!listing.claimant ? "Unclaimed" : "Claimed"
+
+      if !listing.claimant
+        a.claim-listing.button.round(href=`/listings/${listing._id}/claim`, data-listing_id=listing._id) Claim Now!
 
   +listing_reviews(latestReviews, ratings)
   

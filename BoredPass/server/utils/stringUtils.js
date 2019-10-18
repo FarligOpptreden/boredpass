@@ -34,8 +34,10 @@ class _Utils {
     let saturation = 50;
     let lightness = 70;
 
-    for (var i = 0; i < str.length; i++)
+    for (var i = 0; i < str.length; i++) {
       hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      hash = hash & hash;
+    }
 
     return `hsl(${hash % 360}, ${saturation}%, ${lightness}%)`;
   }

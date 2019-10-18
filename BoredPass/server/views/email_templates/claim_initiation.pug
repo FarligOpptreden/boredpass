@@ -1,0 +1,12 @@
+extends _template
+
+include mx_paragraph
+include mx_button
+
+block content
+  +paragraph('Hi there!')
+  +paragraph(`You seemed to have initiated a claim on the listing "${props.listing.name}" created on BoredPass. In order to complete this claim, please click the link below.`)
+  +button('Claim Listing', props.claimLink)
+  +paragraph('Please note that you can only claim this listing if you initiated the claim. If you\'re having trouble claiming this listing, please get in contact with us on our support line.')
+  +button('Send Help!', 'mailto:support@boredpass.com')
+  +paragraph('See you soon!')

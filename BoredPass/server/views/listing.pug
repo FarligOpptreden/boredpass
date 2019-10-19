@@ -13,14 +13,16 @@ block js
   script(type='text/javascript', src='/js/listing.js')
 
 block content
-  - var canEdit = authentication && authentication.isAuthenticated && authentication.user.permissions && authentication.user.permissions.editListing
+  - var hasEditPermission = authentication && authentication.isAuthenticated && authentication.user.permissions && authentication.user.permissions.editListing;
+  - var isClaimant = authentication && authentication.isAuthenticated && listing.claim && listing.claim.user && listing.claim.user._id.toString() === authentication.user._id.toString();
+  - var canEdit = hasEditPermission || isClaimant;
 
   if canEdit
     div.toolbar
       div
         a.edit(href='/listings/' + listing._id + '/edit') Edit
           i.fa.fa-edit
-        if authentication.user.permissions.deleteListing
+        if authentication.user.permissions && authentication.user.permissions.deleteListing
           a.delete.listing(href='/listings/' + listing._id + '/delete') Delete
             i.fa.fa-trash
 
@@ -87,11 +89,13 @@ block content
           a.fa.fa-star(href='rate/4', data-id=listing._id, data-rating=4, class=ratings.rating >= 4 ? "color" : "")
           a.fa.fa-star(href='rate/5', data-id=listing._id, data-rating=5, class=ratings.rating >= 5 ? "color" : "")
       -var isClaimed = listing.claim && listing.claim.status === "verified" ? true : false;
+      -var isBeingVerified = listing.claim && listing.claim.status === "initiated" && moment(listing.claim.expiresOn) > moment();
+      -var statusIcon = isClaimed ? "fa-thumbs-up" : (isBeingVerified ? "fa-hourglass-half" : "fa-hand-point-up");
       span.claimed(class=!isClaimed && "not-yet")
-        span.fa(class=!isClaimed ? "fa-hourglass-half" : "fa-thumbs-up")
-        span=!isClaimed ? "Unclaimed" : "Claimed"
+        span.fa(class=statusIcon)
+        span=!isClaimed ? (isBeingVerified ? "Being Verified" : "Unclaimed") : "Claimed"
 
-      if !isClaimed
+      if !isClaimed && !isBeingVerified && authentication && authentication.isAuthenticated
         a.claim-listing.button.round(href=`/listings/${listing._id}/claim`, data-listing_id=listing._id) Claim Now!
 
   +listing_reviews(latestReviews, ratings)

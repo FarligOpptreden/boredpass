@@ -1,5 +1,10 @@
 ﻿extends _layout
 
+include mixins/listing_card
+
+block css
+  link(rel='stylesheet', href='/css/listing_claim_result.min.css')
+
 block content
   section.banner
     header.banner-image.home
@@ -9,4 +14,12 @@ block content
       h1 Listing Claim Verification
   section.body
     div
-      p=claimResult.success ? "Yay!" : claimResult.message
+      i.status-icon.fa(class=!claimResult.success ? "fa-exclamation-circle" : "fa-check-circle")
+        svg(height="20", width="20", viewBox="0 0 20 20")
+          circle.pie-fill(r="10", cx="10", cy="10")
+          circle.pie-stroke(r="5", cx="10", cy="10")
+          circle.pie-hole(r="9", cx="10", cy="10")
+      p=claimResult.success ? "You have successfully claimed the listing! You can now manage its content and take it to the top of the ranks." : claimResult.message
+
+      if claimResult.success
+        +listing_card(claimResult.listing)

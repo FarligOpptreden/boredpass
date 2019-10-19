@@ -962,6 +962,72 @@ section.body {
       margin-bottom: 20px;
     }
   }
+
+  .status-icon {
+    display: block;
+    margin: 40px auto;
+    font-size: 80px;
+    width: 80px;
+    color: @col-grey;
+    position: relative;
+
+    &.fa-exclamation-circle {
+      color: #d33;
+    }
+
+    &::before {
+      position: relative;
+      z-index: 2;
+    }
+
+    svg {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      height: 100px;
+      width: 100px;
+
+      .pie-fill,
+      .pie-hole {
+        fill: #fff;
+      }
+
+      .pie-stroke {
+        fill: transparent;
+        stroke: @col-grey;
+        stroke-width: 10;
+        stroke-dasharray: calc(100 * 31.4 / 100) 31.4;
+        stroke-dashoffset: 0;
+        transform: rotate(-90deg) translate(-20px);
+        animation: animate-status-ring 3s forwards;
+      }
+    }
+
+    &.fa-exclamation-circle {
+      color: #d33;
+
+      .pie-stroke {
+        stroke: #d33;
+      }
+    }
+
+    &.fa-check-circle {
+      color: #090;
+
+      .pie-stroke {
+        stroke: #090;
+      }
+    }
+  }
+}
+
+@keyframes animate-status-ring {
+  0% {
+    stroke-dashoffset: 31.4;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
 
 @import "./partials/user_profile_box.less";

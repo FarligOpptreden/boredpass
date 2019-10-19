@@ -270,6 +270,15 @@
             text: "Ok"
           }
         });
+      },
+      error: function(d, s, x) {
+        ctx.removeClass("disabled");
+        Shared.confirm({
+          message: d.responseJSON.message,
+          positive: {
+            text: "Ok"
+          }
+        });
       }
     });
 

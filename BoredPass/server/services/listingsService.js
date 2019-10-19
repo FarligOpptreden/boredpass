@@ -365,9 +365,27 @@ class Listings extends BasicCrudPromises {
       })
         .then(listing => {
           if (!listing)
-            return Utils.reject(
-              "Could not find the listing to initiate the claim"
-            );
+            return Utils.reject({
+              status: 400,
+              message: "Could not find the listing to initiate the claim."
+            });
+
+          if (listing.claim && listing.status === "verified")
+            return Utils.reject({
+              status: 400,
+              message: "The listing has already been claimed."
+            });
+
+          if (
+            listing.claim &&
+            listing.claim.status === "initiated" &&
+            moment(listing.claim.expiresOn) > moment()
+          )
+            return Utils.reject({
+              status: 400,
+              message:
+                "There is already an active claim on the listing waiting to be verified."
+            });
 
           _listing = listing;
           return Utils.resolve(listing);
@@ -410,7 +428,8 @@ class Listings extends BasicCrudPromises {
         )
         .then(_ => resolve({ success: true, email: _listing.email }))
         .catch(err => {
-          konsole.error(err.toString());
+          if (!err.status) konsole.error(err.toString());
+
           reject(err);
         });
     });
@@ -435,17 +454,29 @@ class Listings extends BasicCrudPromises {
                 "Could not find the listing to claim. Please try claiming it again to receive a new verification email."
             });
 
-          if (moment(listing.expiresOn) < moment())
+          if (moment(listing.claim.expiresOn) < moment())
             return Utils.reject({
               success: true,
               message:
                 "The claim to this listing has already expired. Please try claiming it again and actioning the verification email withing 24 hours."
             });
 
+          if (listing.claim.user._id.toString() !== args.user._id.toString())
+            return Utils.reject({
+              success: true,
+              message:
+                "Only the account that initiated the claim can verify it. Please make sure you sign in with the same account that you initiated the claim with."
+            });
+
           return Utils.resolve(listing);
         })
         .then(listing => {
           _listing = listing;
+          _listing.claim.expiresOn = null;
+          _listing.claim.claimedOn = moment().toDate();
+          _listing.claim.status = "verified";
+          _listing.claim.token = null;
+
           super.update({
             filter: { _id: ListingsService.db.objectId(args.listing_id) },
             data: {
@@ -456,7 +487,7 @@ class Listings extends BasicCrudPromises {
             }
           });
         })
-        .then(listing => resolve({ success: true, listing: _listing }))
+        .then(_ => resolve({ success: true, listing: _listing }))
         .catch(err => {
           if (err.success)
             return resolve({ success: false, message: err.message });

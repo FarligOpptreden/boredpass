@@ -16,6 +16,8 @@
               span.rose(style="transform: rotate(" + calculateBearing(listing.location.coordinates, location) + "deg)")
       span=listing.distance ? 'kms away' + (bearingLabel || '') : locality
     a(href='/listings/' + listing._id + '/' + makeUrlFriendly(listing.name))
+      if listing.claim && listing.claim.status === "verified"
+        i.claimed.fa.fa-thumbs-up
       .banner(style=banner)
         span.logo(style=logo)
       h3= listing.name

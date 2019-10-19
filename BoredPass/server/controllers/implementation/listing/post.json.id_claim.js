@@ -3,14 +3,13 @@ import config from "../../../../config";
 
 export const post_json_id_claim = (req, res) => {
   if (!req.authentication || !req.authentication.isAuthenticated)
-    return res.status(403).render("error", {
+    return res.status(403).json("error", {
       error: {
         status: 403,
         stack: config.app.debug && err.stack
       },
       message:
-        "You seem to have stumbled where you don't belong. Are you perhaps looking for something else?",
-      categories: req.listing_categories
+        "You seem to have stumbled where you don't belong. Are you perhaps looking for something else?"
     });
 
   ListingsService.initiateClaim({
@@ -19,12 +18,14 @@ export const post_json_id_claim = (req, res) => {
   })
     .then(r => res.json(r))
     .catch(err =>
-      res.status(500).json({
+      res.status(err.status || 500).json({
         error: {
-          status: 500,
+          status: err.status || 500,
           stack: config.app.debug && err.stack
         },
-        message: `Something unexpected happened: ${err}`
+        message: err.status
+          ? err.message
+          : `Something unexpected happened: ${err}`
       })
     );
 };

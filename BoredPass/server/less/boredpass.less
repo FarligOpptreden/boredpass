@@ -64,7 +64,8 @@ body {
       letter-spacing: 1px;
       border-radius: 5px;
 
-      .fa {
+      .fa,
+      .fas {
         font-size: 22px;
         position: absolute;
         left: 10px;
@@ -106,7 +107,8 @@ body {
         font-weight: 100;
         border-radius: 0;
 
-        .fa {
+        .fa,
+        .fas {
           font-size: 18px;
           position: absolute;
           left: 10px;
@@ -1027,6 +1029,51 @@ section.body {
     & + .status-message {
       font-weight: 700;
       text-align: center;
+    }
+  }
+
+  nav.tabs {
+    flex: none;
+    width: 100%;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+    height: 37px;
+    margin-bottom: 20px;
+
+    a {
+      display: inline-block;
+      border-bottom: solid 3px transparent;
+      text-transform: uppercase;
+      font-size: 16px;
+      font-weight: 700;
+      color: @col-main;
+      padding: 20px 10px;
+      top: -20px;
+      transition: all 0.2s;
+      position: relative;
+      text-decoration: none;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(transparent, @col-main);
+        opacity: 0;
+        z-index: -1;
+        transition: all 0.2s;
+      }
+
+      &:hover {
+        &::before {
+          opacity: 0.3;
+        }
+      }
+
+      &.active {
+        border-bottom-color: @col-main;
+      }
     }
   }
 }

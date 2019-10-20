@@ -230,9 +230,17 @@ section.statistics {
     outline: none;
     transition: all 0.2s;
 
+    &::before {
+      border-radius: 30px;
+    }
+
     &.grey {
       color: @col-dark;
       border-color: @col-dark;
+
+      &::before {
+        background-color: @col-dark;
+      }
     }
 
     &:hover {

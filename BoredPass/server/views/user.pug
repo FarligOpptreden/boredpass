@@ -83,6 +83,21 @@ block content
                   p.detail(class=(review.review ? '' : 'no-data'))=(review.review || 'No review.')
           a.next.hidden.fa.fa-angle-right(href='next-reviews')
 
+  if claimedListings.length
+    section.profile-section.feedback.fixed-height.icon-cards.alternating
+      div
+        h1 Claimed Listings
+        .scrollable-container.three(data-breakpoints='960:3,959:2')
+          a.prev.hidden.fa.fa-angle-left(href='prev-claimed-listings')
+          .claimed-listings
+            each listing in claimedListings
+              .scrollable
+                a.card.review-card(href=listing.link)
+                  i.icon(style=`background-image:url(${listing.icon});`)
+                  span=listing.name
+                    label.review-date=listing.date
+          a.next.hidden.fa.fa-angle-right(href='next-claimed-listings')
+
   section.profile-section.social.alternating
     .flex
       div

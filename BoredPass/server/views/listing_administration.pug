@@ -1,0 +1,51 @@
+extends _layout
+
+include mixins/listing_card
+include mixins/listing_card_loading
+
+block css
+  link(rel='stylesheet', href='/css/category_listings.min.css')
+
+block content
+  section.banner
+    header.banner-image.home
+    .cover
+    div
+      h2 Listings
+      h1 Pending Approval
+  section.body(class=pagedData && pagedData.data && pagedData.data.length ? "listings" : "")
+    nav.tabs
+      a.tab(href='/administration/pending-approval/1', class=category === "pending-approval" ? "active" : "") Pending Approval
+      a.tab(href='/administration/reported/1', class=category === "reported" ? "active" : "") Reported
+
+    if nextLink || prevLink
+      nav.paging
+        if prevLink
+          a.button.prev(href=prevLink) Prev
+            i.fa.fa-angle-left
+        if nextLink
+          a.button.next(href=nextLink) Next
+            i.fa.fa-angle-right
+
+    +listing_card_loading().template
+
+    if pagedData && pagedData.data && pagedData.data.length
+      each result in pagedData.data
+        +listing_card(result)
+
+    if !pagedData || !pagedData.data || !pagedData.data.length
+      i.status-icon.fa.fa-info-circle
+        svg(height="20", width="20", viewBox="0 0 20 20")
+          circle.pie-fill(r="10", cx="10", cy="10")
+          circle.pie-stroke(r="5", cx="10", cy="10")
+          circle.pie-hole(r="9", cx="10", cy="10")
+      p.status-message No listings to display
+
+    if nextLink || prevLink
+      nav.paging
+        if prevLink
+          a.button.prev(href=prevLink) Prev
+            i.fa.fa-angle-left
+        if nextLink
+          a.button.next(href=nextLink) Next
+            i.fa.fa-angle-right

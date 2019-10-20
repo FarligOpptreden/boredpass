@@ -32,9 +32,9 @@ html
             if isAuthenticated && authentication.user.permissions && authentication.user.permissions.addListing
               a.add(href="/listings/add") Add
                 span.fa.fa-plus
-            if isAuthenticated && authentication.user.permissions && authentication.user.permissions.claimListing
-              a.claim Claim
-                span.fa.fa-hand-pointer
+            if isAuthenticated && authentication.user.permissions && authentication.user.permissions.administerListings
+              a.administration(href="/administration/pending-approval/1") Administration
+                span.fas.fa-toolbox
           include partials/profile_box
       nav
         a.logo(href="/")

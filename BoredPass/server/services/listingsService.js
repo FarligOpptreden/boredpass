@@ -403,7 +403,7 @@ class Listings extends BasicCrudPromises {
                   .toDate(),
                 status: "initiated",
                 user: {
-                  _id: args.user._id.toString(),
+                  _id: this.db.objectId(args.user._id.toString()),
                   name: args.user.name,
                   profile_pictures: args.user.profile_pictures
                 }

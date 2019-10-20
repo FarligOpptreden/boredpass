@@ -2,7 +2,6 @@
 import { BasicCrudPromises, konsole } from "../../handlr";
 import { v4 } from "uuid";
 import fetch from "node-fetch";
-import { Utils } from "../../handlr";
 import Twitter from "node-twitter-api";
 import { UserActivityService } from ".";
 const crypto = require("crypto");
@@ -13,228 +12,200 @@ class Security extends BasicCrudPromises {
     this.twitter_tokens = {};
   }
 
-  create(args) {
-    return new Promise((resolve, reject) => {
-      let _user;
-      super
-        .create(args)
-        .then(user => {
-          _user = user;
-          let activityType = UserActivityService.types.registration;
-          return UserActivityService.create({
-            data: {
-              type: activityType.key,
-              title: activityType.display,
-              user: {
-                _id: user._id,
-                name: user.name,
-                profile_pictures: user.profile_pictures
-              }
-            }
-          });
-        })
-        .then(_ => resolve(_user))
-        .catch(err => reject(err));
-    });
+  async create(args) {
+    try {
+      const user = await super.create(args);
+      const activityType = UserActivityService.types.registration;
+      await UserActivityService.create({
+        data: {
+          type: activityType.key,
+          title: activityType.display,
+          user: {
+            _id: user._id,
+            name: user.name,
+            profile_pictures: user.profile_pictures
+          }
+        }
+      });
+    } catch (err) {
+      konsole.error(err.toString());
+      throw err;
+    }
   }
 
-  isAuthenticated(args) {
-    return new Promise((resolve, reject) => {
-      if (!args || !args.cookie) return reject(false);
+  async isAuthenticated(args) {
+    if (!args || !args.cookie) throw false;
 
+    try {
       let cookie;
       try {
         cookie = Buffer.from(args.cookie, "base64").toString("ascii");
       } catch (e) {
-        return reject(false);
+        throw false;
       }
 
       let userId = cookie.split(":")[0];
       let token = cookie.split(":")[1];
 
-      if (!userId || !cookie) return reject(false);
+      if (!userId || !cookie) throw false;
 
-      Promise.resolve()
-        .then(_ =>
-          this.findOne({
-            filter: {
-              _id: this.db.objectId(userId),
-              tokens: token
-            }
-          })
-        )
-        .then(user => {
-          if (!user) return reject(false);
+      let user = await this.findOne({
+        filter: {
+          _id: this.db.objectId(userId),
+          tokens: token
+        }
+      });
 
-          user.token = token;
-          resolve(user);
-        })
-        .catch(err => {
-          konsole.error(err.toString());
-          reject(false);
-        });
-    });
+      if (!user) throw false;
+
+      user.token = token;
+
+      return user;
+    } catch (err) {
+      konsole.error(err.toString());
+      throw err;
+    }
   }
 
-  signIn(args, res) {
-    return new Promise((resolve, reject) => {
-      if (!args) return reject({ success: false });
+  async signIn(args, res) {
+    if (!args) throw { success: false };
 
-      let token, userId;
+    try {
+      let user, token, userId;
 
-      Promise.resolve()
-        .then(_ =>
-          this.findOne({
-            filter: {
-              email: args.email,
-              password: crypto
-                .createHash("sha256")
-                .update(`${args.email}:${args.password}`)
-                .digest("hex")
-            }
-          })
-        )
-        .then(user => {
-          if (!user) return reject({ success: false });
+      user = await this.findOne({
+        filter: {
+          email: args.email,
+          password: crypto
+            .createHash("sha256")
+            .update(`${args.email}:${args.password}`)
+            .digest("hex")
+        }
+      });
 
-          token = v4().replace(/\-/g, "");
-          userId = user._id.toString();
-          return this.update({
-            filter: { _id: user._id },
-            data: {
-              $push: { tokens: token }
-            }
-          });
-        })
-        .then(user => {
-          res.cookie(
-            "bp",
-            Buffer.from(`${userId}:${token}`).toString("base64"),
-            {
-              maxAge: 3600000 * 24 * 365, // 1 year
-              httpOnly: true
-            }
-          );
-          resolve({ success: true });
-        })
-        .catch(err => {
-          konsole.error(err.toString());
-          reject({ success: false });
-        });
-    });
+      if (!user) throw { success: false };
+
+      token = v4().replace(/\-/g, "");
+      userId = user._id.toString();
+      user = await this.update({
+        filter: { _id: user._id },
+        data: {
+          $push: { tokens: token }
+        }
+      });
+      res.cookie("bp", Buffer.from(`${userId}:${token}`).toString("base64"), {
+        maxAge: 3600000 * 24 * 365, // 1 year
+        httpOnly: true
+      });
+
+      return { success: true };
+    } catch (err) {
+      konsole.error(err.toString());
+      throw { success: false };
+    }
   }
 
-  signInOauth(profile) {
-    return new Promise((resolve, reject) => {
-      if (!profile) return reject({ success: false });
+  async signInOauth(profile) {
+    if (!profile) throw { success: false };
 
-      let token = v4().replace(/\-/g, "");
+    try {
       let userId;
+      let token = v4().replace(/\-/g, "");
+      let user = await this.findOne({
+        filter: {
+          email: profile.email
+        }
+      });
 
-      Promise.resolve()
-        .then(_ =>
-          this.findOne({
-            filter: {
-              email: profile.email
-            }
-          })
-        )
-        .then(user => {
-          if (!user)
-            return this.create({
-              data: {
-                name: profile.name,
-                email: profile.email,
-                password: null,
-                profile_pictures: {
-                  boredPass: null,
-                  facebook: profile.facebook_picture || null,
-                  google: profile.google_picture || null,
-                  twitter: profile.twitter_picture || null
-                },
-                tokens: [token]
-              }
-            });
-
-          userId = user._id.toString();
-          let profilePictureKey = "",
-            profilePictureValue = "";
-
-          if (profile.facebook_picture) {
-            profilePictureKey = "profile_pictures.facebook";
-            profilePictureValue = profile.facebook_picture;
-          }
-
-          if (profile.google_picture) {
-            profilePictureKey = "profile_pictures.google";
-            profilePictureValue = profile.google_picture;
-          }
-
-          if (profile.twitter_picture) {
-            profilePictureKey = "profile_pictures.twitter";
-            profilePictureValue = profile.twitter_picture;
-          }
-
-          let data = {
-            $push: { tokens: token }
-          };
-
-          data[profilePictureKey] = profilePictureValue;
-
-          return this.update({
-            filter: { _id: user._id },
-            data: data
-          });
-        })
-        .then(user => {
-          resolve({ success: true, userId: userId || user._id, token: token });
-        })
-        .catch(err => {
-          konsole.error(err.toString());
-          reject({ success: false });
-        });
-    });
-  }
-
-  signOut(req, res) {
-    return new Promise((resolve, reject) => {
-      if (
-        !req ||
-        !res ||
-        !req.authentication ||
-        !req.authentication.isAuthenticated
-      )
-        return reject(false);
-
-      res.clearCookie("bp");
-
-      Promise.resolve()
-        .then(_ =>
-          this.update({
-            filter: {
-              _id: req.authentication.user._id
+      if (!user)
+        user = await this.create({
+          data: {
+            name: profile.name,
+            email: profile.email,
+            password: null,
+            profile_pictures: {
+              boredPass: null,
+              facebook: profile.facebook_picture || null,
+              google: profile.google_picture || null,
+              twitter: profile.twitter_picture || null
             },
-            data: {
-              $pullAll: { tokens: [req.authentication.user.token] }
-            }
-          })
-        )
-        .then(user => resolve(true))
-        .catch(err => {
-          konsole.error(err.toString());
-          reject(false);
+            tokens: [token]
+          }
         });
-    });
+      else {
+        userId = user._id;
+        let profilePictureKey = "",
+          profilePictureValue = "";
+
+        if (profile.facebook_picture) {
+          profilePictureKey = "profile_pictures.facebook";
+          profilePictureValue = profile.facebook_picture;
+        }
+
+        if (profile.google_picture) {
+          profilePictureKey = "profile_pictures.google";
+          profilePictureValue = profile.google_picture;
+        }
+
+        if (profile.twitter_picture) {
+          profilePictureKey = "profile_pictures.twitter";
+          profilePictureValue = profile.twitter_picture;
+        }
+
+        let data = {
+          $push: { tokens: token }
+        };
+
+        data[profilePictureKey] = profilePictureValue;
+        user = await this.update({
+          filter: { _id: user._id },
+          data: data
+        });
+        user._id = userId;
+      }
+
+      return { success: true, userId: user._id.toString(), token: token };
+    } catch (err) {
+      konsole.error(err.toString());
+      throw { success: false };
+    }
   }
 
-  signUp(args) {
-    return new Promise((resolve, reject) => {
-      if (!args)
-        return reject({
-          success: false,
-          message: 'No value specified for parameter "args"'
-        });
+  async signOut(req, res) {
+    if (
+      !req ||
+      !res ||
+      !req.authentication ||
+      !req.authentication.isAuthenticated
+    )
+      throw reject(false);
 
+    try {
+      res.clearCookie("bp");
+      await this.update({
+        filter: {
+          _id: req.authentication.user._id
+        },
+        data: {
+          $pullAll: { tokens: [req.authentication.user.token] }
+        }
+      });
+
+      return true;
+    } catch (err) {
+      konsole.error(err.toString());
+      throw err;
+    }
+  }
+
+  async signUp(args) {
+    if (!args)
+      throw reject({
+        success: false,
+        message: 'No value specified for parameter "args"'
+      });
+
+    try {
       let errors = [];
 
       !args.name && errors.push('No value specified for "name"');
@@ -261,52 +232,46 @@ class Security extends BasicCrudPromises {
         args.password !== args.passwordConfirm &&
         errors.push("Password and confirmation do not match");
 
-      if (errors.length) return reject({ success: false, message: errors });
+      if (errors.length) throw { success: false, message: errors };
 
-      Promise.resolve()
-        .then(_ =>
-          this.findOne({
-            filter: {
-              email: args.email
-            }
-          })
-        )
-        .then(user => {
-          if (user)
-            return reject({
-              success: false,
-              message: "Email address already exists"
-            });
+      let user = await this.findOne({
+        filter: {
+          email: args.email
+        }
+      });
 
-          return this.create({
-            data: {
-              name: args.name,
-              email: args.email,
-              password: crypto
-                .createHash("sha256")
-                .update(`${args.email}:${args.password}`)
-                .digest("hex")
-            }
-          });
-        })
-        .then(user => {
-          if (!user)
-            return reject({
-              success: false,
-              message: "Could not register user"
-            });
+      if (user)
+        throw {
+          success: false,
+          message: "Email address already exists"
+        };
 
-          resolve({ success: true, message: "Successfully registered" });
-        })
-        .catch(err => {
-          konsole.error(err);
-          reject({ success: false, message: err.toString() });
-        });
-    });
+      user = this.create({
+        data: {
+          name: args.name,
+          email: args.email,
+          password: crypto
+            .createHash("sha256")
+            .update(`${args.email}:${args.password}`)
+            .digest("hex")
+        }
+      });
+
+      if (!user)
+        throw {
+          success: false,
+          message: "Could not register user"
+        };
+
+      return { success: true, message: "Successfully registered" };
+    } catch (err) {
+      konsole.error(err);
+      throw { success: false, message: err };
+    }
   }
 
   start_facebook(args) {
-    let url = args.provider.authUrl
+    const url = args.provider.authUrl
       .replace("{key}", args.provider.key)
       .replace(
         "{redirect}",
@@ -320,62 +285,58 @@ class Security extends BasicCrudPromises {
     args.res.redirect(url);
   }
 
-  end_facebook(args) {
-    return new Promise((resolve, reject) => {
-      let req = args.req;
-      let provider = args.provider;
-      let code = req.query.code;
+  async end_facebook(args) {
+    try {
+      const req = args.req;
+      const provider = args.provider;
+      const code = req.query.code;
+      let url, res, json, proof;
 
-      Utils.chain()
-        .then(_ => {
-          let url = provider.tokenUrl
-            .replace("{key}", provider.key)
-            .replace("{secret}", provider.secret)
-            .replace(
-              "{redirect}",
-              config.oauth.settings.redirect.replace(
-                "{provider}",
-                req.params.provider
-              )
-            )
-            .replace("{code}", code)
-            .replace("{scope}", provider.scope);
-
-          return fetch(url);
-        })
-        .then(res => res.json())
-        .then(json => {
-          konsole.log(json, "FACEBOOK-2");
-
-          let proof = crypto
-            .createHmac("sha256", provider.secret)
-            .update(json.access_token)
-            .digest("hex");
-          let url = provider.profileUrl
-            .replace("{token}", json.access_token)
-            .replace("{fields}", provider.fields)
-            .replace("{proof}", proof);
-
-          return fetch(url);
-        })
-        .then(res => res.json())
-        .then(json =>
-          SecurityService.signInOauth({
-            name: json.name,
-            email: json.email,
-            facebook_picture: json.picture.data.url
-          })
+      url = provider.tokenUrl
+        .replace("{key}", provider.key)
+        .replace("{secret}", provider.secret)
+        .replace(
+          "{redirect}",
+          config.oauth.settings.redirect.replace(
+            "{provider}",
+            req.params.provider
+          )
         )
-        .then(token => resolve(token))
-        .catch(err => {
-          konsole.error(err, "FACEBOOK");
-          reject(err);
-        });
-    });
+        .replace("{code}", code)
+        .replace("{scope}", provider.scope);
+
+      res = await fetch(url);
+      json = await res.json();
+
+      konsole.log(json, "FACEBOOK-2");
+
+      proof = crypto
+        .createHmac("sha256", provider.secret)
+        .update(json.access_token)
+        .digest("hex");
+      url = provider.profileUrl
+        .replace("{token}", json.access_token)
+        .replace("{fields}", provider.fields)
+        .replace("{proof}", proof);
+
+      res = await fetch(url);
+      json = await res.json();
+
+      const token = await SecurityService.signInOauth({
+        name: json.name,
+        email: json.email,
+        facebook_picture: json.picture.data.url
+      });
+
+      return token;
+    } catch (err) {
+      konsole.error(err, "FACEBOOK");
+      throw err;
+    }
   }
 
   start_google(args) {
-    let url = args.provider.authUrl
+    const url = args.provider.authUrl
       .replace("{key}", args.provider.key)
       .replace(
         "{redirect}",
@@ -388,118 +349,169 @@ class Security extends BasicCrudPromises {
     args.res.redirect(url);
   }
 
-  end_google(args) {
-    return new Promise((resolve, reject) => {
-      let req = args.req;
-      let provider = args.provider;
-      let code = req.query.code;
+  async end_google(args) {
+    try {
+      const req = args.req;
+      const provider = args.provider;
+      const code = req.query.code;
+      let url, res, json;
 
-      Utils.chain()
-        .then(_ => {
-          let url = provider.tokenUrl
-            .replace("{key}", provider.key)
-            .replace("{secret}", provider.secret)
-            .replace(
-              "{redirect}",
-              config.oauth.settings.redirect.replace(
-                "{provider}",
-                req.params.provider
-              )
-            )
-            .replace("{code}", code);
-
-          return fetch(url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded"
-            }
-          });
-        })
-        .then(res => res.json())
-        .then(json => {
-          let url = provider.profileUrl
-            .replace("{token}", json.access_token)
-            .replace("{fields}", provider.fields);
-
-          return fetch(url);
-        })
-        .then(res => res.json())
-        .then(json =>
-          SecurityService.signInOauth({
-            name: json.displayName,
-            email: json.emails[0].value,
-            google_picture: json.image.url
-          })
+      url = provider.tokenUrl
+        .replace("{key}", provider.key)
+        .replace("{secret}", provider.secret)
+        .replace(
+          "{redirect}",
+          config.oauth.settings.redirect.replace(
+            "{provider}",
+            req.params.provider
+          )
         )
-        .then(token => resolve(token))
-        .catch(err => {
-          konsole.error(err, "GOOGLE");
-          reject(err);
-        });
-    });
+        .replace("{code}", code);
+
+      res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      });
+      json = await res.json();
+
+      url = provider.profileUrl
+        .replace("{token}", json.access_token)
+        .replace("{fields}", provider.fields);
+
+      res = await fetch(url);
+      json = await res.json();
+
+      const token = SecurityService.signInOauth({
+        name: json.displayName,
+        email: json.emails[0].value,
+        google_picture: json.image.url
+      });
+
+      return token;
+    } catch (err) {
+      konsole.error(err, "GOOGLE");
+      throw err;
+    }
   }
 
-  start_twitter(args) {
-    let url = args.provider.authUrl;
-    let twitter = new Twitter({
-      consumerKey: args.provider.key,
-      consumerSecret: args.provider.secret,
-      callback: config.oauth.settings.redirect.replace(
-        "{provider}",
-        args.req.params.provider
-      )
-    });
-
-    twitter.getRequestToken((err, token, secret) => {
-      if (err) return args.res.status(500).send(err);
-
-      SecurityService.twitter_tokens[token] = secret;
-      args.res.redirect(url.replace("{token}", token));
-    });
-  }
-
-  end_twitter(args) {
-    return new Promise((resolve, reject) => {
-      let url = args.provider.authUrl;
-      let twitter = new Twitter({
+  async start_twitter(args) {
+    const url = args.provider.authUrl;
+    const twitter = new TwitterPromises(
+      new Twitter({
         consumerKey: args.provider.key,
         consumerSecret: args.provider.secret,
         callback: config.oauth.settings.redirect.replace(
           "{provider}",
           args.req.params.provider
         )
-      });
-      let requestToken = args.req.query.oauth_token;
-      let requestSecret = SecurityService.twitter_tokens[requestToken];
-      let verifier = args.req.query.oauth_verifier;
+      })
+    );
 
-      twitter.getAccessToken(
+    try {
+      const requestToken = await twitter.getRequestToken();
+
+      SecurityService.twitter_tokens[requestToken.token] = requestToken.secret;
+      args.res.redirect(url.replace("{token}", requestToken.token));
+    } catch (err) {
+      args.res.status(500).send(err);
+    }
+  }
+
+  async end_twitter(args) {
+    try {
+      let twitter = new TwitterPromises(
+        new Twitter({
+          consumerKey: args.provider.key,
+          consumerSecret: args.provider.secret,
+          callback: config.oauth.settings.redirect.replace(
+            "{provider}",
+            args.req.params.provider
+          )
+        })
+      );
+      const requestToken = args.req.query.oauth_token;
+      const requestSecret = SecurityService.twitter_tokens[requestToken];
+      const verifier = args.req.query.oauth_verifier;
+
+      const accessToken = await twitter.getAccessToken(
         requestToken,
         requestSecret,
-        verifier,
-        (err, token, secret) => {
-          delete SecurityService.twitter_tokens[requestToken];
+        verifier
+      );
 
-          if (err) return reject(err);
+      delete SecurityService.twitter_tokens[requestToken];
 
-          twitter.verifyCredentials(
-            token,
-            secret,
-            { include_email: true },
-            (err, user) => {
-              if (err) return reject(err);
-
-              SecurityService.signInOauth({
-                name: user.name,
-                email: user.email,
-                twitter_picture: user.profile_image_url
-              }).then(token => resolve(token));
-            }
-          );
+      const user = await twitter.verifyCredentials(
+        accessToken.token,
+        accessToken.secret,
+        {
+          include_email: true
         }
       );
-    });
+
+      const token = await SecurityService.signInOauth({
+        name: user.name,
+        email: user.email,
+        twitter_picture: user.profile_image_url
+      });
+
+      return token;
+    } catch (err) {
+      konsole.error(err, "TWITTER");
+      throw err;
+    }
   }
 }
 
 export const SecurityService = new Security();
+
+class TwitterPromises {
+  constructor(twitterApi) {
+    this._twitter = twitterApi;
+  }
+
+  getRequestToken() {
+    return new Promise((resolve, reject) => {
+      this._twitter.getRequestToken((err, token, secret) => {
+        if (err) return reject(err);
+
+        resolve({ token, secret });
+      });
+    });
+  }
+
+  getAccessToken(requestToken, requestSecret, verifier) {
+    return new Promise((resolve, reject) => {
+      try {
+        this._twitter.getAccessToken(
+          requestToken,
+          requestSecret,
+          verifier,
+          (err, token, secret) => {
+            if (err) return reject(err);
+
+            resolve({ token, secret });
+          }
+        );
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  verifyCredentials(token, secret, scope) {
+    return new Promise((resolve, reject) => {
+      try {
+        this._twitter.verifyCredentials(token, secret, scope, (err, user) => {
+          if (err) return reject(err);
+
+          resolve(user);
+        });
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+}

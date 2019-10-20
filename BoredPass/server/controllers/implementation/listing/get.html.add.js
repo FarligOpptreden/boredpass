@@ -1,7 +1,7 @@
 import { FacilitiesService } from "../../../services";
 import config from "../../../../config";
 
-export const get_html_add = (req, res) => {
+export const get_html_add = async (req, res) => {
   if (
     !req.authentication ||
     !req.authentication.isAuthenticated ||
@@ -18,24 +18,23 @@ export const get_html_add = (req, res) => {
       categories: req.listing_categories
     });
 
-  FacilitiesService.findMany({ sort: { name: 1 } })
-    .then(facilities =>
-      res.render("add_listing", {
-        authentication: req.authentication,
-        title: "Add Listing - BoredPass",
-        moment: require("moment"),
-        facilities: facilities,
-        categories: req.listing_categories
-      })
-    )
-    .catch(err =>
-      res.status(500).render("error", {
-        error: {
-          status: 500,
-          stack: config.app.debug && err.stack
-        },
-        message: `Something unexpected happened: ${err}`,
-        categories: req.listing_categories
-      })
-    );
+  try {
+    const facilities = await FacilitiesService.findMany({ sort: { name: 1 } });
+    res.render("add_listing", {
+      authentication: req.authentication,
+      title: "Add Listing - BoredPass",
+      moment: require("moment"),
+      facilities: facilities,
+      categories: req.listing_categories
+    });
+  } catch (err) {
+    res.status(500).render("error", {
+      error: {
+        status: 500,
+        stack: config.app.debug && err.stack
+      },
+      message: `Something unexpected happened: ${err}`,
+      categories: req.listing_categories
+    });
+  }
 };

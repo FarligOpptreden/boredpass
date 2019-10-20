@@ -20,6 +20,9 @@ block content
   if canEdit
     div.toolbar
       div
+        if authentication.user.permissions && authentication.user.permissions.publishListing
+          a.publish.listing(href='/listings/' + listing._id + (listing.published === true ? '/unpublish' : '/publish'))=listing.published === true ? "Unpublish" : "Publish"
+            i.fa(class=listing.published === true ? "fa-eject" : "fa-check")
         a.edit(href='/listings/' + listing._id + '/edit') Edit
           i.fa.fa-edit
         if authentication.user.permissions && authentication.user.permissions.deleteListing

@@ -12,6 +12,8 @@ import { post_html_add } from "./post.html.add";
 import { post_json_id_claim } from "./post.json.id_claim";
 import { post_json_id_review } from "./post.json.id_review";
 import { put_json_id_edit } from "./put.json.id_edit";
+import { put_json_id_publish } from "./put.json.id_publish";
+import { put_json_id_unpublish } from "./put.json.id_unpublish";
 
 export {
   delete_json_id_delete,
@@ -27,5 +29,7 @@ export {
   post_html_add,
   post_json_id_claim,
   post_json_id_review,
-  put_json_id_edit
+  put_json_id_edit,
+  put_json_id_publish,
+  put_json_id_unpublish
 };

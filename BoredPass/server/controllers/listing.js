@@ -13,7 +13,9 @@ import {
   put_json_id_edit,
   get_html_id_reviews,
   post_json_id_claim,
-  get_html_id_claim
+  get_html_id_claim,
+  put_json_id_publish,
+  put_json_id_unpublish
 } from "./implementation/listing";
 
 export default new Controller("/listings")
@@ -43,6 +45,14 @@ export default new Controller("/listings")
   .handle(
     { route: "/:id/delete", method: "delete", produces: "json" },
     delete_json_id_delete
+  )
+  .handle(
+    { route: "/:id/publish", method: "put", produces: "json" },
+    put_json_id_publish
+  )
+  .handle(
+    { route: "/:id/unpublish", method: "put", produces: "json" },
+    put_json_id_unpublish
   )
   .handle(
     { route: "/:id/review", method: "get", produces: "html" },

@@ -97,6 +97,39 @@
     });
     return false;
   });
+  $("a.publish").click(function(e) {
+    e.preventDefault();
+    var type = $(this).hasClass("listing") ? "listing" : "activity";
+    var typeName = type === "listing" ? "listing" : "experience";
+    var url = $(this).attr("href");
+    Shared.confirm({
+      message:
+        "Are you sure you want to " +
+        $(this)
+          .text()
+          .toLowerCase() +
+        " this " +
+        typeName +
+        "?",
+      positive: {
+        text: "Yes",
+        click: function() {
+          $.ajax({
+            url: url,
+            method: "put",
+            dataType: "json"
+          }).done(function(data) {
+            document.location.reload();
+          });
+          return true;
+        }
+      },
+      negative: {
+        text: "No"
+      }
+    });
+    return false;
+  });
 
   $(".listing-section .photo a").click(function() {
     doLightbox($(this));

@@ -73,6 +73,7 @@ class Listings extends BasicCrudPromises {
               coordinates.results.length &&
               coordinates.results[0].formatted_address) ||
             "Could not geocode";
+          args.data.published = false;
           return super.create(args);
         })
         .then(listing => {
@@ -496,6 +497,22 @@ class Listings extends BasicCrudPromises {
           reject(err);
         });
     });
+  }
+
+  async updatedPublishedState(args) {
+    try {
+      await super.update({
+        filter: { _id: args.listing_id },
+        data: {
+          published: args.published
+        }
+      });
+
+      return { success: true };
+    } catch (err) {
+      konsole.error(err.toString());
+      throw err;
+    }
   }
 }
 

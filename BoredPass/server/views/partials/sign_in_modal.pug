@@ -20,8 +20,7 @@
       input#sign-in-password(type='password')
     button.button.sign-in Sign In
     .password-options
-      a Remember Me
-      a Forgot Password?
+      a.password-reset-request(href='/forgot-password') Forgot Password?
   form.sign-up
     .field-wrapper
       label(for='sign-up-name-and-surname') Name & Surname*
@@ -37,3 +36,24 @@
       label(for='sign-up-confirm-password') Confirm Password*
       input#sign-up-confirm-password.mandatory.validate-custom(type='password', data-validate='Auth.validateConfirmPassword')
     button.button.sign-up Sign Up
+  form.password-reset-request
+    p Please specify your email address so we can send you instructions for resetting your password.
+    .field-wrapper
+      label(for='forgot-password-email') Email Address*
+      input#forgot-password-email.mandatory.validate-email(type='text')
+    p.response-message
+    button.button.reset-request-submit Reset Password
+  if email && token
+    form.password-reset-verification(data-token=token)
+      .field-wrapper.has-value
+        label(for='verify-reset-email') Email Address
+        input#verify-reset-email(type='text', disabled=true, value=email)
+      .field-wrapper.has-hint
+        label(for='verify-reset-password') New Password*
+        input#verify-reset-password.mandatory.validate-custom(type='password', data-validate='Auth.validatePassword')
+      label.hint Should be 6 characters or more with one or more uppercase letter and number
+      .field-wrapper
+        label(for='verify-reset-confirm-password') Confirm New Password*
+        input#verify-reset-confirm-password.mandatory.validate-custom(type='password', data-validate='Auth.validateConfirmResetPassword')
+      p.response-message
+      button.button.reset-verification-submit Reset Password

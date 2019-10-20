@@ -3,7 +3,9 @@ import { BasicCrudPromises, konsole } from "../../handlr";
 import { v4 } from "uuid";
 import fetch from "node-fetch";
 import Twitter from "node-twitter-api";
-import { UserActivityService } from ".";
+import { UserActivityService, EmailsService } from ".";
+import { v4 as uuid } from "uuid";
+import moment from "moment";
 const crypto = require("crypto");
 
 class Security extends BasicCrudPromises {
@@ -246,7 +248,7 @@ class Security extends BasicCrudPromises {
           message: "Email address already exists"
         };
 
-      user = this.create({
+      await this.create({
         data: {
           name: args.name,
           email: args.email,
@@ -256,12 +258,6 @@ class Security extends BasicCrudPromises {
             .digest("hex")
         }
       });
-
-      if (!user)
-        throw {
-          success: false,
-          message: "Could not register user"
-        };
 
       return { success: true, message: "Successfully registered" };
     } catch (err) {
@@ -460,6 +456,157 @@ class Security extends BasicCrudPromises {
       return token;
     } catch (err) {
       konsole.error(err, "TWITTER");
+      throw err;
+    }
+  }
+
+  async initiatePasswordReset(args) {
+    try {
+      const user = await this.findOne({
+        filter: { email: args.email, password: { $ne: null } }
+      });
+
+      if (!user)
+        throw {
+          success: false,
+          message: `The email address "${args.email}" is not a registered BoredPass account.`
+        };
+
+      const resetToken = uuid();
+      await this.update({
+        filter: { _id: user._id },
+        data: {
+          passwordReset: {
+            token: resetToken,
+            requestedOn: moment().toDate(),
+            expiresOn: moment()
+              .add(1, "hours")
+              .toDate()
+          }
+        }
+      });
+      await EmailsService.send({
+        recipients: [{ name: user.name, email: user.email }],
+        subject: "BoredPass password reset request",
+        template: {
+          view: "email_templates/password_reset_request",
+          props: {
+            resetLink: config.endpoints.passwordReset.replace(
+              "{token}",
+              resetToken
+            )
+          }
+        }
+      });
+
+      return {
+        success: true,
+        message: `Instructions to reset your BoredPass account have been mailed to your address "${user.email}"`
+      };
+    } catch (err) {
+      if (err.success !== false) konsole.error(err.toString());
+
+      throw err;
+    }
+  }
+
+  async verifyPasswordReset(args) {
+    try {
+      const user = await this.findOne({
+        filter: {
+          "passwordReset.token": args.token
+        }
+      });
+
+      if (!user)
+        return {
+          success: false,
+          message:
+            "Invalid password reset link. Please try requesting it again."
+        };
+
+      if (moment(user.passwordReset.expiresOn) <= moment())
+        return {
+          success: false,
+          message:
+            "The password reset link has already expired. Please try requesting it again and actioning it within an hour."
+        };
+
+      return {
+        success: true,
+        message: "Password reset link is valid!",
+        data: { email: user.email, token: args.token }
+      };
+    } catch (err) {
+      if (err.success !== false) konsole.error(err.toString());
+      throw err;
+    }
+  }
+
+  async resetPassword(args) {
+    try {
+      let user = await this.findOne({
+        filter: {
+          email: args.email,
+          "passwordReset.token": args.token
+        }
+      });
+
+      if (!user)
+        return {
+          success: false,
+          message:
+            "The email address or reset token could not be found. Please request a new password reset link."
+        };
+
+      if (moment(user.passwordReset.expiresOn) <= moment())
+        return {
+          success: false,
+          message:
+            "The password reset link has already expired. Please try requesting it again and actioning it within an hour."
+        };
+
+      let errors = [];
+
+      !args.password && errors.push('No value specified for "password"');
+      !args.passwordConfirm &&
+        errors.push('No value specified for "passwordConfirm"');
+      args.password &&
+        args.password.length < 6 &&
+        !/(.*[A-Z]+.*[0-9]+.*)|(.*[0-9]+.*[A-Z]+.*)/.test(args.password) &&
+        errors.push(
+          'Field "password" has to to be at least 6 characters long and contain at least one number and one capital letter'
+        );
+      args.password &&
+        args.passwordConfirm &&
+        args.password !== args.passwordConfirm &&
+        errors.push("Password and confirmation do not match");
+
+      if (errors.length) return { success: false, message: errors };
+
+      user = await this.update({
+        filter: { _id: user._id },
+        data: {
+          password: crypto
+            .createHash("sha256")
+            .update(`${user.email}:${args.password}`)
+            .digest("hex")
+        }
+      });
+
+      if (!user)
+        return {
+          success: false,
+          message:
+            "Could not update your password. Please try requesting it again and actioning it within an hour."
+        };
+
+      return {
+        success: true,
+        message: "Your password has been successfully reset!"
+      };
+    } catch (err) {
+      if (err.success !== false) konsole.error(err.toString());
       throw err;
     }
   }

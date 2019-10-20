@@ -58,7 +58,9 @@
     locationSearch:
       "https://eu1.locationiq.com/v1/search.php?key={token}&q={search}&format=json",
     claimVerification: `${process.env.APP_URL ||
-      "http://localhost:13372"}/listings/{id}/claim?token={token}`
+      "http://localhost:13372"}/listings/{id}/claim?token={token}`,
+    passwordReset: `${process.env.APP_URL ||
+      "http://localhost:13372"}/secure/reset-password?token={token}`
   },
   email: {
     host: process.env.EMAIL_HOST,

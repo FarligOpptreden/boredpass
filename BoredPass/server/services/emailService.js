@@ -10,23 +10,32 @@ class Emails extends BasicCrudPromises {
     mailTransport = nodemailer.createTransport(config.email);
   }
 
-  send(args) {
-    return new Promise((resolve, reject) =>
-      RenderView(args.template.view, { props: args.template.props })
-        .then(html =>
-          mailTransport.sendMail({
-            from: "BoredPass <no-reply@boredpass.com>",
-            to: args.recipients.map(r => `${r.name} <${r.email}>`).join(";"),
-            subject: args.subject,
-            html: html
-          })
-        )
-        .then(response => resolve(response))
-        .catch(err => {
-          konsole.error(err.toString());
-          reject(err);
-        })
-    );
+  /**
+   * Send an email.
+   * @param {*} args
+   * @param {*} args.recipients
+   * @param {*} args.subject
+   * @param {*} args.template
+   * @param {*} args.template.view
+   * @param {*} args.template.props
+   */
+  async send(args) {
+    try {
+      const html = await RenderView(args.template.view, {
+        props: args.template.props
+      });
+      const response = await mailTransport.sendMail({
+        from: "BoredPass <no-reply@boredpass.com>",
+        to: args.recipients.map(r => `${r.name} <${r.email}>`).join(";"),
+        subject: args.subject,
+        html: html
+      });
+
+      return response;
+    } catch (err) {
+      konsole.error(err.toString());
+      throw err;
+    }
   }
 }
 

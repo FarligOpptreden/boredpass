@@ -545,7 +545,9 @@ $(document).ready(function() {
 
   Shared.showOverlay = function(args) {
     var overlay = $('<div class="overlay" />');
-    overlay.click(Shared.hideOverlay);
+
+    if (!args.blockClose) overlay.click(Shared.hideOverlay);
+
     args.content.addClass("overlay-content");
     $("body").append(overlay);
     overlay.append(args.content);
@@ -560,6 +562,7 @@ $(document).ready(function() {
       args.content.addClass("show");
     }, 100);
   };
+
   Shared.hideOverlay = function(e, ctx) {
     var overlay = ctx || $(this);
     var content = overlay.find(".overlay-content");
@@ -571,6 +574,7 @@ $(document).ready(function() {
       overlay.remove();
     }, 350);
   };
+
   Shared.inputFields = function(ctx) {
     var elem = ctx || $("body");
     elem
@@ -586,6 +590,7 @@ $(document).ready(function() {
     elem.find(".checkbox-option:not(.has-events)").each(checkboxField);
     elem.find(".photo-upload:not(.has-events)").each(uploadField);
   };
+
   Shared.photoUpload = function(args) {
     var field = $(
       '<div class="photo-upload"><a><span class="plus">+</span></a></div>'
@@ -606,6 +611,7 @@ $(document).ready(function() {
     field.each(uploadField);
     return field;
   };
+
   Shared.confirm = function(args) {
     var close = function() {
       box.addClass("out");
@@ -642,6 +648,7 @@ $(document).ready(function() {
       overlay.removeClass("out");
     }, 50);
   };
+
   Shared.location = function(args) {
     if (!navigator.geolocation) args && args.callback();
 
@@ -654,6 +661,7 @@ $(document).ready(function() {
       }
     );
   };
+
   Shared.scrollableStrip = function() {
     $(".scrollable-container").each(function() {
       var scrollableContainer = $(this);

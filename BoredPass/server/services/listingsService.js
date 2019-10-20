@@ -218,9 +218,11 @@ class Listings extends BasicCrudPromises {
       if (args.tags && args.tags.length)
         pipeline.push({
           filter: {
+            published: true,
             "tags.name": { $in: args.tags }
           }
         });
+      else pipeline.push({ filter: { published: true } });
 
       if (args.sort) pipeline.push({ sort: args.sort });
       else
@@ -263,12 +265,11 @@ class Listings extends BasicCrudPromises {
             maxDistance: 10 * 1000 * 1000, // 10,000km
             spherical: true,
             distanceField: "distance",
-            query:
-              (args.tags &&
-                args.tags.length && {
-                  "tags.name": { $in: args.tags }
-                }) ||
-              null
+            query: (args.tags &&
+              args.tags.length && {
+                published: true,
+                "tags.name": { $in: args.tags }
+              }) || { published: true }
           }
         }
       ];
@@ -318,6 +319,7 @@ class Listings extends BasicCrudPromises {
             distanceField: "distance",
             query: {
               _id: { $ne: ListingsService.db.objectId(listing._id) },
+              published: true,
               "tags.name": { $in: listing.tags.map(t => t.name) }
             }
           }

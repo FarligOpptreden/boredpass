@@ -22,5 +22,5 @@
         span.logo(style=logo)
       h3= listing.name
       p
-        !=marked(description)
+        !=marked(description || "")
       span.tags= tags

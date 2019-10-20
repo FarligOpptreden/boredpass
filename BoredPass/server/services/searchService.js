@@ -46,6 +46,9 @@ class Search {
               query["_id"] = { $ne: TagsService.db.objectId(listing._id) };
             }
 
+            query = query || {};
+            query.published = true;
+
             pipeline.push({
               geoNear: {
                 near: {
@@ -63,12 +66,11 @@ class Search {
             });
           } else {
             pipeline.push({
-              filter:
-                (args.tags &&
-                  args.tags.length && {
-                    "tags._id": { $in: args.tags }
-                  }) ||
-                null
+              filter: (args.tags &&
+                args.tags.length && {
+                  published: true,
+                  "tags._id": { $in: args.tags }
+                }) || { published: true }
             });
             pipeline.push({
               sort: { _id: -1 }
@@ -126,22 +128,20 @@ class Search {
                 maxDistance: null,
                 spherical: true,
                 distanceField: "distance",
-                query:
-                  (r &&
-                    r.length && {
-                      "tags._id": { $in: r.map(t => t._id.toString()) }
-                    }) ||
-                  null
+                query: (r &&
+                  r.length && {
+                    published: true,
+                    "tags._id": { $in: r.map(t => t._id.toString()) }
+                  }) || { published: true }
               }
             });
           else if (r && r.length)
             pipeline.push({
               filter: {
+                published: true,
                 "tags._id": { $in: r.map(t => t._id.toString()) }
               }
             });
-
-          konsole.error("3----------------------------");
 
           pipeline.push({
             sort: args.location ? { distance: 1 } : { _id: -1 }

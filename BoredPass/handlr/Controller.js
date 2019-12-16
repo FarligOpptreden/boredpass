@@ -16,16 +16,12 @@ const register = (root, routes) => {
       if (route.secure) {
         if (config && config.accounts && config.accounts.url) {
           konsole.log(
-            `Route "${root}${route.route}" is secure. Redirecting to "${
-              config.accounts.url
-            }".`
+            `Route "${root}${route.route}" is secure. Redirecting to "${config.accounts.url}".`
           );
           return { redirect: config.accounts.url };
         } else
           konsole.log(
-            `Route "${root}${
-              route.route
-            }" is secure. "config.accounts.url" not specified.`
+            `Route "${root}${route.route}" is secure. "config.accounts.url" not specified.`
           );
         return { status: 401 };
       }
@@ -41,9 +37,7 @@ const register = (root, routes) => {
 const executeRoute = (root, route, delegate, req, res, next) => {
   if (!route.consumes || req.accepts(route.consumes)) {
     let toLog = "";
-    toLog += `${CliColors.FgMagenta}START > ${
-      CliColors.Reset
-    }Routing to "${root}${route.route}"`;
+    toLog += `${CliColors.FgMagenta}START > ${CliColors.Reset}Routing to "${root}${route.route}"`;
 
     if (config && config.loggingLevel.http > 1) {
       toLog += "\n    > Method         : " + route.method;
@@ -139,9 +133,7 @@ export default class Controller {
             break;
         }
         if (amount > 0)
-          return `${bgCol}${CliColors.FgWhite}${amount} ${type}${
-            CliColors.Reset
-          }`;
+          return `${bgCol}${CliColors.FgWhite}${amount} ${type}${CliColors.Reset}`;
         return `${amount} ${type}`;
       };
       konsole.log(

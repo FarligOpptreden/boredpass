@@ -1,7 +1,8 @@
 import { UsersService, BadgesService } from "../../../services";
 import config from "../../../../config";
+import { konsole } from "../../../../handlr";
 
-export const get_html_id = (req, res) => {
+export const get_html_id_name = (req, res) => {
   if (!req.authentication || !req.authentication.isAuthenticated)
     return res.status(403).render("error", {
       error: {
@@ -33,23 +34,38 @@ export const get_html_id = (req, res) => {
           filter: { "claim.user._id": UsersService.db.objectId(req.params.id) },
           sort: { "claim.claimedOn": -1 }
         })
-      : new Promise(resolve => resolve([]))
+      : new Promise(resolve => resolve([])),
+    UsersService.followers(req.params.id),
+    UsersService.following(req.params.id)
   ])
     .then(results => {
-      let user = results[0];
-      let badges = results[1];
-      let latestActivity = results[2];
-      let ratingsAndReviews = results[3];
-      let claimedListings = results[4];
+      const user = results[0];
+      const badges = results[1];
+      const latestActivity = results[2];
+      const reviews = results[3];
+      const claimedListings = results[4];
+      const followers = results[5];
+      const following = results[6];
+      const isFollowing =
+        followers.filter(
+          f =>
+            f.follower._id.toString() === req.authentication.user._id.toString()
+        ).length > 0;
+      const isLoggedInUser =
+        user._id.toString() == req.authentication.user._id.toString();
 
       res.render("user", {
         authentication: req.authentication,
         title: "User Profile - BoredPass",
-        user: user,
-        badges: badges,
-        latestActivity: latestActivity,
-        reviews: ratingsAndReviews,
-        claimedListings: claimedListings,
+        user,
+        badges,
+        latestActivity,
+        reviews,
+        claimedListings,
+        followers,
+        following,
+        isFollowing,
+        isLoggedInUser,
         req: req
       });
     })

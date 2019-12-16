@@ -1,7 +1,12 @@
 ﻿import config from "../../config";
 import { BasicCrudPromises, konsole } from "../../handlr";
 import moment from "moment";
-import { RatingsService, UserActivityService, ListingsService } from ".";
+import {
+  RatingsService,
+  UserActivityService,
+  ListingsService,
+  FollowersService
+} from ".";
 import { StringUtils } from "../utils";
 
 const DATE_FORMAT = "DD MMM YYYY";
@@ -45,7 +50,6 @@ class Users extends BasicCrudPromises {
 
   async claimedListings(args) {
     const listings = await ListingsService.findMany(args);
-    konsole.log(listings.length);
     return listings.map(l => ({
       _id: l._id,
       name: l.name,
@@ -57,6 +61,50 @@ class Users extends BasicCrudPromises {
       icon:
         l.logo.location ||
         `/content/${l.logo.fileType.replace(".", "")}/${l.logo.fileId}`
+    }));
+  }
+
+  async followers(userId) {
+    const following = await FollowersService.findMany({
+      filter: {
+        "target._id": FollowersService.db.objectId(userId)
+      },
+      sort: {
+        "follower.name": 1
+      }
+    });
+    return following.map(f => ({
+      follower: f.follower,
+      target: f.target,
+      date:
+        moment().diff(f._created, "month") > FRIENDLY_LIMIT
+          ? moment(f._created).format(DATE_FORMAT)
+          : moment(f._created).fromNow(),
+      link: `/user/${f.follower._id}/${StringUtils.makeUrlFriendly(
+        f.follower.name
+      )}`
+    }));
+  }
+
+  async following(userId) {
+    const following = await FollowersService.findMany({
+      filter: {
+        "follower._id": FollowersService.db.objectId(userId)
+      },
+      sort: {
+        "target.name": 1
+      }
+    });
+    return following.map(f => ({
+      follower: f.follower,
+      target: f.target,
+      date:
+        moment().diff(f._created, "month") > FRIENDLY_LIMIT
+          ? moment(f._created).format(DATE_FORMAT)
+          : moment(f._created).fromNow(),
+      link: `/user/${f.target._id}/${StringUtils.makeUrlFriendly(
+        f.target.name
+      )}`
     }));
   }
 }

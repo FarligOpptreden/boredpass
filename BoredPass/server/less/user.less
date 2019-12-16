@@ -62,6 +62,7 @@
         text-align: right;
         border-bottom: solid 1px @col-grey;
         padding: 10px 0;
+        min-height: 61px;
 
         button {
           display: inline-block;
@@ -104,6 +105,66 @@
 
     .scrollable-container {
       height: @card-height;
+    }
+  }
+
+  &.social {
+    z-index: 1;
+
+    .follower-box,
+    .following-box {
+      a {
+        display: inline-block;
+        text-decoration: none;
+        position: relative;
+
+        .avatar {
+          display: block;
+          height: 40px;
+          width: 40px;
+          border-radius: 20px;
+          line-height: 40px;
+          text-align: center;
+          font-size: 12px;
+          color: #fff;
+        }
+
+        .tooltip {
+          opacity: 0;
+          position: absolute;
+          color: #fff;
+          background-color: rgba(0, 0, 0, 0.6);
+          transition: opacity 0.2s;
+          left: 50%;
+          margin-top: 10px;
+          padding: 10px;
+          border-radius: 5px;
+          transform: translateX(-50%);
+          white-space: nowrap;
+
+          .arrow {
+            position: absolute;
+            left: 50%;
+            top: -20px;
+            transform: translateX(-50%);
+            display: block;
+            border: solid 10px rgba(0, 0, 0, 0.6);
+            border-left-color: transparent;
+            border-right-color: transparent;
+            border-top-color: transparent;
+          }
+        }
+
+        &:hover {
+          .avatar {
+            box-shadow: @box-shadow;
+          }
+
+          .tooltip {
+            opacity: 1;
+          }
+        }
+      }
     }
   }
 }

@@ -5,6 +5,7 @@ import { CountriesService } from "./countriesService";
 import { DefaultService } from "./defaultService";
 import { EmailsService } from "./emailService";
 import { FacilitiesService } from "./facilitiesService";
+import { FollowersService } from "./followerService";
 import { ListingsService } from "./listingsService";
 import { LocationService } from "./locationService";
 import { RatingsService } from "./ratingsService";
@@ -22,6 +23,7 @@ export {
   DefaultService,
   EmailsService,
   FacilitiesService,
+  FollowersService,
   ListingsService,
   LocationService,
   RatingsService,

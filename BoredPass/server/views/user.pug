@@ -5,6 +5,9 @@ include mixins/avatar
 block css
   link(rel='stylesheet', href='/css/user.min.css')
 
+block js
+  script(type='text/javascript', src='/js/user.js')
+
 block content
   section.banner
     header.banner-image.home
@@ -15,8 +18,12 @@ block content
       +avatar(user)
       h1= user.name
       p.bio.no-data This person hasn't written a biography yet.
+    
     .actions
-      button.follow.button.round Follow
+      if !isLoggedInUser && !isFollowing
+        button.follow.button.round(data-target=user._id) Follow
+      if !isLoggedInUser && isFollowing
+        button.unfollow.button.round(data-target=user._id) Stop Following
 
   section.profile-section.icon-cards.latest-activity.alternating
     div
@@ -102,10 +109,33 @@ block content
     .flex
       div
         h1 Followers
-        p.no-data This person doesn't have any followers.
+
+        if !followers || !followers.length
+          p.no-data This person doesn't have any followers.
+        
+        if followers && followers.length
+          .follower-box
+            each follower in followers
+              a(href=follower.link)
+                +avatar(follower.follower)
+                span.tooltip
+                  span.arrow
+                  =follower.follower.name
       div
         h1 Following
-        p.no-data This person isn't following anyone.
+
+        if !following || !following.length
+          p.no-data This person isn't following anyone.
+        
+        if following && following.length
+          .following-box
+            each follower in following
+              a(href=follower.link)
+                +avatar(follower.target)
+                span.tooltip
+                  span.arrow
+                  =follower.target.name
+        
 
   section.profile-section.photos.alternating
       div

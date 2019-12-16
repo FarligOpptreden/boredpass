@@ -6,7 +6,7 @@ include ../mixins/avatar
     h1 Ratings &amp; Reviews
   .content.all-ratings.icon-cards
     each review in ratings
-      a.card.review-card
+      a.card.review-card(href=`/user/${review.user._id}`)
         +avatar(review.user).icon
         span=review.user.name
           label.stars

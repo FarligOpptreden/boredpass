@@ -7,7 +7,7 @@ if isAuthenticated
     +avatar(authentication.user)
   .menu-box
     i.arrow-top
-    a.my-profile(href="/user/" + authentication.user._id) My Profile
+    a.my-profile(href=`/user/${authentication.user._id}/${authentication.utils.makeUrlFriendly(authentication.user.name)}`) My Profile
       span.fa.fa-user
     a.sign-out(href="/secure/sign-out") Sign Out
       span.fa.fa-power-off

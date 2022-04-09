@@ -33,7 +33,7 @@
     "gulp-cssmin": "^0.2.0",
     "marked": "^0.7.0",
     "memcached": "^2.2.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "mongodb": "^2.2.31",
     "morgan": "^1.9.1",
     "node-fetch": "^2.3.0",
